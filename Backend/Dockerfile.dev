@@ -1,0 +1,11 @@
+FROM node:16.0
+
+USER node
+
+WORKDIR /usr/src/app
+
+COPY --chown=node:node . .
+
+RUN npm install
+
+CMD ["npm", "start"]
