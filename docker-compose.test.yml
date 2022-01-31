@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  jest:
+    image: node:16
+    working_dir: /usr/src/app
+    container_name: next-app-jest
+    command: yarn jest
+    volumes:
+      - ./app:/usr/src/app
+  test:
+    build:
+      context: ./app
+      target: test
+    container_name: next-app-test
+    command: yarn start
+    ports:
+      - "3000:3000"
+  cypress:
+    build:
+      context: ./app
+      target: cypress
+    container_name: next-app-cypress
+    command: yarn cypress

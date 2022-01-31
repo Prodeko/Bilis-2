@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  next:
+    image: node:16
+    container_name: next-app-dev
+    tty: true
+    command: yarn dev
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/usr/src/app
