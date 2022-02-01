@@ -1,12 +1,17 @@
 type Player = {
-    id: Uint16Array
+    id: number
     first_name: string
     last_name: string
-    elo: Uint16Array
+    elo: number
     fav_color: string
     nickname: string
     fav_ball: string
     emoji: string
 }
 
-export type {Player};
+type ValidationError = {
+    field: string
+    message: string
+}
+
+export type {Player, ValidationError};
