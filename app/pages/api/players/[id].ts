@@ -27,7 +27,7 @@ export default function playerHandler(
         break
       case 'PUT':
         // Update or create data in your database
-        res.status(200).json({ 
+        res.status(200).json({  
           id: id_number, 
           first_name: `User ${id_number}`,
           last_name: "na",

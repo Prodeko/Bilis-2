@@ -15,6 +15,7 @@ type ValidationError = {
 }
 
 type Game = {
+  id: number
   winner: number
   loser: number
   datetime: Date
