@@ -1,36 +1,43 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes } from "sequelize";
 import dbConf from "../utils/dbConf";
 
-
 class Player extends Model {
-    declare firstName: string;
-    declare lastName: string;
-    declare elo: number;
-    declare favoriteColor: number;
+  declare id: number;
+  declare firstName: string;
+  declare lastName: string;
+  declare elo: number;
+  declare favoriteColor: number;
 }
 
-Player.init({
+Player.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     firstName: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     lastName: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     elo: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
+      type: DataTypes.DOUBLE,
+      allowNull: false,
     },
     favoriteColor: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    }
-}, {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
     sequelize: dbConf.sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'player',
-})
+    modelName: "player",
+  }
+);
 
 export default Player;

@@ -21,6 +21,7 @@ Etusivu
 - lisää pelaaja
 
 User
+id
 first_name
 last_name
 elo
