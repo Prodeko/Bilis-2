@@ -14,6 +14,8 @@ Player.init(
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
     },
     firstName: {
       type: DataTypes.TEXT,
@@ -33,7 +35,7 @@ Player.init(
     },
   },
   {
-    sequelize: dbConf.sequelize,
+    sequelize: dbConf.getSequelize(),
     underscored: true,
     timestamps: true,
     modelName: "player",

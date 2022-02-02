@@ -1,34 +1,37 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes } from "sequelize";
 import dbConf from "../utils/dbConf";
 
 class Game extends Model {
-    declare winnerId: number;
-    declare loserId: number;
-    declare winnerElo: number;
-    declare loserElo: number;
-    declare underTable: boolean;
-    declare createdAt: Date;
+  declare winnerId: number;
+  declare loserId: number;
+  declare winnerElo: number;
+  declare loserElo: number;
+  declare underTable: boolean;
+  declare createdAt: Date;
 }
 
-Game.init({
+Game.init(
+  {
     winnerElo: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
+      type: DataTypes.NUMBER,
+      allowNull: false,
     },
     loserElo: {
-        type: DataTypes.NUMBER,
-        allowNull: false,
+      type: DataTypes.NUMBER,
+      allowNull: false,
     },
     underTable: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-}, {
-    sequelize: dbConf.sequelize,
+  },
+  {
+    sequelize: dbConf.getSequelize(),
     underscored: true,
     timestamps: true,
     updatedAt: false,
-    modelName: 'game',
-})
+    modelName: "game",
+  }
+);
 
 export default Game;

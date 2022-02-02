@@ -16,12 +16,13 @@ services:
     volumes:
       - ./app:/usr/src/app
   redis:
-    image: redis:alpine
+    image: redislabs/redisearch:latest
     restart: always
     volumes:
       - cache:/data
   db:
     image: postgres
+    restart: always
     volumes:
       - db-data:/var/lib/postgresql/data/
     env_file:

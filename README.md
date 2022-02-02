@@ -33,3 +33,7 @@ Listaa ajetut migraatiot.
 #### `yarn dev:migrate:pending`
 
 Listaa ajamattomat migraatiot.
+
+#### `yarn dev:create-test-data [player_amount=20] [game_amount=30]`
+
+Generoi testidataa databaseen. Hakasuluissa argumentit skriptille ja oletusarvot. Pelejä skripti ei vielä generoi.

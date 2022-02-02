@@ -9,12 +9,13 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({
       type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
-    firstName: {
+    first_name: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    lastName: {
+    last_name: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
@@ -22,8 +23,16 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({
       type: Sequelize.DOUBLE,
       allowNull: false,
     },
-    favoriteColor: {
+    favorite_color: {
       type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    created_at: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
+    updated_at: {
+      type: Sequelize.DATE,
       allowNull: false,
     },
   });
