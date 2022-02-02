@@ -2,31 +2,22 @@ import path from "path";
 import { Sequelize } from "sequelize";
 import { Umzug, SequelizeStorage } from "umzug";
 
-declare global {
-  var sequelizeStore: Sequelize | null | undefined;
-}
-
 const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } = process.env;
 
-const getSequelize = (): Sequelize => {
-  if (!global.sequelizeStore) {
-    global.sequelizeStore = new Sequelize(
-      `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}`
-    );
-  }
-  return global.sequelizeStore;
-};
+const sequelize = new Sequelize(
+  `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}`
+);
 
 const umzug = new Umzug({
   migrations: { glob: path.join(__dirname, "../migrations/*.ts") },
-  context: getSequelize().getQueryInterface(),
-  storage: new SequelizeStorage({ sequelize: getSequelize() }),
+  context: sequelize.getQueryInterface(),
+  storage: new SequelizeStorage({ sequelize }),
   logger: console,
 });
 
 const connectToDb = async () => {
   try {
-    await getSequelize().authenticate();
+    await sequelize.authenticate();
     console.log("Connected database");
   } catch (err) {
     throw Error(`DB ERROR: ${err}`);
@@ -34,7 +25,7 @@ const connectToDb = async () => {
 };
 
 const dbConf = {
-  getSequelize,
+  sequelize,
   umzug,
   connectToDb,
 };

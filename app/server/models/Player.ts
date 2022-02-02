@@ -35,7 +35,7 @@ Player.init(
     },
   },
   {
-    sequelize: dbConf.getSequelize(),
+    sequelize: dbConf.sequelize,
     underscored: true,
     timestamps: true,
     modelName: "player",

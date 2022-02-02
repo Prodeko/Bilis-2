@@ -3,6 +3,7 @@ import type {
   ValidationError,
 } from "../../common/types";
 import Player from "../../server/models/Player";
+import { redisConnection } from "../../server/utils/redisConf";
 
 class PlayerAPI {
   constructor() {}
@@ -35,4 +36,23 @@ const addPlayer = async (
   return res;
 };
 
-export { PlayerAPI, addPlayer };
+const createSearchIndexForAll = async () => {
+  const players = await Player.findAll({
+    attributes: ["id", "firstName", "lastName"],
+  });
+  redisConnection(async (client) =>
+    Promise.all(
+      players.map((p) => {
+        const { firstName, lastName, id } = p;
+        return client.hSet(`noderedis:players:${id}`, {
+          firstName,
+          lastName,
+          nickName: "",
+          id,
+        });
+      })
+    )
+  );
+};
+
+export { PlayerAPI, addPlayer, createSearchIndexForAll };
