@@ -1,13 +1,13 @@
 import {
-	createSearchIndexForAll,
-	getPlayerMetasByString,
+  createSearchIndexForAll,
+  getPlayerMetasByString,
 } from "../../common/db/players";
 import { redisConnection } from "./redisConf";
 
 const fn = async () => {
-	console.log(await createSearchIndexForAll());
+  console.log(await createSearchIndexForAll());
 };
 
 fn().then(async () => {
-	console.log(await getPlayerMetasByString("he"));
+  console.log(await getPlayerMetasByString("h"));
 });
