@@ -1,13 +1,14 @@
+import { getLatestGames } from "../../common/db/games";
 import {
   createSearchIndexForAll,
   getPlayerMetasByString,
 } from "../../common/db/players";
-import { redisConnection } from "./redisConf";
 
 const fn = async () => {
-  console.log(await createSearchIndexForAll());
+  const games = await getLatestGames();
+  games.rows.forEach((el) => {
+    console.log(el);
+  });
 };
 
-fn().then(async () => {
-  console.log(await getPlayerMetasByString("h"));
-});
+fn();

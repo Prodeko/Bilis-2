@@ -1,9 +1,7 @@
 import { Model, DataTypes } from "sequelize";
-import dbConf from "../utils/dbConf";
+import dbConf from "../../utils/dbConf";
 
 class Game extends Model {
-  declare winnerId: number;
-  declare loserId: number;
   declare winnerElo: number;
   declare loserElo: number;
   declare underTable: boolean;

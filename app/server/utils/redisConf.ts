@@ -14,6 +14,8 @@ const getClient = () => {
 
 const setup = async () => {
   await getClient().connect();
+  await getClient().ft.configSet("MINPREFIX", "1");
+  await getClient().ft.configSet("MAXEXPANSIONS", "1000");
 
   try {
     await getClient().ft.dropIndex("idx:nsearch");
@@ -46,7 +48,7 @@ const setup = async () => {
       "nickname",
       "TEXT",
       "id",
-      "NUMERIC",
+      "TEXT",
       "updatedAt",
       "NUMERIC",
       "SORTABLE",

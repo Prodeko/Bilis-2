@@ -3,7 +3,7 @@ import type {
   ValidationError,
   PlayerMeta,
 } from "../../common/types";
-import Player from "../../server/models/Player";
+import { Player } from "../../server/models/index";
 import { redisConnection } from "../../server/utils/redisConf";
 import { checkSetupScript } from "../../server/utils/setupScriptHandler";
 
@@ -44,9 +44,11 @@ const createSearchIndexForAll = async () => {
     Player.findAll({
       attributes: ["id", "firstName", "lastName"],
     }),
-    redisConnection(async (client) =>
-      client.del(await client.keys("nsearch:players:*"))
-    ),
+    redisConnection(async (client) => {
+      const keys = await client.keys("nsearch:players:*");
+      if (keys.length === 0) return;
+      return client.del(keys);
+    }),
   ]);
   await redisConnection(async (client) =>
     Promise.all(
@@ -74,13 +76,13 @@ const getPlayerMetasByString = async (
   pageSize: number = 20
 ) =>
   redisConnection(async (client) => {
-    const terms = str
-      .split(" ")
-      .map((a, i, { length }) =>
-        a.length === 0 ? "" : i < length - 1 ? `%${a}%` : `${a}*`
-      )
-      .filter((s) => s.length > 0)
-      .join(" ");
+    const d = Date.now();
+    const terms =
+      str
+        .split(" ")
+        .map((a) => (a.length === 0 ? "" : `${a}*`))
+        .filter((s) => s.length > 0)
+        .join(" ") || "*";
     const res = (await client.sendCommand([
       "FT.SEARCH",
       "idx:nsearch",
@@ -120,7 +122,7 @@ const getPlayerMetasByString = async (
 
         return r;
       });
-
+    console.log("Searchtime: " + (Date.now() - d) + " ms");
     return results;
   });
 

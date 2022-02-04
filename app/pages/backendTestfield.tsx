@@ -41,11 +41,7 @@ const Testfield: NextPage = () => {
   const onChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
     const newVal = e.target.value;
     setValue(newVal);
-    if (newVal.length > 0) {
-      await fetchPlayerMetas(newVal).then(checkApiState);
-    } else {
-      setApiState({ loading: false, ts: Date.now(), data: [] });
-    }
+    await fetchPlayerMetas(newVal).then(checkApiState);
   };
 
   return (
@@ -57,9 +53,7 @@ const Testfield: NextPage = () => {
         value={value}
         onChange={onChange}
       />
-      {value.length === 0 ? (
-        <p>Type to get suggestions</p>
-      ) : apiState.loading ? (
+      {apiState.loading ? (
         <p>Loading...</p>
       ) : apiState.data.length ? (
         apiState.data.map((d) => (

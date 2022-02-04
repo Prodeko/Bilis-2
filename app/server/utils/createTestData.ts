@@ -1,6 +1,7 @@
 import { addPlayer } from "../../common/db/players";
 import _ from "lodash";
-import Player from "../models/Player";
+import { Player, Game } from "../models";
+import { addGame } from "../../common/db/games";
 
 const PLAYER_AMOUNT = isNaN(Number(process.argv[2]))
   ? 20
@@ -73,6 +74,22 @@ const createTestPlayers = async () => {
     res.map((r) => r.id + ": " + r.firstName + " " + r.lastName).join("\n")
   );
   console.log(res.length + " players created");
+
+  const players = await Player.findAll();
+
+  if (players.length > 0) {
+    const games: Game[] = [];
+    for (let i = 0; i < GAME_AMOUNT; i++) {
+      games.push(
+        await addGame(
+          _.sample(players) as Player,
+          _.sample(players) as Player,
+          Math.random() < 0.05
+        )
+      );
+    }
+    console.log(games.length + " games created");
+  }
 };
 
 createTestPlayers();

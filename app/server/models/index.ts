@@ -1,20 +1,24 @@
-import Player from "./Player";
-import Game from "./Game";
+import Player from "./rawModels/Player";
+import Game from "./rawModels/Game";
 
 // Define winnerId foreign key Game -> Player
 Player.hasMany(Game, {
-    foreignKey: "winnerId"
-})
+  foreignKey: "winnerId",
+});
 // Define loserId foreign key Game -> Player
 Player.hasMany(Game, {
-    foreignKey: "loserId"
-})
+  foreignKey: "loserId",
+});
 
 // Define winnerId foreign key Game -> Player
 Game.belongsTo(Player, {
-    foreignKey: "wonGames"
-})
+  foreignKey: "id",
+  as: "winnerId",
+});
 // Define loserId foreign key Game -> Player
 Game.belongsTo(Player, {
-    foreignKey: "lostGames"
-})
+  foreignKey: "id",
+  as: "loserId",
+});
+
+export { Player, Game };
