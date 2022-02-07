@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <h1 className='bg-teal-500'>Homma pelittää!</h1>
+    <div className='flex'>
+      <h1 className='text-9xl font-bold m-8'>Biliskilke 2.0</h1>
     </div>
   );
 };
