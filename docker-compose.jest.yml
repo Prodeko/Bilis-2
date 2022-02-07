@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  jest:
+    image: node:16
+    depends_on:
+      - redis
+      - db
+    working_dir: /usr/src/app
+    container_name: next-app-jest
+    command: yarn jest
+    env_file: .dev.env
+    volumes:
+      - ./app:/usr/src/app
+  redis:
+    image: redislabs/redisearch:latest
+  db:
+    image: postgres
+    env_file:
+      - .dev.env
+    ports:
+      - "5432:5432"

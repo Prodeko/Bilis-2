@@ -2,6 +2,7 @@ import { addPlayer } from "../../common/db/players";
 import _ from "lodash";
 import { Player, Game } from "../models";
 import { addGame } from "../../common/db/games";
+import { Player as ResultPlayer } from "../../common/types";
 
 const PLAYER_AMOUNT = isNaN(Number(process.argv[2]))
 	? 20
@@ -57,14 +58,14 @@ const randomLastNames = [
 ];
 
 const createTestPlayers = async () => {
-	const promises: Promise<Player>[] = [];
+	const promises: Promise<ResultPlayer>[] = [];
 
 	for (let i = 0; i < PLAYER_AMOUNT; i++) {
 		promises.push(
 			addPlayer(
 				_.sample(randomFirstNames) || "",
 				_.sample(randomLastNames) || "",
-				0
+				"#000000"
 			)
 		);
 	}
@@ -91,5 +92,7 @@ const createTestPlayers = async () => {
 		console.log(games.length + " games created");
 	}
 };
+
+console.log("Creating test players");
 
 createTestPlayers();

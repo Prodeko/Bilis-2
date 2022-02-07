@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  cypress:
+    image: cypress/included:9.3.1
+    working_dir: /usr/src/app
+    container_name: next-app-cypress
+    ports:
+      - "3000:3000"
+    env_file: .dev.env
+    volumes:
+      - ./app:/usr/src/app
+    entrypoint: yarn build-and-test

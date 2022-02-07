@@ -7,21 +7,43 @@ import type {
 import { Player, Game } from "../../server/models/index";
 import { redisConnection } from "../../server/utils/redisConf";
 import { checkSetupScript } from "../../server/utils/setupScriptHandler";
-import { intToHex } from "../utils/colorConvert";
+import { hexToInt, intToHex } from "../utils/colorConvert";
+
+const mapPlayerToReturnPlayer = (player: Player): ReturnPlayer => {
+	const { id, firstName, lastName, favoriteColor, elo } = player;
+	return {
+		id,
+		firstName,
+		lastName,
+		nickname: "",
+		favoriteColor: intToHex(favoriteColor),
+		elo,
+	};
+};
 
 const addPlayer = async (
 	firstName: string,
 	lastName: string,
-	favoriteColor: number,
+	favoriteColor: string,
 	elo: number = 400
 ) => {
 	const res = await Player.create({
 		firstName,
 		lastName,
-		favoriteColor,
+		favoriteColor: hexToInt(favoriteColor),
 		elo,
 	});
-	return res;
+	if (!res) throw new Error("Creating player failed");
+	await redisConnection(async (client) => {
+		return client.hSet(`nsearch:players:${res.id}`, {
+			firstName: res.firstName,
+			lastName: res.lastName,
+			nickname: "",
+			id: res.id,
+			updatedAt: Date.now(),
+		});
+	});
+	return mapPlayerToReturnPlayer(res);
 };
 
 const createSearchIndexForAll = async () => {
@@ -147,22 +169,15 @@ const getPlayerStatsById = async (id: number): Promise<PlayerWithStats> => {
 		favoriteColor: intToHex(favoriteColor),
 		wonGames,
 		lostGames,
-		maxElo: Number(maxElo) || 400,
-		minElo: Number(minElo) || 400,
+		maxElo: Math.max(Number(maxElo) || 400, 400),
+		minElo: Math.min(Number(minElo) || 400, 400),
 	};
 };
 
 const playerAPI = {
-	getById: (id: number): ReturnPlayer => {
-		return {
-			id: id,
-			firstName: `User`,
-			lastName: "na",
-			elo: 0,
-			favoriteColor: "na",
-			nickname: "",
-		};
-	},
+	addPlayer,
+	getById: async (id: number): Promise<ReturnPlayer> =>
+		mapPlayerToReturnPlayer((await Player.findByPk(id)) as Player),
 	searchByKeywords: (keywords: string): Promise<PlayerMeta[]> =>
 		getPlayerMetasByString(keywords),
 	getPlayerStatsById,

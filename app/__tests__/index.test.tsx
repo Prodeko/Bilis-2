@@ -5,7 +5,7 @@ describe("Home", () => {
   it("Exampletest", () => {
     render(<Home />);
 
-    const heading = screen.getByText(/Tailwind pelittää!/i);
+    const heading = screen.getByText(/Homma pelittää!/i);
 
     expect(heading).toBeInTheDocument();
   });
