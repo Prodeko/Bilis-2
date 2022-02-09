@@ -100,6 +100,12 @@ const addGame = async (
 			"updatedAt",
 			Date.now() + 1
 		);
+		const leaderboardElo = Number(await client.get(redisKeys.leaderboardElo));
+		// If winners new elo is smaller than leaderboard elo, so is winners elo before
+		// Same with losers elo: If losers old elo is smaller than leaderboard elo, so is losers new elo
+		if (res.winnerElo >= leaderboardElo || loser.elo >= leaderboardElo) {
+			await client.del(redisKeys.leaderboardCache);
+		}
 	});
 
 	return res;

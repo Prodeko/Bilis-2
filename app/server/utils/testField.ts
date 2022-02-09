@@ -12,6 +12,12 @@ const fn2 = async () => {
 			`${el.id}: Winner: ${el.winner.id} - ${el.winnerEloBefore} -> ${el.winnerElo} --- Loser: ${el.loser.id} - ${el.loserEloBefore} -> ${el.loserElo}`
 		);
 	});
+	const leaderboard = await playerAPI.getTopPlayers();
+	leaderboard.forEach((el, i) =>
+		console.log(
+			`${i + 1} ${el.firstName} ${el.lastName} (${el.id}) --- ${el.elo}`
+		)
+	);
 };
 
 const fn = async () => {

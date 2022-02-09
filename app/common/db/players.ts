@@ -10,6 +10,8 @@ import { checkSetupScript } from "../../server/utils/setupScriptHandler";
 import { hexToInt, intToHex } from "../utils/colorConvert";
 import redisKeys from "../utils/redisKeys";
 
+const DEFAULT_LEADERBOARD_SIZE = 20;
+
 const mapPlayerToReturnPlayer = (player: Player): ReturnPlayer => {
 	const { id, firstName, lastName, favoriteColor, elo } = player;
 	return {
@@ -175,6 +177,61 @@ const getPlayerStatsById = async (id: number): Promise<PlayerWithStats> => {
 	};
 };
 
+const getTopPlayers = async (
+	page: number = 0,
+	pageSize: number = DEFAULT_LEADERBOARD_SIZE
+): Promise<ReturnPlayer[]> => {
+	if (page === 0 && pageSize === DEFAULT_LEADERBOARD_SIZE) {
+		const redisRes = await redisConnection(async (client) => {
+			if (await client.exists(redisKeys.leaderboardCache)) {
+				return (
+					await client.lRange(
+						redisKeys.leaderboardCache,
+						0,
+						DEFAULT_LEADERBOARD_SIZE - 1
+					)
+				).map((r: string): ReturnPlayer => JSON.parse(r));
+			} else {
+				return false;
+			}
+		});
+		if (redisRes) {
+			return redisRes;
+		}
+	}
+
+	const res = (
+		await Player.findAll({
+			order: [
+				["elo", "DESC"],
+				["updatedAt", "DESC"],
+			],
+			limit: pageSize,
+			offset: page * pageSize,
+		})
+	).map((r) => r.getPlayerType());
+
+	if (page === 0 && pageSize >= DEFAULT_LEADERBOARD_SIZE) {
+		redisConnection(async (client) => {
+			await client.del(redisKeys.leaderboardCache);
+			await client.rPush(
+				redisKeys.leaderboardCache,
+				res.slice(0, DEFAULT_LEADERBOARD_SIZE).map((r) => JSON.stringify(r))
+			);
+			if (res.length < DEFAULT_LEADERBOARD_SIZE) {
+				await client.set(redisKeys.leaderboardElo, 0);
+			} else {
+				await client.set(
+					redisKeys.leaderboardElo,
+					res[DEFAULT_LEADERBOARD_SIZE - 1].elo
+				);
+			}
+		});
+	}
+
+	return res;
+};
+
 const playerAPI = {
 	addPlayer,
 	getById: async (id: number): Promise<ReturnPlayer> =>
@@ -182,6 +239,7 @@ const playerAPI = {
 	searchByKeywords: (keywords: string): Promise<PlayerMeta[]> =>
 		getPlayerMetasByString(keywords),
 	getPlayerStatsById,
+	getTopPlayers,
 };
 
 export {
