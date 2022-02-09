@@ -1,12 +1,12 @@
 import type {
   Player as ReturnPlayer,
-  ValidationError,
   PlayerMeta,
   PlayerWithStats,
 } from "../../common/types";
 import { Player, Game } from "../../server/models/index";
 import { redisConnection } from "../../server/utils/redisConf";
 import { checkSetupScript } from "../../server/utils/setupScriptHandler";
+import { ObjectNotFoundError } from "../exceptions";
 import { hexToInt, intToHex } from "../utils/colorConvert";
 import redisKeys from "../utils/redisKeys";
 
@@ -222,8 +222,16 @@ const getTopPlayers = async (
 
 const playerAPI = {
   addPlayer,
-  getById: async (id: number): Promise<ReturnPlayer> =>
-    ((await Player.findByPk(id)) as Player).getPlayerType(),
+  getById: async (id: number): Promise<ReturnPlayer> => {
+    var db_player = ((await Player.findByPk(id)) as Player)
+    
+    if (db_player == null) {
+      throw new ObjectNotFoundError
+    }
+
+    return db_player.getPlayerType()
+
+  },
   searchByKeywords: (keywords: string): Promise<PlayerMeta[]> =>
     getPlayerMetasByString(keywords),
   getPlayerStatsById,

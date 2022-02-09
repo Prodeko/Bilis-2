@@ -1,10 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import type { Game, ValidationError } from "../../../common/types"
+import { MethodNotAllowedError, ValidationError } from "../../../common/exceptions"
+import withAPIMiddleware from "../../../common/middleware"
+import type { Game } from "../../../common/types"
 
-export default function gameHandler(
+const gameHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Game | ValidationError>
-) {
+  res: NextApiResponse<Game>
+) => {
   const { 
     query: { id },
     method
@@ -13,7 +15,7 @@ export default function gameHandler(
   var id_number = parseInt(id.toString(),10)
 
   if(isNaN(id_number)) {
-    res.status(400).json({ "field": "game_id", "message": "Invalid game id." })
+    throw new ValidationError("game_id", "Invalid game id.")
   }
 
   switch (method) {
@@ -29,9 +31,12 @@ export default function gameHandler(
         loser_elo: 0
        })
       break
+    case undefined: // this case is probably not possible but let's keep linter happy
+      throw new MethodNotAllowedError("", ["GET"])
     default:
-      res.setHeader('Allow', ['GET'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      throw new MethodNotAllowedError(method, ["GET"])
   }
 
 }
+
+export default withAPIMiddleware(gameHandler)

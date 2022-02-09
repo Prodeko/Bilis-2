@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Player, ValidationError } from "../../../common/types";
+import type { Player } from "../../../common/types";
 import { playerAPI } from "../../../common/db/players";
+import { MethodNotAllowedError, ObjectNotFoundError, ValidationError } from "../../../common/exceptions";
+import withAPIMiddleware from "../../../common/middleware";
 
-export default function playerHandler(
+ const playerHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Player | ValidationError>
-) {
+  res: NextApiResponse<Player>
+) => {
   const {
     query: { id },
     method,
@@ -14,14 +16,23 @@ export default function playerHandler(
   var id_number = parseInt(id.toString(), 10);
 
   if (isNaN(id_number)) {
-    res.status(400).json({ field: "player_id", message: "Invalid player id." });
+    throw new ValidationError("player_id", "Invalid player id.")
+  }
+  try {
+    var player_result = await playerAPI.getById(id_number)
+  } catch (error) {
+    // Catch expected errors from internal API
+    if (error instanceof ObjectNotFoundError) {
+      throw new ValidationError("player_id", error.message)
+    } else {
+      throw error;  // re-throw unexpected errors unchanged
+    }
   }
 
   switch (method) {
     case "GET":
       // Get data from your database
-
-      res.status(200).json(playerAPI.getById(id_number));
+      res.status(200).json(player_result);
       break;
     case "PUT":
       // Update or create data in your database
@@ -36,8 +47,11 @@ export default function playerHandler(
         emoji: "na",
       });
       break;
+    case undefined: // this case is probably not possible but let's keep linter happy
+      throw new MethodNotAllowedError("", ["GET", "PUT"])
     default:
-      res.setHeader("Allow", ["GET", "PUT"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
+      throw new MethodNotAllowedError(method, ["GET", "PUT"])
   }
 }
+
+export default withAPIMiddleware(playerHandler)
