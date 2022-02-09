@@ -8,6 +8,7 @@ import { Player, Game } from "../../server/models/index";
 import { redisConnection } from "../../server/utils/redisConf";
 import { checkSetupScript } from "../../server/utils/setupScriptHandler";
 import { hexToInt, intToHex } from "../utils/colorConvert";
+import redisKeys from "../utils/redisKeys";
 
 const mapPlayerToReturnPlayer = (player: Player): ReturnPlayer => {
 	const { id, firstName, lastName, favoriteColor, elo } = player;
@@ -35,7 +36,7 @@ const addPlayer = async (
 	});
 	if (!res) throw new Error("Creating player failed");
 	await redisConnection(async (client) => {
-		return client.hSet(`nsearch:players:${res.id}`, {
+		return client.hSet(`${redisKeys.playerSearch}:${res.id}`, {
 			firstName: res.firstName,
 			lastName: res.lastName,
 			nickname: "",
@@ -52,7 +53,7 @@ const createSearchIndexForAll = async () => {
 			attributes: ["id", "firstName", "lastName"],
 		}),
 		redisConnection(async (client) => {
-			const keys = await client.keys("nsearch:players:*");
+			const keys = await client.keys(`${redisKeys.playerSearch}:*`);
 			if (keys.length === 0) return;
 			return client.del(keys);
 		}),
@@ -63,7 +64,7 @@ const createSearchIndexForAll = async () => {
 				const { firstName, lastName, id } = p;
 				const nickname = "";
 				const updatedAt = Date.now();
-				return client.hSet(`nsearch:players:${id}`, {
+				return client.hSet(`${redisKeys.playerSearch}:${id}`, {
 					firstName,
 					lastName,
 					nickname,

@@ -10,9 +10,12 @@ type PlayerMeta = {
 	nickname: string;
 };
 
-type Player = PlayerMeta & {
-	elo: number;
+type PlayerWithoutElo = PlayerMeta & {
 	favoriteColor: string;
+};
+
+type Player = PlayerWithoutElo & {
+	elo: number;
 };
 
 type PlayerWithStats = Player & {
@@ -22,14 +25,32 @@ type PlayerWithStats = Player & {
 	minElo: number;
 };
 
-type Game = {
+type GameMeta = {
 	id: number;
-	winner: Player;
-	loser: Player;
 	datetime: Date;
 	underTable: boolean;
 	winnerElo: number;
 	loserElo: number;
 };
 
-export type { Player, Game, ValidationError, PlayerMeta, PlayerWithStats };
+type Game = GameMeta & {
+	winner: Player;
+	loser: Player;
+};
+
+type GameListItem = GameMeta & {
+	winner: PlayerWithoutElo;
+	loser: PlayerWithoutElo;
+	winnerEloBefore: number;
+	loserEloBefore: number;
+};
+
+export type {
+	Player,
+	Game,
+	ValidationError,
+	PlayerMeta,
+	PlayerWithStats,
+	PlayerWithoutElo,
+	GameListItem,
+};

@@ -8,7 +8,9 @@ import {
 const fn2 = async () => {
 	const games = await getLatestGames();
 	games.forEach((el) => {
-		console.log(el);
+		console.log(
+			`${el.id}: Winner: ${el.winner.id} - ${el.winnerEloBefore} -> ${el.winnerElo} --- Loser: ${el.loser.id} - ${el.loserEloBefore} -> ${el.loserElo}`
+		);
 	});
 };
 
@@ -16,4 +18,4 @@ const fn = async () => {
 	console.log(await playerAPI.getPlayerStatsById(26));
 };
 
-fn();
+fn2();
