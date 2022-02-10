@@ -4,14 +4,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      prodekoBlue: "#002851",
-      backgrounWhite: "#F0F0F2",
-      textGrey: "#434347",
+    extend: {
+      colors: {
+        'prodekoBlue': '#002851',
+        'backgroundWhite': '#F0F0F2',
+        'textGrey': '#434347',
+      }
     },
-    extend: {},
   },
   plugins: [],
 };
