@@ -1,0 +1,7 @@
+const DEFAULT_LATEST_GAMES = 20;
+const DEFAULT_ELO = 400;
+
+export {
+    DEFAULT_LATEST_GAMES,
+    DEFAULT_ELO
+}
