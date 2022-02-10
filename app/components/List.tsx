@@ -16,7 +16,6 @@ const List: NextPage<Props> = ({ title }) => {
         <LeaderboardItem />
         <LeaderboardItem />
         <LeaderboardItem />
-
       </div>
     </div>
   )

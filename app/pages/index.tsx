@@ -8,6 +8,7 @@ const Home: NextPage = () => {
       <div className='flex flex-grow justify-around p-10 gap-16'>
         <List title='All time leaderboard'/>
         <List title='All time leaderboard'/>
+        <List title='All time leaderboard'/>
       </div>
     </div>
   )
