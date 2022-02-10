@@ -7,7 +7,6 @@ type Props = {
 }
 
 
-
 const SidebarButton: NextPage<Props> = ({to, children}) => {
   return(
     <Link href={to} passHref={true}>

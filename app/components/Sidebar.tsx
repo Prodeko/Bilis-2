@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import SidebarButton from "../components/SidebarButton";
 import { FiHome, FiBarChart2, FiSearch } from "react-icons/fi";
 
+
 const Sidebar: NextPage = () => {
   return (
     <div className="h-screen w-36 fixed bg-prodekoBlue">
