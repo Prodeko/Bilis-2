@@ -10,15 +10,11 @@ const Sidebar: NextPage = () => {
   const [expandFull, setExpandFull] = useState(false)
 
   const expandP = () => {
-    setExpandPartial(true)
+    setExpandPartial(!expandPartial)
   }
 
   const expandF = () => {
-    setExpandFull(true)
-  }
-
-  const shrink = () => {
-    setExpandPartial(false)
+    setExpandFull(!expandFull)
   }
 
   return (
@@ -29,7 +25,7 @@ const Sidebar: NextPage = () => {
       <SidebarButton marginP={expandPartial} marginF={expandFull} to="/stats">
         <FiBarChart2 size="42" />
       </SidebarButton>
-      <SideBarSearchBar marginP={expandPartial} marginF={expandFull} onMouseEnter={expandP} onMouseLeave={shrink} onClick={expandF} >
+      <SideBarSearchBar marginP={expandPartial} marginF={expandFull} onMouseEnter={expandP} onClick={expandF} >
         <FiSearch size="42" />
       </SideBarSearchBar>
     </div>
