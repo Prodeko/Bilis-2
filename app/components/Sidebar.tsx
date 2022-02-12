@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
 import React, { useState } from 'react'
 import SidebarButton from "../components/SidebarButton";
+import SideBarSearchBar from "../components/SideBarSearchBar";
 import { FiHome, FiBarChart2, FiSearch } from "react-icons/fi";
 
 
 const Sidebar: NextPage = () => {
-  const[expandPartial, setExpandPartial] = useState(false)
-  const[expandFull, setExpandFull] = useState(false)
+  const [expandPartial, setExpandPartial] = useState(false)
+  const [expandFull, setExpandFull] = useState(false)
 
   const expandP = () => {
     setExpandPartial(true)
@@ -21,16 +22,16 @@ const Sidebar: NextPage = () => {
   }
 
   return (
-    <div className={`h-screen w-36 fixed bg-prodekoBlue ${expandPartial? 'w-40' : 'w-36'} ${expandFull? 'w-64' : 'w-36'}`}>
-      <SidebarButton onMouseEnter={() => {}} onMouseLeave={() => {}} onClick={() => {}} to="/">
+    <div className={`flex flex-col h-screen w-36 fixed bg-prodekoBlue ${expandPartial ? 'w-52' : 'w-36'} ${expandFull ? 'w-1/4' : 'w-36'} duration-200 transition-background`}>
+      <SidebarButton marginP={expandPartial} marginF={expandFull} to="/">
         <FiHome size="42" />
       </SidebarButton>
-      <SidebarButton onMouseEnter={() => {}} onMouseLeave={() => {}} onClick={() => {}} to="/stats">
+      <SidebarButton marginP={expandPartial} marginF={expandFull} to="/stats">
         <FiBarChart2 size="42" />
       </SidebarButton>
-      <SidebarButton onMouseEnter={expandP} onMouseLeave={shrink} onClick={expandF} to="/">
+      <SideBarSearchBar marginP={expandPartial} marginF={expandFull} onMouseEnter={expandP} onMouseLeave={shrink} onClick={expandF} >
         <FiSearch size="42" />
-      </SidebarButton>
+      </SideBarSearchBar>
     </div>
   );
 };
