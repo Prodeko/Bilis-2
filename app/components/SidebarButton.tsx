@@ -4,17 +4,15 @@ import Link from 'next/link'
 type Props = {
   to: string,
   children: JSX.Element
-  marginP: Boolean
-  marginF: Boolean
 }
 
 
 
-const SidebarButton: NextPage<Props> = ({ to, children, marginP, marginF }) => {
+const SidebarButton: NextPage<Props> = ({ to, children }) => {
 
   return (
     <Link href={to} passHref={true}>
-      <div className={`bg-gray-100 hover:bg-blue-50 rounded-[48px] hover:rounded-[42px] w-24 h-24 hover:w-28 hover:h-28 ${marginP? 'ml-6' : 'mx-auto'} ${marginF? 'ml-6' : 'mx-auto'} my-4 flex items-center justify-center duration-200 shadow-2xl transition-background hover:cursor-pointer`}>
+      <div className={`bg-cover bg-gray-100 hover:bg-prodekoBtn bg-contain rounded-[48px] hover:rounded-[36px] w-24 h-24 ml-6 my-4 flex items-center justify-center duration-200 shadow-2xl transition-all hover:cursor-pointer hover:duration-200`}>
         {children}
       </div>
     </Link>
