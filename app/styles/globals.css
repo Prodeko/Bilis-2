@@ -9,6 +9,12 @@
   h2 {
     @apply text-4xl font-bold;
   }
+  h3 {
+    @apply text-2xl font-bold;
+  }
+  h4 {
+    @apply text-xl font-bold;
+  }
 }
 
 html,
