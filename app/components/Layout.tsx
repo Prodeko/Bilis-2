@@ -15,7 +15,7 @@ const Layout: NextPage<Props> = ({ children }) => {
         <title>Biliskilke 2.0</title>
       </Head>
       <Sidebar />
-      <div className="ml-36 bg-gray-50 h-screen">
+      <div className="ml-36 bg-gray-50 h-screen max-h-screen">
         {children}
       </div> 
     </div>

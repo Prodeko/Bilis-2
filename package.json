@@ -16,5 +16,6 @@
     "test:jest": "docker-compose -f docker-compose.jest.yml up --remove-orphans --build --abort-on-container-exit",
     "test:cypress": "docker-compose -f docker-compose.cypress.yml up --remove-orphans --build --abort-on-container-exit",
     "build-dev": "docker-compose -f docker-compose.build-dev.yml up --build --remove-orphans"
-  }
+  },
+  "dependencies": {}
 }
