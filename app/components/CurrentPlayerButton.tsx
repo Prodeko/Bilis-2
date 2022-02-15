@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 
 interface Props {
   playerName: string;
-  // This type is incorrect
-  handleClick: (event: React.MouseEventHandler<HTMLButtonElement>) => void;
+  playerId: string,
+  handleClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-const CurrentPlayerButton: React.FC<Props> = ({ playerName, handleClick }) => {
+const CurrentPlayerButton = ({ playerName, playerId, handleClick }: Props) => {
   return (
-    <button onClick={handleClick} type='button' className="bg-prodekoBlue hover:bg-blue-800 w-48 h-24 rounded-sm hover:rounded-md content-center">
-      <h5 className='font-bold'>{playerName}</h5>
+    <button
+      onClick={handleClick}
+      type='button'
+      className="bg-prodekoBlue shadow-xl w-full h-20 mx-8 hover:scale-110 rounded-lg hover:rounded-2xl items-center transition-all">
+      <div className="text-gray-100">
+        <h3>{playerName}</h3>
+        <h3 className="font-normal">#{playerId}</h3>
+      </div>
     </button>
   )
 }
