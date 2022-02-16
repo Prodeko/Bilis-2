@@ -1,22 +1,33 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler, useState } from 'react'
+import { FiX, FiSearch } from "react-icons/fi";
+import type { PlayerWithoutElo } from '../common/types'
+import SideBarSearchBar from './SideBarSearchBar'
+import PlayerSearchResult from './PlayerSearchResult';
+import CurrentPlayerSearch from './CurrentPlayerSearch';
 
-interface Props {
-  playerName: string;
-  playerId: string,
-  handleClick: MouseEventHandler<HTMLButtonElement>;
-}
+const CurrentPlayerButton = () => {
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(null)
+  const [searchExpanded, setSearchExpanded] = useState<boolean>(false)
 
-const CurrentPlayerButton = ({ playerName, playerId, handleClick }: Props) => {
-  return (
-    <button
-      onClick={handleClick}
-      type='button'
-      className="bg-prodekoBlue shadow-xl w-full h-20 mx-8 hover:scale-110 rounded-lg hover:rounded-2xl items-center transition-all">
-      <div className="text-gray-100">
-        <h3>{playerName}</h3>
-        <h3 className="font-normal">#{playerId}</h3>
-      </div>
-    </button>
+  const toggleExpanded = () => setSearchExpanded(!searchExpanded)
+
+  return (    
+    <div className="flex flex-row w-full">
+      {selectedPlayer
+          ? 
+            <PlayerSearchResult {...selectedPlayer}/>
+          :
+            <CurrentPlayerSearch
+              handleSelect={(player: PlayerWithoutElo) => setSelectedPlayer(player)}
+              expanded={searchExpanded}
+              onClick={() => setSearchExpanded(!searchExpanded)}
+            >
+              <button onClick={() => setSearchExpanded(!searchExpanded)}>
+                {searchExpanded ? <FiX size="36"/> : <FiSearch size="36"/>}
+              </button>
+            </CurrentPlayerSearch>  
+      }
+    </div>
   )
 }
 
