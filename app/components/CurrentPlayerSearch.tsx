@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import type { NextPage } from 'next'
-import { FiX } from "react-icons/fi";
+import { FiX, FiSearch } from "react-icons/fi";
 import type { PlayerWithoutElo } from '../common/types'
-import LeaderboardItem from './LeaderboardItem';
 import PlayerSearchResult from './PlayerSearchResult';
 
 const placeHolderPlayers: PlayerWithoutElo[] = [
@@ -37,34 +37,60 @@ const placeHolderPlayers: PlayerWithoutElo[] = [
 
 
 interface Props {
-  children?: JSX.Element | JSX.Element[]
+  selectedPlayer?: PlayerWithoutElo | null
   expanded: boolean
+  setExpanded: (expanded: boolean) => void
+  setEditing: (expanded: boolean) => void
   handleSelect: (selectedPlayer: PlayerWithoutElo) => void
-  onClick: () => void
 }
 
-const CurrentPlayerSearch: NextPage<Props> = ({ children, expanded, handleSelect, onClick }) => {
-    return (
-        <div className='flex flex-col bg-white w-full mx-6 my-4 py-2 h-fit min-h-16 shadow-xl rounded-md gap-5 hover:cursor-pointer transition-all'>
-            <div className='flex flex-none w-full'>
-              <div className='flex-none pt-4 ml-6 mr-4'>{children}</div>
-              <form className="w-full max-w-sm mt-4">
-                <div className="flex items-center border-b-4 border-prodekoBlue py-1">
-                  <input className="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 leading-tight focus:outline-none" type="text" placeholder="Etsi pelaajaa" aria-label="Full name" />
-                </div>
-              </form>
-            </div>
-            {expanded && 
-              <div className="flex flex-col p-4">
-                {placeHolderPlayers.map(player => (
-                  <button className="" key={player.id} onClick={() => handleSelect(player)}>
-                    <PlayerSearchResult {...player}/>
-                  </button>
-                ))}
-              </div>
+const CurrentPlayerSearch: NextPage<Props> = ({ selectedPlayer, expanded, setExpanded, setEditing, handleSelect }) => {
+  const [searchText, setSearchText] = useState<string>('')
+
+  return (
+      <div className='flex flex-col bg-white shadow-xl w-full h-fit my-4 p-4 rounded-md gap-5 transition-all'>
+          <div className='flex flex-none w-full'>
+            {expanded
+              ?
+                <button className="mx-2" onClick={() => {
+                  setExpanded(false)
+                  setEditing(false)
+                }}>
+                  <FiX size="36"/>
+                </button>
+              :
+                <button className="mx-2" onClick={() => setExpanded(true)}>
+                  <FiSearch size="36"/>
+                </button>
             }
-        </div>
-    )
+            <form className="w-full max-w-sm">
+              <div className="flex items-center border-b-4 border-prodekoBlue py-1">
+                <input 
+                  className="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 leading-tight focus:outline-none" type="text" placeholder="Etsi pelaajaa" aria-label="Full name"
+                  value={searchText}
+                  onChange={event => setSearchText(event.target.value)}
+                  onClick={() => setExpanded(true)}
+                />
+              </div>
+            </form>
+          </div>
+          {expanded && 
+            <ul>
+              {placeHolderPlayers
+                .filter(player => player.nickname.toLowerCase().includes(searchText.toLowerCase()) || player.id.toString().includes(searchText))
+                .map(player => (
+                <li key={player.id} className="flex flex-col">
+                  <button className="mx-4" onClick={() => {
+                    handleSelect(player)
+                  }}>
+                    <PlayerSearchResult selected={player.id === selectedPlayer?.id} {...player}/>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          }
+      </div>
+  )
 }
 
 export default CurrentPlayerSearch
