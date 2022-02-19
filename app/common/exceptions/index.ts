@@ -64,5 +64,17 @@ class MethodNotAllowedError extends BilisError {
     }
 }
 
+class ParseError extends BilisError {
 
-export {ObjectNotFoundError, ValidationError, MethodNotAllowedError}
+    constructor(msg: string) {
+        super(msg);
+        Object.setPrototypeOf(this, ValidationError.prototype);
+        
+    }
+
+    to_json() {
+        return { message: this.message };
+    }
+}
+
+export {ObjectNotFoundError, ValidationError, MethodNotAllowedError, ParseError}
