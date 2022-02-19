@@ -11,6 +11,7 @@ class Player extends Model {
 	declare id: number;
 	declare firstName: string;
 	declare lastName: string;
+	declare nickname: string;
 	declare elo: number;
 	declare favoriteColor: number;
 
@@ -19,7 +20,7 @@ class Player extends Model {
 			id: this.id,
 			firstName: this.firstName,
 			lastName: this.lastName,
-			nickname: "",
+			nickname: this.nickname,
 		};
 	}
 
@@ -53,6 +54,10 @@ Player.init(
 		lastName: {
 			type: DataTypes.TEXT,
 			allowNull: false,
+		},
+		nickname: {
+			type: DataTypes.TEXT,
+			allowNull: true,
 		},
 		elo: {
 			type: DataTypes.DOUBLE,

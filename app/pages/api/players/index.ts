@@ -6,9 +6,10 @@ import { MethodNotAllowedError } from "../../../common/exceptions";
 import withAPIMiddleware from "../../../common/middleware";
 import {validateRequest, stringValidator, hexColorValidator} from "../../../common/validators";
 
-const create_player_structure = {
+const createPlayerStructure = {
     firstName: stringValidator,
     lastName: stringValidator,
+    nickname: stringValidator,
     favoriteColor: hexColorValidator
 }
 
@@ -26,13 +27,14 @@ const playersHandler = async (
     case "POST":
         
       // validate body
-      let validated_data = validateRequest(body, create_player_structure)
+      let validatedData = validateRequest(body, createPlayerStructure)
       
       // Update or create data in your database
       playerAPI.addPlayer(
-          validated_data.firstName,
-          validated_data.lastName,
-          validated_data.favoriteColor,
+        validatedData.firstName,
+        validatedData.lastName,
+        validatedData.nickname,
+        validatedData.favoriteColor,
       )
       // return empty response with proper status code
       res.status(201).json({});

@@ -14,12 +14,14 @@ import { createPlayer, getPlayerMetas, getPlayers, getPlayerStats, getTopPlayers
 const addPlayer = async (
 	firstName: string,
 	lastName: string,
+	nickname: string,
 	favoriteColor: string,
 	elo: number = 400
 ) => {
 	const player = await createPlayer({
 		firstName,
 		lastName,
+		nickname,
 		favoriteColor: hexToInt(favoriteColor),
 		elo,
 	})
