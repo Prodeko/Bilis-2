@@ -10,17 +10,19 @@
     "build-and-test": "yarn build && yarn start-server-and-test start 3000 'cypress'"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.3",
     "@node-redis/search": "^1.0.2",
+    "apexcharts": "^3.33.1",
     "lodash": "^4.17.21",
     "next": "12.0.9",
     "pg": "^8.7.1",
     "react": "17.0.2",
+    "react-apexcharts": "^1.3.9",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "redis": "^4.0.3",
     "sequelize": "^6.15.0",
-    "umzug": "^3.0.0",
-    "@headlessui/react": "^1.4.3"
+    "umzug": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
