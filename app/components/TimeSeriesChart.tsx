@@ -10,8 +10,7 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 type Props = {
   eloData: Array<number>,
   dataName: string,
-  chartName: string,
-  
+  chartName: string
 }
 
 const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
@@ -24,7 +23,6 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
     chart: {
       type: 'area',
       stacked: false,
-      height: 350,
       zoom: {
         type: 'x',
         enabled: true,
@@ -52,7 +50,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
         inverseColors: false,
         opacityFrom: 0.5,
         opacityTo: 0,
-        stops: [0, 90, 100]
+        stops: [10, 90, 100]
       },
     },
     yaxis: {
@@ -82,7 +80,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
 
   return (
     <div>
-      <ApexCharts options={options} type="area" series={series} width={500} />
+      <ApexCharts options={options} type="area" series={series} />
     </div>
   )
 }
