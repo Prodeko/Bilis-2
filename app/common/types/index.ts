@@ -47,6 +47,11 @@ type GameListItem = GameMeta & {
 	loserEloBefore: number;
 };
 
+type MutualStatsPlayer = {
+	mutualGamesWon: number,
+	name: string
+}
+
 interface RequestWithPage extends NextApiRequest {
 	page?: number,
 	pageSize?: number,
@@ -60,5 +65,6 @@ export type {
 	PlayerWithStats,
 	PlayerWithoutElo,
 	GameListItem,
-	RequestWithPage
+	RequestWithPage,
+	MutualStatsPlayer
 };

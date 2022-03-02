@@ -1,17 +1,12 @@
 import type { NextPage } from 'next'
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic';
+import { MutualStatsPlayer } from '../common/types';
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-// WIP, need to make a global class later
-type Player = {
-  mutualGamesWon: number,
-  name: string
-}
-
 type Props = {
-  player1: Player,
-  player2: Player
+  player1: MutualStatsPlayer,
+  player2: MutualStatsPlayer
 }
 
 const PieChart: NextPage<Props> = ({ player1, player2 }) => {
