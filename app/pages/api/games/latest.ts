@@ -22,9 +22,9 @@ const handleLatestGames = async (
       break;
 
     case undefined: // this case is probably not possible but let's keep linter happy
-      throw new MethodNotAllowedError("", ["GET", "POST"]);
+      throw new MethodNotAllowedError("", ["GET"]);
     default:
-      throw new MethodNotAllowedError(method, ["GET", "POST"]);
+      throw new MethodNotAllowedError(method, ["GET"]);
   }
 }
 

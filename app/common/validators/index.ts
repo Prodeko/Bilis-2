@@ -68,4 +68,11 @@ const validatePageQuery = (query: any): { page?: number, pageSize?: number } => 
   return {page, pageSize};
 }
 
-export {validateRequest, stringValidator, hexColorValidator, validateMutualPlayersQuery, validatePageQuery}
+const numberValidator = (input: any) => !isNaN(input);
+
+const booleanValidator = (input: any) => typeof input === 'boolean';
+
+export {validateRequest, stringValidator, hexColorValidator, validateMutualPlayersQuery, validatePageQuery, numberValidator, booleanValidator}
+
+
+

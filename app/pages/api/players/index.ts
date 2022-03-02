@@ -37,7 +37,7 @@ const playersHandler = async (
         validatedData.favoriteColor,
       )
       // return empty response with proper status code
-      res.status(201).json({});
+      res.status(201).end();
       break;
     case undefined: // this case is probably not possible but let's keep linter happy
       throw new MethodNotAllowedError("", ["POST"])
