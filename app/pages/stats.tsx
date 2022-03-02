@@ -23,11 +23,11 @@ const Stats: NextPage = () => {
   return (
     <div className='ml-8 py-4 flex flex-col h-screen content-center'>
       <h1 className="text-8xl font-bold m-8">Statistiikka</h1>
-      <div>
-        <List>
-          <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} />
-          <PieChart player1={dummyPlayer1} player2={dummyPlayer2} />
-        </List>
+      <div className='flex flex-grow justify-between flex-wrap'>
+        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} />
+        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} />
+        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} />
+        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} />
       </div>
     </div>
   )

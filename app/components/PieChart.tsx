@@ -43,7 +43,7 @@ const PieChart: NextPage<Props> = ({ player1, player2 }) => {
   }
 
   return (
-    <div>
+    <div className='w-1/2'>
       <ApexCharts options={options} type='pie' series={series} />
     </div>
   )
