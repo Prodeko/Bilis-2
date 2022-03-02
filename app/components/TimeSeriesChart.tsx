@@ -10,10 +10,11 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 type Props = {
   eloData: Array<number>,
   dataName: string,
-  chartName: string
+  chartName: string,
+  color: string
 }
 
-const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
+const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color }) => {
   const series: ApexOptions["series"] = [{
     name: dataName,
     data: eloData
@@ -32,26 +33,49 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
         autoSelected: 'zoom'
       }
     },
-    colors: ['hsl(210.4,100%,25%)', 'hsl(210.4,100%,70%)'],
+    colors: [color],
     dataLabels: {
       enabled: false
     },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 0.8,
+        inverseColors: false,
+        opacityFrom: 0.6,
+        opacityTo: 0,
+        stops: [10, 90, 100]
+      },
+    },
     markers: {
-      size: 0,
+      colors: '#F0F0F2',
+      size: 2,
+      strokeWidth: 1,
+      strokeColors: '#000000'
+    },
+    noData: {
+      text: 'No data available'
     },
     title: {
       text: chartName,
       align: 'left'
     },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shadeIntensity: 1,
-        inverseColors: false,
-        opacityFrom: 0.5,
-        opacityTo: 0,
-        stops: [10, 90, 100]
-      },
+    tooltip: {
+      shared: false,
+      y: {
+        formatter: function (val: number) {
+          return val.toFixed(0)
+        }
+      }
+    },
+    xaxis: {
+      type: 'numeric',
+      decimalsInFloat: 0,
+      labels: {
+        formatter: function (val: string) {
+          return (Number(val) - 1).toFixed(0)
+        }
+      }
     },
     yaxis: {
       labels: {
@@ -62,24 +86,11 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName }) => {
       title: {
         text: 'Elo'
       },
-    },
-    xaxis: {
-      type: 'numeric',
-      decimalsInFloat: 0,
-      min: 0
-    },
-    tooltip: {
-      shared: false,
-      y: {
-        formatter: function (val: number) {
-          return val.toFixed(0)
-        }
-      }
     }
   }
 
   return (
-    <div className='w-1/2 p-6'>
+    <div>
       <ApexCharts options={options} type="area" series={series} />
     </div>
   )
