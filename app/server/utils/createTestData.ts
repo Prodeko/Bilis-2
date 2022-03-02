@@ -67,6 +67,7 @@ const createTestPlayers = async () => {
 			addPlayer(
 				_.sample(randomFirstNames) || "",
 				_.sample(randomLastNames) || "",
+				"",
 				"#000000"
 			)
 		);
