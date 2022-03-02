@@ -1,4 +1,5 @@
 import { Game, Player } from "../../../server/models";
+import { ObjectNotFoundError } from "../../exceptions";
 import { PlayerMeta } from "../../types";
 import { intToHex } from "../../utils/colorConvert";
 import { DEFAULT_ELO } from "../../utils/constants";
@@ -60,6 +61,10 @@ const getPlayerStats = async (playerId: number) => {
 			where: { loserId: playerId }
         }),
 	]);
+
+    if (!player) {
+		throw new ObjectNotFoundError();
+	}
 
 	const { firstName, lastName, elo, favoriteColor } = player as Player;
 

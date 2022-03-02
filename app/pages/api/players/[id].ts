@@ -1,25 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { Player } from "../../../common/types";
+import type { Player, PlayerWithStats } from "../../../common/types";
 import { playerAPI } from "../../../common/db/players";
 import { MethodNotAllowedError, ObjectNotFoundError, ValidationError } from "../../../common/exceptions";
 import withAPIMiddleware from "../../../common/middleware";
 
  const playerHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Player>
+  res: NextApiResponse<PlayerWithStats>
 ) => {
   const {
     query: { id },
     method,
   } = req;
 
-  var id_number = parseInt(id.toString(), 10);
+  var id_number = Number(id.toString());
 
   if (isNaN(id_number)) {
     throw new ValidationError("player_id", "Invalid player id.")
   }
   try {
-    var player_result = await playerAPI.getById(id_number)
+    var player_result = await playerAPI.getPlayerStatsById(id_number)
   } catch (error) {
     // Catch expected errors from internal API
     if (error instanceof ObjectNotFoundError) {

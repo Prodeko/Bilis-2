@@ -12,7 +12,7 @@ const gameHandler = async (
     method
   } = req
 
-  var id_number = parseInt(id.toString(),10)
+  var id_number = Number(id.toString());
 
   if(isNaN(id_number)) {
     throw new ValidationError("game_id", "Invalid game id.")
