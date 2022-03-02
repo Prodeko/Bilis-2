@@ -4,6 +4,8 @@ import _Game from "./rawModels/Game";
 class Game extends _Game {
 	declare winner?: Player;
 	declare loser?: Player;
+	declare winnerId: number;
+	declare loserId: number;
 }
 
 // Define winnerId foreign key Game -> Player

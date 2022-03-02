@@ -1,3 +1,5 @@
+import { NextApiRequest } from "next/types";
+
 type ValidationError = {
 	field: string;
 	message: string;
@@ -45,6 +47,11 @@ type GameListItem = GameMeta & {
 	loserEloBefore: number;
 };
 
+interface RequestWithPage extends NextApiRequest {
+	page?: number,
+	pageSize?: number,
+}
+
 export type {
 	Player,
 	Game,
@@ -53,4 +60,5 @@ export type {
 	PlayerWithStats,
 	PlayerWithoutElo,
 	GameListItem,
+	RequestWithPage
 };

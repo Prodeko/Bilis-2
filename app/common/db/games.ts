@@ -27,7 +27,6 @@ const getLatestGames = async (
 	if (page === 0 && pageSize >= DEFAULT_LATEST_GAMES) {
 		initGameCache(games);
 	}
-
 	return games;
 };
 

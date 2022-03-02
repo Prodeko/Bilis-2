@@ -77,6 +77,32 @@ const getDbGames = async (page: number, pageSize: number) => {
     return res;
 }
 
+const getMutualGames = async (
+	id1: number,
+	id2: number,
+	page: number = 0,
+	pageSize: number = 25
+) => {
+	const res = await Game.findAndCountAll({
+		order: [["createdAt", "DESC"]],
+		limit: pageSize,
+		offset: page * pageSize,
+		where: {
+			[Op.or]: [
+				{
+					winnerId: id1,
+					loserId: id2
+				},
+				{
+					winnerId: id2,
+					loserId: id1
+				}
+			]
+		}
+	});
+    return res;
+}
+
 const findPrevElo = async (
 	playerId: number,
 	createdAt: Date,
@@ -133,5 +159,6 @@ const getGames = async (page: number, pageSize: number) => {
 
 export {
     createGame,
-    getGames
+    getGames,
+	getMutualGames
 }
