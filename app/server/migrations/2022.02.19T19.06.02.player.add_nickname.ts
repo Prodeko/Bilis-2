@@ -6,7 +6,8 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({
   }) => {
     await queryInterface.addColumn("players", "nickname", {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: ""
     });
   };
   

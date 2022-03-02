@@ -57,7 +57,7 @@ Player.init(
 		},
 		nickname: {
 			type: DataTypes.TEXT,
-			allowNull: true,
+			allowNull: false,
 		},
 		elo: {
 			type: DataTypes.DOUBLE,
