@@ -42,19 +42,24 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
       gradient: {
         shadeIntensity: 0.8,
         inverseColors: false,
-        opacityFrom: 0.6,
+        opacityFrom: 0.65,
         opacityTo: 0,
         stops: [10, 90, 100]
       },
     },
-    markers: {
-      colors: '#F0F0F2',
-      size: 2,
-      strokeWidth: 1,
-      strokeColors: '#000000'
-    },
+    // markers: {
+    //   colors: '#F0F0F2',
+    //   size: 2,
+    //   strokeWidth: 1,
+    //   strokeColors: '#000000'
+    // },
     noData: {
       text: 'No data available'
+    },
+    stroke: {
+      curve: 'straight',
+      colors: ["#000000"],
+      width: 3.5
     },
     title: {
       text: chartName,
@@ -64,7 +69,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
       shared: false,
       y: {
         formatter: function (val: number) {
-          return val.toFixed(0)
+          return val.toFixed(1)
         }
       }
     },
@@ -90,7 +95,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
   }
 
   return (
-    <div>
+    <div className="w-1/2">
       <ApexCharts options={options} type="area" series={series} />
     </div>
   )

@@ -10,17 +10,20 @@ type Props = {
 }
 
 const PieChart: NextPage<Props> = ({ player1, player2 }) => {
-  const series: ApexOptions['series'] = [player1.mutualGamesWon, player2.mutualGamesWon]
+  const winner: MutualStatsPlayer = player1.mutualGamesWon > player2.mutualGamesWon ? player1 : player2
+  const loser: MutualStatsPlayer = player1.mutualGamesWon <= player2.mutualGamesWon ? player1 : player2
+
+  const series: ApexOptions['series'] =[loser.mutualGamesWon, winner.mutualGamesWon]
 
   const options: ApexOptions = {
     chart: {
-      width: '100%',
       type: 'pie',
     },
+    colors: ['#EF2121', '#008000'],
     fill: {
-      type: 'gradient'
+      type: 'gradient',
     },
-    labels: [player1.name, player2.name],
+    labels: [loser.name, winner.name],
     responsive: [{
       breakpoint: 480,
       options: {
@@ -38,7 +41,7 @@ const PieChart: NextPage<Props> = ({ player1, player2 }) => {
   }
 
   return (
-    <div className='w-1/2'>
+    <div className='w-1/2' >
       <ApexCharts options={options} type='pie' series={series} />
     </div>
   )
