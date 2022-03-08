@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Sidebar from './Sidebar'
+import Sidebar from '../Sidebar/Sidebar'
 
 
 type Props = {

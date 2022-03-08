@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Image from 'next/image'
 import React, { useState } from 'react'
-import SidebarButton from "../components/SidebarButton";
-import SideBarSearchBar from "../components/SideBarSearchBar";
+import SidebarButton from "./SidebarButton";
+import SideBarSearchBar from "./SideBarSearchBar";
 import { FiHome, FiBarChart2, FiSearch } from "react-icons/fi";
-import logoPic from '../common/images/prodekoLogoShade.png'
+import logoPic from '../../common/images/prodekoLogoShade.png'
 
 
 const Sidebar: NextPage = () => {

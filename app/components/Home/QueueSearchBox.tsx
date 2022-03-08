@@ -1,7 +1,7 @@
 import CurrentPlayerSearch from './CurrentPlayerSearch'
 import { useState } from 'react'
-import { PlayerWithoutElo } from '../common/types'
-import useQueue from '../hooks/useQueue'
+import { PlayerWithoutElo } from '../../common/types'
+import useQueue from '../../hooks/useQueue'
 interface Props {
   selectedPlayer: PlayerWithoutElo | null
   setSelectedPlayer: (selectedPlayer: PlayerWithoutElo | null) => void

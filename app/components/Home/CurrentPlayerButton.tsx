@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FiEdit2 } from "react-icons/fi";
-import type { PlayerWithoutElo } from '../common/types'
+import type { PlayerWithoutElo } from '../../common/types'
 import PlayerSearchResult from './PlayerSearchResult';
 import CurrentPlayerSearch from './CurrentPlayerSearch';
 

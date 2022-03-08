@@ -1,9 +1,9 @@
 import type { NextPage } from "next"
-import List from "../components/List"
-import Leaderboard from "../components/Leaderboard"
-import Queue from "../components/Queue"
-import WinnerSelectionBox from "../components/WinnerSelectionBox"
-import Recents from "../components/Recents"
+import List from "../components/Utility/List"
+import Leaderboard from "../components/Home/Leaderboard"
+import Queue from "../components/Home/Queue"
+import WinnerSelectionBox from "../components/Home/WinnerSelectionBox"
+import Recents from "../components/Home/Recents"
 
 
 const Home: NextPage = () => {

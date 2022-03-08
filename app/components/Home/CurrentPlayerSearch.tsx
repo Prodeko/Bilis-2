@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
 import { FiX, FiSearch } from 'react-icons/fi'
-import type { PlayerWithoutElo } from '../common/types'
+import type { PlayerWithoutElo } from '../../common/types'
 import PlayerSearchResult from './PlayerSearchResult'
 
 const placeHolderPlayers: PlayerWithoutElo[] = [

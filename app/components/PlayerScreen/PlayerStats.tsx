@@ -1,4 +1,4 @@
-import List from '../List'
+import List from '../Utility/List'
 
 type Props = {
   playedGames: number, 

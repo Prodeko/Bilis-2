@@ -1,4 +1,4 @@
-import type { PlayerWithoutElo } from "../common/types"
+import type { PlayerWithoutElo } from "../../common/types"
 
 type Props = PlayerWithoutElo & {
   selected?: boolean

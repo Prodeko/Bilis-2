@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic';
-import { MutualStatsPlayer } from '../common/types';
+import { MutualStatsPlayer } from '../../common/types';
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type Props = {

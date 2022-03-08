@@ -1,7 +1,7 @@
-import { QueueInfo } from '../common/types'
+import { QueueInfo } from '../../common/types'
 import PlayerCard from './PlayerCard'
 import { FiTrash2 } from 'react-icons/fi'
-import useQueue from '../hooks/useQueue'
+import useQueue from '../../hooks/useQueue'
 
 interface Props extends QueueInfo {
   handleRemove: (id: QueueInfo['id']) => void
