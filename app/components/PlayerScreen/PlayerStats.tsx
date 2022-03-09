@@ -1,4 +1,5 @@
-import List from '../Utility/List'
+import MainTitle from './MainTitle'
+import AttributeLine from './AttributeLine'
 
 type Props = {
   playedGames: number, 
@@ -11,16 +12,14 @@ type Props = {
 
 const PlayerStats = ({ playedGames, wonGames, seasonalRanking, seasonalElo, overallRanking, overallElo }: Props): JSX.Element => {
   return (
-    <List>
-      <div className='box-border h-full p-6'>
-        <h2 className='pb-4'>Pelaajan statsit</h2>
-        <h4 className='pl-6'><strong>Pelatut pelit: </strong>{playedGames}</h4>
-        <h4 className='pl-6'><strong>Voitetut pelit: </strong>{wonGames}</h4>
-        <h4 className='pl-6'><strong>Voittoprosentti: </strong>{wonGames / playedGames}</h4>
-        <h4 className='pl-6'><strong>Seasonal ranking/elo: </strong>{seasonalRanking} / {seasonalElo}</h4>
-        <h4 className='pl-6'><strong>Overall ranking/elo: </strong>{overallRanking} / {overallElo}</h4>
-      </div>
-    </List>
+    <div className='box-border p-6'>
+      <MainTitle titleName="Pelaajan statsit" />
+      <AttributeLine infoName="Pelatut pelit" info={playedGames} />
+      <AttributeLine infoName="Voitetut pelit" info={wonGames} />
+      <AttributeLine infoName="Voittoprosentti" info={wonGames / playedGames} />
+      <AttributeLine infoName="Seasonal ranking/elo" info={`${seasonalRanking} / ${seasonalElo}`} />
+      <AttributeLine infoName="Overall ranking/elo" info={`${overallRanking} / ${overallElo}`} />
+    </div>
   )
 }
 

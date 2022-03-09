@@ -2,7 +2,6 @@ import type { NextPage } from "next"
 import React, { useState } from "react"
 import TimeSeriesChart from '../components/Graphs/TimeSeriesChart'
 import PieChart from '../components/Graphs/PieChart'
-import List from '../components/Utility/List'
 
 const dummyEloData = [
   400, 410, 420.5, 410, 415, 399, 380, 370, 365, 355,
