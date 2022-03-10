@@ -10,6 +10,7 @@ type PlayerMeta = {
   firstName: string
   lastName: string
   nickname: string
+  emoji: string
 }
 
 type PlayerWithoutElo = PlayerMeta & {

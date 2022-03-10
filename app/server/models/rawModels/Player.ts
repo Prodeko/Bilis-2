@@ -12,6 +12,7 @@ class Player extends Model {
 	declare firstName: string;
 	declare lastName: string;
 	declare nickname: string;
+	declare emoji: string;
 	declare elo: number;
 	declare favoriteColor: number;
 
@@ -21,6 +22,7 @@ class Player extends Model {
 			firstName: this.firstName,
 			lastName: this.lastName,
 			nickname: this.nickname,
+			emoji: this.emoji,
 		};
 	}
 
@@ -61,6 +63,10 @@ Player.init(
 		},
 		elo: {
 			type: DataTypes.DOUBLE,
+			allowNull: false,
+		},
+		emoji: {
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		favoriteColor: {

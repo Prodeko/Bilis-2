@@ -25,6 +25,7 @@ const getPlayerMetas = (metaSearchResults: (number | string | string[])[]) => {
                 firstName: "",
                 lastName: "",
                 nickname: "",
+                emoji: "",
                 id: -1,
             };
 
@@ -66,13 +67,14 @@ const getPlayerStats = async (playerId: number) => {
 		throw new ObjectNotFoundError();
 	}
 
-	const { firstName, lastName, elo, favoriteColor } = player as Player;
+	const { firstName, lastName, elo, favoriteColor, emoji } = player as Player;
 
 	return {
 		id: playerId,
 		firstName,
 		lastName,
 		nickname: "",
+        emoji,
 		elo,
 		favoriteColor: intToHex(favoriteColor),
 		wonGames,
