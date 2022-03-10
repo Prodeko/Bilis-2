@@ -57,25 +57,35 @@ const randomLastNames = [
 	"Järvinen",
 ];
 
+const generateNickname = (firstName: String, lastName: String) => {
+	return (
+		firstName.slice(0, Math.min(firstName.length, _.random(1, 4)))
+		+ lastName.slice(0, Math.min(lastName.length, _.random(1, 4)))
+		+ _.random(0, 99).toString()
+	).toLowerCase();
+};
+
 const createTestPlayers = async () => {
 	const promises: Promise<ResultPlayer>[] = [];
 
 	await devClearGames();
 
 	for (let i = 0; i < PLAYER_AMOUNT; i++) {
+		const firstName = _.sample(randomFirstNames) || "";
+		const lastName = _.sample(randomLastNames) || "";
 		promises.push(
 			addPlayer(
-				_.sample(randomFirstNames) || "",
-				_.sample(randomLastNames) || "",
-				"",
-				"#000000"
+				firstName,
+				lastName,
+				generateNickname(firstName, lastName) || "",
+				'#' + _.random(0, 16777215).toString(16).padStart(6, '0') || '#000000',
 			)
 		);
 	}
 
 	const res = await Promise.all(promises);
 	console.log(
-		res.map((r) => r.id + ": " + r.firstName + " " + r.lastName).join("\n")
+		res.map((r) => r.id + ": " + r.firstName + " '" + r.nickname + "' " + r.lastName).join("\n")
 	);
 	console.log(res.length + " players created");
 
