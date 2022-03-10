@@ -1,15 +1,22 @@
+import Link from "next/link"
+import { PlayerMeta } from "../../common/types"
+
 type Props = {
   selected?: boolean
+  id: PlayerMeta['id']
   children: JSX.Element[]
 }
 
-const PlayerCard = ({ selected, children }: Props): JSX.Element => {
+const PlayerCard = ({ selected, id, children }: Props): JSX.Element => {
+  console.log(children.length)
   return (
-    <div
-      className={`bg-white m-4 shadow-xl hover:scale-[1.01] px-8 py-4 rounded-md flex items-center justify-between gap-5 hover:cursor-pointer transition-all`}
-    >
-      {children}
-    </div>
+    <Link href={`/players/${id}`} passHref>
+      <div
+        className={`bg-white m-6 shadow-xl hover:scale-[1.01] py-4 rounded-md grid grid-cols-6 items-center text-center gap-5 hover:cursor-pointer transition-all`}
+      >
+        {children}
+      </div>
+    </Link>
   )
 }
 

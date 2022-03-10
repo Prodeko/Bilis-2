@@ -6,6 +6,7 @@ import CurrentPlayerButton from './CurrentPlayerButton'
 import QueueSearchBox from './QueueSearchBox'
 import { PlayerWithoutElo } from '../../common/types'
 import useQueue from '../../hooks/useQueue'
+
 const Queue: NextPage = () => {
   const [queue, setQueue] = useState<QueueInfo[]>([])
   const { getQueue, removeFromQueue } = useQueue()
@@ -31,15 +32,18 @@ const Queue: NextPage = () => {
           setSelectedPlayer={setSelectedPlayer}
         />
       </div>
-      {queue.map((queuePlayerInfo) => {
-        return (
-          <QueueItem
-            key={queuePlayerInfo.id}
-            handleRemove={handleRemove}
-            {...queuePlayerInfo}
-          />
-        )
-      })}
+      <div className='h-[30vh] overflow-y-auto my-4'>
+        {queue.map((queuePlayerInfo, i) => {
+          return (
+            <QueueItem
+              key={queuePlayerInfo.id}
+              rank={queue.length-i}
+              handleRemove={handleRemove}
+              {...queuePlayerInfo}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }
