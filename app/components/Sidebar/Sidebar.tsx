@@ -21,7 +21,7 @@ const Sidebar: NextPage = () => {
   }
 
   return (
-    <div className={`flex flex-col h-screen w-36 fixed bg-prodekoBlue ${expandPartial ? 'w-52' : 'w-36'} ${expandFull ? 'w-1/4' : 'w-36'} duration-200 transition-background z-10`}>
+    <div className={`flex flex-col h-screen w-36 fixed bg-prodekoBlue ${expandPartial ? 'w-52' : 'w-36'} ${expandFull ? 'w-1/4' : 'w-36'} duration-200 transition-background z-20 shadow-2xl`}>
       <div className="flex-none">
         <SidebarButton to="/">
           <FiHome size="42" />
