@@ -12,10 +12,10 @@ function usePlayerSearch(searchString: string): PlayerMeta[] {
     ;(async () => {
       const response = await fetch(searchUrl)
       const result = (await response.json()) as PlayerMeta[]
+      result.forEach(p => p.nickname = p.nickname || 'placeholderNickname')
       setSearchResult(result)
     })()
   }, [searchUrl])
-
   return searchResult
 }
 

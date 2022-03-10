@@ -3,37 +3,7 @@ import type { NextPage } from 'next'
 import { FiX, FiSearch } from 'react-icons/fi'
 import type { PlayerWithoutElo } from '../../common/types'
 import PlayerSearchResult from './PlayerSearchResult'
-
-const placeHolderPlayers: PlayerWithoutElo[] = [
-  {
-    id: 123,
-    firstName: 'Aada',
-    lastName: 'Korhonen',
-    nickname: 'Aadaaada',
-    favoriteColor: '#32a852',
-  },
-  {
-    id: 456,
-    firstName: 'Aatos',
-    lastName: 'Virtanen',
-    nickname: 'Bilismaisteri',
-    favoriteColor: '#e04cbb',
-  },
-  {
-    id: 789,
-    firstName: 'Aava',
-    lastName: 'Mäkinen',
-    nickname: 'Aavavaan',
-    favoriteColor: '#7e1cd9',
-  },
-  {
-    id: 987,
-    firstName: 'Aino',
-    lastName: 'Nieminen',
-    nickname: 'Ainoa',
-    favoriteColor: '#f5ff3d',
-  },
-]
+import usePlayerSearch from '../../hooks/usePlayerSearch'
 
 interface Props {
   selectedPlayer?: PlayerWithoutElo | null
@@ -51,6 +21,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   handleSelect,
 }) => {
   const [searchText, setSearchText] = useState<string>('')
+  const searchResults = usePlayerSearch(searchText)
 
   return (
     <div className="flex flex-col bg-white shadow-xl w-full h-fit my-4 p-4 rounded-md gap-5 transition-all">
@@ -85,31 +56,14 @@ const CurrentPlayerSearch: NextPage<Props> = ({
         </form>
       </div>
       {expanded && (
-        <ul>
-          {placeHolderPlayers
-            .filter(
-              (player) =>
-                player.nickname
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase()) ||
-                player.id.toString().includes(searchText)
-            )
+        <select value={searchText} size={10}>
+          {searchResults
             .map((player) => (
-              <li key={player.id} className="flex flex-col">
-                <button
-                  className="mx-4"
-                  onClick={() => {
-                    handleSelect(player)
-                  }}
-                >
-                  <PlayerSearchResult
-                    selected={player.id === selectedPlayer?.id}
-                    {...player}
-                  />
-                </button>
-              </li>
+              <option key={player.id} value={player.firstName} onClick={() => handleSelect(player)}>
+                {player.firstName} #{player.id}
+              </option>
             ))}
-        </ul>
+        </select>
       )}
     </div>
   )
