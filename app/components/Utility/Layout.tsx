@@ -13,6 +13,7 @@ const Layout: NextPage<Props> = ({ children }) => {
     <div>
       <Head>
         <title>Biliskilke 2.0</title>
+        <meta charset='UTF-8' />
       </Head>
       <Sidebar />
       <div className="ml-36 bg-gray-50 h-screen max-h-screen">
