@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { PlayerWithoutElo, QueueInfo } from '../common/types'
 
 const useQueue = () => {
@@ -20,7 +19,7 @@ const useQueue = () => {
     }
     let newQueue
     if (_queue) {
-      newQueue = [player, ..._queue]
+      newQueue = [..._queue, player]
     } else {
       newQueue = [player]
     }
@@ -32,10 +31,17 @@ const useQueue = () => {
     localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
   }
 
+  const removeLastFromQueue = () => {
+    const queue = getQueue()
+    localStorage.setItem('BilisKilkeQueue', JSON.stringify(queue.slice(1)))
+    return getQueue()
+  }
+
   return {
     getQueue,
     addToQueue,
     removeFromQueue,
+    removeLastFromQueue
   }
 }
 

@@ -4,8 +4,13 @@ import type { PlayerWithoutElo } from '../../common/types'
 import PlayerSearchResult from './PlayerSearchResult';
 import CurrentPlayerSearch from './CurrentPlayerSearch';
 
-const CurrentPlayerButton = () => {
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(null)
+interface Props {
+  selectedPlayer: PlayerWithoutElo | null
+  setSelectedPlayer: (arg0: PlayerWithoutElo) => void
+}
+
+const CurrentPlayerButton = ({selectedPlayer, setSelectedPlayer}: Props) => {
+  
   const [editing, setEditing] = useState<boolean>(false)
   const [searchExpanded, setSearchExpanded] = useState(false)
 

@@ -3,12 +3,19 @@ import { PlayerMeta } from "../../common/types"
 
 type Props = {
   selected?: boolean
-  id: PlayerMeta['id']
+  id?: PlayerMeta['id']
   children: JSX.Element[]
 }
 
 const PlayerCard = ({ selected, id, children }: Props): JSX.Element => {
-  console.log(children.length)
+  console.log(`grid-cols-${children.length}`)
+  if(!id) {
+    return (
+      <div className={`bg-white m-6 shadow-xl py-4 rounded-md grid grid-cols-8 items-center text-center gap-5 transition-all`}>
+        {children}
+      </div>
+    )
+  }
   return (
     <Link href={`/players/${id}`} passHref>
       <div
