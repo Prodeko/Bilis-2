@@ -40,11 +40,12 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
     fill: {
       type: 'gradient',
       gradient: {
-        shadeIntensity: 0.8,
+        shadeIntensity: 0.7,
         inverseColors: false,
-        opacityFrom: 0.65,
+        gradientToColors: [color],
+        opacityFrom: 0.5,
         opacityTo: 0,
-        stops: [10, 90, 100]
+        stops: [10, 100]
       },
     },
     // markers: {

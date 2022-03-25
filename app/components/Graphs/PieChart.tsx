@@ -19,9 +19,20 @@ const PieChart: NextPage<Props> = ({ player1, player2 }) => {
     chart: {
       type: 'pie',
     },
-    colors: ['#EF2121', '#008000'],
+    colors: [loser.favoriteColor, winner.favoriteColor],
+    // fill: {
+    //   type: 'gradient',
+    // },
     fill: {
       type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        gradientToColors: [loser.favoriteColor, winner.favoriteColor],
+        inverseColors: true,
+        opacityFrom: 0.6,
+        opacityTo: 1,
+        // stops: [10, 90, 100]
+      },
     },
     labels: [loser.name, winner.name],
     responsive: [{

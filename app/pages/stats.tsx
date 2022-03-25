@@ -13,12 +13,14 @@ const playerColor = 'hsl(210.4,100%,25%)'
 
 const dummyPlayer1 = {
   name: "Aleks",
-  mutualGamesWon: 14
+  mutualGamesWon: 14,
+  favoriteColor: "#F7F"
 }
 
 const dummyPlayer2 = { 
   name: "Sakari",
-  mutualGamesWon: 10
+  mutualGamesWon: 10,
+  favoriteColor: "#AF4"
 }
 
 const Stats: NextPage = () => {
