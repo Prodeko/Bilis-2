@@ -1,17 +1,7 @@
 import { ParseError, ValidationError } from "../exceptions";
 
-const validateRequest = (input: string, schema: Record<string, Function>) => {
+const validateRequest = (parsedInput: any, schema: Record<string, Function>) => {
   // Function to parse the POST/PUT request body and validate it using a given schema.
-  try {
-    var parsedInput = JSON.parse(input);
-  } catch (error) {
-    // Catch expected errors from internal API
-    if (error instanceof SyntaxError) {
-      throw new ParseError("Invalid JSON input: " + error.message);
-    } else {
-      throw error;
-    }
-  }
 
   for (const specField in schema) {
     if (
