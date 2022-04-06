@@ -21,12 +21,10 @@ const WinnerSelectionBox = ({queue, setQueue}: Props) => {
   //if the boxes are empty, a person added to queue moves straight to them
   useEffect(() => {
     if(!playerLeft && queue.length>0 && (!playerRight || playerRight.id != queue[0].id)) {
-      console.log(playerLeft)
       setPlayerLeft(queue[0])
       setQueue(removeLastFromQueue())
 
     } else if (!playerRight && queue.length>0 && (!playerLeft || playerLeft.id != queue[0].id)){
-      console.log('there')
       setPlayerRight(queue[0])
       setQueue(removeLastFromQueue())
     }

@@ -8,7 +8,6 @@ type Props = {
 }
 
 const PlayerCard = ({ selected, id, children }: Props): JSX.Element => {
-  console.log(`grid-cols-${children.length}`)
   if(!id) {
     return (
       <div className={`bg-white m-6 shadow-xl py-4 rounded-md grid grid-cols-8 items-center text-center gap-5 transition-all`}>

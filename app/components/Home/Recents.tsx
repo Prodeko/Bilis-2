@@ -22,11 +22,10 @@ const Recents = ({queue, setQueue}: Props) => {
     })()
   }, [searchUrl, queue, setQueue])
 
-  console.log(recents)
   return(
     <div>
       <h2 className='p-8'>Viimeisimmät pelit</h2>
-      <div className='h-[30vh] overflow-y-auto'> 
+      <div className={`h-[30vh] overflow-y-auto`}> 
         {recents.map(game => <RecentGame game={game} key={game.id}/>)}
       </div>
     </div>
