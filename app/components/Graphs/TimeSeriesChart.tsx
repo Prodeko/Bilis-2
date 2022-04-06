@@ -96,8 +96,8 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
   }
 
   return (
-    <div className='grow-[0.5] p-8'>
-      <ApexCharts options={options} type="area" series={series} />
+    <div className='h-96 w-5/6 px-20'>
+      <ApexCharts options={options} type="area" series={series} height="100%" width='100%'/>
     </div>
   )
 }

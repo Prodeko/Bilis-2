@@ -25,9 +25,9 @@ const dummyPlayer2 = {
 
 const Stats: NextPage = () => {
   return (
-    <div className='ml-8 py-4 flex flex-col h-screen content-center'>
-      <h1 className="text-8xl font-bold m-8">Statistiikka</h1>
-      <div className='flex flex-grow justify-between flex-wrap'>
+    <div className='ml-8 py-4 flex flex-col h-screen content-center h-screen'>
+      <h1 className="text-8xl font-bold m-8 h-40">Statistiikka</h1>
+      <div className='grid gap-y-40 grid-cols-2'>
         <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} />
         <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} />
         <PieChart player1={dummyPlayer1} player2={dummyPlayer2} />
