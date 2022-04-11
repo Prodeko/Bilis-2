@@ -11,10 +11,11 @@ type Props = {
   eloData: Array<number>,
   dataName: string,
   chartName: string,
-  color: string
+  color: string,
+  height?: number
 }
 
-const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color }) => {
+const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color, height }) => {
   const series: ApexOptions["series"] = [{
     name: dataName,
     data: eloData
@@ -31,7 +32,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
       },
       toolbar: {
         autoSelected: 'zoom'
-      }
+      },
     },
     colors: [color],
     dataLabels: {
@@ -83,6 +84,11 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
         }
       }
     },
+    grid: {
+      padding: {
+        left: 10
+      }
+    },
     yaxis: {
       labels: {
         formatter: function (val: number) {
@@ -96,9 +102,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color 
   }
 
   return (
-    <div className='h-96 w-5/6 px-20'>
-      <ApexCharts options={options} type="area" series={series} height="100%" width='100%'/>
-    </div>
+    <ApexCharts options={options} type="area" series={series} height={height} width="90%"/>
   )
 }
 

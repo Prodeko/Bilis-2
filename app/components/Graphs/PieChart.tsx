@@ -6,10 +6,11 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type Props = {
   player1: MutualStatsPlayer,
-  player2: MutualStatsPlayer
+  player2: MutualStatsPlayer,
+  height?: number
 }
 
-const PieChart: NextPage<Props> = ({ player1, player2 }) => {
+const PieChart: NextPage<Props> = ({ player1, player2, height }) => {
   const winner: MutualStatsPlayer = player1.mutualGamesWon > player2.mutualGamesWon ? player1 : player2
   const loser: MutualStatsPlayer = player1.mutualGamesWon <= player2.mutualGamesWon ? player1 : player2
 
@@ -46,15 +47,18 @@ const PieChart: NextPage<Props> = ({ player1, player2 }) => {
         }
       }
     }],
+    grid: {
+      padding: {
+        left: 10
+      }
+    },
     title: {
       text: 'Mutual Games'
     }
   }
 
   return (
-    <div className='h-96 w-5/6 px-20'>
-      <ApexCharts options={options} type='pie' series={series} height="100%" />
-    </div>
+    <ApexCharts options={options} type='pie' series={series} height={height} width="90%"/>
   )
 }
 

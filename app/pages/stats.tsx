@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import TimeSeriesChart from '../components/Graphs/TimeSeriesChart'
 import PieChart from '../components/Graphs/PieChart'
 
@@ -24,14 +24,29 @@ const dummyPlayer2 = {
 }
 
 const Stats: NextPage = () => {
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLHeadingElement | null>(null);
+  const [charthHeight, setChartHeight] = useState(0);
+
+  useEffect(() => {
+    // Set chartHeight to be half of the available screen height
+    if (wrapperRef.current && headerRef.current) {
+      const headerRect = headerRef.current.getBoundingClientRect();
+      const wrapperHeight = wrapperRef.current.clientHeight - headerRect.y;
+      const yPadding = 20;
+      setChartHeight((wrapperHeight - yPadding) / 2);
+    }
+  }, [wrapperRef, headerRef]);
+  
   return (
-    <div className='ml-8 py-4 flex flex-col h-screen content-center h-screen'>
-      <h1 className="text-8xl font-bold m-8 h-40">Statistiikka</h1>
-      <div className='grid gap-y-40 grid-cols-2'>
-        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} />
-        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} />
-        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} />
-        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} />
+    <div className='ml-8 py-4 flex flex-col h-screen content-center'>
+      <h1 ref={headerRef} className="text-8xl font-bold h-1/6 m-8">Statistiikka</h1>
+      <div ref={wrapperRef} className="grid grid-cols-2 h-5/6">
+        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} height={charthHeight} />
+        <TimeSeriesChart eloData={dummyEloData} chartName={"All Time Stats"} dataName={"All Time"} color={playerColor} height={charthHeight} />
+        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={charthHeight} />
+        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={charthHeight} />
       </div>
     </div>
   )
