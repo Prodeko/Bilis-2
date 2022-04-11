@@ -1,15 +1,17 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { FiCloudLightning } from 'react-icons/fi'
-import { GameListItem, QueueInfo } from '../../common/types'
+import { GameListItem, PlayerWithoutElo, QueueInfo } from '../../common/types'
 import RecentGame from './RecentGame'
 
 interface Props {
-  queue: QueueInfo[],
-  setQueue: Function
+  playerLeft: PlayerWithoutElo | null
+  playerRight: PlayerWithoutElo | null
+  setPlayerLeft: (arg0: PlayerWithoutElo) => void  
+  setPlayerRight: (arg0: PlayerWithoutElo) => void  
 }
 // queue is needed to update the recent games when a game has been played
-const Recents = ({queue, setQueue}: Props) => {
+const Recents = ({playerLeft, playerRight, setPlayerLeft, setPlayerRight}: Props) => {
   const [recents, setRecents] = useState<GameListItem[]>([])
   
   const searchUrl = `/api/games/latest`
@@ -20,7 +22,7 @@ const Recents = ({queue, setQueue}: Props) => {
       const result = (await response.json()) as GameListItem[]
       setRecents(result)
     })()
-  }, [searchUrl, queue, setQueue])
+  }, [searchUrl, playerLeft, playerRight, setPlayerLeft, setPlayerRight])
 
   return(
     <div>

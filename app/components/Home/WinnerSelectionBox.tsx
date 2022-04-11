@@ -4,12 +4,15 @@ import CurrentPlayerButton from "./CurrentPlayerButton";
 import useQueue from "../../hooks/useQueue";
 
 interface Props {
-  queue: QueueInfo[],
+  queue: QueueInfo[]
   setQueue: Function
+  playerRight: PlayerWithoutElo | null
+  setPlayerRight: (arg0: PlayerWithoutElo) => void
+  playerLeft: PlayerWithoutElo | null
+  setPlayerLeft: (arg0: PlayerWithoutElo) => void
 }
-const WinnerSelectionBox = ({queue, setQueue}: Props) => {
-  const [playerLeft, setPlayerLeft] = useState<PlayerWithoutElo | null>(null)
-  const [playerRight, setPlayerRight] = useState<PlayerWithoutElo | null>(null)
+const WinnerSelectionBox = ({queue, setQueue, playerRight, playerLeft, setPlayerRight, setPlayerLeft}: Props) => {
+
   const {removeLastFromQueue, getQueue} = useQueue()
 
   interface NewGame {
@@ -28,7 +31,7 @@ const WinnerSelectionBox = ({queue, setQueue}: Props) => {
       setPlayerRight(queue[0])
       setQueue(removeLastFromQueue())
     }
-  }, [queue, playerLeft, playerRight, setQueue, removeLastFromQueue])
+  }, [queue, playerLeft, setPlayerLeft, playerRight, setPlayerRight, setQueue, removeLastFromQueue])
 
   const postGame = async (winner: string) => {
     let game: NewGame = {winnerId: undefined, loserId: undefined, underTable: false}
