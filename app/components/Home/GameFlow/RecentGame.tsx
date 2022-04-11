@@ -1,4 +1,4 @@
-import { GameListItem } from "../../common/types";
+import { GameListItem } from "../../../common/types";
 import Card from "./PlayerCard";
 
 

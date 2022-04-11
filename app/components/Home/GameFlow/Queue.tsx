@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import QueueItem from './QueueItem'
-import { QueueInfo } from '../../common/types'
+import { QueueInfo } from '../../../common/types'
 import CurrentPlayerButton from './CurrentPlayerButton'
 import QueueSearchBox from './QueueSearchBox'
-import { PlayerWithoutElo } from '../../common/types'
-import useQueue from '../../hooks/useQueue'
+import { PlayerWithoutElo } from '../../../common/types'
+import useQueue from '../../../hooks/useQueue'
 
 interface Props {
   queue: QueueInfo[],

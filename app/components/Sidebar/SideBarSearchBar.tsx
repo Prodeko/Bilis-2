@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { FiX } from "react-icons/fi";
-import LeaderboardItem from '../Home/LeaderboardItem'
+import LeaderboardItem from '../Home/Leaderboard/LeaderboardItem'
 
 
 type Props = {

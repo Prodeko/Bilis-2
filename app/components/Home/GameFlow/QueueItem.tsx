@@ -1,4 +1,4 @@
-import { QueueInfo } from '../../common/types'
+import { QueueInfo } from '../../../common/types'
 import Card from './PlayerCard'
 import { FiTrash2 } from 'react-icons/fi'
 import Link from 'next/link'

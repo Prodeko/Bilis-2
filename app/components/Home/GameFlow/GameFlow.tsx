@@ -4,7 +4,7 @@ import List from '../../Utility/List'
 import Queue from './Queue'
 import WinnerSelectionBox from './WinnerSelectionBox'
 import Recents from './Recents'
-import { PlayerWithoutElo, QueueInfo } from '../../../common/types'
+import { QueueInfo } from '../../../common/types'
 
 const GameFlow = (): JSX.Element => {
   const [queue, setQueue] = useState<QueueInfo[]>([])

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { FiCloudLightning } from 'react-icons/fi'
-import { GameListItem, QueueInfo } from '../../common/types'
+import { GameListItem, QueueInfo } from '../../../common/types'
 import RecentGame from './RecentGame'
 
 interface Props {

@@ -1,4 +1,4 @@
-import type { PlayerWithoutElo } from "../../common/types"
+import type { PlayerWithoutElo } from "../../../common/types"
 
 const PlayerSearchResult = ({ nickname, id, favoriteColor}: PlayerWithoutElo) => {
   return(
