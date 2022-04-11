@@ -8,24 +8,28 @@ import { PlayerWithoutElo } from '../../common/types'
 import useQueue from '../../hooks/useQueue'
 
 interface Props {
-  queue: QueueInfo[],
-  setQueue: Function
+  queue: QueueInfo[]
+  getQueue: () => void
+  addToQueue: (player: PlayerWithoutElo) => void
+  removeFromQueue: (player: PlayerWithoutElo) => void
+  removeLastFromQueue: () => void
 }
-const Queue = ({ queue, setQueue }: Props) => {
-  const { getQueue, removeFromQueue } = useQueue()
+const Queue = ({ 
+  queue, 
+  getQueue,
+  addToQueue,
+  removeFromQueue,
+  removeLastFromQueue 
+}: Props) => {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(
     null
   )
 
   useEffect(() => {
-    setQueue(getQueue())
+    getQueue()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPlayer])
 
-  const handleRemove = (id: PlayerWithoutElo['id']) => {
-    removeFromQueue(id)
-    setQueue(getQueue)
-  }
   return (
     <div className="w-full">
       <h2 className="p-8">Jono</h2>
@@ -41,7 +45,7 @@ const Queue = ({ queue, setQueue }: Props) => {
             <QueueItem
               key={queuePlayerInfo.id}
               rank={queue.length-i}
-              handleRemove={handleRemove}
+              handleRemove={removeFromQueue}
               {...queuePlayerInfo}
               first={queue.length-i==1}
             />

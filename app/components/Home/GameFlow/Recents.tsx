@@ -5,25 +5,10 @@ import { GameListItem, PlayerWithoutElo, QueueInfo } from '../../common/types'
 import RecentGame from './RecentGame'
 
 interface Props {
-  playerLeft: PlayerWithoutElo | null
-  playerRight: PlayerWithoutElo | null
-  setPlayerLeft: (arg0: PlayerWithoutElo) => void  
-  setPlayerRight: (arg0: PlayerWithoutElo) => void  
+  recents: GameListItem[]
 }
-// queue is needed to update the recent games when a game has been played
-const Recents = ({playerLeft, playerRight, setPlayerLeft, setPlayerRight}: Props) => {
-  const [recents, setRecents] = useState<GameListItem[]>([])
-  
-  const searchUrl = `/api/games/latest`
-    
-  useEffect(() => {
-    ;(async () => {
-      const response = await fetch(searchUrl)
-      const result = (await response.json()) as GameListItem[]
-      setRecents(result)
-    })()
-  }, [searchUrl, playerLeft, playerRight, setPlayerLeft, setPlayerRight])
 
+const Recents = ({ recents }: Props) => {
   return(
     <div>
       <h2 className='p-8'>Viimeisimmät pelit</h2>

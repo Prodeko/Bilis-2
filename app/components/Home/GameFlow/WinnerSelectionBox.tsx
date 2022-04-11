@@ -5,16 +5,14 @@ import useQueue from "../../hooks/useQueue";
 
 interface Props {
   queue: QueueInfo[]
-  setQueue: Function
+  removeLastFromQueue: () => void, 
+  getQueue: () => void,
   playerRight: PlayerWithoutElo | null
   setPlayerRight: (arg0: PlayerWithoutElo) => void
   playerLeft: PlayerWithoutElo | null
   setPlayerLeft: (arg0: PlayerWithoutElo) => void
 }
-const WinnerSelectionBox = ({queue, setQueue, playerRight, playerLeft, setPlayerRight, setPlayerLeft}: Props) => {
-
-  const {removeLastFromQueue, getQueue} = useQueue()
-
+const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, playerLeft, setPlayerRight, setPlayerLeft}: Props) => {
   interface NewGame {
     winnerId: number | undefined
     loserId: number | undefined
@@ -25,13 +23,13 @@ const WinnerSelectionBox = ({queue, setQueue, playerRight, playerLeft, setPlayer
   useEffect(() => {
     if(!playerLeft && queue.length>0 && (!playerRight || playerRight.id != queue[0].id)) {
       setPlayerLeft(queue[0])
-      setQueue(removeLastFromQueue())
+      removeLastFromQueue()
 
     } else if (!playerRight && queue.length>0 && (!playerLeft || playerLeft.id != queue[0].id)){
       setPlayerRight(queue[0])
-      setQueue(removeLastFromQueue())
+      removeLastFromQueue()
     }
-  }, [queue, playerLeft, setPlayerLeft, playerRight, setPlayerRight, setQueue, removeLastFromQueue])
+  }, [queue, playerLeft, setPlayerLeft, playerRight, setPlayerRight, removeLastFromQueue])
 
   const postGame = async (winner: string) => {
     let game: NewGame = {winnerId: undefined, loserId: undefined, underTable: false}
@@ -48,7 +46,7 @@ const WinnerSelectionBox = ({queue, setQueue, playerRight, playerLeft, setPlayer
           underTable: false
         }
         setPlayerRight(queue[0])
-        setQueue(removeLastFromQueue())
+        removeLastFromQueue
         break;
       case 'right':
         game = {
@@ -56,7 +54,7 @@ const WinnerSelectionBox = ({queue, setQueue, playerRight, playerLeft, setPlayer
           loserId: playerLeft?.id,
           underTable: false
         } 
-        setPlayerLeft(getQueue()[0])
+        setPlayerLeft(queue[0])
         removeLastFromQueue()
         break;
     

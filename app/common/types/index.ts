@@ -59,7 +59,7 @@ interface RequestWithPage extends NextApiRequest {
   pageSize?: number
 }
 
-interface QueueInfo extends Player {
+interface QueueInfo extends PlayerWithoutElo {
   time: Date
 }
 
