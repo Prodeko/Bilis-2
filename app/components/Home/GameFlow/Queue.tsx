@@ -30,7 +30,7 @@ const Queue = ({
         />
       </div>
       <div className='overflow-y-auto my-4 max-h-[30vh]'>
-        {/* slice used here because the reverse method mutates the array, which we don't want */}
+        {/* slice used here because the reverse method mutates the array */}
         {queue.slice().reverse().map((queuePlayerInfo, i) => {
           return (
             <QueueItem

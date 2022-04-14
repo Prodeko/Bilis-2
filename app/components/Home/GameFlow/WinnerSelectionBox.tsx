@@ -43,12 +43,10 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
   //if the boxes are empty, a person added to queue moves straight to them
   useEffect(() => {
     if(!playerLeft && queue.length>0 && (!playerRight || playerRight.id != queue[0].id)) {
-      console.log('Fucking with the left player')
       setPlayerLeft(queue[0])
       removeLastFromQueue()
 
     } else if (!playerRight && queue.length>0 && (!playerLeft || playerLeft.id != queue[0].id)){
-      console.log('Fucking with the right player')
       setPlayerRight(queue[0])
       removeLastFromQueue()
     }

@@ -20,24 +20,28 @@ const QueueItem = ({
   first,
 }: Props) => {
   return (
-    <Card selected={false} id={id}>
+    <Card id={id}>
       <h5>{`${rank}.`}</h5>
       <div
         style={{ background: favoriteColor }}
-        className={`shadow-l w-8 h-8 p-4 rounded-full flex justify-center items-center text-xl`}
+        className={`text-center text-xl`}
       >
         😍
       </div>
-      <h5>{nickname}</h5>
+      <h5 className='flex justify-center'>{nickname}</h5>
       <h5>{`#${id}`}</h5>
       <h5>{time.toString().slice(11, 16)}</h5>
-      {/*Link to homepage bcs playercard already a link, so clicking the trash icon would take to the playersite.  */}
-      <Link href="/" passHref>
-        <FiTrash2
-          className="hover:scale-110"
-          onClick={() => handleRemove(id)}
-        />
-      </Link>
+      
+      <div className="flex justify-center">
+        {/*Link to homepage bcs playercard already a link, so clicking the trash icon would take to the playersite.  */}
+        <Link href="/" passHref>
+          <FiTrash2
+            className="hover:scale-110 self-center"
+            onClick={() => handleRemove(id)}
+          />
+        </Link>
+      </div>
+      
     </Card>
   )
 }
