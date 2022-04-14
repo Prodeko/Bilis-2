@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { PlayerWithoutElo, QueueInfo } from "../../common/types";
+import { PlayerWithoutElo, QueueInfo } from "../../../common/types";
 import CurrentPlayerButton from "./CurrentPlayerButton";
-import useQueue from "../../hooks/useQueue";
+import useQueue from "../../../hooks/useQueue";
 
 interface Props {
   queue: QueueInfo[]

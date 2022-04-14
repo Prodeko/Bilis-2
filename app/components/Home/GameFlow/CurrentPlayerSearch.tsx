@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import type { NextPage } from 'next'
 import { FiX, FiSearch } from 'react-icons/fi'
-import type { PlayerWithoutElo } from '../../common/types'
+import type { PlayerWithoutElo } from '../../../common/types'
 import PlayerSearchResult from './PlayerSearchResult'
-import usePlayerSearch from '../../hooks/usePlayerSearch'
+import usePlayerSearch from '../../../hooks/usePlayerSearch'
 
 interface Props {
   selectedPlayer?: PlayerWithoutElo | null

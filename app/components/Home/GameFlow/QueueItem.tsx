@@ -1,5 +1,5 @@
-import { QueueInfo } from '../../common/types'
-import Card from './PlayerCard'
+import { QueueInfo } from '../../../common/types'
+import Card from './Card'
 import { FiTrash2 } from 'react-icons/fi'
 import Link from 'next/link'
 

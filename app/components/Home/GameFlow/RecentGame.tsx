@@ -1,5 +1,5 @@
-import { GameListItem } from "../../common/types";
-import Card from "./PlayerCard";
+import { GameListItem } from "../../../common/types";
+import Card from "./Card";
 
 
 const RecentGame = ({ game }: {game: GameListItem}) => {
