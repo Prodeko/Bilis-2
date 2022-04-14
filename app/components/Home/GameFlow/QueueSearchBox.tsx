@@ -5,12 +5,13 @@ import useQueue from '../../../hooks/useQueue'
 interface Props {
   selectedPlayer: PlayerWithoutElo | null
   setSelectedPlayer: (selectedPlayer: PlayerWithoutElo | null) => void
+  addToQueue: (player: PlayerWithoutElo) => void
 }
 
-const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer }: Props) => {
+const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer, addToQueue }: Props) => {
   const [editing, setEditing] = useState<boolean>(false)
   const [searchExpanded, setSearchExpanded] = useState(false)
-  const { addToQueue } = useQueue()
+
 
   return (
     <CurrentPlayerSearch

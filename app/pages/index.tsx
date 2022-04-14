@@ -21,7 +21,7 @@ const Home: NextPage<Props> = ({ recents }) => {
 }
 
 export async function getServerSideProps() {
-  const searchUrl = `/api/games/latest`
+  const searchUrl = `http://localhost:3000/api/games/latest`
   
   const response = await fetch(searchUrl)
   const result = (await response.json()) as GameListItem[]

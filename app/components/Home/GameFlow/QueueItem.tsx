@@ -30,7 +30,7 @@ const QueueItem = ({
       </div>
       <h5>{nickname}</h5>
       <h5>{`#${id}`}</h5>
-      <h5>{time}</h5>
+      <h5>{time.toString().slice(11, 16)}</h5>
       {/*Link to homepage bcs playercard already a link, so clicking the trash icon would take to the playersite.  */}
       <Link href="/" passHref>
         <FiTrash2

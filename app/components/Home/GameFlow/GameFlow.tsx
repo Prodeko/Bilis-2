@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import type { NextPage } from "next"
 import List from '../../Utility/List'
 import Queue from "./Queue"
 import WinnerSelectionBox from "./WinnerSelectionBox"
@@ -18,7 +17,12 @@ const GameFlow = ({ recents }: Props): JSX.Element => {
   const [playerRight, setPlayerRight] = useState<PlayerWithoutElo | null>(null)
 
   const queue = useQueue()
-  
+
+  useEffect(() => {
+    queue.getQueue()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <List>
     <Queue {...queue}/>

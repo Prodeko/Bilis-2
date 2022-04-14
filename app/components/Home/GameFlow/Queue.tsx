@@ -2,33 +2,22 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import QueueItem from './QueueItem'
 import { QueueInfo } from '../../../common/types'
-import CurrentPlayerButton from './CurrentPlayerButton'
 import QueueSearchBox from './QueueSearchBox'
 import { PlayerWithoutElo } from '../../../common/types'
-import useQueue from '../../../hooks/useQueue'
 
 interface Props {
   queue: QueueInfo[]
-  getQueue: () => void
-  addToQueue: (player: PlayerWithoutElo) => void
-  removeFromQueue: (player: PlayerWithoutElo) => void
-  removeLastFromQueue: () => void
+  addToQueue: (player: PlayerWithoutElo | null) => void
+  removeFromQueue: (id: PlayerWithoutElo['id']) => void
 }
 const Queue = ({ 
   queue, 
-  getQueue,
   addToQueue,
   removeFromQueue,
-  removeLastFromQueue 
 }: Props) => {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(
     null
   )
-
-  useEffect(() => {
-    getQueue()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedPlayer])
 
   return (
     <div className="w-full">
@@ -37,10 +26,12 @@ const Queue = ({
         <QueueSearchBox
           selectedPlayer={selectedPlayer}
           setSelectedPlayer={setSelectedPlayer}
+          addToQueue={addToQueue}
         />
       </div>
       <div className='overflow-y-auto my-4 max-h-[30vh]'>
-        {queue.reverse().map((queuePlayerInfo, i) => {
+        {/* slice used here because the reverse method mutates the array, which we don't want */}
+        {queue.slice().reverse().map((queuePlayerInfo, i) => {
           return (
             <QueueItem
               key={queuePlayerInfo.id}
