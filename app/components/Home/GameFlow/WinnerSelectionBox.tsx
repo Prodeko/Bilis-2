@@ -26,6 +26,8 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
     playerLeft: PlayerWithoutElo 
   }
 
+  const [underTable, setUnderTable] = useState<boolean>(false)
+
   useEffect(() => {
     const item = localStorage.getItem('BilisKilkePlayers')
     const {playerLeft: newLeft, playerRight: newRight} = JSON.parse(item ? item : '') as PlayerStorage
@@ -54,7 +56,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
 
 
   const postGame = async (winner: string) => {
-    let game: NewGame = {winnerId: undefined, loserId: undefined, underTable: false}
+    let game: NewGame
     if(!(playerLeft && playerRight)) return
 
     switch (winner) {
@@ -62,7 +64,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
         game = {
           winnerId: playerLeft?.id,
           loserId: playerRight?.id,
-          underTable: false
+          underTable
         }
         setPlayerRight(queue[0])
         removeLastFromQueue()
@@ -71,7 +73,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
         game = {
           winnerId: playerRight?.id,
           loserId: playerLeft?.id,
-          underTable: false
+          underTable
         } 
         setPlayerLeft(queue[0])
         removeLastFromQueue()
@@ -100,7 +102,17 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
         <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} />
         <WinnerSelectionButton handleClick={() => postGame('left')}/>
       </div>
-      <p className="mx-6">vs</p>
+      <div className="flex flex-col items-center">
+        <p className="mx-6">vs</p>
+        <label>
+          <input 
+            type="checkbox"
+            checked={underTable}
+            onChange={() => setUnderTable(!underTable)}
+          />
+          Pöydän alle
+        </label>
+      </div>
       <div className="flex flex-col items-center">
         <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight}/>
         <WinnerSelectionButton handleClick={() => postGame('right')}/>
