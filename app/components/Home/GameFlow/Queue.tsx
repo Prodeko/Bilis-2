@@ -27,6 +27,7 @@ const Queue = ({
           selectedPlayer={selectedPlayer}
           setSelectedPlayer={setSelectedPlayer}
           addToQueue={addToQueue}
+          queue={queue}
         />
       </div>
       <div className='overflow-y-auto my-4 max-h-[30vh]'>

@@ -11,6 +11,8 @@ interface Props {
   setExpanded: (expanded: boolean) => void
   setEditing: (expanded: boolean) => void
   handleSelect: (selectedPlayer: PlayerWithoutElo) => void
+  usedForQueue: boolean
+  queue: PlayerWithoutElo[]
 }
 
 const CurrentPlayerSearch: NextPage<Props> = ({
@@ -19,6 +21,8 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   setExpanded,
   setEditing,
   handleSelect,
+  usedForQueue = false,
+  queue
 }) => {
   const [searchText, setSearchText] = useState<string>('')
   const searchResults = usePlayerSearch(searchText)
@@ -58,6 +62,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
       {expanded && (
         <select value={searchText} size={10}>
           {searchResults
+            .filter((player) => !usedForQueue || queue.every(q => q.id != player.id))
             .map((player) => (
               <option key={player.id} value={player.firstName} onClick={() => handleSelect(player)}>
                 {player.firstName} #{player.id}
