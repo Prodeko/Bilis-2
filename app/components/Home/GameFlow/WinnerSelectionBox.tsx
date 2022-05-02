@@ -97,26 +97,28 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
   }
 
   return (
-    <div className="flex flex-row flex-nowrap px-2 mx-4 justify-evenly items-center">
-      <div className="flex flex-col items-center">
-        <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} />
-        <WinnerSelectionButton handleClick={() => postGame('left')}/>
+    <div className="flex flex-col items-center">
+      <div className="flex flex-row flex-nowrap px-2 mx-4 justify-evenly items-center">
+        <div className="flex flex-col items-center">
+          <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} />
+          <WinnerSelectionButton handleClick={() => postGame('left')}/>
+        </div>
+        <div className="flex flex-col items-center">
+          <p className="mx-6">vs</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight}/>
+          <WinnerSelectionButton handleClick={() => postGame('right')}/>
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-        <p className="mx-6">vs</p>
-        <label>
-          <input 
-            type="checkbox"
-            checked={underTable}
-            onChange={() => setUnderTable(!underTable)}
-          />
-          Pöydän alle
-        </label>
-      </div>
-      <div className="flex flex-col items-center">
-        <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight}/>
-        <WinnerSelectionButton handleClick={() => postGame('right')}/>
-      </div>
+      <label>
+        <input
+          type="checkbox"
+          checked={underTable}
+          onChange={() => setUnderTable(!underTable)}
+        />
+        Pöydän alle
+      </label>
     </div>
   )
 
