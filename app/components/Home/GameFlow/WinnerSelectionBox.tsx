@@ -91,7 +91,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
       body: JSON.stringify(game) as any,
     })
 
-
+    // updates the serverside props, no idea how/why
     router.replace(router.asPath)
     
   }
@@ -124,7 +124,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
 
 const WinnerSelectionButton = ({ handleClick }: {handleClick: () => Promise<void>}) => {
   return (
-    <button className='bg-green-600 text-white w-full' onClick={handleClick}>Voittaja</button>
+    <button className='bg-gray-300 text-white w-full rounded shadow-xl hover:scale-[1.05] hover:bg-green-600 ' onClick={handleClick}>Voittaja</button>
   )
 }
 
