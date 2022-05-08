@@ -25,10 +25,10 @@ const GameFlow = ({ recents }: Props): JSX.Element => {
 
   return (
     <List>
-    <Queue {...queue}/>
-    <WinnerSelectionBox  {...queue} playerLeft={playerLeft} playerRight={playerRight} setPlayerLeft={setPlayerLeft} setPlayerRight={setPlayerRight}/>
-    <Recents recents={recents} />
-  </List>
+      <Queue {...queue}/>
+      <WinnerSelectionBox  {...queue} playerLeft={playerLeft} playerRight={playerRight} setPlayerLeft={setPlayerLeft} setPlayerRight={setPlayerRight}/>
+      <Recents recents={recents} />
+    </List>
   )
 }
 

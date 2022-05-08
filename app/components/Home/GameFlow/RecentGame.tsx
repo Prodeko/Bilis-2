@@ -13,7 +13,7 @@ const RecentGame = ({ game }: {game: GameListItem}) => {
       </div>
       <div>{`${game.winner.firstName} ${game.winner.lastName}`}</div>
       <div>{game.winnerElo.toFixed(0)}</div>
-      <div>VS {game.underTable ? String.fromCodePoint(128169) : ' '}</div>
+      <div>VS{game.underTable ? String.fromCodePoint(128169) : ' '}</div>
       <div style={{background: game.loser.favoriteColor}} className={`shadow-l w-8 h-8 p-4 rounded-full flex justify-center items-center text-xl`}>
         {winnerEmoji}  
       </div>

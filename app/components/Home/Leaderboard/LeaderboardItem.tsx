@@ -1,4 +1,10 @@
 import type { NextPage } from 'next'
+import { PlayerWithStats } from '../../../common/types'
+
+interface Props extends PlayerWithStats {
+  rank: number,
+  
+}
 
 const LeaderboardItem: NextPage = () => {
   return(

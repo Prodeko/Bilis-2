@@ -12,7 +12,7 @@ const Home: NextPage<Props> = ({ recents }) => {
   return (
     <div className="ml-8 py-4 flex flex-col h-screen content-center">
       <h1>Biliskilke 2.0</h1>
-      <div className="flex justify-around py-10 gap-20">
+      <div className="flex justify-around py-10 pr-10 gap-20">
         <Leaderboard />
         <GameFlow recents={recents}/>
       </div>
