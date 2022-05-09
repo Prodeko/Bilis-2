@@ -7,7 +7,8 @@ type Props = {
 
 const List: NextPage<Props> = ({ children }) => {
   return(
-    <div className='shadow-xl bg-gray-100 flex-shrink rounded-md border-gray-200 border w-11/12 h-fit'>
+    <div className='shadow-xl bg-gray-100 box-border flex-shrink rounded-md 
+      border-gray-200 border w-11/12 h-[80vh]'>
       {children}
     </div>
   )

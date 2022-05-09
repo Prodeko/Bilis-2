@@ -1,16 +1,18 @@
 import CurrentPlayerSearch from './CurrentPlayerSearch'
 import { useState } from 'react'
-import { PlayerWithoutElo } from '../../common/types'
-import useQueue from '../../hooks/useQueue'
+import { PlayerWithoutElo } from '../../../common/types'
+import useQueue from '../../../hooks/useQueue'
 interface Props {
   selectedPlayer: PlayerWithoutElo | null
   setSelectedPlayer: (selectedPlayer: PlayerWithoutElo | null) => void
+  addToQueue: (player: PlayerWithoutElo) => void
+  queue: PlayerWithoutElo[]
 }
 
-const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer }: Props) => {
+const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer, addToQueue, queue }: Props) => {
   const [editing, setEditing] = useState<boolean>(false)
   const [searchExpanded, setSearchExpanded] = useState(false)
-  const { addToQueue } = useQueue()
+
 
   return (
     <CurrentPlayerSearch
@@ -19,11 +21,15 @@ const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer }: Props) => {
       setExpanded={setSearchExpanded}
       setEditing={setEditing}
       handleSelect={(player) => {
-        addToQueue(player)
-        setSelectedPlayer(player)
-        setSearchExpanded(false)
-        setEditing(false)
+        if(queue.every(queuePlayer => queuePlayer.id != player.id)){
+          addToQueue(player)
+          setSelectedPlayer(player)
+          setSearchExpanded(false)
+          setEditing(false)
+        }
       }}
+      usedForQueue={true}
+      queue={queue}
     />
   )
 }

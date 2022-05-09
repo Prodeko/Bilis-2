@@ -9,7 +9,6 @@ type Props = {
 }
 
 const ColorBox = (color: string): JSX.Element => {
-  console.log(color)
   return (
     // Color not working, need to remove extra dots
     <div className={`inline-block w-[6rem] h-full border-2 border-black bg-[color:${color}]`}>.</div>

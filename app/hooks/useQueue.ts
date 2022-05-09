@@ -1,43 +1,48 @@
+import { useState } from 'react'
+
 import { PlayerWithoutElo, QueueInfo } from '../common/types'
 
 const useQueue = () => {
-  const getQueue = (): QueueInfo[] => {
+  const [queue, setQueue] = useState<QueueInfo[]>([])
+
+  const getQueue = () => {
     const _queue = localStorage.getItem('BilisKilkeQueue')
     if (_queue) {
-      return JSON.parse(_queue) as QueueInfo[]
+      setQueue(JSON.parse(_queue) as QueueInfo[])
+    } else {
+      setQueue([])
     }
-    return []
+
   }
 
   const addToQueue = (player: PlayerWithoutElo | null) => {
-    const _queue = getQueue()
-
-    if (!player || _queue.some(({ id }) => id == player.id)) {
+    if (!player || queue.some(({ id }) => id == player.id)) {
       throw new Error(
         `Player already in queue or not defined: ${player?.nickname}`
       )
     }
-    let newQueue
-    if (_queue) {
-      newQueue = [..._queue, player]
-    } else {
-      newQueue = [player]
-    }
+    const newQueue: QueueInfo[] = queue 
+      ? [...queue, {...player, time: new Date()}]
+      : [{...player, time: new Date()}]
+      
     localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
+    setQueue(newQueue)
   }
 
   const removeFromQueue = (id: PlayerWithoutElo['id']) => {
-    const newQueue = getQueue().filter((player) => player.id != id)
+    const newQueue = queue.filter((player) => player.id != id)
     localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
+    setQueue(newQueue)
   }
 
   const removeLastFromQueue = () => {
-    const queue = getQueue()
-    localStorage.setItem('BilisKilkeQueue', JSON.stringify(queue.slice(1)))
-    return getQueue()
+    const newQueue = queue.slice(1)
+    localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
+    setQueue(newQueue)
   }
 
   return {
+    queue,
     getQueue,
     addToQueue,
     removeFromQueue,
