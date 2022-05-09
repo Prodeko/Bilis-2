@@ -4,13 +4,14 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { playerAPI } from "../../../common/db/players";
 import { MethodNotAllowedError } from "../../../common/exceptions";
 import withAPIMiddleware from "../../../common/middleware";
-import {validateRequest, stringValidator, hexColorValidator} from "../../../common/validators";
+import {validateRequest, stringValidator, hexColorValidator, emojiValidator} from "../../../common/validators";
 
 const createPlayerStructure = {
     firstName: stringValidator,
     lastName: stringValidator,
     nickname: stringValidator,
-    favoriteColor: hexColorValidator
+    favoriteColor: hexColorValidator,
+    emoji: emojiValidator
 }
 
 

@@ -17,6 +17,8 @@ type PlayerWithoutElo = PlayerMeta & {
   favoriteColor: string
 }
 
+type NewPlayer = Omit<PlayerWithoutElo, 'id'>
+
 type Player = PlayerWithoutElo & {
   elo: number
 }
@@ -70,6 +72,7 @@ export type {
   PlayerMeta,
   PlayerWithStats,
   PlayerWithoutElo,
+  NewPlayer,
   QueueInfo,
   GameListItem,
   RequestWithPage,

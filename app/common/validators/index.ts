@@ -27,6 +27,8 @@ const stringValidator = (input: any) => input.length > 3 && input.length < 100;
 const hexColorValidator = (hex: string) =>
   typeof hex === "string" && hex.length === 6 && !isNaN(Number("0x" + hex));
 
+const emojiValidator = (emoji: string) => /\p{Emoji}/u.test(emoji);
+
 const validateMutualPlayersQuery = (query: any): [number, number] => {
     if (!('players' in query)) {
       throw new ValidationError('players', 'Player IDs missing');
@@ -62,7 +64,7 @@ const numberValidator = (input: any) => !isNaN(input);
 
 const booleanValidator = (input: any) => typeof input === 'boolean';
 
-export {validateRequest, stringValidator, hexColorValidator, validateMutualPlayersQuery, validatePageQuery, numberValidator, booleanValidator}
+export {validateRequest, stringValidator, hexColorValidator, validateMutualPlayersQuery, validatePageQuery, numberValidator, booleanValidator, emojiValidator}
 
 
 
