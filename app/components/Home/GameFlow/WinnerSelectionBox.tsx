@@ -97,7 +97,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
   }
 
   return (
-    <div className="flex flex-col items-center mx-8">
+    <div className="flex flex-col items-center">
       <div className="w-full flex flex-row flex-nowrap justify-evenly items-center">
         <div className="w-full flex flex-col items-center">
           <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} handleClick={() => postGame('left')}/>

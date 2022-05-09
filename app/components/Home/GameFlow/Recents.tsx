@@ -11,8 +11,8 @@ const Recents = ({ recents }: Props) => {
 
   return(
     <div>
-      <h2 className='p-8'>Viimeisimmät pelit</h2>
-      <div className={`h-[30vh] overflow-y-auto`}> 
+      <h2 className="m-2">Viimeisimmät pelit</h2>
+      <div className={`flex flex-col gap-4 h-[30vh] overflow-y-auto`}> 
         {recents.map(game => <RecentGame game={game} key={game.id}/>)}
       </div>
     </div>

@@ -21,8 +21,8 @@ const Queue = ({
 
   return (
     <div className="w-full">
-      <h2 className="p-8">Jono</h2>
-      <div className="mx-6 ">
+      <h2 className="m-2">Jono</h2>
+      <div>
         <QueueSearchBox
           selectedPlayer={selectedPlayer}
           setSelectedPlayer={setSelectedPlayer}
