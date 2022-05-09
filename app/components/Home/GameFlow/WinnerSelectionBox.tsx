@@ -97,18 +97,16 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-row flex-nowrap px-2 mx-4 justify-evenly items-center">
-        <div className="flex flex-col items-center">
-          <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} />
-          <WinnerSelectionButton handleClick={() => postGame('left')}/>
+    <div className="flex flex-col items-center mx-8">
+      <div className="w-full flex flex-row flex-nowrap justify-evenly items-center">
+        <div className="w-full flex flex-col items-center">
+          <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} handleClick={() => postGame('left')}/>
         </div>
         <div className="flex flex-col items-center">
           <p className="mx-6">vs</p>
         </div>
-        <div className="flex flex-col items-center">
-          <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight}/>
-          <WinnerSelectionButton handleClick={() => postGame('right')}/>
+        <div className="w-full flex flex-col items-center">
+          <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight} handleClick={() => postGame('right')}/>
         </div>
       </div>
       <label>
@@ -124,10 +122,5 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
 
 }
 
-const WinnerSelectionButton = ({ handleClick }: {handleClick: () => Promise<void>}) => {
-  return (
-    <button className='bg-gray-300 text-white w-full rounded shadow-xl hover:scale-[1.05] hover:bg-green-600 ' onClick={handleClick}>Voittaja</button>
-  )
-}
 
 export default WinnerSelectionBox
