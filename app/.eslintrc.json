@@ -30,7 +30,8 @@
       "react/static-property-placement":      [1, "property assignment"],*/
       "arrow-parens": ["error", "as-needed"],
       "react/react-in-jsx-scope": "off",
-      "react/function-component-definition": "off"
+      "react/function-component-definition": "off",
+      "react/prop-types": "off"
       
       
   },
