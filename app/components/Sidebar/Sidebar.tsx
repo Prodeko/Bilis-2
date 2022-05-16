@@ -20,37 +20,44 @@ const Sidebar: NextPage = () => {
   }
 
   return (
-    <aside
-      className={`bg-prodekoBlue ${
-        expandFull
-          ? 'w-1/4 shadow-[0_25px_50px_-12px_rgba(0,0,0,1)]'
-          : `${expandPartial ? 'w-48' : 'w-32'}`
-      } fixed h-screen duration-200 transition-all z-20`}
-    >
-      <div
-        className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full  justify-start`}
+    <>
+      <aside
+        className={`bg-prodekoBlue fixed h-screen duration-200 transition-all z-30 ${
+          expandFull
+            ? 'w-1/4 shadow-[0_25px_50px_-12px_rgba(0,0,0,1)]'
+            : `${expandPartial ? 'w-48' : 'w-32'}`
+        }`}
       >
-        <div className="flex flex-col gap-4 pt-4 px-4 w-full flex-1">
-          <SidebarButton to="/">
-            <FiHome size="42" />
-          </SidebarButton>
-          <SidebarButton to="/stats">
-            <FiBarChart2 size="42" />
-          </SidebarButton>
-          <SideBarSearchBar
-            marginP={expandPartial}
-            marginF={expandFull}
-            onMouseEnter={expandP}
-            onClick={expandF}
-          >
-            <FiSearch size="42" />
-          </SideBarSearchBar>
+        <div
+          className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full  justify-start`}
+        >
+          <div className="flex flex-col gap-4 pt-4 px-4 w-full flex-1">
+            <SidebarButton to="/">
+              <FiHome size="42" />
+            </SidebarButton>
+            <SidebarButton to="/stats">
+              <FiBarChart2 size="42" />
+            </SidebarButton>
+            <SideBarSearchBar
+              marginP={expandPartial}
+              marginF={expandFull}
+              onMouseEnter={expandP}
+              onClick={expandF}
+            >
+              <FiSearch size="42" />
+            </SideBarSearchBar>
+          </div>
+          <div className="align-self-end px-2">
+            <Image src={logoPic} width={110} height={110} alt="Prodeko logo" />
+          </div>
         </div>
-        <div className="align-self-end px-2">
-          <Image src={logoPic} width={110} height={110} alt="Prodeko logo" />
-        </div>
-      </div>
-    </aside>
+      </aside>
+      <div
+        className={`z-20 h-screen w-screen bg-gradient-to-r from-[rgba(0,0,0,0.8)] to-[rgba(0,0,0,0.5)] ${
+          expandFull ? 'absolute' : 'hidden'
+        }`}
+      ></div>
+    </>
   )
 }
 
