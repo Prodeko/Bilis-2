@@ -12,25 +12,22 @@ const useQueue = () => {
     } else {
       setQueue([])
     }
-
   }
 
   const addToQueue = (player: PlayerWithoutElo | null) => {
     if (!player || queue.some(({ id }) => id == player.id)) {
-      throw new Error(
-        `Player already in queue or not defined: ${player?.nickname}`
-      )
+      throw new Error(`Player already in queue or not defined: ${player?.nickname}`)
     }
-    const newQueue: QueueInfo[] = queue 
-      ? [...queue, {...player, time: new Date()}]
-      : [{...player, time: new Date()}]
-      
+    const newQueue: QueueInfo[] = queue
+      ? [...queue, { ...player, time: new Date() }]
+      : [{ ...player, time: new Date() }]
+
     localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
     setQueue(newQueue)
   }
 
   const removeFromQueue = (id: PlayerWithoutElo['id']) => {
-    const newQueue = queue.filter((player) => player.id != id)
+    const newQueue = queue.filter(player => player.id != id)
     localStorage.setItem('BilisKilkeQueue', JSON.stringify(newQueue))
     setQueue(newQueue)
   }
@@ -46,7 +43,7 @@ const useQueue = () => {
     getQueue,
     addToQueue,
     removeFromQueue,
-    removeLastFromQueue
+    removeLastFromQueue,
   }
 }
 

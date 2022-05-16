@@ -22,7 +22,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   setEditing,
   handleSelect,
   usedForQueue = false,
-  queue = []
+  queue = [],
 }) => {
   const [searchText, setSearchText] = useState<string>('')
   const searchResults = usePlayerSearch(searchText)
@@ -53,7 +53,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
               placeholder="Etsi pelaajaa"
               aria-label="Full name"
               value={searchText}
-              onChange={(event) => setSearchText(event.target.value)}
+              onChange={event => setSearchText(event.target.value)}
               onClick={() => setExpanded(true)}
             />
           </div>
@@ -62,8 +62,8 @@ const CurrentPlayerSearch: NextPage<Props> = ({
       {expanded && (
         <select value={searchText} size={10}>
           {searchResults
-            .filter((player) => !usedForQueue || queue.every(q => q.id != player.id))
-            .map((player) => (
+            .filter(player => !usedForQueue || queue.every(q => q.id != player.id))
+            .map(player => (
               <option key={player.id} value={player.firstName} onClick={() => handleSelect(player)}>
                 {player.firstName} #{player.id}
               </option>

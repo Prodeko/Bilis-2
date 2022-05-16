@@ -52,7 +52,7 @@ type GameListItem = GameMeta & {
 
 type MutualStatsPlayer = {
   mutualGamesWon: number
-  name: string,
+  name: string
   favoriteColor: string
 }
 

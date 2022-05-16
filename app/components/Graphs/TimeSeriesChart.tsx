@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { ApexOptions } from 'apexcharts'
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307
@@ -8,18 +8,20 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 // import Chart from 'react-apexcharts'
 
 type Props = {
-  eloData: Array<number>,
-  dataName: string,
-  chartName: string,
-  color: string,
+  eloData: Array<number>
+  dataName: string
+  chartName: string
+  color: string
   height?: number
 }
 
 const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color, height }) => {
-  const series: ApexOptions["series"] = [{
-    name: dataName,
-    data: eloData
-  }]
+  const series: ApexOptions['series'] = [
+    {
+      name: dataName,
+      data: eloData,
+    },
+  ]
 
   const options: ApexOptions = {
     chart: {
@@ -28,15 +30,15 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color,
       zoom: {
         type: 'x',
         enabled: true,
-        autoScaleYaxis: true
+        autoScaleYaxis: true,
       },
       toolbar: {
-        autoSelected: 'zoom'
+        autoSelected: 'zoom',
       },
     },
     colors: [color],
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     fill: {
       type: 'gradient',
@@ -46,7 +48,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color,
         gradientToColors: [color],
         opacityFrom: 0.5,
         opacityTo: 0,
-        stops: [10, 100]
+        stops: [10, 100],
       },
     },
     // markers: {
@@ -56,54 +58,52 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color,
     //   strokeColors: '#000000'
     // },
     noData: {
-      text: 'No data available'
+      text: 'No data available',
     },
     stroke: {
       curve: 'straight',
-      colors: ["#000000"],
-      width: 3.5
+      colors: ['#000000'],
+      width: 3.5,
     },
     title: {
       text: chartName,
-      align: 'left'
+      align: 'left',
     },
     tooltip: {
       shared: false,
       y: {
-        formatter: function (val: number) {
+        formatter(val: number) {
           return val.toFixed(1)
-        }
-      }
+        },
+      },
     },
     xaxis: {
       type: 'numeric',
       decimalsInFloat: 0,
       labels: {
-        formatter: function (val: string) {
+        formatter(val: string) {
           return (Number(val) - 1).toFixed(0)
-        }
-      }
+        },
+      },
     },
     grid: {
       padding: {
-        left: 10
-      }
+        left: 10,
+      },
     },
     yaxis: {
       labels: {
-        formatter: function (val: number) {
-          return val.toFixed(0);
+        formatter(val: number) {
+          return val.toFixed(0)
         },
       },
       title: {
-        text: 'Elo'
+        text: 'Elo',
       },
-    }
+    },
   }
 
-  return (
-    <ApexCharts options={options} type="area" series={series} height={height} width="90%"/>
-  )
+  return <ApexCharts options={options} type="area" series={series} height={height} width="90%" />
 }
 
 export default TimeSeriesChart
