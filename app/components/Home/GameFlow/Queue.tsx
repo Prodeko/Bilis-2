@@ -20,17 +20,15 @@ const Queue = ({
   )
 
   return (
-    <div className="w-full">
-      <h2 className="m-2">Jono</h2>
-      <div>
-        <QueueSearchBox
-          selectedPlayer={selectedPlayer}
-          setSelectedPlayer={setSelectedPlayer}
-          addToQueue={addToQueue}
-          queue={queue}
-        />
-      </div>
-      <div className='overflow-y-auto my-4 max-h-[30vh]'>
+    <div className="flex flex-col gap-3 w-full">
+      <h2>Jono</h2>
+      <QueueSearchBox
+        selectedPlayer={selectedPlayer}
+        setSelectedPlayer={setSelectedPlayer}
+        addToQueue={addToQueue}
+        queue={queue}
+      />
+      <div className='flex flex-col p-2 gap-2 overflow-y-auto '>
         {/* slice used here because the reverse method mutates the array */}
         {queue.slice().reverse().map((queuePlayerInfo, i) => {
           return (
