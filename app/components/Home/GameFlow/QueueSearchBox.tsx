@@ -13,15 +13,14 @@ const QueueSearchBox = ({ selectedPlayer, setSelectedPlayer, addToQueue, queue }
   const [editing, setEditing] = useState<boolean>(false)
   const [searchExpanded, setSearchExpanded] = useState(false)
 
-
   return (
     <CurrentPlayerSearch
       expanded={searchExpanded}
       selectedPlayer={selectedPlayer}
       setExpanded={setSearchExpanded}
       setEditing={setEditing}
-      handleSelect={(player) => {
-        if(queue.every(queuePlayer => queuePlayer.id != player.id)){
+      handleSelect={player => {
+        if (queue.every(queuePlayer => queuePlayer.id != player.id)) {
           addToQueue(player)
           setSelectedPlayer(player)
           setSearchExpanded(false)

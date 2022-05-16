@@ -10,14 +10,8 @@ interface Props {
   addToQueue: (player: PlayerWithoutElo | null) => void
   removeFromQueue: (id: PlayerWithoutElo['id']) => void
 }
-const Queue = ({ 
-  queue, 
-  addToQueue,
-  removeFromQueue,
-}: Props) => {
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(
-    null
-  )
+const Queue = ({ queue, addToQueue, removeFromQueue }: Props) => {
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(null)
 
   return (
     <div className="flex flex-col gap-3 w-full">
@@ -28,21 +22,22 @@ const Queue = ({
         addToQueue={addToQueue}
         queue={queue}
       />
-      <div className='flex flex-col p-2 gap-2 overflow-y-auto '>
+      <div className="flex flex-col p-2 gap-2 overflow-y-auto ">
         {/* slice used here because the reverse method mutates the array */}
-        {queue.slice().reverse().map((queuePlayerInfo, i) => {
-          return (
-            <QueueItem
-              key={queuePlayerInfo.id}
-              rank={queue.length-i}
-              handleRemove={removeFromQueue}
-              {...queuePlayerInfo}
-              first={queue.length-i==1}
-            />
-          )
-        })}
-    
-        
+        {queue
+          .slice()
+          .reverse()
+          .map((queuePlayerInfo, i) => {
+            return (
+              <QueueItem
+                key={queuePlayerInfo.id}
+                rank={queue.length - i}
+                handleRemove={removeFromQueue}
+                {...queuePlayerInfo}
+                first={queue.length - i == 1}
+              />
+            )
+          })}
       </div>
     </div>
   )

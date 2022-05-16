@@ -14,7 +14,7 @@ const Home: NextPage<Props> = ({ recents }) => {
       <h1>Biliskilke 2.0</h1>
       <div className="grid grid-cols-2 gap-16 justify-items-center">
         <Leaderboard />
-        <GameFlow recents={recents}/>
+        <GameFlow recents={recents} />
       </div>
     </div>
   )
@@ -22,11 +22,11 @@ const Home: NextPage<Props> = ({ recents }) => {
 
 export async function getServerSideProps() {
   const searchUrl = `http://localhost:3000/api/games/latest`
-  
+
   const response = await fetch(searchUrl)
   const result = (await response.json()) as GameListItem[]
   return {
-    props: {recents: result}, // will be passed to the page component as props
+    props: { recents: result }, // will be passed to the page component as props
   }
 }
 

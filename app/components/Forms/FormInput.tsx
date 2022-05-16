@@ -1,6 +1,6 @@
-type InputProps = {value: string, placeholder: string, handleChange: (value: string) => void};
+type InputProps = { value: string; placeholder: string; handleChange: (value: string) => void }
 
-const FormInput = ({value, placeholder, handleChange}: InputProps) => {
+const FormInput = ({ value, placeholder, handleChange }: InputProps) => {
   return (
     <div className="border-b-4 border-prodekoBlue w-full bg-white shadow-xl justify-self-center">
       <input
@@ -9,10 +9,10 @@ const FormInput = ({value, placeholder, handleChange}: InputProps) => {
         placeholder={placeholder}
         aria-label={placeholder}
         value={value}
-        onChange={(event) => handleChange(event.target.value)}
+        onChange={event => handleChange(event.target.value)}
       />
     </div>
   )
 }
 
-export default FormInput;
+export default FormInput

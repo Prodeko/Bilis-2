@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Player, PlayerMeta } from "../../../common/types"
+import Link from 'next/link'
+import { Player, PlayerMeta } from '../../../common/types'
 
 type Props = {
   id?: PlayerMeta['id']
