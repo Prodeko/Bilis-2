@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { FiX } from 'react-icons/fi'
 import LeaderboardItem from '../Home/Leaderboard/LeaderboardItem'
-
 type Props = {
   children: JSX.Element
   onMouseEnter: () => void
@@ -54,8 +53,7 @@ const SideBarSearchBar: NextPage<Props> = ({
           <FiX size="36" />
         </button>
       </div>
-      {/* <div className='flex-none rounded-[48px] h-96 overflow-auto mt-8'> */}
-      <div className="flex flex-col gap-2 overflow-scroll max-h-[50vh] px-4 mt-6 mb-12">
+      <div className="flex flex-col gap-2 overflow-scroll h-[calc(100vh-520px)] px-4 mt-6 mb-12">
         <LeaderboardItem />
         <LeaderboardItem />
         <LeaderboardItem />

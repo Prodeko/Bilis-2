@@ -18,9 +18,9 @@ const Leaderboard: NextPage = () => {
         seasonalText={seasonalText}
       />
       <List>
-        <div className="flex flex-col gap-8 w-full">
+        <div className="flex flex-col gap-6 w-full">
           <h2>{allTimeSelected ? allTimeText : seasonalText} leaderboard</h2>
-          <div className="flex flex-col gap-6 h-[65vh] overflow-y-auto">
+          <div className="flex flex-col gap-4 h-[calc(100vh-370px)] overflow-y-auto">
             <LeaderboardItem />
             <LeaderboardItem />
             <LeaderboardItem />

@@ -23,9 +23,9 @@ const GameFlow = ({ recents }: Props): JSX.Element => {
   }, [])
 
   return (
-    <div className="h-full grid grid-rows-[60fr_40fr] gap-4">
+    <div className="h-full grid grid-rows-[50fr_50fr] gap-4">
       <List>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6">
           <Queue {...queue} />
           <WinnerSelectionBox
             {...queue}
