@@ -15,10 +15,10 @@ const Leaderboard: NextPage = () => {
         setAllTimeSelected={setAllTimeSelected}
         allTimeSelected={allTimeSelected}
         allTimeText={allTimeText}
-        seasonalText={seasonalText} 
+        seasonalText={seasonalText}
       />
       <List>
-        <div className='flex flex-col gap-8 w-full'>
+        <div className="flex flex-col gap-8 w-full">
           <h2>{allTimeSelected ? allTimeText : seasonalText} leaderboard</h2>
           <div className="flex flex-col gap-6 h-[65vh] overflow-y-auto">
             <LeaderboardItem />
