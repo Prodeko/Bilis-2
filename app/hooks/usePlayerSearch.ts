@@ -7,12 +7,12 @@ function usePlayerSearch(searchString: string): PlayerWithoutElo[] {
   const [searchResult, setSearchResult] = useState<PlayerWithoutElo[]>([])
 
   const searchUrl = `${baseUrl}?${encodeURIComponent(searchString)}`
-  
+
   useEffect(() => {
     ;(async () => {
       const response = await fetch(searchUrl)
       const result = (await response.json()) as PlayerWithoutElo[]
-      result.forEach(p => p.nickname = p.nickname || 'placeholder')
+      result.forEach(p => (p.nickname = p.nickname || 'placeholder'))
       setSearchResult(result)
     })()
   }, [searchUrl])
