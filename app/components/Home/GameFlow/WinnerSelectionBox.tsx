@@ -97,7 +97,7 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col gap-4 items-center">
       <div className="w-full flex flex-row flex-nowrap justify-evenly items-center">
         <div className="w-full flex flex-col items-center">
           <CurrentPlayerButton selectedPlayer={playerLeft} setSelectedPlayer={setPlayerLeft} handleClick={() => postGame('left')}/>
@@ -109,14 +109,16 @@ const WinnerSelectionBox = ({queue, removeLastFromQueue, getQueue, playerRight, 
           <CurrentPlayerButton selectedPlayer={playerRight} setSelectedPlayer={setPlayerRight} handleClick={() => postGame('right')}/>
         </div>
       </div>
-      <label>
-        <input
-          type="checkbox"
-          checked={underTable}
-          onChange={() => setUnderTable(!underTable)}
-        />
-        Pöydän alle
-      </label>
+      <div className="flex gap-3 align-center justify-center">
+        <label>
+          <input
+            type="checkbox"
+            checked={underTable}
+            onChange={() => setUnderTable(!underTable)}
+            />
+        </label>
+        <p>Pöydän alle</p>
+      </div>
     </div>
   )
 

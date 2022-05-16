@@ -22,7 +22,7 @@ const Sidebar: NextPage = () => {
 
   return (
     <aside className={`bg-prodekoBlue ${expandFull ? 'w-1/4 shadow-[0_25px_50px_-12px_rgba(0,0,0,1)]' : `${expandPartial ? 'w-48' : 'w-32'}`} fixed h-screen duration-200 transition-all z-20`}>  
-      <div className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full justify-start`}>
+      <div className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full  justify-start`}>
         <div className="flex flex-col gap-4 pt-4 px-4 w-full flex-1">
           <SidebarButton to="/">
             <FiHome size="42" />

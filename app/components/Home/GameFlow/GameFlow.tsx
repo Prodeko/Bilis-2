@@ -11,7 +11,6 @@ interface Props {
   recents: GameListItem[]
 }
 
-
 const GameFlow = ({ recents }: Props): JSX.Element => {
   const [playerLeft, setPlayerLeft] = useState<PlayerWithoutElo | null>(null)
   const [playerRight, setPlayerRight] = useState<PlayerWithoutElo | null>(null)
@@ -24,11 +23,17 @@ const GameFlow = ({ recents }: Props): JSX.Element => {
   }, [])
 
   return (
-    <List>
-      <Queue {...queue}/>
-      <WinnerSelectionBox  {...queue} playerLeft={playerLeft} playerRight={playerRight} setPlayerLeft={setPlayerLeft} setPlayerRight={setPlayerRight}/>
-      <Recents recents={recents} />
-    </List>
+    <div className="h-full grid grid-rows-[60fr_40fr] gap-4">
+      <List>
+        <div className="flex flex-col gap-5">
+          <Queue {...queue}/>
+          <WinnerSelectionBox  {...queue} playerLeft={playerLeft} playerRight={playerRight} setPlayerLeft={setPlayerLeft} setPlayerRight={setPlayerRight}/>
+        </div>
+      </List>
+      <List>
+        <Recents recents={recents} />
+      </List>
+    </div>
   )
 }
 
