@@ -12,7 +12,7 @@ const SidebarButton: NextPage<Props> = ({ to, children }) => {
 
   return (
     <Link href={to} passHref={true}>
-      <div className={` bg-gray-100 hover:bg-prodekoBtn bg-contain rounded-[48px] hover:rounded-[36px] w-24 h-24 ml-6 my-4 flex items-center justify-center duration-200 shadow-2xl hover:cursor-pointer hover:duration-200`}>
+      <div className={`bg-gray-100 bg-contain rounded-[48px] h-24 w-24 flex items-center justify-center shadow-2xl hover:bg-prodekoBtn hover:cursor-pointer hover:rounded-[36px] duration-300`}>
         {children}
       </div>
     </Link>

@@ -21,32 +21,27 @@ const Sidebar: NextPage = () => {
   }
 
   return (
-    <div className={`flex flex-col h-screen fixed bg-prodekoBlue ${expandPartial ? 'w-52' : 'w-36'} ${expandFull ? 'w-1/4 shadow-[0_25px_50px_-12px_rgba(0,0,0,1)]' : 'w-36'} duration-200 transition-all z-20 justify-between`}>
-      <div>
-        <div>
+    <aside className={`bg-prodekoBlue ${expandFull ? 'w-1/4 shadow-[0_25px_50px_-12px_rgba(0,0,0,1)]' : `${expandPartial ? 'w-48' : 'w-32'}`} fixed h-screen duration-200 transition-all z-20`}>  
+      <div className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full justify-start`}>
+        <div className="flex flex-col gap-4 pt-4 px-4 w-full flex-1">
           <SidebarButton to="/">
             <FiHome size="42" />
           </SidebarButton>
-        </div>
-        <div>
           <SidebarButton to="/stats">
             <FiBarChart2 size="42" />
           </SidebarButton>
-        </div>
-        <div>
           <SideBarSearchBar marginP={expandPartial} marginF={expandFull} onMouseEnter={expandP} onClick={expandF} >
             <FiSearch size="42" />
           </SideBarSearchBar>
         </div>
+        <div className="align-self-end px-2">
+          <Image src={logoPic}
+            width={110}
+            height={110}
+            alt="Prodeko logo" />
+        </div>
       </div>
-      {/* <div className='ml-2 mb-2 w-32 h-32'> */}
-      <div className='mx-2 w-32 justify-self-end'>
-        <Image src={logoPic}
-          width={500}
-          height={500}
-          alt="Prodeko logo" />
-      </div>
-    </div>
+    </aside>
   );
 };
 
