@@ -28,7 +28,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   const searchResults = usePlayerSearch(searchText)
 
   return (
-    <div className="flex flex-col bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
+    <div className="flex flex-col gap-4 bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
       <div className="flex flex-none w-full">
         {expanded ? (
           <button

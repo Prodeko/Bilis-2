@@ -32,10 +32,10 @@ const SideBarSearchBar: NextPage<Props> = ({
   }
 
   return (
-    <div className="flex flex-col bg-white shadow-xl hover:scale-[1.005] rounded-[52px] hover:cursor-pointer">
-      <div className="flex w-full">
-        <div className="pt-6 pl-6 pr-4 ">{children}</div>
-        <form className="w-full max-w-sm pt-4 pr-4 ">
+    <div className="flex flex-col align-center p-7 gap-6 bg-white shadow-xl hover:scale-[1.005] rounded-[52px] hover:cursor-pointer">
+      <div className="grid grid-cols-[3rem_1fr_3rem] gap-4 w-full">
+        <div>{children}</div>
+        <form className="w-full ">
           <div className="items-center border-b-4 border-prodekoBlue py-2">
             <input
               className="appearance-none bg-transparent border-none w-full text-gray-500 pr-3 py-1 leading-tight focus:outline-none"
@@ -45,15 +45,11 @@ const SideBarSearchBar: NextPage<Props> = ({
             />
           </div>
         </form>
-        <button
-          onClick={onClick}
-          className="border-transparent pt-6 pr-6 text-sm rounded"
-          type="button"
-        >
+        <button onClick={onClick} className="border-transparent text-sm rounded" type="button">
           <FiX size="36" />
         </button>
       </div>
-      <div className="flex flex-col gap-2 overflow-scroll h-[calc(100vh-520px)] px-4 mt-6 mb-12">
+      <div className="flex flex-col gap-2 overflow-scroll max-h-[calc(100vh-520px)] mb-6">
         <LeaderboardItem />
         <LeaderboardItem />
         <LeaderboardItem />

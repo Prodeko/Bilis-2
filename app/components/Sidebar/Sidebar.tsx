@@ -53,7 +53,7 @@ const Sidebar: NextPage = () => {
         </div>
       </aside>
       <div
-        className={`z-20 h-screen w-screen bg-gradient-to-r from-[rgba(0,0,0,0.8)] to-[rgba(0,0,0,0.5)] ${
+        className={`z-20 h-screen w-screen bg-gradient-to-r from-[rgba(0,0,0,0.8)] to-[rgba(0,0,0,0.6)] ${
           expandFull ? 'absolute' : 'hidden'
         }`}
       ></div>
