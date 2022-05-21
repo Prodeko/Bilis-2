@@ -22,7 +22,7 @@ const Queue = ({ queue, addToQueue, removeFromQueue }: Props) => {
         addToQueue={addToQueue}
         queue={queue}
       />
-      <div className="flex flex-col p-2 gap-2 overflow-y-auto h-[calc(50vh-33rem)]">
+      <div className="flex flex-col p-2 gap-2 overflow-y-auto h-[calc(50vh-32.5rem)]">
         {/* slice used here because the reverse method mutates the array */}
         {queue
           .slice()
@@ -37,7 +37,8 @@ const Queue = ({ queue, addToQueue, removeFromQueue }: Props) => {
                 first={queue.length - i == 1}
               />
             )
-          })}
+          })
+          .reverse()}
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { FiX, FiSearch } from 'react-icons/fi'
 import type { PlayerWithoutElo } from '../../../common/types'
 import PlayerSearchResult from './PlayerSearchResult'
+import BlackFilter from '../../Utility/BlackFilter'
 import usePlayerSearch from '../../../hooks/usePlayerSearch'
 
 interface Props {
@@ -28,11 +29,10 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   const searchResults = usePlayerSearch(searchText)
 
   return (
-    <div className="flex flex-col gap-4 bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
-      <div className="flex flex-none w-full">
+    <div className="flex flex-col gap-4 relative bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
+      <div className="flex gap-4 w-full">
         {expanded ? (
           <button
-            className="mx-2"
             onClick={() => {
               setExpanded(false)
               setEditing(false)
@@ -41,35 +41,38 @@ const CurrentPlayerSearch: NextPage<Props> = ({
             <FiX size="36" />
           </button>
         ) : (
-          <button className="mx-2" onClick={() => setExpanded(true)}>
+          <button onClick={() => setExpanded(true)}>
             <FiSearch size="36" />
           </button>
         )}
-        <form className="w-full max-w-sm">
-          <div className="flex items-center border-b-4 border-prodekoBlue py-1">
-            <input
-              className="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 leading-tight focus:outline-none"
-              type="text"
-              placeholder="Etsi pelaajaa"
-              aria-label="Full name"
-              value={searchText}
-              onChange={event => setSearchText(event.target.value)}
-              onClick={() => setExpanded(true)}
-            />
-          </div>
+        <form className="flex items-center border-b-4 border-prodekoBlue py-1 w-full">
+          <input
+            className="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Etsi pelaajaa"
+            aria-label="Full name"
+            value={searchText}
+            onChange={event => setSearchText(event.target.value)}
+            onClick={() => setExpanded(true)}
+          />
         </form>
       </div>
-      {expanded && (
-        <select value={searchText} size={10}>
+      <div className={`${expanded ? 'absolute' : 'hidden'} top-[4.3rem] left-0 w-full`}>
+        <select className="w-full h-[calc(50vh-20rem)]" value={searchText} size={10}>
           {searchResults
             .filter(player => !usedForQueue || queue.every(q => q.id != player.id))
             .map(player => (
-              <option key={player.id} value={player.firstName} onClick={() => handleSelect(player)}>
+              <option
+                className="px-4 py-2 hover:bg-gray-200 active:bg-gray-300"
+                key={player.id}
+                value={player.firstName}
+                onClick={() => handleSelect(player)}
+              >
                 {player.firstName} #{player.id}
               </option>
             ))}
         </select>
-      )}
+      </div>
     </div>
   )
 }

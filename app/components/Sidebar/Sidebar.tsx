@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import SidebarButton from './SidebarButton'
 import SideBarSearchBar from './SideBarSearchBar'
+import BlackFilter from '../Utility/BlackFilter'
 import { FiHome, FiBarChart2, FiSearch } from 'react-icons/fi'
 import logoPic from '../../common/images/prodekoLogoShade.png'
 
@@ -52,11 +53,7 @@ const Sidebar: NextPage = () => {
           </div>
         </div>
       </aside>
-      <div
-        className={`z-20 h-screen w-screen bg-gradient-to-r from-[rgba(0,0,0,0.8)] to-[rgba(0,0,0,0.6)] ${
-          expandFull ? 'absolute' : 'hidden'
-        }`}
-      ></div>
+      <BlackFilter zLevel="z-20" enabled={expandFull} />
     </>
   )
 }
