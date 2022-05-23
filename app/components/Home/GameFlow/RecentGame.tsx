@@ -1,5 +1,5 @@
 import { GameListItem } from '../../../common/types'
-import Card from './Card'
+import Card from '../../Utility/Card'
 
 const RecentGame = ({ game }: { game: GameListItem }) => {
   const loserEmoji = String.fromCodePoint(parseInt(game.winner.emoji.slice(2)))
