@@ -38,7 +38,7 @@ const WinnerSelectionBox = ({
   useEffect(() => {
     const item = localStorage.getItem('BilisKilkePlayers')
     const { playerLeft: newLeft, playerRight: newRight } = JSON.parse(
-      item ? item : ''
+      item ?? ''
     ) as PlayerStorage
     setPlayerLeft(newLeft)
     setPlayerRight(newRight)

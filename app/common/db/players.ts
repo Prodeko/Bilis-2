@@ -25,6 +25,7 @@ const addPlayer = async (
   lastName: string,
   nickname: string,
   favoriteColor: string,
+  emoji: string,
   elo: number = 400
 ) => {
   const player = await createPlayer({
@@ -32,6 +33,7 @@ const addPlayer = async (
     lastName,
     nickname,
     favoriteColor: hexToInt(favoriteColor),
+    emoji,
     elo,
   })
   await setPlayerToCache(player)

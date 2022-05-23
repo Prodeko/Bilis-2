@@ -43,7 +43,6 @@ const playerHandler = async (req: NextApiRequest, res: NextApiResponse<PlayerWit
         lastName: 'na',
         elo: 0,
         favoriteColor: 'na',
-        favoriteBall: 'na',
         nickname: 'na',
         emoji: 'na',
       })

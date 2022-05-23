@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 
 interface Props {
-  setAllTimeSelected: void
+  setAllTimeSelected: (arg: boolean) => void
   allTimeSelected: boolean
   allTimeText: string
   seasonalText: string
