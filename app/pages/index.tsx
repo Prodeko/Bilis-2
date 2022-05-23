@@ -1,32 +1,47 @@
 import type { NextPage } from 'next'
-import List from '../components/Utility/List'
 import Leaderboard from '../components/Home/Leaderboard/Leaderboard'
 import GameFlow from '../components/Home/GameFlow/GameFlow'
-import { GameListItem } from '../common/types'
+import { GameListItem, Player } from '../common/types'
 
 interface Props {
-  recents: GameListItem[]
+  recents: GameListItem[],
+  leaderboard: Player[]
 }
 
-const Home: NextPage<Props> = ({ recents }) => {
+const Home: NextPage<Props> = ({ recents, leaderboard }) => {
+  console.log(leaderboard);
   return (
     <div className="px-10 py-6 flex flex-col gap-12 h-screen content-center">
       <h1>Biliskilke 2.0</h1>
       <div className="grid grid-cols-2 gap-16 justify-items-center">
-        <Leaderboard />
+        <Leaderboard leaderboard={leaderboard} />
         <GameFlow recents={recents} />
       </div>
     </div>
   )
 }
 
-export async function getServerSideProps() {
-  const searchUrl = `http://localhost:3000/api/games/latest`
+const fetchLeaderboard = async () => {
+  const endpoint = `http://localhost:3000/api/players/leaderboard`;
+  const response = await fetch(endpoint);
+  const result = (await response.json()) as Player[];
+  return result;
+}
 
-  const response = await fetch(searchUrl)
-  const result = (await response.json()) as GameListItem[]
+const fetchLatestGames = async () => {
+  const endpoint = `http://localhost:3000/api/games/latest`;
+  const response = await fetch(endpoint);
+  const result = (await response.json()) as GameListItem[];
+  return result;
+}
+
+export async function getServerSideProps() {
+  const [leaderboard, recents] = await Promise.all([
+    fetchLeaderboard(),
+    fetchLatestGames()
+  ])
   return {
-    props: { recents: result }, // will be passed to the page component as props
+    props: { leaderboard, recents}, // will be passed to the page component as props
   }
 }
 

@@ -32,7 +32,8 @@ const playersHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         validatedData.firstName,
         validatedData.lastName,
         validatedData.nickname,
-        validatedData.favoriteColor
+        validatedData.favoriteColor,
+        validatedData.emoji,
       )
       // return empty response with proper status code
       res.status(201).end()
