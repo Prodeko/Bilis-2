@@ -17,7 +17,6 @@ interface Props {
 }
 
 const CurrentPlayerSearch: NextPage<Props> = ({
-  selectedPlayer,
   expanded,
   setExpanded,
   setEditing,
@@ -29,7 +28,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   const searchResults = usePlayerSearch(searchText)
 
   return (
-    <div className="flex flex-col gap-4 relative bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
+    <div className="flex flex-col gap-4 relative z-20 bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
       <div className="flex gap-4 w-full">
         {expanded ? (
           <button
@@ -53,6 +52,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
             aria-label="Full name"
             value={searchText}
             onChange={event => setSearchText(event.target.value)}
+            autoFocus
             onClick={() => setExpanded(true)}
           />
         </form>
@@ -63,12 +63,12 @@ const CurrentPlayerSearch: NextPage<Props> = ({
             .filter(player => !usedForQueue || queue.every(q => q.id != player.id))
             .map(player => (
               <option
-                className="px-4 py-2 hover:bg-gray-200 active:bg-gray-300"
+                className="px-4 py-2 hover:bg-gray-200 active:bg-gray-300 text-lg"
                 key={player.id}
                 value={player.firstName}
                 onClick={() => handleSelect(player)}
               >
-                {player.firstName} #{player.id}
+                #{player.id} {player.firstName} "{player.nickname}" {player.lastName}
               </option>
             ))}
         </select>
