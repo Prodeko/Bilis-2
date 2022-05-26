@@ -30,9 +30,9 @@ const Sidebar: NextPage = () => {
         }`}
       >
         <div
-          className={`grid grid-rows-[1fr_120px] grid-cols-1 gap-4 h-screen w-full  justify-start`}
+          className={`grid grid-rows-[1fr_8rem] grid-cols-1 gap-4 h-screen w-full justify-start`}
         >
-          <div className="flex flex-col gap-4 pt-4 px-4 w-full flex-1">
+          <div className="flex flex-col gap-4 pt-4 px-4 w-full">
             <SidebarButton to="/">
               <FiHome size="42" />
             </SidebarButton>
@@ -53,6 +53,7 @@ const Sidebar: NextPage = () => {
           </div>
         </div>
       </aside>
+
       <BlackFilter zLevel="z-20" enabled={expandFull} />
     </>
   )

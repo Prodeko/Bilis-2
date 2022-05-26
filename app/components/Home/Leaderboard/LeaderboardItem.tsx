@@ -13,10 +13,8 @@ const LeaderboardItem: NextPage<Props> = ({ player, position }) => {
   return (
     <Card id={player.id}>
       <div>{position}.</div>
-      <div className="flex justify-center">
-        <div className="shadow-l w-14 h-14 rounded-full bg-blue-500 text-xl flex justify-center items-center">
-          {renderEmoji(player.emoji)}
-        </div>
+      <div className="shadow-l w-14 h-14 rounded-full bg-blue-500 text-xl flex justify-center items-center">
+        {renderEmoji(player.emoji)}
       </div>
       <h5 className="font-bold">
         {player.firstName} {player.lastName}

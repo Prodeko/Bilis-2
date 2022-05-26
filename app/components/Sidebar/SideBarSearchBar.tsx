@@ -32,9 +32,9 @@ const SideBarSearchBar: NextPage<Props> = ({
   }
 
   return (
-    <div className="flex flex-col align-center p-7 gap-6 bg-white shadow-xl hover:scale-[1.005] rounded-[52px] hover:cursor-pointer">
+    <div className="flex flex-col align-center p-6 gap-6 bg-white shadow-xl hover:scale-[1.005] rounded-[52px] hover:cursor-pointer">
       <div className="grid grid-cols-[3rem_1fr_3rem] gap-4 w-full">
-        <div>{children}</div>
+        <div className="flex items-center justify-center">{children}</div>
         <form className="w-full ">
           <div className="items-center border-b-4 border-prodekoBlue py-2">
             <input
@@ -45,11 +45,46 @@ const SideBarSearchBar: NextPage<Props> = ({
             />
           </div>
         </form>
-        <button onClick={onClick} className="border-transparent text-sm rounded" type="button">
-          <FiX size="36" />
-        </button>
+        <div className="flex items-center justify-center">
+          <button onClick={onClick} className="border-transparent text-sm rounded" type="button">
+            <FiX size="36" />
+          </button>
+        </div>
       </div>
-      <div className="flex flex-col gap-2 overflow-scroll max-h-[calc(100vh-520px)] mb-6">
+      <div className="flex flex-col grow gap-2 overflow-scroll max-h-[calc(100vh-32rem)] mb-6">
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
+        <LeaderboardItem />
         <LeaderboardItem />
         <LeaderboardItem />
         <LeaderboardItem />

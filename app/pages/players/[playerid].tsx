@@ -1,37 +1,44 @@
 import { GetStaticProps, GetStaticPaths, NextPage, InferGetStaticPropsType } from 'next'
-import { PlayerWithStats } from '../../common/types'
+import { PlayerWithStats, MutualStatsPlayer } from '../../common/types'
+import List from '../../components/Utility/List'
+import TimeSeriesChart from '../../components/Graphs/TimeSeriesChart'
+import PieChart from '../../components/Graphs/PieChart'
+import PlayerHeader from '../../components/PlayerScreen/PlayerHeader'
+
+const dummyEloData = [
+  400, 410, 420.5, 410, 415, 399, 380, 370, 365, 355, 365, 370, 364, 358, 370, 381, 391, 398, 405,
+  410, 402, 413, 425, 433, 440, 437, 444, 431, 425, 437, 425, 421,
+]
+
+const playerColor = '#000'
+
+const dummyPlayer1 = {
+  name: 'Aleks',
+  mutualGamesWon: 14,
+  favoriteColor: '#F7F',
+}
 
 const PlayerScreen: NextPage = ({ player }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const playerEmoji = String.fromCodePoint(player.emoji.slice(2))
+  console.log(player)
   return (
-    <div className="h-screen">
-      <div className="bg-blue-600 flex items-center justify-around flex-wrap p-12 gap-16">
-        <div className="flex justify-center items-center gap-28 flex-wrap">
-          <div className="w-96 h-96 rounded-[50%] text-9xl bg-white flex justify-center items-center shadow-xl">
-            {playerEmoji}
+    <div className="h-screen grid grid-rows-[3fr_5fr]">
+      <PlayerHeader player={player} color={playerColor} />
+      <div className="grid grid-cols-[3fr_2fr] h-full p-10 gap-6">
+        <List>
+          <div className="flex flex-col gap-4 p-4">
+            <h2>All time</h2>
+            <TimeSeriesChart
+              eloData={dummyEloData}
+              chartName={'All Time Stats'}
+              dataName={'All Time'}
+              color={player.favoriteColor}
+              height={'270%'}
+            />
           </div>
-          <div className=" text-white text-5xl text-center">
-            <strong>
-              {player.firstName}
-              <i> "raikku"</i> {player.lastName}
-            </strong>{' '}
-            #5
-          </div>
-        </div>
-        <div className="text-white rounded-lg border-white border-[1px] p-12 gap-4">
-          <div>
-            <strong>Elo:</strong> {player.elo}
-          </div>
-          <div>
-            <strong>Suurin elo:</strong> {player.maxElo}
-          </div>
-          <div>
-            <strong>Suurin elo:</strong> {player.maxElo}
-          </div>
-          <div>
-            <strong>Voitetut:</strong> {player.wonGames} + <strong>Hävityt:</strong>{' '}
-            {player.lostGames} = {player.wonGames + player.lostGames}
-          </div>
+        </List>
+        <div className="flex flex-col gap-6 p-14">
+          <h2>Keskinäiset pelit</h2>
+          <PieChart player1={player} player2={dummyPlayer1} height={'100%'} />
         </div>
       </div>
     </div>
