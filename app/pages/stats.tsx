@@ -25,7 +25,7 @@ const dummyPlayer2 = {
 const Stats: NextPage = () => {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const headerRef = useRef<HTMLHeadingElement | null>(null)
-  const [charthHeight, setChartHeight] = useState(0)
+  const [chartHeight, setChartHeight] = useState(0)
 
   useEffect(() => {
     // Set chartHeight to be half of the available screen height
@@ -48,17 +48,17 @@ const Stats: NextPage = () => {
           chartName={'All Time Stats'}
           dataName={'All Time'}
           color={playerColor}
-          height={charthHeight}
+          height={chartHeight}
         />
         <TimeSeriesChart
           eloData={dummyEloData}
           chartName={'All Time Stats'}
           dataName={'All Time'}
           color={playerColor}
-          height={charthHeight}
+          height={chartHeight}
         />
-        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={charthHeight} />
-        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={charthHeight} />
+        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={chartHeight} />
+        <PieChart player1={dummyPlayer1} player2={dummyPlayer2} height={chartHeight} />
       </div>
     </div>
   )

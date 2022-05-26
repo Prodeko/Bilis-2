@@ -8,14 +8,14 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children }) => {
   return (
-    <div>
+    <>
       <Head>
         <title>Biliskilke 2.0</title>
         <meta charset="UTF-8" />
       </Head>
       <Sidebar />
       <div className="ml-32 bg-gray-50 h-screen max-h-screen">{children}</div>
-    </div>
+    </>
   )
 }
 

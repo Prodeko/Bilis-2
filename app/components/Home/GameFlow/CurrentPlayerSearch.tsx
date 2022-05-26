@@ -29,7 +29,7 @@ const CurrentPlayerSearch: NextPage<Props> = ({
   const searchResults = usePlayerSearch(searchText)
 
   return (
-    <div className="flex flex-col gap-4 relative bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all">
+    <div className="flex flex-col gap-4 relative bg-white shadow-xl w-full h-fit p-4 rounded-md transition-all z-50">
       <div className="flex gap-4 w-full">
         {expanded ? (
           <button

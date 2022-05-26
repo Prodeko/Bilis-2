@@ -123,11 +123,17 @@ const WinnerSelectionBox = ({
           />
         </div>
       </div>
-      <div className="flex gap-3 align-center justify-center">
-        <label>
-          <input type="checkbox" checked={underTable} onChange={() => setUnderTable(!underTable)} />
+      <div className="flex gap-3 items-center">
+        <input
+          className="h-full"
+          id="under"
+          type="checkbox"
+          checked={underTable}
+          onChange={() => setUnderTable(!underTable)}
+        />
+        <label className="font-bold" htmlFor="under">
+          Pöydän alle
         </label>
-        <p>Pöydän alle</p>
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 type Props = {
   player1: MutualStatsPlayer
   player2: MutualStatsPlayer
-  height?: number
+  height?: number | string
 }
 
 const PieChart: NextPage<Props> = ({ player1, player2, height }) => {
@@ -61,7 +61,7 @@ const PieChart: NextPage<Props> = ({ player1, player2, height }) => {
     },
   }
 
-  return <ApexCharts options={options} type="pie" series={series} height={height} width="90%" />
+  return <ApexCharts options={options} type="pie" series={series} height={height} width="100%" />
 }
 
 export default PieChart

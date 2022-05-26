@@ -12,7 +12,7 @@ type Props = {
   dataName: string
   chartName: string
   color: string
-  height?: number
+  height?: number | string
 }
 
 const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color, height }) => {
@@ -103,7 +103,7 @@ const TimeSeriesChart: NextPage<Props> = ({ eloData, dataName, chartName, color,
     },
   }
 
-  return <ApexCharts options={options} type="area" series={series} height={height} width="90%" />
+  return <ApexCharts options={options} type="area" series={series} height={height} width="100%" />
 }
 
 export default TimeSeriesChart
