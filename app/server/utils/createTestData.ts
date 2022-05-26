@@ -74,7 +74,8 @@ const createTestPlayers = async () => {
         firstName,
         lastName,
         generateNickname(firstName, lastName) || '',
-        `#${_.random(0, 16777215).toString(16).padStart(6, '0')}` || '#000000'
+        `#${_.random(0, 16777215).toString(16).padStart(6, '0')}` || '#000000',
+        "&#129312;",
       )
     )
   }
