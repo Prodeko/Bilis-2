@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { PlayerWithoutElo, QueueInfo } from '../../../common/types'
 import CurrentPlayerButton from './CurrentPlayerButton'
+import HeaderRow from '../../Utility/HeaderRow'
+import WinnerSelectionButton from './WinnerSelectionButton'
 import useQueue from '../../../hooks/useQueue'
 import { useRouter } from 'next/router'
 
@@ -33,13 +35,9 @@ const WinnerSelectionBox = ({
     playerLeft: PlayerWithoutElo
   }
 
-  const [underTable, setUnderTable] = useState<boolean>(false)
-
   useEffect(() => {
     const item = localStorage.getItem('BilisKilkePlayers')
-    const { playerLeft: newLeft, playerRight: newRight } = JSON.parse(
-      item ?? ''
-    ) as PlayerStorage
+    const { playerLeft: newLeft, playerRight: newRight } = JSON.parse(item ?? '') as PlayerStorage
     setPlayerLeft(newLeft)
     setPlayerRight(newRight)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,20 +65,20 @@ const WinnerSelectionBox = ({
     if (!(playerLeft && playerRight)) return
 
     switch (winner) {
-      case 'left':
+      case 'normal':
         game = {
           winnerId: playerLeft?.id,
           loserId: playerRight?.id,
-          underTable,
+          underTable: false,
         }
         setPlayerRight(queue[0])
         removeLastFromQueue()
         break
-      case 'right':
+      case 'under the table':
         game = {
-          winnerId: playerRight?.id,
-          loserId: playerLeft?.id,
-          underTable,
+          winnerId: playerLeft?.id,
+          loserId: playerRight?.id,
+          underTable: true,
         }
         setPlayerLeft(queue[0])
         removeLastFromQueue()
@@ -104,36 +102,36 @@ const WinnerSelectionBox = ({
 
   return (
     <div className="flex flex-col gap-4 items-center">
-      <div className="w-full flex flex-row flex-nowrap justify-evenly items-center">
+      <HeaderRow middleColumn="VS" />
+      <div className="w-full flex flex-row gap-4 flex-nowrap justify-evenly items-center">
         <div className="w-full flex flex-col items-center">
           <CurrentPlayerButton
             selectedPlayer={playerLeft}
             setSelectedPlayer={setPlayerLeft}
-            handleClick={() => postGame('left')}
+            leftSide={true}
           />
         </div>
-        <div className="flex flex-col items-center">
-          <p className="mx-6">vs</p>
+        <div className="flex flex-col gap-2">
+          <button
+            className="btn bg-green-600 hover:bg-green-500"
+            onClick={() => postGame('normal')}
+          >
+            Voittaja
+          </button>
+          <button
+            className="btn bg-slate-600 hover:bg-slate-500"
+            onClick={() => postGame('under the table')}
+          >
+            Pöytä
+          </button>
         </div>
         <div className="w-full flex flex-col items-center">
           <CurrentPlayerButton
             selectedPlayer={playerRight}
             setSelectedPlayer={setPlayerRight}
-            handleClick={() => postGame('right')}
+            leftSide={false}
           />
         </div>
-      </div>
-      <div className="flex gap-3 items-center">
-        <input
-          className="h-full"
-          id="under"
-          type="checkbox"
-          checked={underTable}
-          onChange={() => setUnderTable(!underTable)}
-        />
-        <label className="font-bold" htmlFor="under">
-          Pöydän alle
-        </label>
       </div>
     </div>
   )

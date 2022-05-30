@@ -17,6 +17,12 @@
   }
 }
 
+@layer components {
+  .btn {
+    @apply hover:-translate-y-1 py-2 px-4 text-white rounded-full shadow-xl transition-all
+  }
+}
+
 html,
 body {
   padding: 0;

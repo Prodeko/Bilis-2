@@ -8,16 +8,17 @@ type Props = {
 }
 
 const Card = ({ id, children, cols }: Props): JSX.Element => {
-  const colStructure = cols ? cols : 4
-  return (
-    <Link href={`/players/${id}`} passHref>
-      <div
-        className={`grid grid-cols-${colStructure} bg-white shadow-xl hover:scale-[1.01] py-4 px-8 rounded-md items-center gap-5 hover:cursor-pointer transition-all`}
-      >
-        {children}
-      </div>
-    </Link>
-  )
+  const colStructure = cols ? `grid-cols-${cols}` : `grid-cols-4`
+  const styles = `grid ${colStructure} bg-white shadow-xl hover:scale-[1.01] py-3 px-6 rounded-md items-center gap-2 hover:cursor-pointer transition-all`
+  if (id !== undefined) {
+    return (
+      <Link href={`/players/${id}`} passHref>
+        <div className={styles}>{children}</div>
+      </Link>
+    )
+  } else {
+    return <div className={styles}>{children}</div>
+  }
 }
 
 // const PlayerData = ({ Player }: {}): JSX.Element => {

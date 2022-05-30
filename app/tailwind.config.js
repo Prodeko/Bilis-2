@@ -11,6 +11,9 @@ module.exports = {
         prodekoBtn: "url('~/common/images/buttonBackground.png')",
         logo: "url('~/common/images/prodekoLogoShade.png')",
       },
+      gridTemplateColumns: {
+        headerRow: '1fr 7rem 1fr',
+      },
     },
   },
   plugins: [],

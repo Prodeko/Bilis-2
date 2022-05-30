@@ -11,14 +11,14 @@ interface Props {
 
 const LeaderboardItem: NextPage<Props> = ({ player, position }) => {
   return (
-    <Card id={player.id}>
-      <div>{position}.</div>
+    <Card id={player.id} cols={4}>
+      <p>{position}.</p>
       <div className="shadow-l w-14 h-14 rounded-full bg-blue-500 text-xl flex justify-center items-center">
         {renderEmoji(player.emoji)}
       </div>
-      <h5 className="font-bold">
+      <p className="font-bold">
         {player.firstName} {player.lastName}
-      </h5>
+      </p>
       <p>Pisteet {round(player.elo, 2)}</p>
     </Card>
   )
