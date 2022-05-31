@@ -14,7 +14,7 @@ const Queue = ({ queue, addToQueue, removeFromQueue }: Props) => {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerWithoutElo | null>(null)
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-6 w-full flex-grow">
       <h2>Jono</h2>
       <QueueSearchBox
         selectedPlayer={selectedPlayer}
@@ -22,7 +22,7 @@ const Queue = ({ queue, addToQueue, removeFromQueue }: Props) => {
         addToQueue={addToQueue}
         queue={queue}
       />
-      <div className="flex flex-col p-2 gap-2 overflow-y-auto h-[calc(50vh-33rem)]">
+      <div className="flex flex-col flex-grow p-2 gap-2 overflow-y-auto max-h-[calc(50vh-32rem)]">
         {/* slice used here because the reverse method mutates the array */}
         {queue
           .slice()

@@ -9,7 +9,7 @@ type Props = {
 
 const Card = ({ id, children, cols }: Props): JSX.Element => {
   const colStructure = cols ? `grid-cols-${cols}` : `grid-cols-4`
-  const styles = `grid ${colStructure} bg-white shadow-xl hover:scale-[1.01] py-3 px-6 rounded-md items-center gap-2 hover:cursor-pointer transition-all`
+  const styles = `grid ${colStructure} z-10 bg-white shadow-xl hover:scale-[1.01] py-3 px-6 rounded-md items-center gap-2 hover:cursor-pointer transition-all`
   if (id !== undefined) {
     return (
       <Link href={`/players/${id}`} passHref>

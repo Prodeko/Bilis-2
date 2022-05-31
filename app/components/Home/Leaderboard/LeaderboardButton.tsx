@@ -19,21 +19,19 @@ const LeaderboardButton: NextPage<Props> = ({
   const buttonProperties = 'w-[10rem] rounded-t transition-all py-1'
 
   return (
-    <div className="relative">
-      <div className="flex absolute -translate-y-9 gap-1 text-lg pl-[0.5rem]">
-        <button
-          className={`${buttonProperties} ${allTimeSelected ? active : disabled}`}
-          onClick={() => setAllTimeSelected(true)}
-        >
-          {allTimeText}
-        </button>
-        <button
-          className={`${buttonProperties} ${!allTimeSelected ? active : disabled}`}
-          onClick={() => setAllTimeSelected(false)}
-        >
-          {seasonalText}
-        </button>
-      </div>
+    <div className="flex absolute -translate-y-9 gap-1 text-lg pl-[0.5rem]">
+      <button
+        className={`${buttonProperties} ${allTimeSelected ? active : disabled}`}
+        onClick={() => setAllTimeSelected(true)}
+      >
+        {allTimeText}
+      </button>
+      <button
+        className={`${buttonProperties} ${!allTimeSelected ? active : disabled}`}
+        onClick={() => setAllTimeSelected(false)}
+      >
+        {seasonalText}
+      </button>
     </div>
   )
 }
