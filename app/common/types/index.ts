@@ -5,23 +5,17 @@ type ValidationError = {
   message: string
 }
 
-type PlayerMeta = {
+type Player = {
   id: number
   firstName: string
   lastName: string
   nickname: string
   emoji: string
-}
-
-type PlayerWithoutElo = PlayerMeta & {
   favoriteColor: string
-}
-
-type NewPlayer = Omit<PlayerWithoutElo, 'id'>
-
-type Player = PlayerWithoutElo & {
   elo: number
 }
+
+type NewPlayer = Omit<Player, 'id'>
 
 type PlayerWithStats = Player & {
   wonGames: number
@@ -30,22 +24,19 @@ type PlayerWithStats = Player & {
   minElo: number
 }
 
-type GameMeta = {
+type Game = {
   id: number
   datetime: Date
   underTable: boolean
   winnerElo: number
   loserElo: number
-}
-
-type Game = GameMeta & {
   winner: Player
   loser: Player
 }
 
-type GameListItem = GameMeta & {
-  winner: PlayerWithoutElo
-  loser: PlayerWithoutElo
+type GameListItem = Game & {
+  winner: Player
+  loser: Player
   winnerEloBefore: number
   loserEloBefore: number
 }
@@ -61,19 +52,12 @@ interface RequestWithPage extends NextApiRequest {
   pageSize?: number
 }
 
-interface QueueInfo extends PlayerWithoutElo {
-  time: Date
-}
-
 export type {
   Player,
   Game,
   ValidationError,
-  PlayerMeta,
   PlayerWithStats,
-  PlayerWithoutElo,
   NewPlayer,
-  QueueInfo,
   GameListItem,
   RequestWithPage,
   MutualStatsPlayer,
