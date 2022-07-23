@@ -1,24 +1,8 @@
 import type { NextPage } from 'next'
-import Leaderboard from '../components/Home/Leaderboard/Leaderboard'
-import GameFlow from '../components/Home/GameFlow/GameFlow'
 import { GameListItem, Player } from '../common/types'
 
-interface Props {
-  recents: GameListItem[]
-  leaderboard: Player[]
-}
-
-const Home: NextPage<Props> = ({ recents, leaderboard }) => {
-  console.log(leaderboard)
-  return (
-    <div className="px-10 py-6 flex flex-col gap-12 h-screen content-center">
-      <h1>Biliskilke 2.0</h1>
-      <div className="grid grid-cols-2 gap-16 justify-items-center">
-        <Leaderboard leaderboard={leaderboard} />
-        <GameFlow recents={recents} />
-      </div>
-    </div>
-  )
+const Home: NextPage = () => {
+  return <div>Tervetuloa bilikseen!</div>
 }
 
 const fetchLeaderboard = async () => {
