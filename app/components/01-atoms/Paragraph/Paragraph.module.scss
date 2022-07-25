@@ -1,0 +1,19 @@
+.paragraph {
+  margin: 0;
+  
+  &__XS {
+    font-size: 16px;
+  }
+  &__S {
+    font-size: 24px;
+  }
+  &__M {
+    font-size: 32px;
+  }
+  &__L {
+    font-size: 48px;
+  }
+  &__XL {
+    font-size: 96px;
+  }
+}
