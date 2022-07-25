@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
-import { PlayerMeta, PlayerWithoutElo, Player as ReturnPlayer } from '../../../common/types'
+import { Player as PlayerType } from '../../../common/types'
 import { intToHex } from '../../../common/utils/colorConvert'
 import dbConf from '../../utils/dbConf'
 
@@ -18,27 +18,15 @@ class Player extends Model {
 
   declare favoriteColor: number
 
-  getPlayerMeta(): PlayerMeta {
+  getPlayer(): PlayerType {
     return {
       id: this.id,
       firstName: this.firstName,
       lastName: this.lastName,
       nickname: this.nickname,
       emoji: this.emoji,
-    }
-  }
-
-  getPlayerWithoutElo(): PlayerWithoutElo {
-    return {
-      ...this.getPlayerMeta(),
-      favoriteColor: intToHex(this.favoriteColor),
-    }
-  }
-
-  getPlayerType(): ReturnPlayer {
-    return {
-      ...this.getPlayerWithoutElo(),
       elo: this.elo,
+      favoriteColor: intToHex(this.favoriteColor),
     }
   }
 }
