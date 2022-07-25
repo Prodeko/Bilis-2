@@ -4,7 +4,7 @@
     "paths": {
       "@common/*": ["common/*"],
       "@atoms/*": ["components/01-atoms/*"],
-      "@molecules/*": ["components/02-molecule/*"],
+      "@molecules/*": ["components/02-molecules/*"],
       "@organisms/*": ["components/03-organisms/*"],
       "@templates/*": ["components/04-templates/*"],
       "@server/*": ["server/*"]
