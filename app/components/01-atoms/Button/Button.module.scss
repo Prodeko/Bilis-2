@@ -13,7 +13,6 @@
 
   &__positive {
     background-color: green;
-
     &:hover {
       background-color: color.adjust(green, 3);
     }

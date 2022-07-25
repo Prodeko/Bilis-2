@@ -1,5 +1,5 @@
-import styles from './Button.module.scss'
 import { getCssClass } from '@common/utils/helperFunctions'
+import styles from './Button.module.scss'
 
 interface Props {
   onClick: () => void
