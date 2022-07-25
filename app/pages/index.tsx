@@ -6,10 +6,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <h1>Tervetuloa Bilikseen!</h1>
-      <Button onClick={() => 'nothing'} variations={['btn__winner']}>
+      <Button onClick={() => 'nothing'} variation="positive">
         Voittaja
       </Button>
-      <Button onClick={() => 'nothing'} variations={['btn__underTable']}>
+      <Button onClick={() => 'nothing'} variation="negative">
         Pöydän alle
       </Button>
     </div>
