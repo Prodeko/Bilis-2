@@ -1,7 +1,7 @@
 .btn {
   padding: 0.8rem 2.4rem;
   border-radius: 300px;
-  color: #222;
+  color: whitesmoke;
   border: 0;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
 
@@ -9,24 +9,22 @@
 
   &:hover {
     transform: translateY(-10%);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 6px;
   }
 
-  &__winner {
+  &__positive {
     background-color: green;
-    color: whitesmoke;
     
     &:hover {
       background-color: lighten(green, 3);
     }
   }
 
-  &__underTable {
-    background-color: #7B5804;
-    color: whitesmoke;
+  &__negative {
+    background-color: red;
 
     &:hover {
-      background-color: lighten(#7B5804, 3);
+      background-color: lighten(red, 3);
     }
   }
 }

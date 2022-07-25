@@ -1,15 +1,14 @@
 import styles from './Button.module.scss'
-import { ClassNames } from './Button.module.scss'
 
 interface Props {
   onClick: () => void
-  variations: ClassNames[]
+  variation: 'positive' | 'negative'
   children: string
 }
 
-const Button = ({ onClick, variations, children }: Props): JSX.Element => {
-  const allVariations = variations.concat('btn')
-  const classes = `${allVariations.map(variation => styles[variation]).join(' ')}`
+const Button = ({ onClick, variation, children }: Props): JSX.Element => {
+  const baseClass = 'btn'
+  const classes = `${styles[baseClass]} ${styles[`${baseClass}__${variation}`]}`
 
   return (
     <button type="button" className={classes} onClick={onClick}>
