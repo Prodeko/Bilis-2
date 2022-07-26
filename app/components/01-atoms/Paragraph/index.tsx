@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import styles from './Paragraph.module.scss'
+import { getCssClass } from '@common/utils/helperFunctions'
 
 interface ParagraphProps {
   variation: 'XXXS' | 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
@@ -7,7 +8,7 @@ interface ParagraphProps {
 }
 
 const Paragraph: NextPage<ParagraphProps> = ({ variation, children }) => {
-  return <p className={`${styles.paragraph} ${styles[`paragraph__${variation}`]}`}>{children}</p>
+  return <p className={getCssClass(styles, variation)}>{children}</p>
 }
 
 export default Paragraph
