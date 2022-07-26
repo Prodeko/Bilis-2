@@ -5,7 +5,11 @@ export const logWithBase = (x: number, base: number): number => Math.log(x) / Ma
 // matching the "baseClass" part from
 // the {baseClass}__{variation} key
 const getBaseClass = (module: Styles) => {
-  const key = Object.keys(module)[0]
+  const classKeys = Object.keys(module)
+  if (classKeys.length === 0) {
+    throw Error('Empty style sheet')
+  }
+  const key = classKeys[0]
   const regexPattern = /^(\w+)__/
   const matches = key.match(regexPattern)
   const baseClass = matches ? matches[1] : key
