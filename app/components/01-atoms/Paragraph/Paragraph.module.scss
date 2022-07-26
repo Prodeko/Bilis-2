@@ -1,19 +1,31 @@
+@import '../../main.scss';
+
 .paragraph {
-  margin: 0;
-  
+  &__XXXS {
+    font-size: $font-size-XXXS;
+  }
+  &__XXS {
+    font-size: $font-size-XXS;
+  }
   &__XS {
-    font-size: 16px;
+    font-size: $font-size-XS;
   }
   &__S {
-    font-size: 24px;
+    font-size: $font-size-S;
   }
   &__M {
-    font-size: 32px;
+    font-size: $font-size-M;
   }
   &__L {
-    font-size: 48px;
+    font-size: $font-size-L;
   }
   &__XL {
-    font-size: 96px;
+    font-size: $font-size-XL;
+  }
+  &__XXL {
+    font-size: $font-size-XXL;
+  }
+  &__XXXL {
+    font-size: $font-size-XXXL;
   }
 }
