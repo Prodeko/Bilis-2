@@ -1,4 +1,5 @@
 import styles from './Button.module.scss'
+import { getCssClass } from '@common/utils/helperFunctions'
 
 interface Props {
   onClick: () => void
@@ -7,11 +8,8 @@ interface Props {
 }
 
 const Button = ({ onClick, variation, children }: Props): JSX.Element => {
-  const baseClass = 'btn'
-  const classes = `${styles[baseClass]} ${styles[`${baseClass}__${variation}`]}`
-
   return (
-    <button type="button" className={classes} onClick={onClick}>
+    <button type="button" className={getCssClass(styles, variation)} onClick={onClick}>
       {children}
     </button>
   )
