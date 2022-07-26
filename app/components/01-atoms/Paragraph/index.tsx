@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import styles from './Paragraph.module.scss'
 
 interface ParagraphProps {
-  variation: 'XS' | 'S' | 'M' | 'L' | 'XL'
+  variation: 'XXXS' | 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
   children: string | number
 }
 
