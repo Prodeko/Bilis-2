@@ -52,6 +52,10 @@ interface RequestWithPage extends NextApiRequest {
   pageSize?: number
 }
 
+type Styles = {
+  readonly [key: string]: string
+}
+
 export type {
   Player,
   Game,
@@ -61,4 +65,5 @@ export type {
   GameListItem,
   RequestWithPage,
   MutualStatsPlayer,
+  Styles,
 }
