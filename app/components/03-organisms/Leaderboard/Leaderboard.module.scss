@@ -1,0 +1,12 @@
+@import "../../main";
+
+.leaderboard {
+  background: $white;
+  margin: $spacing-m;
+  padding: $spacing-m;
+  border-radius: $border-radius-small;
+  border: $border;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-l;
+}

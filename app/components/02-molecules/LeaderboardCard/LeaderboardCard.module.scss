@@ -3,4 +3,9 @@
 .card-item {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  justify-items: start;
+  padding-left: $spacing-l;
+  background: $background;
+  border: $border;
+  border-radius: $border-radius-small;
 }
