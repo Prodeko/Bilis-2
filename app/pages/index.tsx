@@ -1,19 +1,24 @@
 import type { NextPage } from 'next'
-import { GameListItem, Player } from '../common/types'
-import Button from '@atoms/Button'
+import Leaderboard from '@organisms/Leaderboard'
+import { API_URL } from '../config'
+import type { HomeLeaderboard } from '@common/types'
 
-const Home: NextPage = () => {
+interface Props {
+  leaderboard: HomeLeaderboard
+}
+
+const Home: NextPage<Props> = ({ leaderboard }: Props) => {
   return (
-    <div>
-      <h1>Tervetuloa Bilikseen!</h1>
-      <Button onClick={() => 'nothing'} variation="positive">
-        Voittaja
-      </Button>
-      <Button onClick={() => 'nothing'} variation="negative">
-        Pöydän alle
-      </Button>
-    </div>
+    <>
+      <Leaderboard leaderboard={leaderboard} />
+    </>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`${API_URL}/leaderboard`)
+  const leaderboard = await res.json()
+  return { props: { leaderboard } }
 }
 
 export default Home
