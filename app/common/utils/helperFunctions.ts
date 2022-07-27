@@ -4,7 +4,7 @@ export const logWithBase = (x: number, base: number): number => Math.log(x) / Ma
 // Get the base class from module automatically by
 // matching the "baseClass" part from
 // the {baseClass}__{variation} key
-const getBaseClass = (module: Styles) => {
+const getBaseClassName = (module: Styles) => {
   const classKeys = Object.keys(module)
   if (classKeys.length === 0) {
     throw Error('Empty style sheet')
@@ -16,8 +16,9 @@ const getBaseClass = (module: Styles) => {
   return baseClass
 }
 
-export const getCssClass = (module: Styles, variation: string): string => {
-  const baseClass = getBaseClass(module)
-  const variationClass = module[`${baseClass}__${variation}`]
+export const getCssClass = (module: Styles, variation?: string): string => {
+  const baseClassName = getBaseClassName(module)
+  const baseClass = module[baseClassName]
+  const variationClass = variation ? module[`${baseClassName}__${variation}`] : ''
   return `${baseClass} ${variationClass}`
 }

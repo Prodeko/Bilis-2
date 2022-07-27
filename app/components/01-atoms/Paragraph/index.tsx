@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
 import styles from './Paragraph.module.scss'
 import { getCssClass } from '@common/utils/helperFunctions'
+import { ReactNode } from 'react'
 
 interface ParagraphProps {
   variation: 'xxxs' | 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl'
-  children: string | number
+  children: ReactNode
 }
 
 const Paragraph: NextPage<ParagraphProps> = ({ variation, children }) => {

@@ -1,18 +1,11 @@
 import type { NextPage } from 'next'
-import { GameListItem, Player } from '../common/types'
-import Button from '@atoms/Button'
+import Leaderboard from '@organisms/Leaderboard'
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <h1>Tervetuloa Bilikseen!</h1>
-      <Button onClick={() => 'nothing'} variation="positive">
-        Voittaja
-      </Button>
-      <Button onClick={() => 'nothing'} variation="negative">
-        Pöydän alle
-      </Button>
-    </div>
+    <>
+      <Leaderboard />
+    </>
   )
 }
 
