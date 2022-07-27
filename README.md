@@ -37,3 +37,30 @@ Listaa ajamattomat migraatiot.
 #### `yarn dev:create-test-data [player_amount=20] [game_amount=30]`
 
 Generoi testidataa databaseen. Hakasuluissa argumentit skriptille ja oletusarvot.
+
+## Projektin erityisyyksiä (TÄRKEÄ!!)
+
+### Komponenttistruktuuri
+Komponenttien luomisessa käytämme ns. Atomic-designia. Jaottelemme komponentit neljään pääluokkaan: atoms, molecules, organisms ja templates. Molekyylit koostuvat atomeista, organismit molekyyleistä jne. Hyvä lähde hakea lisätietoa tästä designista löytyy seuraavan linkin takaa: (https://bradfrost.com/blog/post/atomic-web-design/)
+
+### SASS ja moduulit
+Uutta komponenttia tehdessä luodaan pääluokan alle uusi kansio, jonka nimeksi tulee komponentin nimi, esimerkiksi Button. Tämän kansion sisälle tulee kaksi tiedostoa: index.tsx, joka on perinteinen React-komponentti ja "ComponentName".module.scss, johon tulee komponenttikohtainen SCSS-koodi.
+
+#### SCSS
+CSS-framworkkina käytämme SASSia, josta voi lukea lisää...
+- virallisesta dokumentaatiosta (https://sass-lang.com/guide)
+- SASS vs CSS (https://www.youtube.com/watch?v=g1kF45K-q7o&list=PL4-IK0AVhVjMYRhK9vRPatSlb-9r0aKgh&index=4)
+
+SCSS-luokkien nimeäminen tapahtuu seuraavalla tavalla:
+- {baseClass}__{variation}--{modifier} --> btn__positive--active
+- baseClass on joku lyhyt viittaus komponentin nimeen, esim. Button-komponentti -> .btn
+- variation määrittää komponentin variantin, esim. btn__positive on vihreä nappi
+- modifier määrittää jonkin lisäominaisuuden, esim btn__positive--active on vihreä nappi, joka on tällä hetkellä aktiivisena
+
+#### Komponentit
+Komponentit ja niiden tyylit luodaan tietyn prosessin mukaan.
+1. Kirjoita komponenttilogiikka:
+- Propsit saavat lähtökohtaisesti seuraavat kolme propertya: 'onClick', 'variation' ja 'children'.
+- Näistä kolmesta variation on tärkein. Siihen kirjoitetaan stringeillä kaikki komponentin variantit, jolta löytyy vastaava class scss-tiedostosta, esim buttonin variantti 'positive' löytyy scss-tiedostosta nimellä .btn__positive (tämä on nestattu, checkaa 'Nesting'-osio täältä: https://sass-lang.com/guide)
+2. Importtaa SCSS-moduuli index.tsx-tiedostoon "import styles from './XXXX.module.scss'
+3. Importtaa funktio getCssClass, joka luo css-luokat "styles" ja "variation" muuttujien avulla -> import getCssClass from "@common/utils/helperFunctions". Kirjoita className={getCssClass(styles, variation)} -> tämä luo css-luokat automaattisesti.
