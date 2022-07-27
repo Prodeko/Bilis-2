@@ -14,6 +14,15 @@ type Player = {
   elo: number
 }
 
+type LeaderboardItem = {
+  position: number
+  points: number
+  emoji: string
+  name: string
+}
+
+type HomeLeaderboard = LeaderboardItem[]
+
 type NewPlayer = Omit<Player, 'id'>
 
 interface RequestWithPage extends NextApiRequest {
@@ -25,4 +34,4 @@ type Styles = {
   readonly [key: string]: string
 }
 
-export type { Player, ValidationError, NewPlayer, RequestWithPage, Styles }
+export type { Player, ValidationError, NewPlayer, RequestWithPage, HomeLeaderboard, Styles }

@@ -1,13 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-interface LeaderboardCard {
-  position: number
-  points: number
-  emoji: string
-  name: string
-}
-
-type Leaderboard = LeaderboardCard[]
+import type { Leaderboard } from '@common/types'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Leaderboard>) {
   const leaderboardMock = [

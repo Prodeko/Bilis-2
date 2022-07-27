@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
 import Leaderboard from '@organisms/Leaderboard'
 import { API_URL } from '../config'
+import type { HomeLeaderboard } from '@common/types'
 
 interface Props {
-  leaderboard: { position: number; points: number; emoji: string; name: string }[]
+  leaderboard: HomeLeaderboard
 }
 
 const Home: NextPage<Props> = ({ leaderboard }: Props) => {

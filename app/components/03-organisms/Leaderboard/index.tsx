@@ -2,9 +2,10 @@ import Paragraph from '@atoms/Paragraph'
 import { getCssClass } from '@common/utils/helperFunctions'
 import styles from './Leaderboard.module.scss'
 import LeaderboardCard from '@molecules/LeaderboardCard'
+import type { HomeLeaderboard } from '@common/types'
 
 interface Props {
-  leaderboard: { position: number; points: number; emoji: string; name: string }[]
+  leaderboard: HomeLeaderboard
 }
 
 const Leaderboard = ({ leaderboard }: Props): JSX.Element => {
