@@ -3,20 +3,19 @@
   border-radius: 300px;
   color: whitesmoke;
   border: 0;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
-
+  box-shadow: rgb(0 0 0 / 20%) 0 3px 8px;
   transition: all 0.2s;
 
   &:hover {
     transform: translateY(-10%);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 6px;
+    box-shadow: rgb(0 0 0 / 20%) 0 3px 6px;
   }
 
   &__positive {
     background-color: green;
-    
+
     &:hover {
-      background-color: lighten(green, 3);
+      background-color: color.adjust(green, 3);
     }
   }
 
@@ -24,7 +23,7 @@
     background-color: red;
 
     &:hover {
-      background-color: lighten(red, 3);
+      background-color: color.adjust(red, 3);
     }
   }
 }

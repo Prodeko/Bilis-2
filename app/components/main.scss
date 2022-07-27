@@ -6,24 +6,22 @@ $prodeko-blue-light: #4d6985;
 $prodeko-blue: #002851;
 $prodeko-blue-dark: #001c39;
 $prodeko-blue-darker: #001020;
-
-$white: #F0F0F2;
+$white: #f0f0f2;
 $grey-light: #434347;
 $grey: #434347;
 $grey-dark: #222224;
 $black: #0d0d0e;
 
 // Font sizes
-$font-size-XXXL: 8.6rem;
-$font-size-XXL: 5.2rem;
-$font-size-XL: 3.6rem;
-$font-size-L: 3rem;
-$font-size-M: 2.4rem;
-$font-size-S: 2rem;
-$font-size-XS: 1.6rem;
-$font-size-XXS: 1.4rem;
-$font-size-XXXS: 1.2rem;
-
+$font-size-xxxl: 8.6rem;
+$font-size-xxl: 5.2rem;
+$font-size-xl: 3.6rem;
+$font-size-l: 3rem;
+$font-size-m: 2.4rem;
+$font-size-s: 2rem;
+$font-size-xs: 1.6rem;
+$font-size-xxs: 1.4rem;
+$font-size-xxxs: 1.2rem;
 
 // Font weights
 $font-weight-bold: 700;
@@ -45,4 +43,4 @@ $border-radius-large: 11px;
 $border-radius-small: 9px;
 
 // Box shadow
-$box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+$box-shadow: 0 2.4rem 4.8rem rgb(0 0 0 / 7.5%);

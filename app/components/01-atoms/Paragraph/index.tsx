@@ -3,7 +3,7 @@ import styles from './Paragraph.module.scss'
 import { getCssClass } from '@common/utils/helperFunctions'
 
 interface ParagraphProps {
-  variation: 'XXXS' | 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL'
+  variation: 'xxxs' | 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl'
   children: string | number
 }
 

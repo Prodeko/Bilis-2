@@ -11,5 +11,7 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "stylelint.validate": ["css", "scss"],
+    "stylelint.configBasedir": "/Users/leevi.jakala/Dev/prodeko/Bilis-2/app",
     "recommendations": ["esbenp.prettier-vscode"]
 }
