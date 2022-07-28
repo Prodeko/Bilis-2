@@ -4,7 +4,6 @@ services:
   jest:
     image: node:16
     depends_on:
-      - redis
       - db
     working_dir: /usr/src/app
     container_name: next-app-jest
@@ -12,8 +11,6 @@ services:
     env_file: .dev.env
     volumes:
       - ./app:/usr/src/app
-  redis:
-    image: redislabs/redisearch:latest
   db:
     image: postgres
     env_file:
