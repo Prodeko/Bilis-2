@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
 import { Player as PlayerType } from '../../../common/types'
-import { intToHex } from '../../../common/utils/colorConvert'
 import dbConf from '../../utils/dbConf'
 
 class Player extends Model {
@@ -16,8 +15,6 @@ class Player extends Model {
 
   declare elo: number
 
-  declare favoriteColor: number
-
   getPlayer(): PlayerType {
     return {
       id: this.id,
@@ -26,7 +23,6 @@ class Player extends Model {
       nickname: this.nickname,
       emoji: this.emoji,
       elo: this.elo,
-      favoriteColor: intToHex(this.favoriteColor),
     }
   }
 }
@@ -57,10 +53,6 @@ Player.init(
     },
     emoji: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    favoriteColor: {
-      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
