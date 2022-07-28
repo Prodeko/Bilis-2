@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Leaderboard } from '@common/types'
+import type { HomeLeaderboard } from '@common/types'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Leaderboard>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<HomeLeaderboard>) {
   const leaderboardMock = [
     { position: 1, points: 100, emoji: '🫥', name: 'Aleks' },
     { position: 2, points: 53, emoji: '🥵', name: 'Sakari' },
