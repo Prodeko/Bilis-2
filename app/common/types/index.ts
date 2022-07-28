@@ -14,14 +14,7 @@ type Player = {
   elo: number
 }
 
-type LeaderboardItem = {
-  position: number
-  points: number
-  emoji: string
-  name: string
-}
-
-type HomeLeaderboard = LeaderboardItem[]
+type HomeLeaderboard = Player[]
 
 type NewPlayer = Omit<Player, 'id'>
 
