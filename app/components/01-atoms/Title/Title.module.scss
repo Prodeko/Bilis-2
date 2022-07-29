@@ -1,0 +1,18 @@
+@import "../../main";
+
+.title {
+  &__primary {
+    font-size: $font-size-xxxl;
+    font-weight: $font-weight-bold;
+  }
+
+  &__secondary {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-xxl;
+  }
+
+  &__tertiary {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-xl;
+  }
+}
