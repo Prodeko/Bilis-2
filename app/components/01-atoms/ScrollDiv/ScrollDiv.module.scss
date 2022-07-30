@@ -1,9 +1,9 @@
-@import "../../main";
+@import "~components/styles/config";
 
 .scroll {
   // height: 50vh;
   overflow: scroll;
   display: flex;
   flex-direction: column;
-  gap: $spacing-l;
+  gap: $spacing-12;
 }
