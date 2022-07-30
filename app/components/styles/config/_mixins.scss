@@ -1,0 +1,23 @@
+@mixin hover-background($color) {
+  background-color: $color;
+
+  &:hover {
+    background-color: darken($color, 3%);
+    cursor: pointer;
+  }
+}
+
+@mixin dual-grid($first_fr: 1fr, $second_fr: 1fr) {
+  display: grid;
+  grid-template-columns: $first_fr $second_fr;
+}
+
+@mixin padding-y($padding) {
+  padding-top: $padding;
+  padding-bottom: $padding;
+}
+
+@mixin padding-x($padding) {
+  padding-left: $padding;
+  padding-right: $padding;
+}
