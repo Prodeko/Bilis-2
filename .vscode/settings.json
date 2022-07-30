@@ -13,9 +13,12 @@
     },
     "editor.codeActionsOnSave": {
         "source.fixAll": true,
-        "source.fixAll.stylelint": true,
         "source.fixAll.eslint": true,
+        "source.fixAll.stylelint": true
     },
+    // Does not work
+    "css.validate": false,
+    "scss.validate": false,
     "stylelint.validate": ["css", "scss"],
     "stylelint.configBasedir": "./app",
     "recommendations": ["esbenp.prettier-vscode"]
