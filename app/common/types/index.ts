@@ -18,6 +18,17 @@ type HomeLeaderboard = Player[]
 
 type NewPlayer = Omit<Player, 'id'>
 
+type Game = {
+  id: number
+  winnerId: number
+  loserId: number
+  winnerElo: number
+  loserElo: number
+  underTable: boolean
+}
+
+export type NewGame = Omit<Game, 'id'>
+
 interface RequestWithPage extends NextApiRequest {
   page?: number
   pageSize?: number
