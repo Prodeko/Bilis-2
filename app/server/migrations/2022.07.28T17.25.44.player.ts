@@ -21,9 +21,10 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
       type: Sequelize.DOUBLE,
       allowNull: false,
     },
-    favorite_color: {
-      type: Sequelize.INTEGER,
+    emoji: {
+      type: Sequelize.STRING,
       allowNull: false,
+      defaultValue: '🥵',
     },
     created_at: {
       type: Sequelize.DATE,

@@ -9,17 +9,11 @@ services:
     working_dir: /usr/src/app
     env_file: .dev.env
     depends_on:
-      - redis
       - db
     ports:
       - "3000:3000"
     volumes:
       - ./app:/usr/src/app
-  redis:
-    image: redislabs/redisearch:latest
-    restart: always
-    volumes:
-      - cache:/data
   db:
     image: postgres
     restart: always
@@ -31,5 +25,4 @@ services:
       - "5432:5432"
 
 volumes:
-  cache:
   db-data:
