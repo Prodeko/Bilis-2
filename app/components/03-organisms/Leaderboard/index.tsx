@@ -1,8 +1,5 @@
-import Paragraph from '@atoms/Paragraph'
-import { getCssClass } from '@common/utils/helperFunctions'
-import styles from './Leaderboard.module.scss'
-import LeaderboardCard from '@molecules/LeaderboardCard'
 import type { HomeLeaderboard } from '@common/types'
+import styles from './Leaderboard.module.scss'
 
 interface Props {
   leaderboard: HomeLeaderboard
@@ -10,17 +7,34 @@ interface Props {
 
 const Leaderboard = ({ leaderboard }: Props): JSX.Element => {
   return (
-    <div className={getCssClass(styles)}>
-      <Paragraph variation="l">All time leaderboard</Paragraph>
-      {leaderboard.map(item => (
-        <LeaderboardCard
-          key={item.position}
-          position={item.position}
-          points={item.points}
-          emoji={item.emoji}
-          name={item.name}
-        />
-      ))}
+    <div className={styles.leaderboard}>
+      <h2 className={styles.title}>All time leaderboard</h2>
+      <table className={styles.keepHeight}>
+        <thead className={`${styles.leaderboardHeader}`}>
+          <th className={styles.leaderboardCardInfo}>
+            <p className={styles.tableItem}>Position</p>
+            <p className={styles.tableItem}>Name</p>
+          </th>
+          <th className={styles.leaderboardCardStats}>
+            <p className={styles.tableItem}>Elo</p>
+          </th>
+        </thead>
+        <tbody className={styles.scroll}>
+          {leaderboard.map(item => (
+            <tr key={item.position} className={styles.leaderboardCard}>
+              <td className={styles.leaderboardCardInfo}>
+                <p className={styles.tableItem}>{item.position}.</p>
+                <p className={styles.tableItem}>
+                  {item.emoji} {item.name}
+                </p>
+              </td>
+              <td className={styles.leaderboardCardStats}>
+                <p className={styles.tableItem}>{item.points}</p>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

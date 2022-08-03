@@ -1,12 +1,74 @@
-@import "../../main";
+@import "~components/styles/config";
+
+.keepHeight {
+  height: 100%;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 100%;
+  display: block;
+}
+
+.title {
+  font-size: $font-size-52;
+  font-weight: $font-weight-semibold;
+}
+
+.tableItem {
+  font-size: $font-size-20;
+}
 
 .leaderboard {
+  height: 100%;
   background: $white;
-  margin: $spacing-m;
-  padding: $spacing-m;
+  padding: $spacing-16;
   border-radius: $border-radius-small;
   border: $border;
   display: flex;
   flex-direction: column;
-  gap: $spacing-l;
+  gap: $spacing-24;
+
+  &Card {
+    align-items: center;
+    border: $border;
+    padding: $spacing-12 $spacing-16;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    @include padding-x($spacing-16);
+    @include padding-y($spacing-12);
+    @include dual-grid(30fr, 70fr);
+    @include hover-background($prodeko-blue-lighter);
+
+    &:nth-child(even) {
+      @include hover-background($prodeko-blue-lightest);
+    }
+
+    &Info {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: left;
+      width: minmax(20rem, 100%);
+    }
+
+    &Stats {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(1, 1fr);
+      width: 100%;
+      justify-items: right;
+    }
+  }
+
+  &Header {
+    @include dual-grid(30fr, 70fr);
+    @include padding-x($spacing-16);
+    @include padding-y($spacing-12);
+    align-items: center;
+    background: $prodeko-blue;
+    color: $prodeko-blue-lightest;
+    text-transform: uppercase;
+    font-weight: $font-weight-semibold;
+  }
 }
