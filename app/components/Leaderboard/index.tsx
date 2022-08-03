@@ -1,4 +1,5 @@
 import type { HomeLeaderboard } from '@common/types'
+import { round } from 'lodash'
 import styles from './Leaderboard.module.scss'
 
 interface Props {
@@ -20,16 +21,16 @@ const Leaderboard = ({ leaderboard }: Props): JSX.Element => {
           </th>
         </thead>
         <tbody className={styles.scroll}>
-          {leaderboard.map(item => (
-            <tr key={item.position} className={styles.leaderboardCard}>
+          {leaderboard.map((item, index) => (
+            <tr key={item.id} className={styles.leaderboardCard}>
               <td className={styles.leaderboardCardInfo}>
-                <p className={styles.tableItem}>{item.position}.</p>
+                <p className={styles.tableItem}>{index + 1}.</p>
                 <p className={styles.tableItem}>
-                  {item.emoji} {item.name}
+                  {item.emoji} {`${item.firstName} ${item.lastName}`}
                 </p>
               </td>
               <td className={styles.leaderboardCardStats}>
-                <p className={styles.tableItem}>{item.points}</p>
+                <p className={styles.tableItem}>{round(item.elo)}</p>
               </td>
             </tr>
           ))}
