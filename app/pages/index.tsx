@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import Leaderboard from '@organisms/Leaderboard'
 import type { HomeLeaderboard } from '@common/types'
 import { API_URL } from '../config'
+import Leaderboard from '@components/Leaderboard'
 
 interface Props {
   leaderboard: HomeLeaderboard
