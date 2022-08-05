@@ -1,3 +1,6 @@
+@import 'components/styles/config';
+
 .layout {
+  margin-left: $sidebar-width;
   height: 100vh;
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { getCssClass } from '@common/utils/helperFunctions'
+import Head from 'next/head'
+import Sidebar from './Sidebar'
 import styles from './Layout.module.scss'
 
 interface LayoutProps {
@@ -7,7 +8,16 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
-  return <div className={getCssClass(styles)}>{children}</div>
+  return (
+    <>
+      <Head>
+        <title>Biliskilke 2.0</title>
+        <meta charSet="UTF-8" />
+      </Head>
+      <Sidebar />
+      <main className={styles.layout}>{children}</main>
+    </>
+  )
 }
 
 export default Layout
