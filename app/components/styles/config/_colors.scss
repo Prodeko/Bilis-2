@@ -1,17 +1,17 @@
 // Color shades from: https://maketintsandshades.com
 
 // Blues
-$prodeko-blue-lightest: hsl(210deg, 70%, 98%);
-$prodeko-blue-lighter: hsl(210deg, 70%, 90%);
-$prodeko-blue-light: hsl(210deg, 100%, 82%);
-$prodeko-blue: hsl(210deg, 100%, 16%);
+$prodeko-blue-lightest: hsl(210deg 70% 98%);
+$prodeko-blue-lighter: hsl(210deg 70% 90%);
+$prodeko-blue-light: hsl(210deg 100% 82%);
+$prodeko-blue: hsl(210deg 100% 16%);
 
 // Whites
-$pure-white: hsl(0deg, 0%, 99%);
-$white: hsl(0deg, 0%, 95%);
-$white-grey: hsl(0deg, 0%, 90%);
+$pure-white: hsl(0deg 0% 99%);
+$white: hsl(0deg 0% 95%);
+$white-grey: hsl(0deg 0% 90%);
 
 // Blacks
-$black: hsl(255deg, 0%, 2%);
-$grey-black: hsl(255deg, 0%, 10%);
-$grey: hsl(255deg, 0%, 15%);
+$black: hsl(255deg 0% 2%);
+$grey-black: hsl(255deg 0% 10%);
+$grey: hsl(255deg 0% 15%);

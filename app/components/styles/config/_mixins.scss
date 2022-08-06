@@ -13,8 +13,8 @@
 }
 
 @mixin padding-y($padding) {
-  padding-top: $padding;
   padding-bottom: $padding;
+  padding-top: $padding;
 }
 
 @mixin padding-x($padding) {

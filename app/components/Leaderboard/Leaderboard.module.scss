@@ -5,9 +5,9 @@
 }
 
 .scroll {
-  overflow-y: scroll;
-  height: 100%;
   display: block;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .title {
@@ -20,44 +20,45 @@
 }
 
 .leaderboard {
-  height: 100%;
   background: $white;
-  padding: $spacing-16;
-  border-radius: $border-radius-small;
   border: $border;
+  border-radius: $border-radius-small;
   display: flex;
   flex-direction: column;
   gap: $spacing-24;
+  height: 100%;
+  padding: $spacing-16;
 
   &Card {
-    align-items: center;
-    border: $border;
-    padding: $spacing-12 $spacing-16;
-    flex-shrink: 0;
-    transition: all 0.3s;
     @include padding-x($spacing-16);
     @include padding-y($spacing-12);
     @include dual-grid(30fr, 70fr);
     @include hover-background($prodeko-blue-lighter);
+
+    align-items: center;
+    border: $border;
+    flex-shrink: 0;
+    padding: $spacing-12 $spacing-16;
+    transition: all 0.3s;
 
     &:nth-child(even) {
       @include hover-background($prodeko-blue-lightest);
     }
 
     &Info {
-      display: grid;
       align-items: center;
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
       justify-items: left;
       width: minmax(20rem, 100%);
     }
 
     &Stats {
-      display: grid;
       align-items: center;
+      display: grid;
       grid-template-columns: repeat(1, 1fr);
-      width: 100%;
       justify-items: right;
+      width: 100%;
     }
   }
 
@@ -65,10 +66,11 @@
     @include dual-grid(30fr, 70fr);
     @include padding-x($spacing-16);
     @include padding-y($spacing-12);
+
     align-items: center;
     background: $prodeko-blue;
     color: $prodeko-blue-lightest;
-    text-transform: uppercase;
     font-weight: $font-weight-semibold;
+    text-transform: uppercase;
   }
 }
