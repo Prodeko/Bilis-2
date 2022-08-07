@@ -4,7 +4,8 @@
     "paths": {
       "@common/*": ["common/*"],
       "@server/*": ["server/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@state/*": ["state/*"]
     },
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
