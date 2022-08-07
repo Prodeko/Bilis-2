@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import Head from 'next/head'
-import styles from '@components/Layout/Layout.module.scss'
+import styles from './BaseLayout.module.scss'
 import Sidebar from './Sidebar'
 
 interface LayoutProps {
