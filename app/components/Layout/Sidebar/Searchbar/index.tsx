@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import styles from '@components/Layout/Layout.module.scss'
 import { useStateValue } from '@state/index'
+import styles from './Searchbar.module.scss'
 
 interface Props {
   children: ReactNode

@@ -1,67 +1,44 @@
 @import 'components/styles/config';
 
 .sidebar {
-  padding: $spacing-12;
-  width: $sidebar-width;
+  @include padding-x($spacing-16);
+
   background: $prodeko-blue;
-  position: fixed;
   height: 100%;
+  position: fixed;
 }
 
 .linkContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: $spacing-12;
-  // color: $prodeko-blue;
+  gap: $spacing-16;
 }
 
 .sidebarLink {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  background-color: $pure-white;
-  width: 10rem;
-  height: 10rem;
-  border-radius: 50%;
-  color: $prodeko-blue;
-  transition: all 0.2s;
+  @extend %sidebar-circle;
+
   z-index: 2;
   
   &:hover {
     color: lighten($prodeko-blue, 15);
-    border-radius: 75%;
     transform: scale(1.05);
-
+    
     & > svg {
-      stroke: url(#bg-rainbow) lighten($prodeko-blue, 15);
+      stroke: url("#bg-rainbow") lighten($prodeko-blue, 15);
     }
   }
-
-  &::before {
-    content: "";
-    position: absolute;
-    background-color: $pure-white;
-    width: 100%;
-    height: 100%;
-    opacity: 0.6;
-    border-radius: 50%;
-    z-index: -1;
+  
+  &:active {
+    transform: scale(0.95);
   }
 
   &.fade::before {
-    animation-name: ping;
-    animation-duration: 1s;
-    animation-timing-function: (0, 0, 0.2, 1);
-    animation-iteration-count: 1;
+    @extend %sidebar-circle;
+    @extend %animation-ping;
   
-    @keyframes ping {
-      75%, 100% {
-        transform: scale(1.6);
-        opacity: 0;
-      }
-    }
+    content: "";
+    opacity: 0.6;
+    position: absolute;
+    z-index: -1;
   }
 }
-
