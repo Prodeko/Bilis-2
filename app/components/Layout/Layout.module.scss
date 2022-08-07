@@ -1,6 +1,59 @@
 @import 'components/styles/config';
 
 .layout {
-  margin-left: $sidebar-width;
   height: 100vh;
+  margin-left: $sidebar-width;
+}
+
+.sidebar {
+  @include padding-x($spacing-16);
+
+  background: $prodeko-blue;
+  height: 100%;
+  position: fixed;
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-16;
+}
+
+.sidebarLink {
+  @extend %sidebar-circle;
+
+  z-index: 2;
+  
+  &:hover {
+    color: lighten($prodeko-blue, 15);
+    transform: scale(1.05);
+    
+    & > svg {
+      stroke: url("#bg-rainbow") lighten($prodeko-blue, 15);
+    }
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.fade::before {
+    @extend %sidebar-circle;
+    @extend %animation-ping;
+  
+    content: "";
+    opacity: 0.6;
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+.searchbar {
+  @extend %sidebar-circle;
+
+  &:hover {
+    border-radius: 9999px;
+    cursor: pointer;
+    width: $searchbar-width-partial;
+  }
 }
