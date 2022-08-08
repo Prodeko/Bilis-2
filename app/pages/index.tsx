@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { HomeLeaderboard } from '@common/types'
-import { API_URL } from '../config'
+import { NEXT_PUBLIC_API_URL } from '../config'
 import Leaderboard from '@components/Leaderboard'
 import axios from 'axios'
 
@@ -13,7 +13,7 @@ const Home: NextPage<Props> = ({ leaderboard }: Props) => {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${API_URL}/leaderboard`)
+  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`)
   const leaderboard = res.data
   return { props: { leaderboard } }
 }
