@@ -5,8 +5,6 @@ import { FormEvent, useState } from 'react'
 const Home: NextPage = () => {
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
-    winnerElo: 400,
-    loserElo: 400,
   })
 
   const setGameField = (key: keyof NewGame) => (val: any) => {

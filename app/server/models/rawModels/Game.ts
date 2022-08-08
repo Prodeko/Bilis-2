@@ -4,9 +4,13 @@ import dbConf from '@server/utils/dbConf'
 class Game extends Model {
   declare id: number
 
-  declare winnerElo: number
+  declare winnerEloBefore: number
 
-  declare loserElo: number
+  declare loserEloBefore: number
+
+  declare winnerEloAfter: number
+
+  declare loserEloAfter: number
 
   declare underTable: boolean
 
@@ -21,11 +25,19 @@ Game.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    winnerElo: {
+    winnerEloBefore: {
       type: DataTypes.NUMBER,
       allowNull: false,
     },
-    loserElo: {
+    loserEloBefore: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+    },
+    winnerEloAfter: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+    },
+    loserEloAfter: {
       type: DataTypes.NUMBER,
       allowNull: false,
     },

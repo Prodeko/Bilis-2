@@ -19,11 +19,19 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
       references: { model: 'players', key: 'id' },
       allowNull: false,
     },
-    winner_elo: {
+    winner_elo_before: {
       type: Sequelize.DOUBLE,
       allowNull: false,
     },
-    loser_elo: {
+    loser_elo_before: {
+      type: Sequelize.DOUBLE,
+      allowNull: false,
+    },
+    winner_elo_after: {
+      type: Sequelize.DOUBLE,
+      allowNull: false,
+    },
+    loser_elo_after: {
       type: Sequelize.DOUBLE,
       allowNull: false,
     },

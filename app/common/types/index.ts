@@ -22,8 +22,10 @@ type Game = {
   id: number
   winnerId: number
   loserId: number
-  winnerElo: number
-  loserElo: number
+  winnerEloBefore: number
+  loserEloBefore: number
+  winnerEloAfter: number
+  loserEloAfter: number
   underTable: boolean
 }
 
