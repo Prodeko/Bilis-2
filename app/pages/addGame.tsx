@@ -1,19 +1,26 @@
 import { NewGame } from '@common/types'
+import axios from 'axios'
+import { NEXT_PUBLIC_API_URL } from '@config'
 import type { NextPage } from 'next'
 import { FormEvent, useState } from 'react'
 
 const Home: NextPage = () => {
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
+    winnerEloAfter: 420,
+    winnerEloBefore: 400,
+    loserEloBefore: 400,
+    loserEloAfter: 375,
   })
 
   const setGameField = (key: keyof NewGame) => (val: any) => {
     setGame({ ...game, [key]: val })
   }
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(game)
+    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
+    console.log(res.data)
   }
 
   return (

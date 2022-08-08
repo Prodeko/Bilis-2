@@ -29,7 +29,7 @@ type Game = {
   underTable: boolean
 }
 
-export type NewGame = Omit<Game, 'id'>
+type NewGame = Omit<Game, 'id'>
 
 interface RequestWithPage extends NextApiRequest {
   page?: number
@@ -40,4 +40,13 @@ type Styles = {
   readonly [key: string]: string
 }
 
-export type { Player, ValidationError, NewPlayer, RequestWithPage, HomeLeaderboard, Styles }
+export type {
+  Player,
+  ValidationError,
+  NewPlayer,
+  Game,
+  NewGame,
+  RequestWithPage,
+  HomeLeaderboard,
+  Styles,
+}

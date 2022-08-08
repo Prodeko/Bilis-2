@@ -1,5 +1,10 @@
-import { Player } from '@server/models'
-import { NewPlayer } from '@common/types'
+import { Game, Player } from '@server/models'
+import { NewGame, NewPlayer } from '@common/types'
+
+const createGame = async (game: NewGame) => {
+  const createdGame = await Game.create(game)
+  return createdGame
+}
 
 const createPlayer = async (player: NewPlayer) => {
   const createdPlayer = await Player.create(player)
@@ -19,4 +24,4 @@ const getPlayers = async () => {
   return players.map(p => p.getPlayer())
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV }
+export { getPlayers, createPlayer, createGame, clearPlayersDEV }
