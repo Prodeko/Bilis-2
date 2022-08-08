@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize'
-import { Player as PlayerType } from '../../../common/types'
-import dbConf from '../../utils/dbConf'
+import { Player as PlayerType } from '@common/types'
+import dbConf from '@server/utils/dbConf'
 
 class Player extends Model {
   declare id: number

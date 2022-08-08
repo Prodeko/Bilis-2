@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
-import dbConf from '../../utils/dbConf'
+import dbConf from '@server/utils/dbConf'
 
 class Game extends Model {
   declare id: number
