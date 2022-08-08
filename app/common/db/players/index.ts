@@ -6,6 +6,8 @@ const createPlayer = async (player: NewPlayer) => {
   return createdPlayer
 }
 
+const getPlayerById = async (id: number) => Player.findByPk(id)
+
 const clearPlayersDEV = () =>
   Player.destroy({
     where: {},
@@ -19,4 +21,4 @@ const getPlayers = async () => {
   return players.map(p => p.getPlayer())
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV }
+export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById }
