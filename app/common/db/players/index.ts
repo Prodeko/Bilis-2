@@ -1,5 +1,5 @@
 import { Player } from '@server/models'
-import { NewPlayer } from '@common/types'
+import { NewPlayer, Player as PlayerType } from '@common/types'
 
 const createPlayer = async (player: NewPlayer) => {
   const createdPlayer = await Player.create(player)
@@ -14,11 +14,11 @@ const clearPlayersDEV = () =>
     truncate: true,
   })
 
-const getPlayers = async () => {
+const getPlayers = async (): Promise<PlayerType[]> => {
   const players = await Player.findAll({
     order: [['elo', 'DESC']],
   })
-  return players.map(p => p.getPlayer())
+  return players.map(p => p.toJSON())
 }
 
 export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById }

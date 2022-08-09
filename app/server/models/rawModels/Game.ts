@@ -52,6 +52,16 @@ Game.init(
     timestamps: true,
     updatedAt: false,
     modelName: 'game',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt'],
+      },
+    },
+    hooks: {
+      async afterCreate(attrs) {
+        await attrs.reload()
+      },
+    },
   }
 )
 

@@ -14,17 +14,6 @@ class Player extends Model {
   declare emoji: string
 
   declare elo: number
-
-  getPlayer(): PlayerType {
-    return {
-      id: this.id,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      nickname: this.nickname,
-      emoji: this.emoji,
-      elo: this.elo,
-    }
-  }
 }
 
 Player.init(
@@ -61,6 +50,16 @@ Player.init(
     underscored: true,
     timestamps: true,
     modelName: 'player',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt'],
+      },
+    },
+    hooks: {
+      async afterCreate(attrs) {
+        await attrs.reload()
+      },
+    },
   }
 )
 
