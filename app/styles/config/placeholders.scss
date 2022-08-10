@@ -1,15 +1,21 @@
 @import './colors';
+@import './mixins';
 
-%sidebar-circle {
+%flex-center {
   align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+%sidebar-button {
+  @extend %flex-center;
+  @include button-styles(10rem);
+
   background-color: $pure-white;
   border-radius: 50%;
   color: $prodeko-blue;
-  display: flex;
-  height: 10rem;
-  justify-content: center;
   transition: all 0.2s;
-  width: 10rem;
+  z-index: 2;
 }
 
 %animation-ping {
@@ -24,4 +30,11 @@
   animation-iteration-count: 1;
   animation-name: ping;
   animation-timing-function: (0, 0, 0.2, 1);
+}
+
+%modal-position {
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 9999;
 }

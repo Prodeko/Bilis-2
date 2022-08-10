@@ -12,6 +12,52 @@
   grid-template-columns: $first_fr $second_fr;
 }
 
+@mixin button-styles($side-length) {
+  border: none;
+  height: $side-length;
+  width: $side-length;
+  
+}
+
+@mixin sidebar-button-hover {
+  &:hover {
+    color: lighten($prodeko-blue, 15);
+    transform: scale(1.05);
+    
+    & > svg {
+      stroke: url("#bg-rainbow") lighten($prodeko-blue, 15);
+    }
+  }
+}
+
+@mixin sidebar-button-click {
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@mixin modal-button-hover($shadow-color) {
+  &:hover {
+    box-shadow: rgba($shadow-color, 35%) 0 3px 8px;
+    cursor: pointer;
+    transform: translateY(-50%) translateX(-50%) scale(1.2);
+  }
+}
+
+@mixin modal-button-click() {
+  &:active {
+    transform: translateY(-50%) translateX(-50%) scale(1)
+  }
+}
+
+@mixin shadow-button($color) {
+  box-shadow: rgba($color, 35%) 0 3px 8px;
+}
+
+@mixin shadow-modal($color) {
+  box-shadow: rgb($color, 25%) 0 54px 55px, rgb($color, 12%) 0 -12px 30px, rgb($color, 12%) 0 4px 6px, rgb($color, 17%) 0 12px 13px, rgb($color, 9%) 0 -3px 5px;
+}
+
 @mixin padding-y($padding) {
   padding-bottom: $padding;
   padding-top: $padding;
