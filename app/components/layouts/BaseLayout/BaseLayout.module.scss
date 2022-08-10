@@ -2,5 +2,8 @@
 
 .layout {
   height: 100vh;
+
+  // DUM VALUE: should be calculated as: 2* sidebar paddingx + max(sidebarlink width)
   margin-left: $sidebar-width;
+
 }

@@ -1,10 +1,14 @@
 import { FiHome, FiSearch } from 'react-icons/fi'
 import Rainbow from '@components/utility/Rainbow'
+import { useState } from 'react'
 import styles from './Sidebar.module.scss'
 import SidebarLink from './SidebarLink'
-import Searchbar from './Searchbar'
+import SidebarButton from './SidebarButton'
+import PlayerSearchModal from './PlayerSearchModal'
 
 const Sidebar = () => {
+  const [visible, setVisible] = useState<boolean>(false)
+
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.linkContainer}>
@@ -12,9 +16,10 @@ const Sidebar = () => {
         <SidebarLink path="/">
           <FiHome size="42" />
         </SidebarLink>
-        <Searchbar>
+        <SidebarButton onClick={() => setVisible(!visible)}>
           <FiSearch size="42" />
-        </Searchbar>
+        </SidebarButton>
+        <PlayerSearchModal visible setVisible={setVisible} />
       </nav>
     </aside>
   )
