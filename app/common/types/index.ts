@@ -18,6 +18,19 @@ type HomeLeaderboard = Player[]
 
 type NewPlayer = Omit<Player, 'id'>
 
+type Game = {
+  id: number
+  winnerId: number
+  loserId: number
+  winnerEloBefore: number
+  loserEloBefore: number
+  winnerEloAfter: number
+  loserEloAfter: number
+  underTable: boolean
+}
+
+type NewGame = Omit<Game, 'id'>
+
 interface RequestWithPage extends NextApiRequest {
   page?: number
   pageSize?: number
@@ -27,4 +40,13 @@ type Styles = {
   readonly [key: string]: string
 }
 
-export type { Player, ValidationError, NewPlayer, RequestWithPage, HomeLeaderboard, Styles }
+export type {
+  Player,
+  ValidationError,
+  NewPlayer,
+  Game,
+  NewGame,
+  RequestWithPage,
+  HomeLeaderboard,
+  Styles,
+}
