@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { State } from './state'
 import { Action } from './actions'
 
