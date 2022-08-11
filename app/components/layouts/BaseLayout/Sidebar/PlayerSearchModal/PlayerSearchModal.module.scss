@@ -83,28 +83,3 @@
     outline: 1px green;
   }
 }
-
-.table {
-  @include flex-y($spacing-16);
-
-  & > * {
-    color: $white;
-    font-size: $font-size-24;
-  }
-
-  &Header {
-    @extend %modal-grid;
-  }
-}
-
-.player {
-  @extend %modal-grid;
-
-  background: $white;
-  color: $prodeko-blue;
-  
-
-  &:nth-child(even) {
-    background-color: $prodeko-blue-lighter;
-  }
-}
