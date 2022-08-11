@@ -49,7 +49,7 @@
 }
 
 @mixin shadow-modal($color) {
-  box-shadow: rgb($color, 25%) 0 54px 55px, rgb($color, 12%) 0 -12px 30px, rgb($color, 12%) 0 4px 6px, rgb($color, 17%) 0 12px 13px, rgb($color, 9%) 0 -3px 5px;
+  box-shadow: rgba($black, 56%) 0 22px 70px 4px;
 }
 
 @mixin padding-y($padding) {
