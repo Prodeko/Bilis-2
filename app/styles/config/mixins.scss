@@ -7,16 +7,10 @@
   }
 }
 
-@mixin dual-grid($first_fr: 1fr, $second_fr: 1fr) {
-  display: grid;
-  grid-template-columns: $first_fr $second_fr;
-}
-
 @mixin button-styles($side-length) {
   border: none;
   height: $side-length;
   width: $side-length;
-  
 }
 
 @mixin sidebar-button-hover {
