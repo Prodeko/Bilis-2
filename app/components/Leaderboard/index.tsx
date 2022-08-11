@@ -11,27 +11,29 @@ const Leaderboard = ({ leaderboard }: Props): JSX.Element => {
     <div className={styles.leaderboard}>
       <h2 className={styles.title}>All time leaderboard</h2>
       <table className={styles.keepHeight}>
-        <thead className={`${styles.leaderboardHeader}`}>
-          <th className={styles.leaderboardCardInfo}>
-            <p className={styles.tableItem}>Position</p>
-            <p className={styles.tableItem}>Name</p>
-          </th>
-          <th className={styles.leaderboardCardStats}>
-            <p className={styles.tableItem}>Elo</p>
-          </th>
+        <thead>
+          <tr className={`${styles.leaderboardHeader}`}>
+            <div className={styles.leaderboardCardInfo}>
+              <th className={styles.tableItem}>Position</th>
+              <th className={styles.tableItem}>Name</th>
+            </div>
+            <div className={styles.leaderboardCardStats}>
+              <th className={styles.tableItem}>Elo</th>
+            </div>
+          </tr>
         </thead>
         <tbody className={styles.scroll}>
           {leaderboard.map((item, index) => (
             <tr key={item.id} className={styles.leaderboardCard}>
-              <td className={styles.leaderboardCardInfo}>
-                <p className={styles.tableItem}>{index + 1}.</p>
-                <p className={styles.tableItem}>
+              <div className={styles.leaderboardCardInfo}>
+                <td className={styles.tableItem}>{index + 1}.</td>
+                <td className={styles.tableItem}>
                   {item.emoji} {`${item.firstName} ${item.lastName}`}
-                </p>
-              </td>
-              <td className={styles.leaderboardCardStats}>
-                <p className={styles.tableItem}>{round(item.elo)}</p>
-              </td>
+                </td>
+              </div>
+              <div className={styles.leaderboardCardStats}>
+                <td className={styles.tableItem}>{round(item.elo)}</td>
+              </div>
             </tr>
           ))}
         </tbody>
