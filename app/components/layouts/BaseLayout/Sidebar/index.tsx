@@ -10,7 +10,6 @@ import PlayerSearchModal from './PlayerSearchModal'
 const Sidebar = () => {
   const [visible, setVisible] = useState<boolean>(false)
   const [state] = useStateValue()
-  console.log('state', state)
 
   const toggleModal = () => {
     if (visible) {

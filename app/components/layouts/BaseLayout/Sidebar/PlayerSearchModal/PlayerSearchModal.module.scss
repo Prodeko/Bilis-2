@@ -1,0 +1,110 @@
+@import 'styles/config';
+
+.modal {
+  @extend %modal-position;
+  @extend %flex-center;
+
+  backdrop-filter: blur(10px);
+  background-color: rgb(255 255 255 / 50%);
+}
+
+.content {
+  @include shadow-modal($black);
+
+  background-color: $prodeko-blue;
+  border-radius: $border-radius-large;
+  height: 70vh;
+  position: relative;
+  width: 70vw;
+}
+
+.title { 
+  @include padding-x($spacing-24);
+  @include padding-y($spacing-12);
+  @include shadow-button($black);
+
+  background: $prodeko-blue;
+  border-radius: $border-radius-full;
+  color: $white;
+  display: inline-block;
+  font-size: $font-size-36;
+  left: 50%;
+  position: absolute;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.button {
+  @include modal-button-hover($pure-white);
+  @include modal-button-click;
+  @include shadow-button($black);
+  @include button-styles(6rem);
+  
+  background-color: inherit;
+  border-radius: 50%;
+  color: $white;
+  left: 0;
+  position: absolute;
+  transform: translateY(-50%) translateX(-50%);
+  transition: all 0.3s;
+}
+
+.layout {
+  @include padding-x($spacing-32);
+  @include padding-y($spacing-32);
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-32;
+  height: 100%;
+  padding-top: $spacing-64;
+}
+
+.searchbox {
+  background-color: $white-grey;
+  border-radius: $border-radius-small;
+  box-shadow: rgba($white, 35%) 0 3px 8px;
+  color: $prodeko-blue;
+  display: flex;
+  gap: $spacing-16;
+  padding: $spacing-12;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.input {
+  background-color: inherit;
+  border: none;
+  color: $grey-black;
+  flex-grow: 1;
+  font-size: 4rem;
+  outline: none;
+
+  :focus {
+    outline: 1px green;
+  }
+}
+
+.table {
+  @include flex-y($spacing-16);
+
+  & > * {
+    color: $white;
+    font-size: $font-size-24;
+  }
+
+  &Header {
+    @extend %modal-grid;
+  }
+}
+
+.player {
+  @extend %modal-grid;
+
+  background: $white;
+  color: $prodeko-blue;
+  
+
+  &:nth-child(even) {
+    background-color: $prodeko-blue-lighter;
+  }
+}
