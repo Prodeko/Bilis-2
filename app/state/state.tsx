@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useReducer, useMemo } from 'react'
+import type { HomeLeaderboard } from '@common/types'
 import { Action } from './actions'
 
 export type State = {
-  sidebar: 'normal' | 'partial' | 'full'
+  players: HomeLeaderboard
 }
 
 const initialState: State = {
-  sidebar: 'normal',
+  players: [],
 }
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
@@ -14,19 +15,13 @@ export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   () => initialState,
 ])
 
-export const reducer = (state: State, action: Action): State => {
-  return {
-    sidebar: action.payload,
-  }
-}
-
 type StateProviderProps = {
-  _reducer: React.Reducer<State, Action>
+  reducer: React.Reducer<State, Action>
   children: React.ReactElement
 }
 
-export const StateProvider = ({ _reducer, children }: StateProviderProps) => {
-  const [state, dispatch] = useReducer(_reducer, initialState)
+export const StateProvider = ({ reducer, children }: StateProviderProps) => {
+  const [state, dispatch] = useReducer(reducer, initialState)
   return (
     <StateContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}

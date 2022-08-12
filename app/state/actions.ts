@@ -1,25 +1,14 @@
-export type Action =
-  | {
-      type: 'NORMAL_SIDEBAR'
-      payload: 'normal'
-    }
-  | {
-      type: 'PARTIAL_SIDEBAR'
-      payload: 'partial'
-    }
-  | {
-      type: 'FULL_SIDEBAR'
-      payload: 'full'
-    }
+import type { HomeLeaderboard } from '@common/types'
 
-export const setNormalSidebar = (): Action => {
-  return { type: 'NORMAL_SIDEBAR', payload: 'normal' }
+export type Action = {
+  type: 'SET_PLAYERS'
+  payload: HomeLeaderboard
 }
+// | {
+//     type: 'REMOVE_PLAYERS'
+//     payload: []
+//   }
 
-export const setPartialSidebar = (): Action => {
-  return { type: 'PARTIAL_SIDEBAR', payload: 'partial' }
-}
-
-export const setFullSidebar = (): Action => {
-  return { type: 'FULL_SIDEBAR', payload: 'full' }
+export const setPlayers = (players: HomeLeaderboard): Action => {
+  return { type: 'SET_PLAYERS', payload: players }
 }

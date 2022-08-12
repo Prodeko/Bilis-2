@@ -21,8 +21,6 @@
 
 .leaderboard {
   background: $white;
-  border: $border;
-  border-radius: $border-radius-small;
   display: flex;
   flex-direction: column;
   gap: $spacing-24;
@@ -48,7 +46,7 @@
     &Info {
       align-items: center;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       justify-items: left;
       width: minmax(20rem, 100%);
     }
