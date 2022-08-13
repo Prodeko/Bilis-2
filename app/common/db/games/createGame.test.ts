@@ -73,4 +73,22 @@ describe('create game', () => {
       loserEloBefore: mockLoser.elo,
     })
   })
+
+  test("throws if player id's not given", async () => {
+    // Game with missing winnerId
+    const newGame = {
+      loserId: mockLoser.id,
+      underTable: false,
+    }
+    const f = () => createGame(newGame as any)
+    await expect(f).rejects.toThrow()
+
+    // Game with missing loserId
+    const newGame2 = {
+      winnerId: mockWinner.id,
+      underTable: false,
+    }
+    const g = () => createGame(newGame2 as any)
+    await expect(g).rejects.toThrow()
+  })
 })
