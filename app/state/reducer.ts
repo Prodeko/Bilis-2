@@ -1,6 +1,8 @@
-/* eslint-disable import/prefer-default-export */
-import { State } from './state'
-import { Action } from './actions'
+import type { HomeLeaderboard } from '@common/types'
+
+export type State = {
+  players: HomeLeaderboard
+}
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -11,4 +13,17 @@ export const reducer = (state: State, action: Action): State => {
     default:
       return state
   }
+}
+
+export type Action = {
+  type: 'SET_PLAYERS'
+  payload: HomeLeaderboard
+}
+// | {
+//     type: 'REMOVE_PLAYERS'
+//     payload: []
+//   }
+
+export const setPlayers = (players: HomeLeaderboard): Action => {
+  return { type: 'SET_PLAYERS', payload: players }
 }

@@ -1,10 +1,5 @@
 import React, { createContext, useContext, useReducer, useMemo } from 'react'
-import type { HomeLeaderboard } from '@common/types'
-import { Action } from './actions'
-
-export type State = {
-  players: HomeLeaderboard
-}
+import { Action, State } from './reducer'
 
 const initialState: State = {
   players: [],
