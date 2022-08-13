@@ -1,6 +1,6 @@
 import { NewGame } from '@common/types'
 import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
 import { FormEvent, useState } from 'react'
 
