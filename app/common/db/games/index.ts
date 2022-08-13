@@ -12,7 +12,9 @@ const getGameCountForPlayer = async (playerId: number) => {
   })
 }
 
-const createGame = async (game: NewGame) => {
+type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
+
+const createGame = async (game: CreateGameType) => {
   const [winner, loser, winnerGames, loserGames] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
