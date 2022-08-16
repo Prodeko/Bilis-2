@@ -1,12 +1,6 @@
 @import './colors';
 @import './mixins';
 
-%flex-center {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
 %sidebar-button {
   @extend %flex-center;
   @include button-styles(10rem);
