@@ -1,4 +1,4 @@
-import type { Player } from '@common/types'
+import type { PlayerExtended } from '@common/types'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 import leaderboardStyles from './Leaderboard.module.scss'
@@ -7,25 +7,26 @@ import modalStyles from './Modal.module.scss'
 type TableVariation = 'leaderboard' | 'modal'
 
 interface Props {
-  players: Player[]
+  players: PlayerExtended[]
   variation: TableVariation
+  filter: string | undefined
 }
 
 interface Settings {
   styles: { readonly [key: string]: string }
-  infoAttrs: Array<(keyof Player)[]>
-  statsAttrs: Array<(keyof Player)[]>
+  infoAttrs: Array<(keyof PlayerExtended)[]>
+  statsAttrs: Array<(keyof PlayerExtended)[]>
   infoNames: string[]
   statsNames: string[]
 }
 
-const Table = ({ players, variation }: Props) => {
-  const getStyles = (tableVariation: TableVariation): Settings => {
+const Table = ({ players, variation, filter }: Props) => {
+  const getProps = (tableVariation: TableVariation): Settings => {
     switch (tableVariation) {
       case 'leaderboard':
         return {
           styles: leaderboardStyles,
-          infoAttrs: [['emoji', 'firstName', 'lastName']],
+          infoAttrs: [['position'], ['emoji', 'fullName']],
           statsAttrs: [['elo']],
           infoNames: ['Position', 'Player'],
           statsNames: ['Elo'],
@@ -33,7 +34,7 @@ const Table = ({ players, variation }: Props) => {
       case 'modal':
         return {
           styles: modalStyles,
-          infoAttrs: [['emoji', 'firstName', 'lastName']],
+          infoAttrs: [['position'], ['emoji', 'fullName']],
           statsAttrs: [['elo']],
           infoNames: ['Position', 'Player'],
           statsNames: ['Elo'],
@@ -48,12 +49,18 @@ const Table = ({ players, variation }: Props) => {
         }
     }
   }
-  const { styles, infoAttrs, statsAttrs, infoNames, statsNames } = getStyles(variation)
+  const { styles, infoAttrs, statsAttrs, infoNames, statsNames } = getProps(variation)
 
   return (
     <table className={styles.table}>
       <TableHead infoNames={infoNames} statsNames={statsNames} styles={styles} />
-      <TableBody infoAttrs={infoAttrs} statsAttrs={statsAttrs} styles={styles} players={players} />
+      <TableBody
+        infoAttrs={infoAttrs}
+        statsAttrs={statsAttrs}
+        styles={styles}
+        players={players}
+        filter={filter}
+      />
     </table>
   )
 }
