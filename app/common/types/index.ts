@@ -14,7 +14,12 @@ type Player = {
   elo: number
 }
 
-type HomeLeaderboard = Player[]
+type PlayerExtended = Player & {
+  position: number
+  fullName: string
+}
+
+type HomeLeaderboard = PlayerExtended[]
 
 type NewPlayer = Omit<Player, 'id'>
 
@@ -42,6 +47,7 @@ type Styles = {
 
 export type {
   Player,
+  PlayerExtended,
   ValidationError,
   NewPlayer,
   Game,

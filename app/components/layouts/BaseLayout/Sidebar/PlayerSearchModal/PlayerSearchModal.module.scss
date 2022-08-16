@@ -46,6 +46,10 @@
   position: absolute;
   transform: translateY(-50%) translateX(-50%);
   transition: all 0.3s;
+
+  &Icon {
+    @include react-icon(40%);
+  }
 }
 
 .layout {
@@ -60,6 +64,7 @@
 }
 
 .searchbox {
+  align-items: center;
   background-color: $white-grey;
   border-radius: $border-radius-small;
   box-shadow: rgba($white, 35%) 0 3px 8px;
@@ -69,6 +74,10 @@
   padding: $spacing-12;
   transition: all 0.2s;
   width: 100%;
+
+  &Icon {
+    @include react-icon(4rem);
+  }
 }
 
 .input {

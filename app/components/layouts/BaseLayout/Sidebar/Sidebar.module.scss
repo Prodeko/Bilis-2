@@ -28,4 +28,8 @@
     position: absolute;
     z-index: -1;
   }
+
+  .sidebarIcon {
+    @include react-icon(40%);
+  }
 }
