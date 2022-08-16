@@ -23,12 +23,12 @@ const PlayerSearchModal = ({ visible, toggleModal, players }: Props) => {
     <dialog className={styles.modal}>
       <div className={styles.content}>
         <button type="button" className={styles.button} onClick={toggleModal}>
-          <FiX size={32} />
+          <FiX className={styles.buttonIcon} />
         </button>
         <h2 className={styles.title}>Player Search</h2>
         <form className={styles.layout}>
           <label htmlFor="#modal-search" className={styles.searchbox}>
-            <FiSearch size="42" />
+            <FiSearch className={styles.searchboxIcon} />
             <input
               id="#modal-search"
               className={styles.input}

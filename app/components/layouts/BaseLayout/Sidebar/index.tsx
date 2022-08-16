@@ -26,10 +26,10 @@ const Sidebar = () => {
       <nav className={styles.linkContainer}>
         <Rainbow />
         <SidebarLink path="/">
-          <FiHome size="42" />
+          <FiHome className={styles.sidebarIcon} />
         </SidebarLink>
         <SidebarButton onClick={toggleModal}>
-          <FiSearch size="42" />
+          <FiSearch className={styles.sidebarIcon} />
         </SidebarButton>
         <PlayerSearchModal visible={visible} toggleModal={toggleModal} players={state.players} />
       </nav>

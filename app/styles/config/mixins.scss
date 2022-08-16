@@ -61,3 +61,8 @@
   padding-left: $padding;
   padding-right: $padding;
 }
+
+@mixin react-icon($width) {
+  height: $width;
+  width: $width;
+}
