@@ -3,10 +3,12 @@
 .profileheader {
   align-items: center;
   background-color: $prodeko-profile-blue;
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
   display: flex;
   height: 30%;
   justify-content: space-around;
   padding: $spacing-32;
+  z-index: 1;
 }
 
 .emojiCircle {
