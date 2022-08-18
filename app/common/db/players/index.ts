@@ -8,6 +8,13 @@ const createPlayer = async (player: NewPlayer) => {
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
 
+const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
+  const player = await getPlayerById(id)
+  if (!player) throw Error(`Player with id ${id} not found`)
+  const updated = await player.update(data)
+  return updated
+}
+
 const clearPlayersDEV = () =>
   Player.destroy({
     where: {},
@@ -33,4 +40,4 @@ const getPlayers = async (): Promise<PlayerExtended[]> => {
   return extendedPlayers
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById }
+export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById, updatePlayerById }
