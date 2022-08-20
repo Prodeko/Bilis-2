@@ -1,6 +1,6 @@
 import { NewGame } from '@common/types'
 import { Game } from '@server/models'
-import { getPlayerById } from '@common/db/players'
+import { getPlayerById, updatePlayerById } from '@common/db/players'
 import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
 
@@ -29,13 +29,19 @@ const createGame = async (game: CreateGameType) => {
     loser.elo,
     loserGames
   )
+  const winnerEloAfter = winner.elo + winnerEloChange
+  const loserEloAfter = loser.elo + loserEloChange
   const createdGame = await Game.create({
     ...game,
-    winnerEloAfter: winner.elo + winnerEloChange,
-    loserEloAfter: loser.elo + loserEloChange,
+    winnerEloAfter,
+    loserEloAfter,
     winnerEloBefore: winner.elo,
     loserEloBefore: loser.elo,
   })
+  await Promise.all([
+    updatePlayerById(winner.id, { elo: winnerEloAfter }),
+    updatePlayerById(loser.id, { elo: loserEloAfter }),
+  ])
   return createdGame
 }
 

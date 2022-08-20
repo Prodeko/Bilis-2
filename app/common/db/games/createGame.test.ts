@@ -29,19 +29,20 @@ const players = {
 const winnerGames = 100
 const loserGames = 50
 
+const mockUpdatePlayerById = jest.fn()
+
 jest.mock('@common/db/players', () => ({
   getPlayerById: jest.fn(async id => {
     return players[id]
   }),
+  updatePlayerById: (...a: any) => mockUpdatePlayerById(...a),
 }))
 
+const mockGameCount = jest.fn()
 jest.mock('@server/models', () => ({
   Game: {
     create: jest.fn(),
-    count: jest
-      .fn()
-      .mockImplementationOnce(async () => winnerGames)
-      .mockImplementationOnce(async () => loserGames),
+    count: () => mockGameCount(),
   },
 }))
 
@@ -63,6 +64,10 @@ describe('create game', () => {
       loserGames
     )
 
+    mockGameCount
+      .mockImplementationOnce(async () => winnerGames)
+      .mockImplementationOnce(async () => loserGames)
+
     await createGame(newGame)
     expect(Game.create).toHaveBeenCalledTimes(1)
     expect(Game.create).toHaveBeenCalledWith({
@@ -71,6 +76,32 @@ describe('create game', () => {
       loserEloAfter: mockLoser.elo + loserEloChange,
       winnerEloBefore: mockWinner.elo,
       loserEloBefore: mockLoser.elo,
+    })
+  })
+
+  test('updates player elos', async () => {
+    const newGame = {
+      winnerId: mockWinner.id,
+      loserId: mockLoser.id,
+      underTable: false,
+    }
+    const [winnerEloChange, loserEloChange] = getScoreChange(
+      mockWinner.elo,
+      winnerGames,
+      mockLoser.elo,
+      loserGames
+    )
+    mockGameCount
+      .mockImplementationOnce(async () => winnerGames)
+      .mockImplementationOnce(async () => loserGames)
+
+    await createGame(newGame)
+    expect(mockUpdatePlayerById).toHaveBeenCalledTimes(2)
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(mockWinner.id, {
+      elo: mockWinner.elo + winnerEloChange,
+    })
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(mockLoser.id, {
+      elo: mockLoser.elo + loserEloChange,
     })
   })
 
