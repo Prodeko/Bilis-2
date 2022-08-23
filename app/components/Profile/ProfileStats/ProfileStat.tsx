@@ -1,11 +1,7 @@
+import { ProfileStatistic } from '@common/types'
 import styles from './ProfileStats.module.scss'
 
-interface Props {
-  label: string
-  value: string
-}
-
-const ProfileStat = ({ label, value }: Props) => {
+const ProfileStat = ({ label, value }: ProfileStatistic) => {
   return (
     <div className={styles.profilestat}>
       <p className={styles['profilestat--value']}>{value}</p>

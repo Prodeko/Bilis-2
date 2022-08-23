@@ -1,18 +1,11 @@
 import styles from './ProfileStats.module.scss'
 import ProfileStat from './ProfileStat'
-import { stat } from 'fs'
+import { ProfileStatistic } from '@common/types'
 
-const stats = [
-  { value: '400', label: 'Elo' },
-  { value: '287', label: 'Won games' },
-  { value: '389', label: 'Total games' },
-  { value: '74%', label: 'Win rate' },
-]
-
-const ProfileStats = () => {
+const ProfileStats = ({ stats }: { stats: ProfileStatistic[] }) => {
   return (
     <div className={styles.profilestats}>
-      {stats.map(stat => (
+      {stats.map((stat: ProfileStatistic) => (
         <ProfileStat {...stat} />
       ))}
     </div>

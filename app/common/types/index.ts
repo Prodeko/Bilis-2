@@ -45,6 +45,11 @@ type Styles = {
   readonly [key: string]: string
 }
 
+interface ProfileStatistic {
+  label: string
+  value: string
+}
+
 export type {
   Player,
   PlayerExtended,
@@ -55,4 +60,5 @@ export type {
   RequestWithPage,
   HomeLeaderboard,
   Styles,
+  ProfileStatistic,
 }
