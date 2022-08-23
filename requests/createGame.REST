@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/game
+Content-Type: application/json
+
+{
+  "winnerId": 2,
+  "loserId": 1,
+  "undertable": false
+}
