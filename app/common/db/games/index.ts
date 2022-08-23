@@ -5,9 +5,17 @@ import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
 
 const getGameCountForPlayer = async (playerId: number) => {
-  return Game.count({
+  return await Game.count({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+  })
+}
+
+const getWinGameCountForPlayer = async (playerId: number) => {
+  return await Game.count({
+    where: {
+      winnerId: playerId,
     },
   })
 }
@@ -45,4 +53,4 @@ const createGame = async (game: CreateGameType) => {
   return createdGame
 }
 
-export { createGame }
+export { createGame, getGameCountForPlayer, getWinGameCountForPlayer }

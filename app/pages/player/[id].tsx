@@ -4,17 +4,20 @@ import ProfileHeader from '@components/Profile/ProfileHeader'
 import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { Player } from '@common/types'
+import { PlayerWithStatistics } from '@common/types'
 import { round } from 'lodash'
 
-const PlayerPage: NextPage<Player> = ({
+const PlayerPage: NextPage<PlayerWithStatistics> = ({
   id,
   firstName,
   lastName,
   nickname,
   elo,
   emoji,
-}: Player) => {
+  wonGames,
+  totalGames,
+  winPercentage,
+}: PlayerWithStatistics) => {
   return (
     <ProfileLayout>
       <ProfileHeader
@@ -27,9 +30,9 @@ const PlayerPage: NextPage<Player> = ({
       <ProfileStats
         stats={[
           { label: 'Elo', value: round(elo).toString() },
-          { label: 'Won games', value: (284).toString() },
-          { label: 'Lost games', value: (493).toString() },
-          { label: 'Win percentage', value: '87%' },
+          { label: 'Won games', value: wonGames.toString() },
+          { label: 'Total games', value: totalGames.toString() },
+          { label: 'Win percentage', value: winPercentage },
         ]}
       />
     </ProfileLayout>
