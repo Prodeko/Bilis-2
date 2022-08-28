@@ -19,6 +19,12 @@ type PlayerExtended = Player & {
   fullName: string
 }
 
+type PlayerWithStatistics = Player & {
+  wonGames: number
+  totalGames: number
+  winPercentage: string
+}
+
 type HomeLeaderboard = PlayerExtended[]
 
 type NewPlayer = Omit<Player, 'id'>
@@ -45,6 +51,11 @@ type Styles = {
   readonly [key: string]: string
 }
 
+interface ProfileStatistic {
+  label: string
+  value: string
+}
+
 export type {
   Player,
   PlayerExtended,
@@ -55,4 +66,6 @@ export type {
   RequestWithPage,
   HomeLeaderboard,
   Styles,
+  ProfileStatistic,
+  PlayerWithStatistics,
 }

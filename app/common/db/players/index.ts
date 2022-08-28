@@ -6,7 +6,7 @@ const createPlayer = async (player: NewPlayer) => {
   return createdPlayer
 }
 
-const getPlayerById = async (id: number) => Player.findByPk(id)
+const getPlayerById = async (id: number) => await Player.findByPk(id)
 
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
   const player = await getPlayerById(id)

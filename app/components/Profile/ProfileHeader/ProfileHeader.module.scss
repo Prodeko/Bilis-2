@@ -1,0 +1,41 @@
+@import 'styles/config';
+
+.profileheader {
+  align-items: center;
+  background-color: $prodeko-profile-blue;
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+  display: flex;
+  height: 30%;
+  justify-content: space-around;
+  padding: $spacing-32;
+  z-index: 1;
+}
+
+.emojiCircle {
+  align-items: center;
+  aspect-ratio: 1/1;
+  background-color: $white;
+  border-radius: 50%;
+  box-shadow: rgb(0 0 0 / 19%) 0 10px 20px, rgb(0 0 0 / 23%) 0 6px 6px;
+  display: flex;
+  font-size: $font-size-152;
+  height: 100%;
+  justify-content: center;
+}
+
+.profileinfo {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-16;
+
+  &--primary {
+    font-size: $font-size-86;
+  }
+
+  &--secondary {
+    display: flex;
+    font-size: $font-size-30;
+    justify-content: space-evenly;
+  }
+}
