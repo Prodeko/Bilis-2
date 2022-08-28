@@ -32,7 +32,7 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
           { label: 'Elo', value: round(elo).toString() },
           { label: 'Won games', value: wonGames.toString() },
           { label: 'Total games', value: totalGames.toString() },
-          { label: 'Win percentage', value: winPercentage },
+          { label: 'Win percentage', value: winPercentage + '%' },
         ]}
       />
     </ProfileLayout>

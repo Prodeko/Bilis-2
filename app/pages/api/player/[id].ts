@@ -10,15 +10,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (isNumber(id)) {
       const player = await getPlayerById(id)
-      const wonGames = await getWinGameCountForPlayer(id)
-      const totalGames = await getGameCountForPlayer(id)
+
+      const [wonGames, totalGames] = await Promise.all([
+        getWinGameCountForPlayer(id),
+        getGameCountForPlayer(id),
+      ])
 
       if (player) {
         res.status(200).json({
           ...player.toJSON(),
           wonGames,
           totalGames,
-          winPercentage: round((wonGames / totalGames) * 100) + '%',
+          winPercentage: round((wonGames / totalGames) * 100),
         })
       } else {
         res.status(404).json({ error: `No player found with ID ${id}` })
