@@ -19,7 +19,9 @@ const PlayerList = ({ players, onChosen }: ListProps) => {
   )
 }
 
-const Home: NextPage = () => {
+type PlayerProps = { players: Player[] }
+
+const Home: NextPage<PlayerProps> = ({players}: PlayerProps) => {
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
   })
@@ -34,42 +36,16 @@ const Home: NextPage = () => {
     console.log(res.data)
   }
 
-  // TODO fetch ~top 20 from db
-  const testPlayers: Player[] = [{
-    id: 1,
-    firstName: "Teemu",
-    lastName: "Selänne",
-    nickname: "kiekko",
-    elo: 400,
-    emoji: "😎"
-  },
-  {
-    id: 2,
-    firstName: "Elvis",
-    lastName: "Presley",
-    nickname: "singa",
-    elo: 450,
-    emoji: "😎"
-  },
-  {
-    id: 3,
-    firstName: "Pekka",
-    lastName: "Herlin",
-    nickname: "kone",
-    elo: 420,
-    emoji: "😎"
-  }]
-
   return (
     <>
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
 
         <h1>WINNER</h1>
-        <PlayerList onChosen={setGameField('winnerId')} players={testPlayers} />
+        <PlayerList onChosen={setGameField('winnerId')} players={players} />
         <br/>
         <h1>LOSER</h1>
-        <PlayerList onChosen={setGameField('loserId')} players={testPlayers} />
+        <PlayerList onChosen={setGameField('loserId')} players={players} />
 
         <input
           onChange={item => setGameField('underTable')(item.target.checked)}
@@ -80,6 +56,12 @@ const Home: NextPage = () => {
       </form>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`)
+  const players = res.data
+  return { props: { players } }
 }
 
 export default Home
