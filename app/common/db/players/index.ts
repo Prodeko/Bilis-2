@@ -17,8 +17,7 @@ const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
 
 const clearPlayersDEV = () =>
   Player.destroy({
-    where: {},
-    truncate: true,
+    where: {}
   })
 
 const getPlayers = async (): Promise<PlayerExtended[]> => {
