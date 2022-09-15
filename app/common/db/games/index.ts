@@ -53,4 +53,9 @@ const createGame = async (game: CreateGameType) => {
   return createdGame
 }
 
-export { createGame, getGameCountForPlayer, getWinGameCountForPlayer }
+const clearGamesDEV = () =>
+  Game.destroy({
+    where: {}
+  })
+
+export { createGame, getGameCountForPlayer, getWinGameCountForPlayer, clearGamesDEV }
