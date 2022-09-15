@@ -1,5 +1,5 @@
-import { NewGame } from '@common/types'
-import { Game } from '@server/models'
+import { GameWithPlayers, NewGame } from '@common/types'
+import { Game, Player } from '@server/models'
 import { getPlayerById, updatePlayerById } from '@common/db/players'
 import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
@@ -18,6 +18,20 @@ const getWinGameCountForPlayer = async (playerId: number) => {
       winnerId: playerId,
     },
   })
+}
+
+const getLatestGames = async (n=20): Promise<GameWithPlayers[]> => {
+  const games = await Game.findAll({
+    order: [['createdAt', 'DESC']],
+    include: [
+      {model: Player, as: "winner"},
+      {model: Player, as: "loser"}
+    ],
+    limit: n,
+  })
+
+  const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
+  return jsonGames
 }
 
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
@@ -58,4 +72,4 @@ const clearGamesDEV = () =>
     where: {}
   })
 
-export { createGame, getGameCountForPlayer, getWinGameCountForPlayer, clearGamesDEV }
+export { createGame, getGameCountForPlayer, getWinGameCountForPlayer, getLatestGames, clearGamesDEV }
