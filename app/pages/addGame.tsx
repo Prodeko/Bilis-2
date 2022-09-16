@@ -31,7 +31,12 @@ const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
 
 type PlayerProps = { players: Player[] }
 
-const Home: NextPage<PlayerProps> = ({players}: PlayerProps) => {
+const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
+  const [playerLists, setPlayerLists] = useState<{ winner: Player[]; loser: Player[] }>({
+    winner: players,
+    loser: players,
+  })
+
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
   })
@@ -51,10 +56,18 @@ const Home: NextPage<PlayerProps> = ({players}: PlayerProps) => {
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
         <h1>WINNER</h1>
-        <PlayerList onChosen={setGameField('winnerId')} players={players} chosen={game.winnerId} />
+        <PlayerList
+          onChosen={setGameField('winnerId')}
+          players={playerLists.winner}
+          chosen={game.winnerId}
+        />
         <br />
         <h1>LOSER</h1>
-        <PlayerList onChosen={setGameField('loserId')} players={players} chosen={game.loserId} />
+        <PlayerList
+          onChosen={setGameField('loserId')}
+          players={playerLists.loser}
+          chosen={game.loserId}
+        />
 
         <input
           onChange={item => setGameField('underTable')(item.target.checked)}
