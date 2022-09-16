@@ -2,8 +2,33 @@ import { NewGame } from '@common/types'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Player } from '@common/types'
+
+type SearchProps = {
+  onSearchDone: (players: Player[]) => void
+}
+
+const PlayerSearch = ({ onSearchDone }: SearchProps) => {
+  const [query, setQuery] = useState<string>('')
+
+  useEffect(() => {
+    const isEmpty = query.length === 0
+    if (!isEmpty) search(query)
+  }, [query])
+
+  const search = async (query: string) => {
+    // TODO call player search endpoint with query
+    const players: Player[] = []
+    onSearchDone(players)
+  }
+
+  return (
+    <div>
+      <input onChange={({ target }) => setQuery(target.value)} placeholder="Search for player..." />
+    </div>
+  )
+}
 
 type ListProps = { players: Player[]; onChosen: (id: number) => void; chosen: number | undefined }
 
@@ -56,6 +81,7 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
         <h1>WINNER</h1>
+        <PlayerSearch onSearchDone={p => setPlayerLists({ ...playerLists, winner: p })} />
         <PlayerList
           onChosen={setGameField('winnerId')}
           players={playerLists.winner}
@@ -63,6 +89,7 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
         />
         <br />
         <h1>LOSER</h1>
+        <PlayerSearch onSearchDone={p => setPlayerLists({ ...playerLists, loser: p })} />
         <PlayerList
           onChosen={setGameField('loserId')}
           players={playerLists.loser}
