@@ -1,5 +1,6 @@
+import { Op } from 'sequelize'
 import { Player } from '@server/models'
-import { Player as PlayerType } from "@common/types"
+import { Player as PlayerType } from '@common/types'
 import { NewPlayer, PlayerExtended } from '@common/types'
 import { getLatestGames } from '../games'
 import _ from 'lodash'
@@ -50,4 +51,34 @@ const getLatestPlayers = async (n = 20) => {
   return uniquePlayers.slice(0, n)
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById, updatePlayerById, getLatestPlayers }
+const searchPlayers = async (query: string): Promise<Player[]> => {
+  const players = await Player.findAll({
+    where: {
+      [Op.or]: [
+        {
+          firstName: {
+            [Op.iLike]: `%${query}%`,
+          },
+        },
+        {
+          lastName: {
+            [Op.iLike]: `%${query}%`,
+          },
+        },
+      ],
+    },
+  })
+
+  const jsonPlayers = players.map(p => p.toJSON())
+  return jsonPlayers
+}
+
+export {
+  getPlayers,
+  createPlayer,
+  clearPlayersDEV,
+  getPlayerById,
+  updatePlayerById,
+  getLatestPlayers,
+  searchPlayers,
+}
