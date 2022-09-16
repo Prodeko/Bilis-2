@@ -31,8 +31,10 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
   }, [query])
 
   const search = async (query: string) => {
-    // TODO call player search endpoint with query
-    const players: Player[] = []
+    const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+      params: { query },
+    })
+    const players = res.data
     onSearchDone(players)
   }
 
