@@ -5,14 +5,24 @@ import type { NextPage } from 'next'
 import { FormEvent, useState } from 'react'
 import { Player } from '@common/types'
 
-type ListProps = { players: Player[], onChosen: (id: number) => void }
+type ListProps = { players: Player[]; onChosen: (id: number) => void; chosen: number | undefined }
 
-const PlayerList = ({ players, onChosen }: ListProps) => {
+const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
   return (
-    <div>
+    <div style={{ width: 400 }}>
       {players.map(p => (
-        <div key={p.id} onClick={() => onChosen(p.id)}>
-          <h1>{p.firstName} {p.lastName}: {p.elo}</h1>
+        <div
+          style={{
+            width: '100%',
+            padding: 5,
+            background: chosen === p.id ? '#fafafa' : 'transparent',
+          }}
+          key={p.id}
+          onClick={() => onChosen(p.id)}
+        >
+          <h1>
+            {p.firstName} {p.lastName}: {p.elo}
+          </h1>
         </div>
       ))}
     </div>
@@ -40,12 +50,11 @@ const Home: NextPage<PlayerProps> = ({players}: PlayerProps) => {
     <>
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
-
         <h1>WINNER</h1>
-        <PlayerList onChosen={setGameField('winnerId')} players={players} />
-        <br/>
+        <PlayerList onChosen={setGameField('winnerId')} players={players} chosen={game.winnerId} />
+        <br />
         <h1>LOSER</h1>
-        <PlayerList onChosen={setGameField('loserId')} players={players} />
+        <PlayerList onChosen={setGameField('loserId')} players={players} chosen={game.loserId} />
 
         <input
           onChange={item => setGameField('underTable')(item.target.checked)}
