@@ -7,14 +7,26 @@ import { Player } from '@common/types'
 
 type SearchProps = {
   onSearchDone: (players: Player[]) => void
+  onSearchActiveChanged: (isActive: boolean) => void
 }
 
-const PlayerSearch = ({ onSearchDone }: SearchProps) => {
+const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
+  const [searchActive, setSearchActive] = useState<boolean>(false)
   const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
+    onSearchActiveChanged(searchActive)
+  }, [searchActive])
+
+  useEffect(() => {
     const isEmpty = query.length === 0
-    if (!isEmpty) search(query)
+    if (isEmpty && searchActive) {
+      setSearchActive(false)
+    } else if (!isEmpty && !searchActive) {
+      setSearchActive(true)
+    } else if (!isEmpty) {
+      search(query)
+    }
   }, [query])
 
   const search = async (query: string) => {
@@ -81,7 +93,12 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
         <h1>WINNER</h1>
-        <PlayerSearch onSearchDone={p => setPlayerLists({ ...playerLists, winner: p })} />
+        <PlayerSearch
+          onSearchDone={p => setPlayerLists({ ...playerLists, winner: p })}
+          onSearchActiveChanged={active =>
+            setPlayerLists({ ...playerLists, winner: active ? playerLists.winner : players })
+          }
+        />
         <PlayerList
           onChosen={setGameField('winnerId')}
           players={playerLists.winner}
@@ -89,7 +106,12 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
         />
         <br />
         <h1>LOSER</h1>
-        <PlayerSearch onSearchDone={p => setPlayerLists({ ...playerLists, loser: p })} />
+        <PlayerSearch
+          onSearchDone={p => setPlayerLists({ ...playerLists, loser: p })}
+          onSearchActiveChanged={active =>
+            setPlayerLists({ ...playerLists, loser: active ? playerLists.loser : players })
+          }
+        />
         <PlayerList
           onChosen={setGameField('loserId')}
           players={playerLists.loser}
