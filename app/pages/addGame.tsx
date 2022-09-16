@@ -4,6 +4,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useState } from 'react'
 import { Player } from '@common/types'
+import useDelayedCall from 'hooks/useDelayedCall'
 
 type SearchProps = {
   onSearchDone: (players: Player[]) => void
@@ -25,7 +26,7 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
     } else if (!isEmpty && !searchActive) {
       setSearchActive(true)
     } else if (!isEmpty) {
-      search(query)
+      delayedCall(() => search(query))
     }
   }, [query])
 
@@ -34,6 +35,8 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
     const players: Player[] = []
     onSearchDone(players)
   }
+
+  const delayedCall = useDelayedCall({ f: search, delayMs: 1000 })
 
   return (
     <div>
