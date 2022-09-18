@@ -1,4 +1,4 @@
-@use "./colors";
+@use "./colors" as *;
 
 %focus-ring-4-px-primary-100 {
 	box-shadow: 0 0 0 4px rgb($color-primary-100 / 100%);
