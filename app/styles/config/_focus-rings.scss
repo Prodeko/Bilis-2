@@ -1,0 +1,17 @@
+@use "./colors" as *;
+
+%focus-ring-4-px-primary-100 {
+	box-shadow: 0 0 0 4px rgb($color-primary-100 / 100%);
+}
+%focus-ring-4-px-gray-100 {
+	box-shadow: 0 0 0 4px rgb($color-gray-100 / 100%);
+}
+%focus-ring-4-px-error-100 {
+	box-shadow: 0 0 0 4px rgb($color-error-100 / 100%);
+}
+%focus-ring-4-px-gray-500 {
+	box-shadow: 0 0 0 4px rgb($color-gray-500 / 100%);
+}
+%focus-ring-4-px-primary-500 {
+	box-shadow: 0 0 0 4px rgb($color-primary-100 / 100%);
+}

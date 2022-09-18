@@ -1,31 +1,14 @@
-////////////////////////////////////////
-// GRIDS
-////////////////////////////////////////
-
-%modal-grid {
-  display: grid;
-  grid-template-columns: 20fr 20fr 60fr
-}
-
-@mixin dual-grid($first_fr: 1fr, $second_fr: 1fr) {
-  display: grid;
-  grid-template-columns: $first_fr $second_fr;
-}
-
+// Grids
 @mixin grid-cols($nof_cols) {
   display: grid;
   grid-template-columns: repeat($nof_cols, 1fr);
 }
-
 @mixin grid-rows($nof_rows) {
   display: grid;
   grid-template-columns: repeat($nof_rows, 1fr);
 }
 
-////////////////////////////////////////
-// FLEXBOX
-////////////////////////////////////////
-
+// Flexbox
 @mixin flex-y($gap) {
   display: flex;
   flex-direction: column;
@@ -36,7 +19,6 @@
   flex-direction: row;
   gap: $gap;
 }
-
 %flex-center {
   align-items: center;
   display: flex;
