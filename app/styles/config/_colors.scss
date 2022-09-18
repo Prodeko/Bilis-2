@@ -1,0 +1,106 @@
+// Base colors
+$color-base-white: rgb(255 255 255 / 100%);
+$color-base-black: rgb(0 0 0 / 100%);
+
+// Primary
+$color-primary-25: rgb(241 244 248 / 100%);
+$color-primary-50: rgb(229 234 240 / 100%);
+$color-primary-100: rgb(189 201 218 / 100%);
+$color-primary-200: rgb(189 201 218 / 100%);
+$color-primary-300: rgb(106 133 168 / 100%);
+$color-primary-400: rgb(72 107 151 / 100%);
+$color-primary-500: rgb(31 83 137 / 100%);
+$color-primary-600: rgb(23 76 128 / 100%);
+$color-primary-700: rgb(10 66 117 / 100%);
+$color-primary-800: rgb(3 57 105 / 100%);
+$color-primary-900: rgb(0 41 81 / 100%);
+
+// Gray
+$color-gray-25: rgb(252 252 253 / 100%);
+$color-gray-50: rgb(249 250 251 / 100%);
+$color-gray-100: rgb(242 244 247 / 100%);
+$color-gray-200: rgb(234 236 240 / 100%);
+$color-gray-300: rgb(208 213 221 / 100%);
+$color-gray-400: rgb(152 162 179 / 100%);
+$color-gray-500: rgb(102 112 133 / 100%);
+$color-gray-600: rgb(71 84 103 / 100%);
+$color-gray-700: rgb(52 64 84 / 100%);
+$color-gray-800: rgb(29 41 57 / 100%);
+$color-gray-900: rgb(16 24 40 / 100%);
+
+// Error
+$color-error-25: rgb(255 251 250 / 100%);
+$color-error-50: rgb(254 243 242 / 100%);
+$color-error-100: rgb(254 228 226 / 100%);
+$color-error-200: rgb(254 205 202 / 100%);
+$color-error-300: rgb(253 162 155 / 100%);
+$color-error-400: rgb(249 112 102 / 100%);
+$color-error-500: rgb(240 68 56 / 100%);
+$color-error-600: rgb(217 45 32 / 100%);
+$color-error-700: rgb(180 35 24 / 100%);
+$color-error-800: rgb(145 32 24 / 100%);
+$color-error-900: rgb(122 39 26 / 100%);
+
+// Warning
+$color-warning-25: rgb(255 252 245 / 100%);
+$color-warning-50: rgb(255 250 235 / 100%);
+$color-warning-100: rgb(254 240 199 / 100%);
+$color-warning-200: rgb(254 223 137 / 100%);
+$color-warning-300: rgb(254 200 75 / 100%);
+$color-warning-400: rgb(253 176 34 / 100%);
+$color-warning-500: rgb(247 144 9 / 100%);
+$color-warning-600: rgb(220 104 3 / 100%);
+$color-warning-700: rgb(181 71 8 / 100%);
+$color-warning-800: rgb(147 55 13 / 100%);
+$color-warning-900: rgb(122 46 14 / 100%);
+
+// Success
+$color-success-25: rgb(246 254 249 / 100%);
+$color-success-50: rgb(236 253 243 / 100%);
+$color-success-100: rgb(209 250 223 / 100%);
+$color-success-200: rgb(166 244 197 / 100%);
+$color-success-300: rgb(108 233 166 / 100%);
+$color-success-400: rgb(50 213 131 / 100%);
+$color-success-500: rgb(18 183 106 / 100%);
+$color-success-600: rgb(3 152 85 / 100%);
+$color-success-700: rgb(2 122 72 / 100%);
+$color-success-800: rgb(5 96 58 / 100%);
+$color-success-900: rgb(5 79 49 / 100%);
+
+// Gradient gray
+$color-gradient-gray-600-500: linear-gradient(to right top, $color-gray-600, $color-gray-500);
+$color-gradient-gray-700-600: linear-gradient(to right top, $color-gray-700, $color-gray-600);
+$color-gradient-gray-800-600: linear-gradient(to right top, $color-gray-800, $color-gray-600);
+$color-gradient-gray-800-700: linear-gradient(to right top, $color-gray-800, $color-gray-700);
+$color-gradient-gray-900-700: linear-gradient(to right top, $color-gray-900, $color-gray-700);
+$color-gradient-gray-900-800: linear-gradient(to right top, $color-gray-900, $color-gray-800);
+
+// Gradient white
+$color-gradient-white-100-25: linear-gradient(to right top, $color-gray-100, $color-gray-25);
+$color-gradient-white-200-25: linear-gradient(to right top, $color-gray-200, $color-gray-25);
+$color-gradient-white-200-100: linear-gradient(to right top, $color-gray-200, $color-gray-100);
+$color-gradient-white-300-100: linear-gradient(to right top, $color-gray-300, $color-gray-100);
+$color-gradient-white-300-200: linear-gradient(to right top, $color-gray-300, $color-gray-200);
+$color-gradient-white-400-200: linear-gradient(to right top, $color-gray-400, $color-gray-200);
+$color-gradient-white-400-300: linear-gradient(to right top, $color-gray-400, $color-gray-300);
+
+// Gradient primary
+$color-gradient-primary-600-500: linear-gradient(to right top, $color-primary-600, $color-primary-500);
+$color-gradient-primary-700-600: linear-gradient(to right top, $color-primary-700, $color-primary-600);
+$color-gradient-primary-800-600: linear-gradient(to right top, $color-primary-800, $color-primary-600);
+$color-gradient-primary-800-700: linear-gradient(to right top, $color-primary-800, $color-primary-700);
+$color-gradient-primary-900-700: linear-gradient(to right top, $color-primary-900, $color-primary-700);
+$color-gradient-primary-900-800: linear-gradient(to right top, $color-primary-900, $color-primary-800);
+
+// Mixed gradients: gray --> blue
+$color-gradient-mixed-600-500: linear-gradient(to right top, $color-gray-600, $color-primary-500);
+$color-gradient-mixed-700-500: linear-gradient(to right top, $color-gray-700, $color-primary-500);
+$color-gradient-mixed-700-600: linear-gradient(to right top, $color-gray-700, $color-primary-600);
+$color-gradient-mixed-800-500: linear-gradient(to right top, $color-gray-800, $color-primary-500);
+$color-gradient-mixed-800-600: linear-gradient(to right top, $color-gray-800, $color-primary-600);
+$color-gradient-mixed-800-700: linear-gradient(to right top, $color-gray-800, $color-primary-700);
+$color-gradient-mixed-900-500: linear-gradient(to right top, $color-gray-900, $color-primary-500);
+$color-gradient-mixed-900-600: linear-gradient(to right top, $color-gray-900, $color-primary-600);
+$color-gradient-mixed-900-700: linear-gradient(to right top, $color-gray-900, $color-primary-700);
+$color-gradient-mixed-900-800: linear-gradient(to right top, $color-gray-900, $color-primary-800);
+
