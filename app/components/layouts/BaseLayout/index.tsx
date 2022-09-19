@@ -8,10 +8,10 @@ interface LayoutProps {
 
 const BaseLayout = ({ children }: LayoutProps): JSX.Element => {
   return (
-    <>
+    <div className={styles.grid}>
       <Sidebar />
       <main className={styles.layout}>{children}</main>
-    </>
+    </div>
   )
 }
 
