@@ -1,41 +1,38 @@
-@import 'styles/config';
+@import 'styles';
 
 .profileheader {
+  @include flex-x($gap: $spacing-96);
+  @include padding-y($padding: $spacing-32);
+
   align-items: center;
-  background-color: $prodeko-profile-blue;
-  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
-  display: flex;
-  height: 30%;
-  justify-content: space-around;
-  padding: $spacing-32;
-  z-index: 1;
+  background-image: $color-gradient-gray-800-700;
+  height: $spacing-256;
+  justify-content: space-between;
 }
 
 .emojiCircle {
-  align-items: center;
+  @extend %flex-center;
+  @extend %shadow-lg;
+  @extend %text-style-display-2-xl-bold;
+
   aspect-ratio: 1/1;
-  background-color: $white;
-  border-radius: 50%;
-  box-shadow: rgb(0 0 0 / 19%) 0 10px 20px, rgb(0 0 0 / 23%) 0 6px 6px;
-  display: flex;
-  font-size: $font-size-152;
+  background-color: $color-base-white;
+  border-radius: $border-radius-full;
   height: 100%;
-  justify-content: center;
+  margin-left: 10%;
 }
 
 .profileinfo {
-  color: $white;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-16;
+  @include flex-y($gap: $spacing-16);
+
+  color: $color-gray-100;
 
   &--primary {
-    font-size: $font-size-86;
+    @extend %text-style-display-lg-bold;
   }
 
   &--secondary {
-    display: flex;
-    font-size: $font-size-30;
-    justify-content: space-evenly;
+    @extend %text-style-display-xs-semibold;
+    @extend %flex-center;
   }
 }
