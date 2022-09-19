@@ -1,0 +1,51 @@
+@import 'styles';
+
+%sidebar-button {
+  @extend %flex-center;
+  @include button-styles(10rem);
+
+  border-radius: 50%;
+  color: $color-primary-300;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar {
+  @include padding-x($spacing-24);
+
+  background: $color-gradient-mixed-900-600;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-24;
+}
+
+.sidebarLink {
+  @extend %flex-center;
+  @include button-styles(10rem);
+
+  background-color: $color-gray-25;
+  border-radius: 50%;
+  color: $color-primary-800;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 2;
+
+  &:hover {
+    background-color: $color-gray-300;
+    color: $color-primary-800;
+  }
+
+  &:active {
+    background-color: $color-gray-200;
+  }
+}
+
+.sidebarIcon {
+  @include react-icon(40%);
+}

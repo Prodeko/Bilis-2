@@ -1,9 +1,5 @@
-@import 'styles/config';
+@use 'styles';
 
 .layout {
   height: 100vh;
-
-  // DUM VALUE: should be calculated as: 2* sidebar paddingx + max(sidebarlink width)
-  margin-left: $sidebar-width;
-  width: calc(100vw - $sidebar-width);
 }
