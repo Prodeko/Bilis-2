@@ -3,14 +3,21 @@ import 'styles/globals.scss'
 import type { AppProps } from 'next/app'
 import BaseLayout from '@components/layouts/BaseLayout'
 import { StateProvider, reducer } from '@state/index'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <StateProvider reducer={reducer}>
-      <BaseLayout>
-        <Component {...pageProps} />
-      </BaseLayout>
-    </StateProvider>
+    <>
+      <Head>
+        <title>Biliskilke 2.0</title>
+        <meta charSet="UTF-8" />
+      </Head>
+      <StateProvider reducer={reducer}>
+        <BaseLayout>
+          <Component {...pageProps} />
+        </BaseLayout>
+      </StateProvider>
+    </>
   )
 }
 
