@@ -40,6 +40,19 @@ type Game = {
   underTable: boolean
 }
 
+type GameWithPlayers = {
+  id: number
+  winnerId: number
+  loserId: number
+  winner: Player
+  loser: Player
+  winnerEloBefore: number
+  loserEloBefore: number
+  winnerEloAfter: number
+  loserEloAfter: number
+  underTable: boolean
+}
+
 type NewGame = Omit<Game, 'id'>
 
 interface RequestWithPage extends NextApiRequest {
@@ -62,6 +75,7 @@ export type {
   ValidationError,
   NewPlayer,
   Game,
+  GameWithPlayers,
   NewGame,
   RequestWithPage,
   HomeLeaderboard,

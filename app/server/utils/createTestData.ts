@@ -1,5 +1,6 @@
-import { createPlayer, clearPlayersDEV } from '@common/db'
-import { NewPlayer } from '@common/types'
+import { clearGamesDEV, createGame } from '@common/db/games'
+import { createPlayer, clearPlayersDEV, getPlayers } from '@common/db/players'
+import { NewPlayer, PlayerExtended } from '@common/types'
 import _ from 'lodash'
 
 const randomFirstNames: string[] = [
@@ -78,9 +79,26 @@ const createPlayers = async () => {
   await Promise.all(players.map(createPlayer))
 }
 
+const createGames = async () => {
+  const GAME_COUNT = 150
+  const allPlayers = await getPlayers()
+  const games = _.times(GAME_COUNT, () => {
+    const winner = _.sample(allPlayers) as PlayerExtended
+    const loser = _.sample(allPlayers) as PlayerExtended
+    return {
+      winnerId: winner.id,
+      loserId: loser.id,
+      underTable: Math.random() < 0.1
+    }
+  })
+  await Promise.all(games.map(createGame))
+}
+
 const main = async () => {
   await clearPlayersDEV()
   await createPlayers()
+  await clearGamesDEV()
+  await createGames()
 }
 
 main()

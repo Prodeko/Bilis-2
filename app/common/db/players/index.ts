@@ -1,5 +1,9 @@
+import { Op } from 'sequelize'
 import { Player } from '@server/models'
+import { Player as PlayerType } from '@common/types'
 import { NewPlayer, PlayerExtended } from '@common/types'
+import { getLatestGames } from '../games'
+import _ from 'lodash'
 
 const createPlayer = async (player: NewPlayer) => {
   const createdPlayer = await Player.create(player)
@@ -18,7 +22,6 @@ const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
 const clearPlayersDEV = () =>
   Player.destroy({
     where: {},
-    truncate: true,
   })
 
 const getPlayers = async (): Promise<PlayerExtended[]> => {
@@ -40,4 +43,42 @@ const getPlayers = async (): Promise<PlayerExtended[]> => {
   return extendedPlayers
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById, updatePlayerById }
+const getLatestPlayers = async (n = 20) => {
+  // Get > n games since the games likely contain duplicate players
+  const latestGames = await getLatestGames(n * 5)
+  const players = latestGames.reduce((acc: PlayerType[], g) => [...acc, g.winner, g.loser], [])
+  const uniquePlayers = _.uniqBy(players, pl => pl.id)
+  return uniquePlayers.slice(0, n)
+}
+
+const searchPlayers = async (query: string): Promise<Player[]> => {
+  const players = await Player.findAll({
+    where: {
+      [Op.or]: [
+        {
+          firstName: {
+            [Op.iLike]: `%${query}%`,
+          },
+        },
+        {
+          lastName: {
+            [Op.iLike]: `%${query}%`,
+          },
+        },
+      ],
+    },
+  })
+
+  const jsonPlayers = players.map(p => p.toJSON())
+  return jsonPlayers
+}
+
+export {
+  getPlayers,
+  createPlayer,
+  clearPlayersDEV,
+  getPlayerById,
+  updatePlayerById,
+  getLatestPlayers,
+  searchPlayers,
+}

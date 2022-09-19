@@ -2,9 +2,83 @@ import { NewGame } from '@common/types'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+import { Player } from '@common/types'
+import useDelayedCall from 'hooks/useDelayedCall'
 
-const Home: NextPage = () => {
+type SearchProps = {
+  onSearchDone: (players: Player[]) => void
+  onSearchActiveChanged: (isActive: boolean) => void
+}
+
+const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
+  const [searchActive, setSearchActive] = useState<boolean>(false)
+  const [query, setQuery] = useState<string>('')
+
+  useEffect(() => {
+    onSearchActiveChanged(searchActive)
+  }, [searchActive])
+
+  useEffect(() => {
+    const isEmpty = query.length === 0
+    if (isEmpty && searchActive) {
+      setSearchActive(false)
+    } else if (!isEmpty && !searchActive) {
+      setSearchActive(true)
+    } else if (!isEmpty) {
+      delayedCall(() => search(query))
+    }
+  }, [query])
+
+  const search = async (query: string) => {
+    const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+      params: { query },
+    })
+    const players = res.data
+    onSearchDone(players)
+  }
+
+  const delayedCall = useDelayedCall({ f: search, delayMs: 1000 })
+
+  return (
+    <div>
+      <input onChange={({ target }) => setQuery(target.value)} placeholder="Search for player..." />
+    </div>
+  )
+}
+
+type ListProps = { players: Player[]; onChosen: (id: number) => void; chosen: number | undefined }
+
+const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
+  return (
+    <div style={{ width: 400 }}>
+      {players.map(p => (
+        <div
+          style={{
+            width: '100%',
+            padding: 5,
+            background: chosen === p.id ? '#fafafa' : 'transparent',
+          }}
+          key={p.id}
+          onClick={() => onChosen(p.id)}
+        >
+          <h1>
+            {p.firstName} {p.lastName}: {p.elo}
+          </h1>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+type PlayerProps = { players: Player[] }
+
+const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
+  const [playerLists, setPlayerLists] = useState<{ winner: Player[]; loser: Player[] }>({
+    winner: players,
+    loser: players,
+  })
+
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
   })
@@ -23,16 +97,32 @@ const Home: NextPage = () => {
     <>
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
-        <input
-          onChange={item => setGameField('winnerId')(parseInt(item.target.value))}
-          placeholder="Winner"
-          type="number"
+        <h1>WINNER</h1>
+        <PlayerSearch
+          onSearchDone={p => setPlayerLists({ ...playerLists, winner: p })}
+          onSearchActiveChanged={active =>
+            setPlayerLists({ ...playerLists, winner: active ? playerLists.winner : players })
+          }
         />
-        <input
-          onChange={item => setGameField('loserId')(parseInt(item.target.value))}
-          placeholder="Player 2"
-          type="number"
+        <PlayerList
+          onChosen={setGameField('winnerId')}
+          players={playerLists.winner}
+          chosen={game.winnerId}
         />
+        <br />
+        <h1>LOSER</h1>
+        <PlayerSearch
+          onSearchDone={p => setPlayerLists({ ...playerLists, loser: p })}
+          onSearchActiveChanged={active =>
+            setPlayerLists({ ...playerLists, loser: active ? playerLists.loser : players })
+          }
+        />
+        <PlayerList
+          onChosen={setGameField('loserId')}
+          players={playerLists.loser}
+          chosen={game.loserId}
+        />
+
         <input
           onChange={item => setGameField('underTable')(item.target.checked)}
           title="Under table"
@@ -42,6 +132,12 @@ const Home: NextPage = () => {
       </form>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`)
+  const players = res.data
+  return { props: { players } }
 }
 
 export default Home
