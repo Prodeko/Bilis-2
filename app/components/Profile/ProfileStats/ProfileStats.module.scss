@@ -1,28 +1,28 @@
-@import 'styles/config';
+@import 'styles';
 
 .profilestats {
   align-items: center;
-  /* stylelint-disable-next-line scss/no-global-function-names */
-  background-color: $grey;
+  background-color: $color-gray-700;
   display: flex;
   justify-content: space-evenly;
   padding: $spacing-32;
 }
 
 .profilestat {
-  align-items: center;
-  color: $white;
-  display: flex;
+  @extend %flex-center;
+
   flex-direction: column;
   gap: $spacing-16;
-  justify-content: center;
 
   &--value {
-    font-size: $font-size-52;
-    font-weight: $font-weight-bold;
+    @extend %text-style-display-md-bold;
+
+    color: $color-gray-300;
   }
 
   &--label {
-    font-size: $font-size-20;
+    @extend %text-style-display-xs-medium;
+
+    color: $color-gray-400;
   }
 }

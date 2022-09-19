@@ -30,9 +30,9 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
       <ProfileStats
         stats={[
           { label: 'Elo', value: round(elo).toString() },
-          { label: 'Won games', value: wonGames.toString() },
-          { label: 'Total games', value: totalGames.toString() },
-          { label: 'Win percentage', value: winPercentage + '%' },
+          { label: 'Total Games', value: totalGames.toString() },
+          { label: 'Wins / Losses', value: `${wonGames} / ${totalGames - wonGames}` }, //TODO: Return lost games from DB instead of frontend calculation
+          { label: 'Win Percentage', value: winPercentage + '%' },
         ]}
       />
     </ProfileLayout>
