@@ -2,7 +2,6 @@
 
 %sidebar-button {
   @extend %flex-center;
-  @include button-styles(10rem);
 
   border-radius: 50%;
   color: $color-primary-300;
@@ -27,7 +26,6 @@
 
 .sidebarLink {
   @extend %flex-center;
-  @include button-styles(10rem);
 
   background-color: $color-gray-25;
   border-radius: 50%;
