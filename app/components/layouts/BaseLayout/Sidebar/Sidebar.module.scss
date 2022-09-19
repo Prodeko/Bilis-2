@@ -2,6 +2,7 @@
 
 .sidebar {
   @include padding-x($spacing-24);
+  @include padding-y($spacing-24);
 
   background: $color-gradient-mixed-900-600;
   height: 100vh;
@@ -18,23 +19,28 @@
 .sidebarLink {
   @extend %flex-center;
 
-  background-color: $color-gray-25;
+  color: $color-gray-300;
   border-radius: 50%;
-  color: $color-primary-800;
   cursor: pointer;
   transition: all 0.2s;
-  z-index: 2;
+  width: 8rem;
+  height: 8rem;
 
   &:hover {
-    background-color: $color-gray-300;
-    color: $color-primary-800;
+    color: $color-gray-25;
   }
 
-  &:active {
-    background-color: $color-gray-200;
+  &--active {
+    color: $color-primary-800;
+    background-color: $color-gray-25;
+
+    &:hover {
+      color: $color-primary-800;
+    }
   }
 }
 
 .sidebarIcon {
-  @include react-icon(40%);
+  width: 4rem;
+  height: 4rem;
 }
