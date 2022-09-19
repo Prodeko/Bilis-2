@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { useState, ReactNode } from 'react'
+import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
 import styles from './Sidebar.module.scss'
 
 interface Props {
@@ -8,19 +9,14 @@ interface Props {
 }
 
 const SidebarLink = ({ path, children }: Props) => {
-  const baseClass = styles.sidebarLink
-  const showAnimation = `${baseClass} ${styles.fade}`
-  const [classes, setClasses] = useState<string>(baseClass)
+  const router = useRouter()
+  const isActive = router.pathname === path
   return (
     <Link href={path}>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         role="link"
         tabIndex={0}
-        className={classes}
-        onKeyUp={() => setClasses(showAnimation)}
-        onClick={() => setClasses(showAnimation)}
-        onAnimationEnd={() => setClasses(baseClass)}
+        className={`${styles.sidebarLink} ${isActive ? styles['sidebarLink--active'] : ''}`}
       >
         {children}
       </a>

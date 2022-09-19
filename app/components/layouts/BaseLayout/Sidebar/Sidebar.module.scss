@@ -1,9 +1,10 @@
-@import 'styles/config';
+@import 'styles';
 
 .sidebar {
-  @include padding-x($spacing-16);
+  @include padding-x($spacing-24);
+  @include padding-y($spacing-24);
 
-  background: $prodeko-blue;
+  background: $color-gradient-mixed-900-600;
   height: 100vh;
   position: fixed;
   z-index: 10;
@@ -12,25 +13,34 @@
 .linkContainer {
   display: flex;
   flex-direction: column;
-  gap: $spacing-16;
+  gap: $spacing-24;
 }
 
 .sidebarLink {
-  @extend %sidebar-button;
-  @include sidebar-button-hover;
-  @include sidebar-button-click;
+  @extend %flex-center;
 
-  &.fade::before {
-    @extend %sidebar-button;
-    @extend %animation-ping;
-  
-    content: "";
-    opacity: 0.6;
-    position: absolute;
-    z-index: -1;
+  color: $color-gray-300;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 8rem;
+  height: 8rem;
+
+  &:hover {
+    color: $color-gray-25;
   }
 
-  .sidebarIcon {
-    @include react-icon(40%);
+  &--active {
+    color: $color-primary-800;
+    background-color: $color-gray-25;
+
+    &:hover {
+      color: $color-primary-800;
+    }
   }
+}
+
+.sidebarIcon {
+  width: 4rem;
+  height: 4rem;
 }
