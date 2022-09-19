@@ -46,9 +46,9 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
   )
 }
 
-type ListProps = { players: Player[]; onChosen: (id: number) => void; chosen: number | undefined }
+type ListProps = { players: Player[]; onChoose: (id: number) => void; chosen: number | undefined }
 
-const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
+const PlayerList = ({ players, onChoose, chosen }: ListProps) => {
   return (
     <div style={{ width: 400 }}>
       {players.map(p => (
@@ -59,8 +59,8 @@ const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
             background: chosen === p.id ? '#fafafa' : 'transparent',
           }}
           key={p.id}
-          onClick={() => onChosen(p.id)}
-          onKeyPress={() => onChosen(p.id)}
+          onClick={() => onChoose(p.id)}
+          onKeyPress={() => onChoose(p.id)}
           type="button"
         >
           {p.firstName} {p.lastName}: {p.elo}
@@ -103,7 +103,7 @@ const AddGame: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
           }
         />
         <PlayerList
-          onChosen={setGameField('winnerId')}
+          onChoose={setGameField('winnerId')}
           players={playerLists.winner}
           chosen={game.winnerId}
         />
@@ -116,7 +116,7 @@ const AddGame: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
           }
         />
         <PlayerList
-          onChosen={setGameField('loserId')}
+          onChoose={setGameField('loserId')}
           players={playerLists.loser}
           chosen={game.loserId}
         />
