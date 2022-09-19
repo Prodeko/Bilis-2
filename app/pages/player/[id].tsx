@@ -1,6 +1,7 @@
 import ProfileLayout from '@components/Layouts/ProfileLayout'
 import ProfileStats from '@components/Profile/ProfileStats/'
 import ProfileHeader from '@components/Profile/ProfileHeader'
+import ProfileCharts from '@components/Profile/ProfileCharts'
 import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
@@ -35,6 +36,7 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
           { label: 'Win Percentage', value: winPercentage + '%' },
         ]}
       />
+      <ProfileCharts />
     </ProfileLayout>
   )
 }
