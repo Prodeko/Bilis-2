@@ -72,7 +72,7 @@ const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
 
 type PlayerProps = { players: Player[] }
 
-const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
+const AddGame: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
   const [playerLists, setPlayerLists] = useState<{ winner: Player[]; loser: Player[] }>({
     winner: players,
     loser: players,
@@ -132,10 +132,4 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
   )
 }
 
-export async function getServerSideProps() {
-  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`)
-  const players = res.data
-  return { props: { players } }
-}
-
-export default Home
+export default AddGame
