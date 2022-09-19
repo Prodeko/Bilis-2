@@ -1,78 +1,13 @@
 import axios from 'axios'
-import type { NextPage } from 'next'
-import { FormEvent, useEffect, useState } from 'react'
-
-import { NewGame, Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import useDelayedCall from 'hooks/useDelayedCall'
-
-type SearchProps = {
-  onSearchDone: (players: Player[]) => void
-  onSearchActiveChanged: (isActive: boolean) => void
-}
-
-const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
-  const [searchActive, setSearchActive] = useState<boolean>(false)
-  const [query, setQuery] = useState<string>('')
-  const delayedCall = useDelayedCall({ delayMs: 1000 })
-
-  useEffect(() => {
-    onSearchActiveChanged(searchActive)
-  }, [searchActive, onSearchActiveChanged])
-
-  useEffect(() => {
-    const search = async (q: string) => {
-      const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
-        params: { query: q },
-      })
-      const players = res.data
-      onSearchDone(players)
-    }
-
-    const isEmpty = query.length === 0
-    if (isEmpty && searchActive) {
-      setSearchActive(false)
-    } else if (!isEmpty && !searchActive) {
-      setSearchActive(true)
-    } else if (!isEmpty) {
-      delayedCall(() => search(query))
-    }
-  }, [query, delayedCall, searchActive, onSearchDone])
-
-  return (
-    <div>
-      <input onChange={({ target }) => setQuery(target.value)} placeholder="Search for player..." />
-    </div>
-  )
-}
-
-type ListProps = { players: Player[]; onChoose: (id: number) => void; chosen: number | undefined }
-
-const PlayerList = ({ players, onChoose, chosen }: ListProps) => {
-  return (
-    <div style={{ width: 400 }}>
-      {players.map(p => (
-        <button
-          style={{
-            width: '100%',
-            padding: 5,
-            background: chosen === p.id ? '#fafafa' : 'transparent',
-          }}
-          key={p.id}
-          onClick={() => onChoose(p.id)}
-          onKeyPress={() => onChoose(p.id)}
-          type="button"
-        >
-          {p.firstName} {p.lastName}: {p.elo}
-        </button>
-      ))}
-    </div>
-  )
-}
+import { FormEvent, useState } from 'react'
+import { NewGame, Player } from '@common/types'
+import PlayerSearch from './PlayerSearch'
+import PlayerList from './PlayerList'
 
 type PlayerProps = { players: Player[] }
 
-const AddGame: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
+const AddGame = ({ players }: PlayerProps) => {
   const [playerLists, setPlayerLists] = useState<{ winner: Player[]; loser: Player[] }>({
     winner: players,
     loser: players,
