@@ -5,7 +5,6 @@ import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { HomeLeaderboard } from '@common/types'
 import { useStateValue, setPlayers } from '@state/index'
-import Sidebar from './Sidebar'
 import styles from './BaseLayout.module.scss'
 
 interface LayoutProps {
@@ -29,7 +28,6 @@ const BaseLayout = ({ children }: LayoutProps): JSX.Element => {
         <title>Biliskilke 2.0</title>
         <meta charSet="UTF-8" />
       </Head>
-      <Sidebar />
       <main className={styles.layout}>{children}</main>
     </>
   )
