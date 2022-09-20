@@ -387,3 +387,10 @@ $font-weight-regular: 400;
   font-weight: $font-weight-bold;
   line-height: 1.8rem;
 }
+
+// Mixins
+@mixin gradient-text($color) {
+  background: $color;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
