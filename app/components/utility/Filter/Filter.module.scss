@@ -1,0 +1,7 @@
+@use "styles" as *;
+
+.filter {
+  background-image: $color-gradient-gray-900-700;
+  height: 100%;
+  opacity: 0.9;
+}
