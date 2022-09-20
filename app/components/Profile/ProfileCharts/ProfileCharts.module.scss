@@ -1,0 +1,26 @@
+@import 'styles';
+
+.container {
+  background-image: $color-gradient-mixed-900-400;
+  display: grid;
+  flex-grow: 1;
+  grid-gap: $spacing-32 $spacing-128;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  padding: $spacing-48;
+}
+
+.chartTitle {
+  @extend %text-style-display-lg-bold;
+
+  color: $color-gray-100;
+}
+
+// To be made
+.eloGraph {
+  @extend %flex-center;
+  @extend %text-style-display-lg-bold;
+
+  background-color: $color-gray-400;
+}

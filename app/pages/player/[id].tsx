@@ -1,6 +1,7 @@
 import ProfileLayout from '@components/Layouts/ProfileLayout'
 import ProfileStats from '@components/Profile/ProfileStats/'
 import ProfileHeader from '@components/Profile/ProfileHeader'
+import ProfileCharts from '@components/Profile/ProfileCharts'
 import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
@@ -30,11 +31,12 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
       <ProfileStats
         stats={[
           { label: 'Elo', value: round(elo).toString() },
-          { label: 'Won games', value: wonGames.toString() },
-          { label: 'Total games', value: totalGames.toString() },
-          { label: 'Win percentage', value: winPercentage + '%' },
+          { label: 'Total Games', value: totalGames.toString() },
+          { label: 'Wins / Losses', value: `${wonGames} / ${totalGames - wonGames}` }, //TODO: Return lost games from DB instead of frontend calculation
+          { label: 'Win Percentage', value: winPercentage + '%' },
         ]}
       />
+      <ProfileCharts />
     </ProfileLayout>
   )
 }
