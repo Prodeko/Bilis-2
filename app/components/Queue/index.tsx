@@ -36,7 +36,7 @@ const Queue: FunctionComponent = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>Queue</h2>
       <Select
-        className={styles.addBtn}
+        className={styles.playerSelect}
         options={options}
         onChange={handleChange}
         placeholder="add player to queue"
