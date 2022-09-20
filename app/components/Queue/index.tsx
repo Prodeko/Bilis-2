@@ -16,8 +16,11 @@ const Queue: FunctionComponent = () => {
   const [queue, setQueue] = useLocalStorage<Player[]>('prodeko-biliskilke-queue', [])
 
   const options: OptionType[] = useMemo(
-    () => players.map(p => ({ label: `#${p.id} ${p.firstName} ${p.lastName}`, value: p })),
-    [players]
+    () =>
+      players
+        .filter(o => !queue.some(qP => qP.id === o.id))
+        .map(p => ({ label: `#${p.id} ${p.firstName} ${p.lastName}`, value: p })),
+    [players, queue]
   )
 
   const handleChange = (newValue: SingleValue<OptionType>) => {
