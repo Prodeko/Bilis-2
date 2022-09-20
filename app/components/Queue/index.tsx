@@ -43,7 +43,13 @@ const Queue: FunctionComponent = () => {
       />
       <div className={styles.list}>
         {queue.map((player, i) => (
-          <QueueItem player={player} place={i + 1} key={player.id} />
+          <QueueItem
+            player={player}
+            place={i + 1}
+            queue={queue}
+            setQueue={setQueue}
+            key={player.id}
+          />
         ))}
       </div>
     </div>
