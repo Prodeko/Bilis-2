@@ -18,6 +18,7 @@
         "jsx": true
     }
   },
+  "ignorePatterns": "app/**/*.js",
   "rules": {
       /*"prettier/prettier": ["error"],
       "react-hooks/exhaustive-deps":          "warn",
@@ -32,8 +33,6 @@
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": "off",
       "react/prop-types": "off"
-      
-      
   },
   "settings": {
     "import/extensions": [
@@ -51,8 +50,5 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  },
-  "overrides": [
-    {"files": "app/*"}
-  ]
+  }
 }
