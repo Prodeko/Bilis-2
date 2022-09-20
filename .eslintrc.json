@@ -33,7 +33,8 @@
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": "off",
       "react/prop-types": "off",
-      "import/prefer-default-export": "off"
+      "import/prefer-default-export": "off",
+      "react/jsx-props-no-spreading": "off"
   },
   "settings": {
     "import/extensions": [
