@@ -1,53 +1,43 @@
 import useLocalStorage from 'hooks/useLocalStorage'
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import { Player } from '@common/types'
+import usePlayers from 'hooks/usePlayers'
+import Select, { SingleValue } from 'react-select'
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 
-interface QueueProps {}
+interface OptionType {
+  label: string
+  value: Player
+}
 
-const TEST_QUEUE: Player[] = [
-  {
-    id: 1344345345,
-    firstName: 'Petteri',
-    lastName: 'Ranta',
-    nickname: 'Raikku',
-    emoji: 'U+1F480',
-    elo: 666,
-  },
-  {
-    id: 435345,
-    firstName: 'Petteri',
-    lastName: 'Ranta',
-    nickname: 'Raikku',
-    emoji: 'U+1F480',
-    elo: 666,
-  },
-  {
-    id: 65263,
-    firstName: 'Petteri',
-    lastName: 'Ranta',
-    nickname: 'Raikku',
-    emoji: 'U+1F480',
-    elo: 666,
-  },
-  {
-    id: 2135123,
-    firstName: 'Petteri',
-    lastName: 'Ranta',
-    nickname: 'Raikku',
-    emoji: 'U+1F480',
-    elo: 666,
-  },
-]
+const Queue: FunctionComponent = () => {
+  const { players } = usePlayers()
+  const [queue, setQueue] = useLocalStorage<Player[]>('prodeko-biliskilke-queue', [])
 
-const Queue: FunctionComponent<QueueProps> = () => {
-  const [queue, setQueue] = useLocalStorage<Player[]>('prodeko-biliskilke-queue', TEST_QUEUE)
+  const options: OptionType[] = useMemo(
+    () => players.map(p => ({ label: `#${p.id} ${p.firstName} ${p.lastName}`, value: p })),
+    [players]
+  )
+
+  const handleChange = (newValue: SingleValue<OptionType>) => {
+    if (newValue?.value) {
+      setQueue([...queue, newValue.value])
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('Trying to add to queue: ', newValue?.value)
+    }
+  }
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Queue</h2>
-      <button className={styles.addBtn} type="button">add player to queue</button>
+      <Select
+        className={styles.addBtn}
+        options={options}
+        onChange={handleChange}
+        placeholder="add player to queue"
+      />
       <div className={styles.list}>
         {queue.map((player, i) => (
           <QueueItem player={player} place={i + 1} key={player.id} />

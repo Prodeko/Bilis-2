@@ -17,11 +17,15 @@
 .addBtn {
   @extend %text-style-text-md-semibold;
 
-  background: $color-primary-25;
   border-radius: $border-radius-small;
+
+  // background: $color-primary-25;
+  color: $color-primary-700;
   justify-self: right;
-  padding: 8px 16px;
+
+  // padding: 8px 16px;
   text-transform: uppercase;
+  width: 300px;
 }
 
 .list {
