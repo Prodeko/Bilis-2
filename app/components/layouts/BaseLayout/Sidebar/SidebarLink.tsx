@@ -1,3 +1,6 @@
+// Disable force anchor tag for this file since <Link> copies the href attribute to the child
+
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
