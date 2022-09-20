@@ -1,4 +1,5 @@
 import type { Styles } from '@common/types'
+
 export const logWithBase = (x: number, base: number): number => Math.log(x) / Math.log(base)
 
 // Get the base class from module automatically by

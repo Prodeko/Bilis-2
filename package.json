@@ -14,12 +14,24 @@
     "test:jest": "docker-compose -f docker-compose.jest.yml up --remove-orphans --build --abort-on-container-exit",
     "test:cypress": "docker-compose -f docker-compose.cypress.yml up --remove-orphans --build --abort-on-container-exit",
     "build-dev": "docker-compose -f docker-compose.build-dev.yml up --build --remove-orphans",
-    "prettify": "prettier --write './app/**/*.{ts,tsx,js,jsx}'"
+    "prettify": "prettier --write './app/**/*.{ts,tsx,js,jsx}'",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.24.0",
     "@typescript-eslint/parser": "^5.24.0",
+    "eslint": "^8.10.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-next": "12.0.9",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.2",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "typescript": "^4.5.5",
     "prettier": "^2.6.2"
   }
 }

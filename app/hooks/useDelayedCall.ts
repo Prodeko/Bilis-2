@@ -1,18 +1,17 @@
 import { useState } from 'react'
 
 type Props = {
-  f: (...args: any) => unknown
   delayMs: number
 }
 
-const useDelayedCall = ({ f, delayMs = 1000 }: Props) => {
+const useDelayedCall = ({ delayMs = 1000 }: Props) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>(undefined)
 
-  const delayedCall = (f: (...args: any) => unknown) => {
+  const delayedCall = (func: (...args: any) => unknown) => {
     if (timer) {
       clearTimeout(timer)
     }
-    const t = setTimeout(f, delayMs)
+    const t = setTimeout(func, delayMs)
     setTimer(t)
   }
 

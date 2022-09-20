@@ -5,7 +5,7 @@ import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
 
 const getGameCountForPlayer = async (playerId: number) => {
-  return await Game.count({
+  return Game.count({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
@@ -13,19 +13,19 @@ const getGameCountForPlayer = async (playerId: number) => {
 }
 
 const getWinGameCountForPlayer = async (playerId: number) => {
-  return await Game.count({
+  return Game.count({
     where: {
       winnerId: playerId,
     },
   })
 }
 
-const getLatestGames = async (n=20): Promise<GameWithPlayers[]> => {
+const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
   const games = await Game.findAll({
     order: [['createdAt', 'DESC']],
     include: [
-      {model: Player, as: "winner"},
-      {model: Player, as: "loser"}
+      { model: Player, as: 'winner' },
+      { model: Player, as: 'loser' },
     ],
     limit: n,
   })
@@ -69,7 +69,13 @@ const createGame = async (game: CreateGameType) => {
 
 const clearGamesDEV = () =>
   Game.destroy({
-    where: {}
+    where: {},
   })
 
-export { createGame, getGameCountForPlayer, getWinGameCountForPlayer, getLatestGames, clearGamesDEV }
+export {
+  createGame,
+  getGameCountForPlayer,
+  getWinGameCountForPlayer,
+  getLatestGames,
+  clearGamesDEV,
+}

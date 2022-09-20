@@ -1,9 +1,8 @@
-import { NewGame } from '@common/types'
+import { NewGame, Player } from '@common/types'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useState } from 'react'
-import { Player } from '@common/types'
 import useDelayedCall from 'hooks/useDelayedCall'
 
 type SearchProps = {
@@ -14,12 +13,21 @@ type SearchProps = {
 const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
   const [searchActive, setSearchActive] = useState<boolean>(false)
   const [query, setQuery] = useState<string>('')
+  const delayedCall = useDelayedCall({ delayMs: 1000 })
 
   useEffect(() => {
     onSearchActiveChanged(searchActive)
-  }, [searchActive])
+  }, [searchActive, onSearchActiveChanged])
 
   useEffect(() => {
+    const search = async (q: string) => {
+      const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+        params: { query: q },
+      })
+      const players = res.data
+      onSearchDone(players)
+    }
+
     const isEmpty = query.length === 0
     if (isEmpty && searchActive) {
       setSearchActive(false)
@@ -28,17 +36,7 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
     } else if (!isEmpty) {
       delayedCall(() => search(query))
     }
-  }, [query])
-
-  const search = async (query: string) => {
-    const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
-      params: { query },
-    })
-    const players = res.data
-    onSearchDone(players)
-  }
-
-  const delayedCall = useDelayedCall({ f: search, delayMs: 1000 })
+  }, [query, delayedCall, searchActive, onSearchDone])
 
   return (
     <div>
@@ -53,7 +51,7 @@ const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
   return (
     <div style={{ width: 400 }}>
       {players.map(p => (
-        <div
+        <button
           style={{
             width: '100%',
             padding: 5,
@@ -61,11 +59,11 @@ const PlayerList = ({ players, onChosen, chosen }: ListProps) => {
           }}
           key={p.id}
           onClick={() => onChosen(p.id)}
+          onKeyPress={() => onChosen(p.id)}
+          type="button"
         >
-          <h1>
-            {p.firstName} {p.lastName}: {p.elo}
-          </h1>
-        </div>
+          {p.firstName} {p.lastName}: {p.elo}
+        </button>
       ))}
     </div>
   )

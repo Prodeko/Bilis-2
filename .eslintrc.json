@@ -18,6 +18,7 @@
         "jsx": true
     }
   },
+  "ignorePatterns": "app/**/*.js",
   "rules": {
       /*"prettier/prettier": ["error"],
       "react-hooks/exhaustive-deps":          "warn",
@@ -31,9 +32,9 @@
       "arrow-parens": ["error", "as-needed"],
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": "off",
-      "react/prop-types": "off"
-      
-      
+      "react/prop-types": "off",
+      "import/prefer-default-export": "off",
+      "react/jsx-props-no-spreading": "off"
   },
   "settings": {
     "import/extensions": [

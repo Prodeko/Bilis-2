@@ -1,16 +1,15 @@
 import { Op } from 'sequelize'
 import { Player } from '@server/models'
-import { Player as PlayerType } from '@common/types'
-import { NewPlayer, PlayerExtended } from '@common/types'
-import { getLatestGames } from '../games'
+import { Player as PlayerType, NewPlayer, PlayerExtended } from '@common/types'
 import _ from 'lodash'
+import { getLatestGames } from '../games'
 
 const createPlayer = async (player: NewPlayer) => {
   const createdPlayer = await Player.create(player)
   return createdPlayer
 }
 
-const getPlayerById = async (id: number) => await Player.findByPk(id)
+const getPlayerById = async (id: number) => Player.findByPk(id)
 
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
   const player = await getPlayerById(id)

@@ -37,6 +37,10 @@ const mockResults = [
   'Walter',
 ]
 
+const Result = ({ name }: { name: string }) => {
+  return <p className={styles.result}>{name}</p>
+}
+
 const PlayerComparison = () => {
   return (
     <div className={styles.container}>
@@ -48,10 +52,6 @@ const PlayerComparison = () => {
       </div>
     </div>
   )
-}
-
-const Result = ({ name }: { name: string }) => {
-  return <p className={styles.result}>{name}</p>
 }
 
 export default PlayerComparison

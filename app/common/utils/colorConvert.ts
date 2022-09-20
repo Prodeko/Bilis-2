@@ -1,7 +1,7 @@
 export const intToHex = (n: number): string => {
   let acc = n
   let res = '#'
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i += 1) {
     const current = acc % 16
     if (current < 10) res += current
     else {

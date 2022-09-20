@@ -88,7 +88,7 @@ const createGames = async () => {
     return {
       winnerId: winner.id,
       loserId: loser.id,
-      underTable: Math.random() < 0.1
+      underTable: Math.random() < 0.1,
     }
   })
   await Promise.all(games.map(createGame))

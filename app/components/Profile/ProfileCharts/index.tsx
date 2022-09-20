@@ -2,7 +2,7 @@ import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'
 
 const ProfileCharts = () => {
-  //TODO: Change layout to horizontal 2D layout and move titles to chart components.
+  // TODO: Change layout to horizontal 2D layout and move titles to chart components.
   return (
     <div className={styles.container}>
       <h2 className={styles.chartTitle}>Elo Graph</h2>

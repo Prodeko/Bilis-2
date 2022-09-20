@@ -1,9 +1,8 @@
 export const isNumber = (supposedNumber: unknown): supposedNumber is number => {
   const forcedNumber = Number(supposedNumber)
 
-  if (isNaN(forcedNumber)) {
+  if (Number.isNaN(forcedNumber)) {
     return false
-  } else {
-    return true
   }
+  return true
 }
