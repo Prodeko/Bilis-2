@@ -1,1 +1,29 @@
-@import 'styles';
+@use 'styles' as *;
+
+.container {
+  background: $color-gray-800;
+  border-radius: $border-radius-large;
+  color: $color-gray-200;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  padding: 24px;
+}
+
+.title {
+ @extend %text-style-display-md-semibold;
+}
+
+.addBtn {
+  @extend %text-style-text-md-semibold;
+
+  background: $color-primary-25;
+  border-radius: $border-radius-small;
+  justify-self: right;
+  padding: 8px 16px;
+  text-transform: uppercase;
+}
+
+.list {
+  grid-column: 1 / span 2;
+}

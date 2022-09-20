@@ -45,9 +45,10 @@ const Queue: FunctionComponent<QueueProps> = () => {
   const [queue, setQueue] = useLocalStorage<Player[]>('prodeko-biliskilke-queue', TEST_QUEUE)
 
   return (
-    <div>
-      <h2>Queue</h2>
-      <div>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Queue</h2>
+      <button className={styles.addBtn} type="button">add player to queue</button>
+      <div className={styles.list}>
         {queue.map((player, i) => (
           <QueueItem player={player} place={i + 1} key={player.id} />
         ))}

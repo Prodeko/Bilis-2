@@ -9,10 +9,12 @@ interface QueueItemProps {
 
 const QueueItem: FunctionComponent<QueueItemProps> = ({ place, player }) => {
   return (
-    <div>
-      <div>{place}</div>
+    <div className={styles.container}>
+      <div>{place}.</div>
       <div>{`${player.firstName} ${player.lastName}`}</div>
-      <button type="button">remove</button>
+      <button className={styles.removeBtn} type="button">
+        remove
+      </button>
     </div>
   )
 }
