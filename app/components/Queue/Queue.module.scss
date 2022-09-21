@@ -1,0 +1,51 @@
+@use 'styles' as *;
+
+.container {
+  background: $color-gray-800;
+  border-radius: $border-radius-large;
+  color: $color-gray-200;
+  display: grid;
+  grid-template-rows: 5rem auto;
+  height: 100%;
+  padding: 2.4rem;
+}
+
+.title {
+  @extend %text-style-display-md-semibold;
+}
+
+.playerSelect {
+  @extend %text-style-text-md-semibold;
+
+  border-radius: $border-radius-small;
+  color: $color-primary-700;
+  justify-self: right;
+  text-transform: uppercase;
+  width: 30rem;
+}
+
+.list {
+  grid-column: 1 / span 2;
+  overflow-y: scroll;
+}
+
+/*
+ some scrollbar styles. see https://www.digitalocean.com/community/tutorials/css-scrollbars
+*/
+
+// entire scrobbar
+.list::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+// scrobbar background
+.list::-webkit-scrollbar-track {
+  background: $color-primary-25;
+  border-radius: $border-radius-large;
+}
+
+// scrobar "thumb"
+.list::-webkit-scrollbar-thumb {
+  background-color: $color-gray-400;
+  border-radius: $border-radius-large;
+}

@@ -1,0 +1,27 @@
+@use 'styles' as *;
+
+.container {
+  @extend %text-style-text-xl-normal;
+  @include grid-cols(3);
+
+  align-items: center;
+  margin: 2.7rem 0;
+}
+
+.removeBtn {
+  @extend %text-style-text-md-semibold;
+
+  background: $color-error-600;
+  border-radius: $border-radius-small;
+  color: $color-base-white;
+  display: none;
+  justify-self: right;
+  margin: -1rem 1rem;
+  padding: 1rem;
+  text-transform: uppercase;
+  width: fit-content; // will be set to inline-block on hover
+}
+
+.container:hover > .removeBtn {
+  display: inline-block;
+}
