@@ -1,4 +1,4 @@
-@import 'styles';
+@use 'styles' as *;
 
 .container {
   @include flex-y($gap: $spacing-16);

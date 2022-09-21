@@ -1,4 +1,4 @@
-@import 'styles';
+@use 'styles' as *;
 
 .container {
   background-image: $color-gradient-mixed-900-400;

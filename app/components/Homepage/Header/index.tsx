@@ -1,4 +1,4 @@
-import QuoteCard from '@components/Profile/ProfileHeader/QuoteCard'
+import MottoCard from '@components/utility/MottoCard'
 import Filter from '@components/utility/Filter'
 import Image from 'next/image'
 import billiardPic from '../../../public/images/billiard.jpg'
@@ -21,7 +21,7 @@ const Header = () => {
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
-          <QuoteCard text={text} author={author} />
+          <MottoCard text={text} author={author} />
         </div>
       </Filter>
     </header>
