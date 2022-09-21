@@ -14,7 +14,7 @@ const Header = () => {
       <Image
         src={billiardPic}
         alt="Billiard Table"
-        objectPosition="0px -1600px"
+        objectPosition="0px -1000px"
         layout="fill"
         objectFit="cover"
       />
