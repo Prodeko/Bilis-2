@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-@import 'styles';
-=======
 @use 'styles' as *;
->>>>>>> f40450aa... change global sass imports to use imports
 
 .profileheader {
   @include flex-x($gap: $spacing-96);
