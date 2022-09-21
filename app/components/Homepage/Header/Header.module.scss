@@ -7,7 +7,7 @@
 
 .title {
   @extend %text-style-display-2-xl-bold;
-  @include gradient-text($color-gradient-white-200-25);
+  @include gradient-text($color: $color-gradient-white-200-25);
 }
 
 .layout {
