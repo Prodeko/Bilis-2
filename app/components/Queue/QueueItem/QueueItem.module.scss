@@ -5,7 +5,7 @@
   @include grid-cols(3);
 
   align-items: center;
-  margin: 27px 0;
+  margin: 2.7rem 0;
 }
 
 .removeBtn {
@@ -16,8 +16,8 @@
   color: $color-base-white;
   display: none;
   justify-self: right;
-  margin: -10px 0;
-  padding: 10px;
+  margin: -1rem 1rem;
+  padding: 1rem;
   text-transform: uppercase;
   width: fit-content; // will be set to inline-block on hover
 }
