@@ -1,6 +1,6 @@
 import { Player } from '@common/types'
 import styles from './ProfileHeader.module.scss'
-import QuoteCard from './QuoteCard'
+import MottoCard from '@components/utility/MottoCard'
 
 const ProfileHeader = ({
   id,
@@ -20,7 +20,7 @@ const ProfileHeader = ({
           <p>#{id}</p>
         </div>
       </div>
-      <QuoteCard text="Voihan juukelispuukelis" author={name} />
+      <MottoCard text="Voihan juukelispuukelis" author={name} />
     </div>
   )
 }

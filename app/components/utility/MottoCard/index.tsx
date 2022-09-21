@@ -1,6 +1,6 @@
-import styles from './QuoteCard.module.scss'
+import styles from './MottoCard.module.scss'
 
-const QuoteCard = ({ text, author }: { text: string; author: string }) => {
+const MottoCard = ({ text, author }: { text: string; author: string }) => {
   return (
     <div className={styles.card}>
       <h2 className={styles.quoteTitle}>Personal motto</h2>
@@ -10,4 +10,4 @@ const QuoteCard = ({ text, author }: { text: string; author: string }) => {
   )
 }
 
-export default QuoteCard
+export default MottoCard
