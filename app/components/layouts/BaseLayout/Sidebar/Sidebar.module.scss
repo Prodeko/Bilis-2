@@ -18,20 +18,20 @@
 .sidebarLink {
   @extend %flex-center;
 
-  color: $color-gray-300;
   border-radius: 50%;
+  color: $color-gray-300;
   cursor: pointer;
+  height: 8rem;
   transition: all 0.2s;
   width: 8rem;
-  height: 8rem;
 
   &:hover {
     color: $color-gray-25;
   }
 
   &--active {
-    color: $color-primary-800;
     background-color: $color-gray-25;
+    color: $color-primary-800;
 
     &:hover {
       color: $color-primary-800;
@@ -40,6 +40,6 @@
 }
 
 .sidebarIcon {
-  width: 4rem;
   height: 4rem;
+  width: 4rem;
 }
