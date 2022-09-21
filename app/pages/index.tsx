@@ -10,8 +10,7 @@ interface Props {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Home: NextPage<Props> = ({ leaderboard }: Props) => {
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <></>
+  return <Queue />
 }
 
 export async function getServerSideProps() {
