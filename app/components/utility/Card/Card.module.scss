@@ -1,0 +1,15 @@
+@use 'styles' as *;
+
+.card {
+  background-color: $color-gray-800;
+  border-radius: $border-radius-large;
+  height: 100%;
+  padding: 2.4rem;
+} 
+
+.cardgrid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  row-gap: $spacing-16;
+}
