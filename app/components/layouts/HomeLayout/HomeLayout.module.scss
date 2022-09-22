@@ -1,0 +1,20 @@
+@use 'styles' as *;
+
+
+.grid {
+  &__layout {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+  }
+
+  &__content {
+    @include grid-cols(3);
+    @include grid-rows(2);
+
+    background-image: $color-gradient-mixed-900-400;
+    gap: $spacing-24;
+    max-height: 100%;
+    padding: $spacing-48;
+  }
+}
