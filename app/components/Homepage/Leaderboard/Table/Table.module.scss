@@ -4,7 +4,6 @@
   @include padding-y($padding: $spacing-8);
   @include padding-x($padding: $spacing-16);
 
-  cursor: pointer;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   width: 100%;
@@ -26,31 +25,29 @@
   &__header {
     @extend %row;
     @extend %text-style-text-xl-semibold;
-
+    
     border-bottom: $border-primary-600-px;
+    color: $color-gray-400;
     justify-items: start;
     text-transform: uppercase;
-    
-    & th {
-      color: $color-gray-400;
-      transition: color 0.2s;
-      
-      &:hover {
-        color: $color-gray-300;
-      }
-    }
   }
   
   &__player {
     @extend %row;
     @extend %text-style-text-xl-semibold;
+    @include gradient-animation(
+      $before-left: $color-gray-800,
+      $before-right: $color-gray-800,
+      $after-left: $color-gray-800,
+      $after-right: $color-gray-700,
+      $trans-time: 0.2s
+    );
 
     color: $color-gray-50;
+    cursor: pointer;
 
     &:hover {
       @extend %shadow-lg;
-
-      background-image: $color-gradient-gray-800-700;
     }
   }
 }
