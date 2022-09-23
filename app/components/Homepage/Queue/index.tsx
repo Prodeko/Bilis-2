@@ -1,6 +1,7 @@
 import useLocalStorage from 'hooks/useLocalStorage'
 import { FunctionComponent, useMemo } from 'react'
 import { Player } from '@common/types'
+import Card from '@components/utility/Card'
 import usePlayers from 'hooks/usePlayers'
 import Select, { SingleValue } from 'react-select'
 import styles from './Queue.module.scss'
@@ -33,26 +34,28 @@ const Queue: FunctionComponent = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Queue</h2>
-      <Select
-        className={styles.playerSelect}
-        options={options}
-        onChange={handleChange}
-        placeholder="add player to queue"
-      />
-      <div className={styles.list}>
-        {queue.map((player, i) => (
-          <QueueItem
-            player={player}
-            place={i + 1}
-            queue={queue}
-            setQueue={setQueue}
-            key={player.id}
-          />
-        ))}
+    <Card rowspan="1 / 2" colspan="2 / 3">
+      <div className={styles.layout}>
+        <h2 className={styles.title}>Queue</h2>
+        <Select
+          className={styles.playerSelect}
+          options={options}
+          onChange={handleChange}
+          placeholder="add player to queue"
+        />
+        <div className={styles.list}>
+          {queue.map((player, i) => (
+            <QueueItem
+              player={player}
+              place={i + 1}
+              queue={queue}
+              setQueue={setQueue}
+              key={player.id}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

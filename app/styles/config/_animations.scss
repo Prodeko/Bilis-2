@@ -1,3 +1,5 @@
+@use './shadows' as *;
+
 %animation-ping {
   @keyframes ping {
     75%, 100% {
@@ -10,4 +12,33 @@
   animation-iteration-count: 1;
   animation-name: ping;
   animation-timing-function: (0, 0, 0.2, 1);
+}
+
+@mixin gradient-animation( $before-left, $before-right, $after-left, $after-right, $trans-time ){
+  background-image: linear-gradient(to right top, $before-left, $before-right);
+  background-size: 100%;
+  position: relative;
+  z-index: 100;
+
+  &::before {
+    background-image: linear-gradient(to right top, $after-left, $after-right);
+    content: "";
+    display: block;
+    height: 100%; 
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: all $trans-time;
+    width: 100%;
+    z-index: -100;
+  }
+
+  &:hover {
+    &::before {
+      @extend %shadow-lg;
+
+      opacity: 1;
+    }
+  }
 }

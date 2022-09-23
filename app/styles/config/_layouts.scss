@@ -5,7 +5,7 @@
 }
 @mixin grid-rows($nof_rows) {
   display: grid;
-  grid-template-columns: repeat($nof_rows, 1fr);
+  grid-template-rows: repeat($nof_rows, 1fr);
 }
 
 // Flexbox

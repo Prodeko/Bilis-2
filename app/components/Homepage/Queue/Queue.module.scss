@@ -1,17 +1,15 @@
 @use 'styles' as *;
 
-.container {
-  background: $color-gray-800;
-  border-radius: $border-radius-large;
-  color: $color-gray-200;
+.layout {
   display: grid;
   grid-template-rows: 5rem auto;
   height: 100%;
-  padding: 2.4rem;
 }
 
 .title {
   @extend %text-style-display-md-semibold;
+
+  color: $color-gray-50;
 }
 
 .playerSelect {
@@ -25,6 +23,7 @@
 }
 
 .list {
+  color: $color-gray-200;
   grid-column: 1 / span 2;
   overflow-y: scroll;
 }
