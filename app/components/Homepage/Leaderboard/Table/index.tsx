@@ -11,7 +11,7 @@ const Table = ({ leaderboard }: { leaderboard: HomeLeaderboard }) => {
       </thead>
       <tbody className={styles.tablebody}>
         {leaderboard.map((player, position) => {
-          return <PlayerRow player={player} position={position + 1} />
+          return <PlayerRow key={player.id} player={player} position={position + 1} />
         })}
       </tbody>
     </table>
