@@ -1,4 +1,4 @@
-import ProfileLayout from '@components/Layouts/ProfileLayout'
+import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileStats from '@components/Profile/ProfileStats/'
 import ProfileHeader from '@components/Profile/ProfileHeader'
 import ProfileCharts from '@components/Profile/ProfileCharts'
