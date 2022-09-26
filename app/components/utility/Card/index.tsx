@@ -3,8 +3,8 @@ import styles from './Card.module.scss'
 
 interface Props {
   children: ReactNode
-  colspan: string
-  rowspan: string
+  colspan?: string
+  rowspan?: string
 }
 
 const Card = ({ children, colspan, rowspan }: Props) => {
