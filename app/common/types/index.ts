@@ -1,10 +1,3 @@
-import { NextApiRequest } from 'next/types'
-
-type ValidationError = {
-  field: string
-  message: string
-}
-
 type Player = {
   id: number
   firstName: string
@@ -55,15 +48,6 @@ type GameWithPlayers = {
 
 type NewGame = Omit<Game, 'id'>
 
-interface RequestWithPage extends NextApiRequest {
-  page?: number
-  pageSize?: number
-}
-
-type Styles = {
-  readonly [key: string]: string
-}
-
 interface ProfileStatistic {
   label: string
   value: string
@@ -72,14 +56,11 @@ interface ProfileStatistic {
 export type {
   Player,
   PlayerExtended,
-  ValidationError,
   NewPlayer,
   Game,
   GameWithPlayers,
   NewGame,
-  RequestWithPage,
   HomeLeaderboard,
-  Styles,
   ProfileStatistic,
   PlayerWithStatistics,
 }
