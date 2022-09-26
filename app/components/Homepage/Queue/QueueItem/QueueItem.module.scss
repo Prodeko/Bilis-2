@@ -1,27 +1,37 @@
 @use 'styles' as *;
 
 .container {
-  @extend %text-style-text-xl-normal;
+  @extend %text-style-text-xl-semibold;;
   @include grid-cols(3);
+  @include padding-y($padding: $spacing-8);
+  @include padding-x($padding: $spacing-16);
+
+  @include gradient-animation(
+      $before-left: $color-gray-800,
+      $before-right: $color-gray-800,
+      $after-left: $color-gray-800,
+      $after-right: $color-gray-700,
+      $trans-time: 0.2s
+    );
 
   align-items: center;
-  margin: 2.7rem 0;
 }
 
 .removeBtn {
   @extend %text-style-text-md-semibold;
-
+  @include padding-y($padding: $spacing-4);
+  @include padding-x($padding: $spacing-8);
+  
   background: $color-error-600;
-  border-radius: $border-radius-small;
+  border: none;
   color: $color-base-white;
-  display: none;
+  cursor: pointer;
   justify-self: right;
-  margin: -1rem 1rem;
-  padding: 1rem;
+  scale: 0;
   text-transform: uppercase;
   width: fit-content; // will be set to inline-block on hover
 }
 
 .container:hover > .removeBtn {
-  display: inline-block;
+  scale: 1;
 }

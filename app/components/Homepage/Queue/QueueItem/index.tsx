@@ -1,5 +1,4 @@
 import { Player } from '@common/types'
-import { FunctionComponent } from 'react'
 import styles from './QueueItem.module.scss'
 
 interface QueueItemProps {
@@ -9,7 +8,7 @@ interface QueueItemProps {
   setQueue: (p: Player[]) => void
 }
 
-const QueueItem: FunctionComponent<QueueItemProps> = ({ place, player, setQueue, queue }) => {
+const QueueItem = ({ place, player, setQueue, queue }: QueueItemProps) => {
   const removePlayer = () => {
     setQueue(queue.filter(q => q.id !== player.id))
   }
@@ -17,7 +16,7 @@ const QueueItem: FunctionComponent<QueueItemProps> = ({ place, player, setQueue,
   return (
     <div className={styles.container}>
       <div>{place}.</div>
-      <div>{`${player.firstName} ${player.lastName}`}</div>
+      <div>{`${player.emoji} ${player.firstName} ${player.lastName}`}</div>
       <button onClick={removePlayer} className={styles.removeBtn} type="button">
         remove
       </button>
