@@ -1,3 +1,4 @@
+// Player types
 type Player = {
   id: number
   firstName: string
@@ -6,6 +7,8 @@ type Player = {
   emoji: string
   elo: number
 }
+
+type NewPlayer = Omit<Player, 'id'>
 
 type PlayerExtended = Player & {
   position: number
@@ -20,8 +23,7 @@ type PlayerWithStatistics = Player & {
 
 type HomeLeaderboard = PlayerExtended[]
 
-type NewPlayer = Omit<Player, 'id'>
-
+// Game types
 type Game = {
   id: number
   winnerId: number
@@ -32,6 +34,8 @@ type Game = {
   loserEloAfter: number
   underTable: boolean
 }
+
+type NewGame = Omit<Game, 'id'>
 
 type GameWithPlayers = {
   id: number
@@ -46,8 +50,7 @@ type GameWithPlayers = {
   underTable: boolean
 }
 
-type NewGame = Omit<Game, 'id'>
-
+// Profile types
 interface ProfileStatistic {
   label: string
   value: string
