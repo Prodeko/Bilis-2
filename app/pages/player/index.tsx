@@ -1,6 +1,7 @@
 import { Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
+import usePlayers from 'hooks/usePlayers'
 import { FunctionComponent } from 'react'
 
 interface PlayerPageProps {
@@ -8,9 +9,13 @@ interface PlayerPageProps {
 }
 
 const PlayerPage: FunctionComponent<PlayerPageProps> = ({ initialPlayers }) => {
+  const { players: queriedPlayers, query, setQuery } = usePlayers()
+
+  const players = queriedPlayers ?? initialPlayers
   return (
     <div>
-      {initialPlayers.map(player => (
+      <input placeholder="Search for a player" onChange={e => setQuery(e.target.value)} />
+      {players.map(player => (
         <div>{player.firstName}</div>
       ))}
     </div>
