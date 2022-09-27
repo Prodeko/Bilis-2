@@ -1,4 +1,5 @@
 import styles from './PlayerComparison.module.scss'
+import Card from '@components/utility/Card'
 
 const mockResults = [
   'Adam',
@@ -43,14 +44,14 @@ const Result = ({ name }: { name: string }) => {
 
 const PlayerComparison = () => {
   return (
-    <div className={styles.container}>
+    <Card>
       <input className={styles.searchBar} placeholder="Search for a player..." />
       <div className={styles.results}>
         {mockResults.map(name => (
           <Result name={name} key={name} />
         ))}
       </div>
-    </div>
+    </Card>
   )
 }
 
