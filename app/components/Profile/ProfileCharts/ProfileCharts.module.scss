@@ -2,13 +2,13 @@
 
 .container {
   background-image: $color-gradient-mixed-900-400;
+  column-gap: $spacing-128;
   display: grid;
-  flex-grow: 1;
-  grid-gap: $spacing-32 $spacing-128;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
   padding: $spacing-48;
+  row-gap: $spacing-32;
 }
 
 .chartTitle {

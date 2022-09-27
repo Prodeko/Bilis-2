@@ -1,11 +1,11 @@
 @import 'styles';
 
 .profilestats {
+  @include grid-cols($nof_cols: 4);
+
   align-items: center;
   background-color: $color-gray-700;
-  display: flex;
-  justify-content: space-evenly;
-  padding: $spacing-32;
+  height: 20rem;
 }
 
 .profilestat {
