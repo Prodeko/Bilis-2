@@ -18,7 +18,7 @@
   background-image: linear-gradient(to right top, $before-left, $before-right);
   background-size: 100%;
   position: relative;
-  z-index: 100;
+  z-index: 0;
 
   &::before {
     background-image: linear-gradient(to right top, $after-left, $after-right);
