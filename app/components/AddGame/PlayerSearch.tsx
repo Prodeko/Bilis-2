@@ -15,9 +15,19 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
 
   useEffect(() => {
     onSearchActiveChanged(searchActive)
-  }, [searchActive])
+  }, [searchActive, onSearchActiveChanged])
+
+  const delayedCall = useDelayedCall({ delayMs: 1000 })
 
   useEffect(() => {
+    const search = async (q: string) => {
+      const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+        params: { query: q },
+      })
+      const players = res.data
+      onSearchDone(players)
+    }
+
     const isEmpty = query.length === 0
     if (isEmpty && searchActive) {
       setSearchActive(false)
@@ -26,17 +36,7 @@ const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
     } else if (!isEmpty) {
       delayedCall(() => search(query))
     }
-  }, [query])
-
-  const search = async (query: string) => {
-    const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
-      params: { query },
-    })
-    const players = res.data
-    onSearchDone(players)
-  }
-
-  const delayedCall = useDelayedCall({ f: search, delayMs: 1000 })
+  }, [query, delayedCall, searchActive, onSearchDone])
 
   return (
     <div>
