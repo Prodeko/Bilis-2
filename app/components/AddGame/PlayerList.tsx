@@ -14,6 +14,9 @@ const PlayerList = ({ players, onChoose, chosen }: ListProps) => {
           }}
           key={p.id}
           onClick={() => onChoose(p.id)}
+          onKeyDown={() => onChoose(p.id)}
+          tabIndex={0}
+          role="button"
         >
           <h1>
             {p.firstName} {p.lastName}: {p.elo}
