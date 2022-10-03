@@ -1,4 +1,5 @@
 import { ApexOptions } from 'apexcharts'
+import styles from './TimeSeriesChart.module.scss'
 import dynamic from 'next/dynamic'
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -14,7 +15,16 @@ type Props = {
   height?: HeightOptions
 }
 
-const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props): ApexCharts => {
+const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
+  // Do not show the graph if data includes only one entry (DEFAULT_ELO)
+  if (data.length <= 1) {
+    return (
+      <div className={styles.nodata}>
+        <p>No elo data available</p>
+      </div>
+    )
+  }
+
   const black = '#111'
   const white = '#eee'
 
