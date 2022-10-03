@@ -15,10 +15,12 @@ type PlayerExtended = Player & {
   fullName: string
 }
 
-type PlayerWithStatistics = Player & {
+type PlayerStats = {
   wonGames: number
+  lostGames: number
   totalGames: number
-  winPercentage: string
+  winPercentage: number
+  eloData: Array<number>
 }
 
 type HomeLeaderboard = PlayerExtended[]
@@ -65,5 +67,5 @@ export type {
   NewGame,
   HomeLeaderboard,
   ProfileStatistic,
-  PlayerWithStatistics,
+  PlayerStats,
 }

@@ -5,8 +5,10 @@ import ProfileCharts from '@components/Profile/ProfileCharts'
 import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { PlayerWithStatistics } from '@common/types'
+import { Player, PlayerStats } from '@common/types'
 import { round } from 'lodash'
+
+type PlayerWithStatistics = Player & PlayerStats
 
 const PlayerPage: NextPage<PlayerWithStatistics> = ({
   id,
