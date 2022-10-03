@@ -35,21 +35,23 @@ type Game = {
   winnerEloAfter: number
   loserEloAfter: number
   underTable: boolean
+  createdAt: Date
 }
 
 type NewGame = Omit<Game, 'id'>
 
-type GameWithPlayers = {
+type RecentGame = {
   id: number
-  winnerId: number
-  loserId: number
+  time: string
+  winner: string
+  winnerEloChange: string
+  loser: string
+  loserEloChange: string
+}
+
+type GameWithPlayers = Game & {
   winner: Player
   loser: Player
-  winnerEloBefore: number
-  loserEloBefore: number
-  winnerEloAfter: number
-  loserEloAfter: number
-  underTable: boolean
 }
 
 // Profile types
@@ -65,6 +67,7 @@ export type {
   Game,
   GameWithPlayers,
   NewGame,
+  RecentGame,
   HomeLeaderboard,
   ProfileStatistic,
   PlayerStats,
