@@ -13,14 +13,6 @@ const getGameCountForPlayer = async (playerId: number) => {
   })
 }
 
-const getWinGameCountForPlayer = async (playerId: number) => {
-  return Game.count({
-    where: {
-      winnerId: playerId,
-    },
-  })
-}
-
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await Game.findAll({
     where: {
@@ -106,11 +98,4 @@ const clearGamesDEV = () =>
     where: {},
   })
 
-export {
-  createGame,
-  getGameCountForPlayer,
-  getWinGameCountForPlayer,
-  getPlayerStats,
-  getLatestGames,
-  clearGamesDEV,
-}
+export { createGame, getGameCountForPlayer, getPlayerStats, getLatestGames, clearGamesDEV }
