@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getPlayerById } from '@common/db/players'
+import { getPlayerById } from '@server/db/players'
 import { isNumber } from '@common/types/guards'
-import { getGameCountForPlayer, getWinGameCountForPlayer } from '@common/db/games'
+import { getGameCountForPlayer, getWinGameCountForPlayer } from '@server/db/games'
 import { round } from 'lodash'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
