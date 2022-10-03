@@ -17,9 +17,11 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
   nickname,
   elo,
   emoji,
+  lostGames,
   wonGames,
   totalGames,
   winPercentage,
+  eloData,
 }: PlayerWithStatistics) => {
   return (
     <ProfileLayout>
@@ -34,11 +36,11 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
         stats={[
           { label: 'Elo', value: round(elo).toString() },
           { label: 'Total Games', value: totalGames.toString() },
-          { label: 'Wins / Losses', value: `${wonGames} / ${totalGames - wonGames}` }, // TODO: Return lost games from DB instead of frontend calculation
+          { label: 'Wins / Losses', value: `${wonGames} / ${lostGames}` },
           { label: 'Win Percentage', value: `${winPercentage}%` },
         ]}
       />
-      <ProfileCharts />
+      <ProfileCharts eloData={eloData} />
     </ProfileLayout>
   )
 }
