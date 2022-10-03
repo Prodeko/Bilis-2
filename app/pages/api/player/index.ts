@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isString } from 'lodash'
-import { searchPlayers } from '@common/db/players'
+import { searchPlayers } from '@server/db/players'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

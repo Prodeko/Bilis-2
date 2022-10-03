@@ -1,6 +1,6 @@
 import { GameWithPlayers, NewGame } from '@common/types'
 import { Game, Player } from '@server/models'
-import { getPlayerById, updatePlayerById } from '@common/db/players'
+import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
 

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createGame } from '@common/db/games'
+import { createGame } from '@server/db/games'
 import { Game } from '@common/types'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Game>) {

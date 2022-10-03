@@ -1,5 +1,5 @@
-import { clearGamesDEV, createGame } from '@common/db/games'
-import { createPlayer, clearPlayersDEV, getPlayers } from '@common/db/players'
+import { clearGamesDEV, createGame } from '@server/db/games'
+import { createPlayer, clearPlayersDEV, getPlayers } from '@server/db/players'
 import { NewPlayer, PlayerExtended } from '@common/types'
 import _ from 'lodash'
 
