@@ -5,8 +5,10 @@ import ProfileCharts from '@components/Profile/ProfileCharts'
 import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { PlayerWithStatistics } from '@common/types'
+import { Player, PlayerStats } from '@common/types'
 import { round } from 'lodash'
+
+type PlayerWithStatistics = Player & PlayerStats
 
 const PlayerPage: NextPage<PlayerWithStatistics> = ({
   id,
@@ -15,9 +17,11 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
   nickname,
   elo,
   emoji,
+  lostGames,
   wonGames,
   totalGames,
   winPercentage,
+  eloData,
 }: PlayerWithStatistics) => {
   return (
     <ProfileLayout>
@@ -32,11 +36,11 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
         stats={[
           { label: 'Elo', value: round(elo).toString() },
           { label: 'Total Games', value: totalGames.toString() },
-          { label: 'Wins / Losses', value: `${wonGames} / ${totalGames - wonGames}` }, // TODO: Return lost games from DB instead of frontend calculation
+          { label: 'Wins / Losses', value: `${wonGames} / ${lostGames}` },
           { label: 'Win Percentage', value: `${winPercentage}%` },
         ]}
       />
-      <ProfileCharts />
+      <ProfileCharts eloData={eloData} />
     </ProfileLayout>
   )
 }

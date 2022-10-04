@@ -1,0 +1,8 @@
+@use 'styles' as *;
+
+.nodata {
+  @extend %flex-center;
+  @extend %text-style-display-lg-bold;
+
+  height: 100%;
+}

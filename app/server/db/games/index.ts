@@ -1,4 +1,5 @@
-import { GameWithPlayers, NewGame } from '@common/types'
+import type { PlayerStats, GameWithPlayers, NewGame } from '@common/types'
+import { DEFAULT_ELO } from '@common/utils/constants'
 import { Game, Player } from '@server/models'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { getScoreChange } from '@common/utils/gameStats'
@@ -12,12 +13,30 @@ const getGameCountForPlayer = async (playerId: number) => {
   })
 }
 
-const getWinGameCountForPlayer = async (playerId: number) => {
-  return Game.count({
+const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
+  const games = await Game.findAll({
     where: {
-      winnerId: playerId,
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
   })
+  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
+
+  const totalGames = jsonGames.length
+  const wonGames = jsonGames.filter(game => game.winnerId === playerId).length
+  const lostGames = totalGames - wonGames
+  const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
+
+  const pickElo = (game: GameWithPlayers) =>
+    game.winnerId === playerId ? game.winnerEloAfter : game.loserEloAfter
+  const eloData = [DEFAULT_ELO, ...jsonGames.map(pickElo)] // Everybody starts from 400 elo
+
+  return {
+    wonGames,
+    lostGames,
+    totalGames,
+    winPercentage,
+    eloData,
+  }
 }
 
 const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
@@ -72,10 +91,4 @@ const clearGamesDEV = () =>
     where: {},
   })
 
-export {
-  createGame,
-  getGameCountForPlayer,
-  getWinGameCountForPlayer,
-  getLatestGames,
-  clearGamesDEV,
-}
+export { createGame, getGameCountForPlayer, getPlayerStats, getLatestGames, clearGamesDEV }
