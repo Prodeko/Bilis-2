@@ -26,16 +26,9 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const lostGames = totalGames - wonGames
   const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
 
-  // Helper function to add elos from games
-  const pickElo = (game: GameWithPlayers, id: number) =>
-    game.winnerId === id ? game.winnerEloAfter : game.loserEloAfter
-
-  const eloData: Array<number> = [DEFAULT_ELO] // Everybody starts from 400 elo
-  if (totalGames !== 0) {
-    // Avoid 500 errors
-    const elos = jsonGames.map(game => pickElo(game, playerId))
-    eloData.push(...elos)
-  }
+  const pickElo = (game: GameWithPlayers) =>
+    game.winnerId === playerId ? game.winnerEloAfter : game.loserEloAfter
+  const eloData: Array<number> = [DEFAULT_ELO, ...jsonGames.map(pickElo)] // Everybody starts from 400 elo
 
   return {
     wonGames,
