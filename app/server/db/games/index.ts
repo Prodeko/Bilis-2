@@ -28,7 +28,7 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
 
   const pickElo = (game: GameWithPlayers) =>
     game.winnerId === playerId ? game.winnerEloAfter : game.loserEloAfter
-  const eloData: Array<number> = [DEFAULT_ELO, ...jsonGames.map(pickElo)] // Everybody starts from 400 elo
+  const eloData = [DEFAULT_ELO, ...jsonGames.map(pickElo)] // Everybody starts from 400 elo
 
   return {
     wonGames,

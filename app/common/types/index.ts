@@ -20,7 +20,7 @@ type PlayerStats = {
   lostGames: number
   totalGames: number
   winPercentage: number
-  eloData: Array<number>
+  eloData: number[]
 }
 
 type HomeLeaderboard = PlayerExtended[]

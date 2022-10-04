@@ -9,7 +9,7 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 type HeightOptions = '100%' | '75%' | '50%'
 
 type Props = {
-  data: Array<number>
+  data: number[]
   dataName: string
   chartTitle: string
   height?: HeightOptions
