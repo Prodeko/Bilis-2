@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { PlayerStats } from '@common/types'
 import { getPlayerById } from '@server/db/players'
 import { isNumber } from '@common/types/guards'
 import { getPlayerStats } from '@server/db/games'
@@ -9,8 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const id = req.query.id as unknown
 
     if (isNumber(id)) {
-      const player = await getPlayerById(id)
-      const playerStats: PlayerStats = await getPlayerStats(id)
+      const [player, playerStats] = await Promise.all([getPlayerById(id), getPlayerStats(id)])
 
       if (player) {
         res.status(200).json({
