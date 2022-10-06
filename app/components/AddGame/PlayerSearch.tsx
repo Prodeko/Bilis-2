@@ -5,11 +5,11 @@ import { Player } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
 
 type SearchProps = {
-  onSearchDone: (players: Player[]) => void
-  onSearchFinished: () => void
+  setPlayers: (players: Player[]) => void
+  closeSearch: () => void
 }
 
-const PlayerSearch = ({ onSearchDone, onSearchFinished }: SearchProps) => {
+const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
   const [query, setQuery] = useDebounce<string>('', 1000)
 
   useEffect(() => {
@@ -17,13 +17,13 @@ const PlayerSearch = ({ onSearchDone, onSearchFinished }: SearchProps) => {
       const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
         params: { query: q },
       })
-      onSearchDone(res.data)
+      setPlayers(res.data)
     }
     const isEmpty = query.length === 0
     if (!isEmpty) {
       search(query)
     } else {
-      onSearchFinished()
+      closeSearch()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])

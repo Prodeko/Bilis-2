@@ -42,10 +42,7 @@ const AddGame = ({ players }: PlayerProps) => {
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
         <h1>WINNER</h1>
-        <PlayerSearch
-          onSearchFinished={resetPlayers('winner')}
-          onSearchDone={setPlayers('winner')}
-        />
+        <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
         <PlayerList
           onChoose={setGameField('winnerId')}
           players={playerLists.winner}
@@ -53,7 +50,7 @@ const AddGame = ({ players }: PlayerProps) => {
         />
         <br />
         <h1>LOSER</h1>
-        <PlayerSearch onSearchFinished={resetPlayers('loser')} onSearchDone={setPlayers('loser')} />
+        <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
         <PlayerList
           onChoose={setGameField('loserId')}
           players={playerLists.loser}
