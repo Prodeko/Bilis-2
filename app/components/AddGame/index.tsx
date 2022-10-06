@@ -21,6 +21,10 @@ const AddGame = ({ players }: PlayerProps) => {
     setGame({ ...game, [key]: val })
   }
 
+  const resetPlayers = (side: 'winner' | 'loser') => () => {
+    setPlayerLists(prev => ({ ...prev, [side]: players }))
+  }
+
   const setPlayers = (side: 'winner' | 'loser') => (p: Player[]) => {
     setPlayerLists(prev => ({
       ...prev,
@@ -38,7 +42,10 @@ const AddGame = ({ players }: PlayerProps) => {
       <h3>Creating a new game</h3>
       <form onSubmit={onSubmit}>
         <h1>WINNER</h1>
-        <PlayerSearch onSearchDone={setPlayers('winner')} />
+        <PlayerSearch
+          onSearchFinished={resetPlayers('winner')}
+          onSearchDone={setPlayers('winner')}
+        />
         <PlayerList
           onChoose={setGameField('winnerId')}
           players={playerLists.winner}
@@ -46,7 +53,7 @@ const AddGame = ({ players }: PlayerProps) => {
         />
         <br />
         <h1>LOSER</h1>
-        <PlayerSearch onSearchDone={setPlayers('loser')} />
+        <PlayerSearch onSearchFinished={resetPlayers('loser')} onSearchDone={setPlayers('loser')} />
         <PlayerList
           onChoose={setGameField('loserId')}
           players={playerLists.loser}
