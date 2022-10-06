@@ -1,42 +1,29 @@
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Player } from '@common/types'
-import useDelayedCall from 'hooks/useDelayedCall'
+import useDebounce from 'hooks/useDebounce'
 
 type SearchProps = {
   onSearchDone: (players: Player[]) => void
-  onSearchActiveChanged: (isActive: boolean) => void
 }
 
-const PlayerSearch = ({ onSearchActiveChanged, onSearchDone }: SearchProps) => {
-  const [searchActive, setSearchActive] = useState<boolean>(false)
-  const [query, setQuery] = useState<string>('')
-
-  useEffect(() => {
-    onSearchActiveChanged(searchActive)
-  }, [searchActive, onSearchActiveChanged])
-
-  const delayedCall = useDelayedCall({ delayMs: 1000 })
+const PlayerSearch = ({ onSearchDone }: SearchProps) => {
+  const [query, setQuery] = useDebounce<string>('', 1000)
 
   useEffect(() => {
     const search = async (q: string) => {
       const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
         params: { query: q },
       })
-      const players = res.data
-      onSearchDone(players)
+      onSearchDone(res.data)
     }
-
     const isEmpty = query.length === 0
-    if (isEmpty && searchActive) {
-      setSearchActive(false)
-    } else if (!isEmpty && !searchActive) {
-      setSearchActive(true)
-    } else if (!isEmpty) {
-      delayedCall(() => search(query))
+    if (!isEmpty) {
+      search(query)
     }
-  }, [query, delayedCall, searchActive, onSearchDone])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
 
   return (
     <div>
