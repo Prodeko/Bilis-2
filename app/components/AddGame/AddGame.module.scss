@@ -14,13 +14,17 @@
 
 .card {
   background: white;
+  column-gap: $spacing-32;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   height: 85%;
+  padding: $spacing-64;
   width: 85%
 }
 
 .searchCard {
+  background: blue;
+
   input {
     background: black;
     width: 100%;
