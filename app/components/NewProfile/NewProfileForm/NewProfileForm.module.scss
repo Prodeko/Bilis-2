@@ -2,10 +2,25 @@
 
 .title {
   @extend %text-style-display-lg-bold;
+
+  align-self: flex-start;
 }
 
 .container {
+  align-items: center;
   align-self: stretch;
-  background-color: green;
+  display: flex;
   flex-grow: 1;
+  justify-content: center;
+}
+
+.helperWrapper {
+  width: 80%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: $spacing-24;
 }

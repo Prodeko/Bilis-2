@@ -1,0 +1,17 @@
+@use 'styles' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.label {
+  @extend %text-style-text-sm-medium;
+}
+
+.input {
+  border: none;
+  border-radius: $spacing-8;
+  padding: $spacing-8 $spacing-12;
+}
