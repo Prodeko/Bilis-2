@@ -1,12 +1,20 @@
 import styles from './NewProfileForm.module.scss'
 import { useState } from 'react'
 import Field from './Field'
+import { BsGenderAmbiguous } from 'react-icons/bs'
+import React from 'react'
 
 const NewProfileForm = () => {
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [nickname, setNickname] = useState<string>('')
   const [motto, setMotto] = useState<string>('')
+
+  const submitNewPlayer = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    console.log('Submitted following data:')
+    console.log({ firstName, lastName, nickname, motto })
+  }
 
   return (
     <div className={styles.container}>
@@ -22,6 +30,10 @@ const NewProfileForm = () => {
             setValue={setMotto}
             label="Motto"
           />
+          <button className={styles.button} onClick={submitNewPlayer}>
+            Create player
+            <BsGenderAmbiguous className={styles.icon} />
+          </button>
         </form>
       </div>
     </div>
