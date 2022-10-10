@@ -1,0 +1,33 @@
+@use 'styles' as *;
+
+.container {
+  @extend %flex-center;
+  @extend %background-blur-sm;
+
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.card {
+  background: white;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 85%;
+  width: 85%
+}
+
+.searchCard {
+  input {
+    background: black;
+    width: 100%;
+  }
+}
+
+.playerList {
+  background: yellow;
+  width: 100%;
+}

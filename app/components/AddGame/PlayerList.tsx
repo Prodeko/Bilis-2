@@ -1,10 +1,11 @@
 import { Player } from '@common/types'
+import styles from './AddGame.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void; chosen: number | undefined }
 
 const PlayerList = ({ players, onChoose, chosen }: ListProps) => {
   return (
-    <div style={{ width: 400 }}>
+    <div className={styles.playerList}>
       {players.map(p => (
         <div
           style={{

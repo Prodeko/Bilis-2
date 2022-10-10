@@ -1,9 +1,8 @@
-import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { FormEvent, useState } from 'react'
 import { NewGame, Player } from '@common/types'
+import { useState } from 'react'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
+import styles from './AddGame.module.scss'
 
 type PlayerProps = { players: Player[] }
 
@@ -32,39 +31,34 @@ const AddGame = ({ players }: PlayerProps) => {
     }))
   }
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
-  }
+  // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+  //   const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
+  //   console.log(res.data)
+  // }
 
   return (
-    <>
-      <h3>Creating a new game</h3>
-      <form onSubmit={onSubmit}>
-        <h1>WINNER</h1>
-        <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
-        <PlayerList
-          onChoose={setGameField('winnerId')}
-          players={playerLists.winner}
-          chosen={game.winnerId}
-        />
-        <br />
-        <h1>LOSER</h1>
-        <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
-        <PlayerList
-          onChoose={setGameField('loserId')}
-          players={playerLists.loser}
-          chosen={game.loserId}
-        />
-
-        <input
-          onChange={item => setGameField('underTable')(item.target.checked)}
-          title="Under table"
-          type="checkbox"
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <div className={styles.searchCard}>
+          <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
+          <PlayerList
+            onChoose={setGameField('winnerId')}
+            players={playerLists.winner}
+            chosen={game.winnerId}
+          />
+        </div>
+        <div className={styles.searchCard} />
+        <div className={styles.searchCard}>
+          <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
+          <PlayerList
+            onChoose={setGameField('loserId')}
+            players={playerLists.loser}
+            chosen={game.loserId}
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 
