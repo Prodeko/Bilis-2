@@ -1,5 +1,5 @@
 import { Player } from '@common/types'
-import PlayerLandingLayout from '@components/layouts/PlayerLandingLayout'
+import PlayerLandingLayout from '@components/Layout/PlayerLandingLayout'
 import PlayerSearch from '@components/Player/PlayerSearch'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
