@@ -1,5 +1,6 @@
 import { Player } from '@common/types'
 import PlayerLandingLayout from '@components/Layout/PlayerLandingLayout'
+import SearchContainer from '@components/Layout/PlayerLandingLayout/SearchContainer'
 import PlayerSearch from '@components/Player/PlayerSearch'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
@@ -13,7 +14,10 @@ interface PlayerPageProps {
 const PlayerPage = ({ initialPlayers }: PlayerPageProps) => {
   return (
     <PlayerLandingLayout>
-      <PlayerSearch initialPlayers={initialPlayers} />
+      <SearchContainer>
+        <h1>Player Search</h1>
+        <PlayerSearch initialPlayers={initialPlayers} />
+      </SearchContainer>
     </PlayerLandingLayout>
   )
 }

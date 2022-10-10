@@ -1,6 +1,7 @@
 import { Player } from '@common/types'
 import usePlayers from 'hooks/usePlayers'
 import { FunctionComponent, useState } from 'react'
+import styles from './PlayerSearch.module.scss'
 
 interface PlayerSearchProps {
   initialPlayers: Player[]
@@ -11,8 +12,9 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ initialPlayers: pl
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
   return (
-    <div>
+    <div className={styles.container}>
       <input
+        className={styles.search}
         placeholder="Search for a player"
         onClick={() => {
           if (!isVisible) setIsVisible(true)
