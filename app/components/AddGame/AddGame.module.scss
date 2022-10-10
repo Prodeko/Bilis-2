@@ -23,11 +23,15 @@
 }
 
 .searchCard {
+  height: 50%;
+
   .inputWrapper {
     @include padding-x($spacing-12);
     @include padding-y($spacing-8);
 
     background: $color-primary-800;
+    border-top-left-radius: $border-radius-small;
+    border-top-right-radius: $border-radius-small;
     box-sizing: border-box;
     height: $spacing-48;
     width: 100%;
@@ -46,8 +50,12 @@
 
 .playerList {
   background: $color-gray-800;
+  border-bottom-left-radius: $border-radius-small;
+  border-bottom-right-radius: $border-radius-small;
   box-sizing: border-box;
   color: $color-gray-200;
+  max-height: 100%;
+  overflow: scroll;
   width: 100%;
 
   .playerRow {
