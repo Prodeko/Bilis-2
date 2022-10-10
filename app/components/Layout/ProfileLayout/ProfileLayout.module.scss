@@ -1,5 +1,14 @@
-.container {  
+@use 'styles' as *;
+
+.container {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.newProfileContainer {
+  @extend %flex-center;
+
+  background-image: $color-gradient-mixed-900-400;
   height: 100%;
 }
