@@ -42,20 +42,12 @@ const AddGame = ({ players }: PlayerProps) => {
       <div className={styles.card}>
         <div className={styles.searchCard}>
           <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
-          <PlayerList
-            onChoose={setGameField('winnerId')}
-            players={playerLists.winner}
-            chosen={game.winnerId}
-          />
+          <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
         </div>
         <div className={styles.searchCard} />
         <div className={styles.searchCard}>
           <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
-          <PlayerList
-            onChoose={setGameField('loserId')}
-            players={playerLists.loser}
-            chosen={game.loserId}
-          />
+          <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
         </div>
       </div>
     </div>

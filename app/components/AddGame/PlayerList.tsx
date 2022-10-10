@@ -1,18 +1,13 @@
 import { Player } from '@common/types'
 import styles from './AddGame.module.scss'
 
-type ListProps = { players: Player[]; onChoose: (id: number) => void; chosen: number | undefined }
+type ListProps = { players: Player[]; onChoose: (id: number) => void }
 
-const PlayerList = ({ players, onChoose, chosen }: ListProps) => {
+const PlayerList = ({ players, onChoose }: ListProps) => {
   return (
     <div className={styles.playerList}>
       {players.map(p => (
         <div
-          style={{
-            width: '100%',
-            padding: 5,
-            background: chosen === p.id ? '#fafafa' : 'transparent',
-          }}
           key={p.id}
           onClick={() => onChoose(p.id)}
           onKeyDown={() => onChoose(p.id)}
