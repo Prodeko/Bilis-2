@@ -3,6 +3,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useEffect } from 'react'
 import { Player } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
+import styles from './AddGame.module.scss'
 
 type SearchProps = {
   setPlayers: (players: Player[]) => void
@@ -29,7 +30,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
   }, [query])
 
   return (
-    <div>
+    <div className={styles.inputWrapper}>
       <input onChange={({ target }) => setQuery(target.value)} placeholder="Search for player..." />
     </div>
   )

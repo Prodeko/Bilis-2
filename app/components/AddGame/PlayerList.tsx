@@ -9,7 +9,7 @@ const PlayerList = ({ players, onChoose }: ListProps) => {
     <div className={styles.playerList}>
       {players.map(p => (
         <div
-          className={styles.playerName}
+          className={styles.playerRow}
           key={p.id}
           onClick={() => onChoose(p.id)}
           onKeyDown={() => onChoose(p.id)}
