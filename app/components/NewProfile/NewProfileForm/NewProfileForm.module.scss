@@ -1,0 +1,11 @@
+@use 'styles' as *;
+
+.title {
+  @extend %text-style-display-lg-bold;
+}
+
+.container {
+  align-self: stretch;
+  background-color: green;
+  flex-grow: 1;
+}

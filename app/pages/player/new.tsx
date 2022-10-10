@@ -1,9 +1,12 @@
 import NewProfileLayout from '@components/Layout/ProfileLayout/newProfileLayout'
+import BackButton from '@components/NewProfile/BackButton'
+import NewProfileForm from '@components/NewProfile/NewProfileForm'
 
 const newPlayer = () => {
   return (
     <NewProfileLayout>
-      <h1>Create new profile</h1>
+      <BackButton />
+      <NewProfileForm />
     </NewProfileLayout>
   )
 }
