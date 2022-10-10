@@ -1,7 +1,37 @@
+@use 'styles' as *;
+
 .container {
   width: 100%;
 }
 
 .search {
+  background-color: $color-base-white;
+  border: $color-primary-300;
+  border-radius: $border-radius-small;
+  margin-bottom: $spacing-8;
+  padding: $spacing-12;
   width: 100%;
+}
+
+.results {
+  background: $color-base-white;
+  border-radius: $border-radius-small;
+  max-height: 20rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+}
+
+.results::-webkit-scrollbar {
+  display: none;
+}
+
+.player {
+  @extend %text-style-text-md-normal;
+
+  padding: $spacing-8;
+}
+
+.player:hover {
+  background: $color-gray-50;
 }

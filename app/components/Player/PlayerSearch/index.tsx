@@ -21,14 +21,16 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ initialPlayers: pl
         }}
         onChange={e => setQuery(e.target.value)}
       />
-      {isVisible &&
-        players
-          .filter(p => new RegExp(query, 'i').test(p.firstName + p.lastName))
-          .map(player => (
-            <div>
-              {player.firstName} {player.lastName}
-            </div>
-          ))}
+      <div className={styles.results}>
+        {isVisible &&
+          players
+            .filter(p => new RegExp(query, 'i').test(p.firstName + p.lastName))
+            .map(player => (
+              <div className={styles.player}>
+                {player.firstName} {player.lastName}
+              </div>
+            ))}
+      </div>
     </div>
   )
 }

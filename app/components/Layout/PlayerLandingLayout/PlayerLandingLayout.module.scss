@@ -1,13 +1,17 @@
+@use 'styles' as *;
+
 .container {
   align-items: center,;
+  background: $color-gradient-mixed-900-400;
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  width: 100%;
+  width: 100%
 }
 
 .searchContainer {
   text-align: left;
   width: 75rem;
+  
 }
