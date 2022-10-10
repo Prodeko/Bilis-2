@@ -7,8 +7,7 @@
 }
 
 .newProfileContainer {
-  @extend %flex-center;
-
   background-image: $color-gradient-mixed-900-400;
   height: 100%;
+  padding: $spacing-8;
 }
