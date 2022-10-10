@@ -1,5 +1,6 @@
 import { Player } from '@common/types'
 import usePlayers from 'hooks/usePlayers'
+import Link from 'next/link'
 import { FunctionComponent, useState } from 'react'
 import styles from './PlayerSearch.module.scss'
 
@@ -26,9 +27,9 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ initialPlayers: pl
           players
             .filter(p => new RegExp(query, 'i').test(p.firstName + p.lastName))
             .map(player => (
-              <div className={styles.player}>
-                {player.firstName} {player.lastName}
-              </div>
+              <Link href={`/player/${player.id}`}>
+                <div className={styles.player}>{`${player.firstName} ${player.lastName}`}</div>
+              </Link>
             ))}
       </div>
     </div>
