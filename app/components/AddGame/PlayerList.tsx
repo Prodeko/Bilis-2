@@ -1,4 +1,5 @@
 import { Player } from '@common/types'
+import { round } from 'lodash'
 import styles from './AddGame.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void }
@@ -8,15 +9,17 @@ const PlayerList = ({ players, onChoose }: ListProps) => {
     <div className={styles.playerList}>
       {players.map(p => (
         <div
+          className={styles.playerName}
           key={p.id}
           onClick={() => onChoose(p.id)}
           onKeyDown={() => onChoose(p.id)}
           tabIndex={0}
           role="button"
         >
-          <h1>
-            {p.firstName} {p.lastName}: {p.elo}
-          </h1>
+          <p>
+            {p.firstName} {p.lastName}
+          </p>
+          <p>{round(p.elo)}</p>
         </div>
       ))}
     </div>
