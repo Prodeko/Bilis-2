@@ -55,6 +55,9 @@ const PlayerSearch: FunctionComponent<PlayerSearchProps> = ({ initialPlayers: pl
         }}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
+        onBlur={() => {
+          if (isVisible) setIsVisible(false)
+        }}
       />
       <div className={styles.results}>
         {isVisible &&
