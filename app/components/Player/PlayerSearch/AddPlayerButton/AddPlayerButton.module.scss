@@ -1,0 +1,16 @@
+@use 'styles' as *;
+
+.button {
+  @extend %text-style-display-sm-bold;
+
+  background-color: $color-primary-25;
+  border-color: $color-primary-25;
+  border-radius: $border-radius-small;
+  color: $color-primary-700;
+  padding: 1.6rem 2.8rem;
+  position: fixed;
+  right: 6.4rem;
+  text-transform: uppercase;
+  top: 6.4rem
+
+}
