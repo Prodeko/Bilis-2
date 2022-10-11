@@ -9,26 +9,16 @@ import axios from 'axios'
 import usePlayers from 'hooks/usePlayers'
 import { FunctionComponent, useState } from 'react'
 
-interface PlayerPageProps {
-  initialPlayers: Player[]
-}
-
-const PlayerPage = ({ initialPlayers }: PlayerPageProps) => {
+const PlayerPage = () => {
   return (
     <PlayerLandingLayout>
       <AddPlayerButton />
       <SearchContainer>
         <Header />
-        <PlayerSearch initialPlayers={initialPlayers} />
+        <PlayerSearch />
       </SearchContainer>
     </PlayerLandingLayout>
   )
-}
-
-export async function getServerSideProps() {
-  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player?query=`)
-  const initialPlayers = res.data as Player[]
-  return { props: { initialPlayers } }
 }
 
 export default PlayerPage
