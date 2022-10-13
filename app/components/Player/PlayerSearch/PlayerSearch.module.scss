@@ -29,7 +29,9 @@
 .player {
   @extend %text-style-text-md-normal;
 
+  cursor: pointer;
   padding: $spacing-8;
+  pointer-events: fill;
 }
 
 .player:hover {

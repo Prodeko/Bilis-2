@@ -76,16 +76,21 @@ const PlayerSearch = () => {
           if (isVisible) setIsVisible(false)
         }}
       />
-      <div className={styles.results}>
+      <ul className={styles.results}>
         {isVisible &&
           players.map((player, i) => (
             <Link href={`/player/${player.id}`} key={player.id}>
-              <div
-                className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
-              >{`${player.firstName} ${player.lastName}`}</div>
+              <a>
+                <li
+                  className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
+                  onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
+                >
+                  {`${player.firstName} ${player.lastName}`}
+                </li>
+              </a>
             </Link>
           ))}
-      </div>
+      </ul>
     </div>
   )
 }
