@@ -1,0 +1,15 @@
+@use 'styles' as *;
+
+.container {
+  @include flex-y(null);
+  @extend %flex-center;
+
+  background: $color-gradient-mixed-900-400;
+  height: 100%;
+  width: 100%;
+}
+
+.searchContainer {
+  text-align: left;
+  width: 50%;
+}

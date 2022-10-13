@@ -1,0 +1,24 @@
+@use 'styles' as *;
+
+.button {
+  @include flex-x($spacing-12);
+  @extend %text-style-display-sm-bold;
+  @extend %flex-center;
+
+  background-color: $color-primary-25;
+  border: none;
+  border-color: $color-primary-25;
+  border-radius: $border-radius-small;
+  color: $color-primary-700;
+  cursor: pointer;
+  padding: $spacing-12 $spacing-24;
+  position: fixed;
+  right: $spacing-64;
+  text-transform: uppercase;
+  top: $spacing-64;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background-color: $color-primary-100;
+}
