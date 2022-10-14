@@ -11,13 +11,7 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <Image
-        src={billiardPic}
-        alt="Billiard Table"
-        objectPosition="0px -1000px"
-        layout="fill"
-        objectFit="cover"
-      />
+      <Image src={billiardPic} alt="Billiard Table" layout="fill" objectFit="cover" />
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
