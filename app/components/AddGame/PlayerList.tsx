@@ -17,7 +17,7 @@ const PlayerList = ({ players, onChoose }: ListProps) => {
           role="button"
         >
           <p>
-            {p.firstName} {p.lastName}
+            {p.emoji} {p.firstName} {p.lastName}
           </p>
           <p>{round(p.elo)}</p>
         </div>

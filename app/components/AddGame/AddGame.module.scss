@@ -29,12 +29,26 @@
     @include padding-x($spacing-12);
     @include padding-y($spacing-8);
 
+    align-items: center;
     background: $color-primary-800;
     border-top-left-radius: $border-radius-small;
     border-top-right-radius: $border-radius-small;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
     height: $spacing-48;
     width: 100%;
+
+    .searchIcon {
+      display: flex;
+      height: 2rem;
+      width: 2rem;
+
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
 
     input {
       @extend %text-style-text-md-normal;
@@ -43,7 +57,13 @@
       border: none;
       color: $color-gray-400;
       height: 100%;
+      margin-left: 0.8rem;
+      outline: none;
       width: 100%;
+    }
+
+    input::placeholder {
+      color: $color-gray-400;
     }
   }
 }

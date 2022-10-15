@@ -31,6 +31,9 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
 
   return (
     <div className={styles.inputWrapper}>
+      <div className={styles.searchIcon}>
+        <img src="/images/search-icon.svg" alt="search icon" />
+      </div>
       <input onChange={({ target }) => setQuery(target.value)} placeholder="Search for player..." />
     </div>
   )
