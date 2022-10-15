@@ -43,10 +43,25 @@
   }
 }
 
+.cardWrapper {
+  flex: 1;
+
+  .cardLabel {
+    background: $color-gradient-primary-900-700;
+    flex: 1;
+    padding: 6.4rem;
+    text-align: center;
+
+    h3 {
+      @extend %text-style-display-lg-bold;
+      @include gradient-text($color-gradient-white-300-100);
+    }
+  }
+}
+
 .card {
   column-gap: $spacing-32;
   display: grid;
-  flex: 1;
   grid-template-columns: repeat(3, 1fr);
   padding: $spacing-64;
 }
