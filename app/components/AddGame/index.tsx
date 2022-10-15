@@ -3,6 +3,7 @@ import { useState } from 'react'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
 import styles from './AddGame.module.scss'
+import PlayerLabel from './PlayerLabel'
 
 type PlayerProps = { players: Player[] }
 
@@ -39,16 +40,20 @@ const AddGame = ({ players }: PlayerProps) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <div className={styles.searchCard}>
-          <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
-          <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
+      <div className={styles.modal}>
+        <PlayerLabel type="winner" />
+        <div className={styles.card}>
+          <div className={styles.searchCard}>
+            <PlayerSearch closeSearch={resetPlayers('winner')} setPlayers={setPlayers('winner')} />
+            <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
+          </div>
+          <div className={styles.searchCard} />
+          <div className={styles.searchCard}>
+            <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
+            <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
+          </div>
         </div>
-        <div className={styles.searchCard} />
-        <div className={styles.searchCard}>
-          <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
-          <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
-        </div>
+        <PlayerLabel type="loser" />
       </div>
     </div>
   )
