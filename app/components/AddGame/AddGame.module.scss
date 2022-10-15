@@ -13,7 +13,8 @@
 }
 
 .card {
-  background: white;
+  background: $color-gradient-gray-800-700;
+  border-radius: $border-radius-large;
   column-gap: $spacing-32;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
