@@ -40,6 +40,39 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   }
 }
 
+interface MutualGames {
+  currentPlayerGamesWon: number
+  opposingPlayerGamesWon: number
+  totalGames: number
+}
+
+const getMutualGames = async (
+  currentPlayerId: number,
+  opposingPlayerId: number
+): Promise<MutualGames> => {
+  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
+    Game.count({
+      where: {
+        winnerId: currentPlayerId,
+        loserId: opposingPlayerId,
+      },
+    }),
+    Game.count({
+      where: {
+        winnerId: opposingPlayerId,
+        loserId: currentPlayerId,
+      },
+    }),
+  ])
+  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
+
+  return {
+    currentPlayerGamesWon,
+    opposingPlayerGamesWon,
+    totalGames,
+  }
+}
+
 const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
   const games = await Game.findAll({
     order: [['createdAt', 'DESC']],
@@ -119,4 +152,5 @@ export {
   getLatestGames,
   clearGamesDEV,
   getRecentGames,
+  getMutualGames,
 }
