@@ -53,6 +53,23 @@ const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
   return jsonGames
 }
 
+const getRecentGames = async (n = 20) => {
+  const recentGames = await getLatestGames(n)
+
+  return recentGames.map(game => ({
+    id: game.id,
+    time: new Date(game.createdAt).toLocaleDateString('fi-FI', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }),
+    winner: `${game.winner.firstName} ${game.winner.lastName}`,
+    winnerEloChange: `${Math.round(game.winnerEloBefore)} » ${Math.round(game.winnerEloAfter)}`,
+    loser: `${game.loser.firstName} ${game.loser.lastName}`,
+    loserEloChange: `${Math.round(game.loserEloBefore)} » ${Math.round(game.loserEloAfter)}`,
+  }))
+}
+
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
 
 const createGame = async (game: CreateGameType) => {
@@ -91,4 +108,11 @@ const clearGamesDEV = () =>
     where: {},
   })
 
-export { createGame, getGameCountForPlayer, getPlayerStats, getLatestGames, clearGamesDEV }
+export {
+  createGame,
+  getGameCountForPlayer,
+  getPlayerStats,
+  getLatestGames,
+  clearGamesDEV,
+  getRecentGames,
+}

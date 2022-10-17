@@ -1,0 +1,61 @@
+@use 'styles' as *;
+
+%row {
+  @include padding-y($padding: $spacing-8);
+  @include padding-x($padding: $spacing-16);
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+}
+
+.table {
+  gap: $spacing-16;
+  height: 100%;
+}
+
+.tablebody {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.row {
+  &__header {
+    @extend %row;
+    @extend %text-style-text-xl-semibold;
+    
+    border-bottom: $border-primary-600-px;
+    color: $color-gray-400;
+    justify-items: start;
+    text-transform: uppercase;
+  }
+  
+  &__game {
+    @extend %row;
+    @extend %text-style-text-xl-semibold;
+
+    color: $color-gray-50;
+  }
+}
+
+.time {
+  grid-column: 1 / 3
+}
+
+.winner {
+  grid-column: 3 / 6
+}
+
+.winnerEloChange {
+  grid-column: 6 / 8
+}
+
+.loser {
+  grid-column: 8 / 11 
+}
+
+.loserEloChange {
+  grid-column: 11 / 13 
+}
