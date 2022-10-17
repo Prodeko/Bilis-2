@@ -6,6 +6,7 @@ import React from 'react'
 import EmojiPicker from 'emoji-picker-react'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { useRouter } from 'next/router'
 
 const NewProfileForm = () => {
   const [firstName, setFirstName] = useState<string>('')
@@ -14,6 +15,8 @@ const NewProfileForm = () => {
   const [motto, setMotto] = useState<string>('')
   const [emoji, setEmoji] = useState<string>('')
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
+
+  const router = useRouter()
 
   const submitNewPlayer = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -24,6 +27,7 @@ const NewProfileForm = () => {
       motto,
       emoji,
     })
+    router.push('/player/' + res.data.id)
   }
 
   const isValid =
