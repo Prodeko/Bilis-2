@@ -28,6 +28,14 @@ const createPlayer = async (player: NewPlayer) => {
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
 
+const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
+  const player = await getPlayerById(id)
+  if (!player) throw Error(`Player with id ${id} not found`)
+  const updated = await player.update(data)
+  return updated
+}
+
+// NOTE!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
   Player.destroy({
     where: {},
@@ -82,4 +90,12 @@ const searchPlayers = async (query: string): Promise<Player[]> => {
   return jsonPlayers
 }
 
-export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById, getLatestPlayers, searchPlayers }
+export {
+  getPlayers,
+  createPlayer,
+  clearPlayersDEV,
+  getPlayerById,
+  updatePlayerById,
+  getLatestPlayers,
+  searchPlayers,
+}
