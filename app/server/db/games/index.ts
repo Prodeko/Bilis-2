@@ -1,9 +1,10 @@
-import type { PlayerStats, GameWithPlayers, NewGame } from '@common/types'
-import { DEFAULT_ELO } from '@common/utils/constants'
-import { Game, Player } from '@server/models'
-import { getPlayerById, updatePlayerById } from '@server/db/players'
-import { getScoreChange } from '@common/utils/gameStats'
 import { Op } from 'sequelize'
+
+import type { GameWithPlayers, NewGame, PlayerStats } from '@common/types'
+import { DEFAULT_ELO } from '@common/utils/constants'
+import { getScoreChange } from '@common/utils/gameStats'
+import { getPlayerById, updatePlayerById } from '@server/db/players'
+import { Game, Player } from '@server/models'
 
 const getGameCountForPlayer = async (playerId: number) => {
   return Game.count({

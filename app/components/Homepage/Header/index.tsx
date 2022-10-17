@@ -1,7 +1,9 @@
-import MottoCard from '@components/utility/MottoCard'
-import Filter from '@components/utility/Filter'
-import Image from 'next/image'
 import billiardPic from '../../../public/images/billiard.jpg'
+import Image from 'next/image'
+
+import Filter from '@components/utility/Filter'
+import MottoCard from '@components/utility/MottoCard'
+
 import styles from './Header.module.scss'
 
 const Header = () => {

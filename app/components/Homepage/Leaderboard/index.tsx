@@ -1,7 +1,8 @@
-import Card from '@components/utility/Card'
 import type { HomeLeaderboard } from '@common/types'
-import TitleRow from './TitleRow'
+import Card from '@components/utility/Card'
+
 import Table from './Table'
+import TitleRow from './TitleRow'
 
 const Leaderboard = ({ leaderboard }: { leaderboard: HomeLeaderboard }) => {
   return (

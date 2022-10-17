@@ -1,7 +1,9 @@
-import { Op } from 'sequelize'
-import { Player } from '@server/models'
-import { Player as PlayerType, NewPlayer, PlayerExtended } from '@common/types'
 import _ from 'lodash'
+import { Op } from 'sequelize'
+
+import { NewPlayer, PlayerExtended, Player as PlayerType } from '@common/types'
+import { Player } from '@server/models'
+
 import { getLatestGames } from '../games'
 
 const createPlayer = async (player: NewPlayer) => {

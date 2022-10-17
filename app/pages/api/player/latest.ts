@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+
 import type { Player } from '@common/types'
 import { getLatestPlayers } from '@server/db/players'
 

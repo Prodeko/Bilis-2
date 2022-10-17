@@ -1,7 +1,8 @@
-import { Player } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+
+import { Player } from '@common/types'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 const usePlayers = () => {
   const [players, setPlayers] = useState<Player[]>([])

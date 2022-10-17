@@ -1,4 +1,5 @@
-import { Model, DataTypes } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
+
 import dbConf from '@server/utils/dbConf'
 
 class Game extends Model {

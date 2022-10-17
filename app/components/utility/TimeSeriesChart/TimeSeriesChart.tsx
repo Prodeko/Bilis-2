@@ -1,6 +1,8 @@
 import { ApexOptions } from 'apexcharts'
-import styles from './TimeSeriesChart.module.scss'
 import dynamic from 'next/dynamic'
+
+import styles from './TimeSeriesChart.module.scss'
+
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240

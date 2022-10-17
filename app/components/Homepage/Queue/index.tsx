@@ -1,9 +1,10 @@
 import type { Player } from '@common/types'
 import Card from '@components/utility/Card'
+import useLocalStorage from 'hooks/useLocalStorage'
+
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'
-import useLocalStorage from 'hooks/useLocalStorage'
 
 const Queue = () => {
   const [queue, setQueue] = useLocalStorage<Player[]>('prodeko-biliskilke-queue', [])

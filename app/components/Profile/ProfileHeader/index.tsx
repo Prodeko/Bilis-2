@@ -1,6 +1,7 @@
 import { Player } from '@common/types'
-import styles from './ProfileHeader.module.scss'
 import MottoCard from '@components/utility/MottoCard'
+
+import styles from './ProfileHeader.module.scss'
 
 const ProfileHeader = ({
   id,

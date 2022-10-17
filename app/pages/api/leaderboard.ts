@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+
 import type { HomeLeaderboard } from '@common/types'
 import { getPlayers } from '@server/db/players'
 

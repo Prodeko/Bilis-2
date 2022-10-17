@@ -1,8 +1,9 @@
-import { NewGame, Player } from '@common/types'
 import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import type { NextPage } from 'next'
 import { FormEvent, useEffect, useState } from 'react'
+
+import { NewGame, Player } from '@common/types'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 import useDelayedCall from 'hooks/useDelayedCall'
 
 type SearchProps = {

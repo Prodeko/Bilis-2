@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+
 import styles from './HomeLayout.module.scss'
 
 const HomeLayout = ({ children }: { children: ReactNode }) => {

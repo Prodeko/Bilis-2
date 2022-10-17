@@ -1,6 +1,7 @@
-import styles from './Table.module.scss'
-import PlayerRow from './PlayerRow'
 import type { HomeLeaderboard } from '@common/types'
+
+import PlayerRow from './PlayerRow'
+import styles from './Table.module.scss'
 
 const TableBody = ({ leaderboard }: { leaderboard: HomeLeaderboard }) => {
   return (

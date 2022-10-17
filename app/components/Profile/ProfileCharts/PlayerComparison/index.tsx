@@ -1,5 +1,6 @@
-import styles from './PlayerComparison.module.scss'
 import Card from '@components/utility/Card'
+
+import styles from './PlayerComparison.module.scss'
 
 const mockResults = [
   'Adam',

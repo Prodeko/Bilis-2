@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { FiUserPlus } from 'react-icons/fi'
+
 import styles from './AddPlayerButton.module.scss'
 
 const AddPlayerButton = () => {

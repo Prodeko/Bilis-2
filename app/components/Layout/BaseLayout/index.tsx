@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+
 import styles from './BaseLayout.module.scss'
 import Sidebar from './Sidebar'
 
