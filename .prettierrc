@@ -4,5 +4,8 @@
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "es5",
-    "arrowParens":"avoid"
+    "arrowParens":"avoid",
+    "importOrder": ["^(hooks|@)", "^[.]\/"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
 }
