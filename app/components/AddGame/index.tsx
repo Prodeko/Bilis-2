@@ -60,7 +60,9 @@ const AddGame = ({ players }: PlayerProps) => {
                 <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
               </div>
             </div>
-            <div className={styles.cardColumn} />
+            <div className={styles.buttonWrapper}>
+              <button>Add Game</button>
+            </div>
             <div className={styles.cardColumn}>
               <div className={styles.searchCard}>
                 <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />

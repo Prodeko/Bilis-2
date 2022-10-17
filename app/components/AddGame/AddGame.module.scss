@@ -164,3 +164,23 @@
     color: white;
   }
 }
+
+.buttonWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    @extend %text-style-display-xs-semibold;
+
+    width: 50%;
+    height: 7rem;
+    background: $color-primary-600;
+    border-radius: $border-radius-small;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+}
