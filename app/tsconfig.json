@@ -6,7 +6,8 @@
       "@server/*": ["server/*"],
       "@components/*": ["components/*"],
       "@state/*": ["state/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@hooks/*": ["hooks/*"]
     },
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
