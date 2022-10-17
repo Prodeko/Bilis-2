@@ -15,10 +15,11 @@
 .modal {
   background: $color-gradient-gray-800-700;
   border-radius: $border-radius-large;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   height: 85%;
   justify-content: space-between;
+  min-height: 0;
   width: 85%;
 }
 
@@ -44,18 +45,20 @@
 }
 
 .cardWrapper {
-  flex: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
 
-  .cardLabel {
-    background: $color-gradient-primary-900-700;
-    flex: 1;
-    padding: 6.4rem;
-    text-align: center;
+.cardLabel {
+  background: $color-gradient-primary-900-700;
+  padding: 6.4rem;
+  text-align: center;
 
-    h3 {
-      @extend %text-style-display-lg-bold;
-      @include gradient-text($color-gradient-white-300-100);
-    }
+  h3 {
+    @extend %text-style-display-lg-bold;
+    @include gradient-text($color-gradient-white-300-100);
   }
 }
 
@@ -63,63 +66,73 @@
   column-gap: $spacing-32;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  height: 100%;
+  min-height: 0;
   padding: $spacing-64;
 }
 
-.searchCard {
-  height: 50%;
+.cardColumn {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
 
-  .inputWrapper {
-    @include padding-x($spacing-12);
-    @include padding-y($spacing-8);
+.inputWrapper {
+  @include padding-x($spacing-12);
+  @include padding-y($spacing-8);
 
-    align-items: center;
-    background: $color-primary-800;
-    border-top-left-radius: $border-radius-small;
-    border-top-right-radius: $border-radius-small;
-    box-sizing: border-box;
+  align-items: center;
+  background: $color-primary-800;
+  border-top-left-radius: $border-radius-small;
+  border-top-right-radius: $border-radius-small;
+  display: flex;
+  flex-direction: row;
+  height: $spacing-48;
+  width: 100%;
+
+  .searchIcon {
     display: flex;
-    flex-direction: row;
-    height: $spacing-48;
-    width: 100%;
+    height: 2rem;
+    width: 2rem;
 
-    .searchIcon {
-      display: flex;
-      height: 2rem;
-      width: 2rem;
-
-      svg {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    input {
-      @extend %text-style-text-md-normal;
-
-      background: inherit;
-      border: none;
-      color: $color-gray-400;
+    svg {
       height: 100%;
-      margin-left: 0.8rem;
-      outline: none;
       width: 100%;
     }
-
-    input::placeholder {
-      color: $color-gray-400;
-    }
   }
+
+  input {
+    @extend %text-style-text-md-normal;
+
+    background: inherit;
+    border: none;
+    color: $color-gray-400;
+    height: 100%;
+    margin-left: 0.8rem;
+    outline: none;
+    width: 100%;
+  }
+
+  input::placeholder {
+    color: $color-gray-400;
+  }
+}
+
+.searchCard {
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .playerList {
   background: $color-gray-800;
   border-bottom-left-radius: $border-radius-small;
   border-bottom-right-radius: $border-radius-small;
-  box-sizing: border-box;
   color: $color-gray-200;
-  max-height: 100%;
-  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
   width: 100%;
 
   .playerRow {

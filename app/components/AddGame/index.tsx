@@ -47,17 +47,24 @@ const AddGame = ({ players }: PlayerProps) => {
             <h3>New Game</h3>
           </div>
           <div className={styles.card}>
-            <div className={styles.searchCard}>
-              <PlayerSearch
-                closeSearch={resetPlayers('winner')}
-                setPlayers={setPlayers('winner')}
-              />
-              <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
+            <div className={styles.cardColumn}>
+              <div className={styles.searchCard}>
+                <PlayerSearch
+                  closeSearch={resetPlayers('winner')}
+                  setPlayers={setPlayers('winner')}
+                />
+                <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
+              </div>
             </div>
-            <div className={styles.searchCard} />
-            <div className={styles.searchCard}>
-              <PlayerSearch closeSearch={resetPlayers('loser')} setPlayers={setPlayers('loser')} />
-              <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
+            <div className={styles.cardColumn} />
+            <div className={styles.cardColumn}>
+              <div className={styles.searchCard}>
+                <PlayerSearch
+                  closeSearch={resetPlayers('loser')}
+                  setPlayers={setPlayers('loser')}
+                />
+                <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
+              </div>
             </div>
           </div>
         </div>
