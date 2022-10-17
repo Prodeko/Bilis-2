@@ -1,11 +1,9 @@
 import { NewGame, PlayerWithStats } from '@common/types'
 import { useState } from 'react'
-import PlayerSearch from './PlayerSearch'
-import PlayerList from './PlayerList'
 import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
-import Queue from './Queue'
 import ChosenPlayer from './ChosenPlayer'
+import ChoosePlayer from './ChoosePlayer'
 
 type PlayerProps = { players: PlayerWithStats[] }
 
@@ -59,18 +57,12 @@ const AddGame = ({ players }: PlayerProps) => {
                   onClear={() => setGameField('winnerId')(undefined)}
                 />
               ) : (
-                <>
-                  <div className={styles.searchCard}>
-                    <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
-                  </div>
-                  <div className={styles.searchCard}>
-                    <PlayerSearch
-                      closeSearch={resetPlayers('winner')}
-                      setPlayers={setPlayers('winner')}
-                    />
-                    <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
-                  </div>
-                </>
+                <ChoosePlayer
+                  onChoose={setGameField('winnerId')}
+                  players={playerLists.winner}
+                  closeSearch={resetPlayers('winner')}
+                  setPlayers={setPlayers('winner')}
+                />
               )}
             </div>
             <div className={styles.buttonWrapper}>
@@ -83,18 +75,12 @@ const AddGame = ({ players }: PlayerProps) => {
                   onClear={() => setGameField('loserId')(undefined)}
                 />
               ) : (
-                <>
-                  <div className={styles.searchCard}>
-                    <Queue onChoose={setGameField('loserId')} players={playerLists.loser} />
-                  </div>
-                  <div className={styles.searchCard}>
-                    <PlayerSearch
-                      closeSearch={resetPlayers('loser')}
-                      setPlayers={setPlayers('loser')}
-                    />
-                    <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
-                  </div>
-                </>
+                <ChoosePlayer
+                  onChoose={setGameField('loserId')}
+                  players={playerLists.loser}
+                  closeSearch={resetPlayers('loser')}
+                  setPlayers={setPlayers('loser')}
+                />
               )}
             </div>
           </div>
