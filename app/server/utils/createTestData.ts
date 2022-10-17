@@ -1,7 +1,8 @@
-import { clearGamesDEV, createGame } from '@server/db/games'
-import { createPlayer, clearPlayersDEV, getPlayers } from '@server/db/players'
-import { NewPlayer, PlayerExtended } from '@common/types'
 import _ from 'lodash'
+
+import { NewPlayer, PlayerExtended } from '@common/types'
+import { clearGamesDEV, createGame } from '@server/db/games'
+import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
 
 const randomFirstNames: string[] = [
   'Aada',

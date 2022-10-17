@@ -1,7 +1,9 @@
-import type { PlayerExtended } from '@common/types'
-import styles from './Table.module.scss'
 import { round } from 'lodash'
 import Link from 'next/link'
+
+import type { PlayerExtended } from '@common/types'
+
+import styles from './Table.module.scss'
 
 interface Props {
   player: PlayerExtended

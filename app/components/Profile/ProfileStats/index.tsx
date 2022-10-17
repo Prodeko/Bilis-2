@@ -1,6 +1,7 @@
 import { ProfileStatistic } from '@common/types'
-import styles from './ProfileStats.module.scss'
+
 import ProfileStat from './ProfileStat'
+import styles from './ProfileStats.module.scss'
 
 const ProfileStats = ({ stats }: { stats: ProfileStatistic[] }) => {
   return (

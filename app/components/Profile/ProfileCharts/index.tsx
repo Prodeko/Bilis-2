@@ -1,6 +1,7 @@
+import TimeSeriesChart from '@components/utility/TimeSeriesChart/TimeSeriesChart'
+
 import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'
-import TimeSeriesChart from '@components/utility/TimeSeriesChart/TimeSeriesChart'
 
 const ProfileCharts = ({ eloData }: { eloData: number[] }) => {
   // TODO: Change layout to horizontal 2D layout and move titles to chart components.

@@ -1,4 +1,5 @@
 import { Player } from '@common/types'
+
 import styles from './QueueItem.module.scss'
 
 interface QueueItemProps {

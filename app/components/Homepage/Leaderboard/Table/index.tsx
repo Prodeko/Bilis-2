@@ -1,4 +1,5 @@
 import type { HomeLeaderboard } from '@common/types'
+
 import styles from './Table.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'

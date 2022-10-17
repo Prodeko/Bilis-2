@@ -1,12 +1,13 @@
-import ProfileLayout from '@components/Layout/ProfileLayout'
-import ProfileStats from '@components/Profile/ProfileStats/'
-import ProfileHeader from '@components/Profile/ProfileHeader'
-import ProfileCharts from '@components/Profile/ProfileCharts'
-import type { GetServerSideProps, NextPage } from 'next'
 import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { Player, PlayerStats } from '@common/types'
 import { round } from 'lodash'
+import type { GetServerSideProps, NextPage } from 'next'
+
+import { Player, PlayerStats } from '@common/types'
+import ProfileLayout from '@components/Layout/ProfileLayout'
+import ProfileCharts from '@components/Profile/ProfileCharts'
+import ProfileHeader from '@components/Profile/ProfileHeader'
+import ProfileStats from '@components/Profile/ProfileStats/'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 type PlayerWithStatistics = Player & PlayerStats
 

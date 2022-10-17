@@ -1,7 +1,7 @@
 import { Player as PlayerType } from '@common/types'
-import { Game } from '@server/models'
 import { getScoreChange } from '@common/utils/gameStats'
 import { createGame } from '@server/db/games'
+import { Game } from '@server/models'
 
 const mockWinner: PlayerType = {
   id: 1,

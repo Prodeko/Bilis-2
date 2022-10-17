@@ -1,4 +1,5 @@
-import { FiHome, FiBarChart2, FiUser } from 'react-icons/fi'
+import { FiBarChart2, FiHome, FiUser } from 'react-icons/fi'
+
 import styles from './Sidebar.module.scss'
 import SidebarLink from './SidebarLink'
 

@@ -1,10 +1,12 @@
-import { Player } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
-import useDebounce from 'hooks/useDebounce'
 import Link from 'next/link'
 import Router from 'next/router'
 import { ChangeEventHandler, KeyboardEventHandler, useEffect, useState } from 'react'
+
+import { Player } from '@common/types'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import useDebounce from 'hooks/useDebounce'
+
 import styles from './PlayerSearch.module.scss'
 
 const PlayerSearch = () => {

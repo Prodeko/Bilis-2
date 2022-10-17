@@ -1,6 +1,6 @@
 import path from 'path'
 import { Sequelize } from 'sequelize'
-import { Umzug, SequelizeStorage } from 'umzug'
+import { SequelizeStorage, Umzug } from 'umzug'
 
 const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } = process.env
 

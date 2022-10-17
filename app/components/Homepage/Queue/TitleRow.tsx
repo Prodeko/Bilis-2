@@ -1,8 +1,10 @@
-import styles from './Queue.module.scss'
-import Select, { SingleValue } from 'react-select'
 import { useMemo } from 'react'
+import Select, { SingleValue } from 'react-select'
+
 import type { Player } from '@common/types'
 import usePlayers from 'hooks/usePlayers'
+
+import styles from './Queue.module.scss'
 
 interface OptionType {
   label: string

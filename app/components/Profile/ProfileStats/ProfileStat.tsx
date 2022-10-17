@@ -1,4 +1,5 @@
 import { ProfileStatistic } from '@common/types'
+
 import styles from './ProfileStats.module.scss'
 
 const ProfileStat = ({ label, value }: ProfileStatistic) => {

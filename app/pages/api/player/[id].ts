@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getPlayerById } from '@server/db/players'
+
 import { isNumber } from '@common/types/guards'
 import { getPlayerStats } from '@server/db/games'
+import { getPlayerById } from '@server/db/players'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

@@ -1,5 +1,5 @@
-import Player from './rawModels/Player'
 import _Game from './rawModels/Game'
+import Player from './rawModels/Player'
 
 class Game extends _Game {
   declare winner?: Player
