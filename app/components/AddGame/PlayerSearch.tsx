@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useEffect } from 'react'
-import { Player } from '@common/types'
+import { PlayerWithStats } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
 import styles from './AddGame.module.scss'
 
 type SearchProps = {
-  setPlayers: (players: Player[]) => void
+  setPlayers: (players: PlayerWithStats[]) => void
   closeSearch: () => void
 }
 
@@ -16,7 +16,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
   useEffect(() => {
     const search = async (q: string) => {
       const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
-        params: { query: q },
+        params: { query: q, stats: true },
       })
       setPlayers(res.data)
     }

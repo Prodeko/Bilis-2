@@ -1,15 +1,19 @@
-import { NewGame, Player } from '@common/types'
+import { NewGame, PlayerWithStats } from '@common/types'
 import { useState } from 'react'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
 import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
 import Queue from './Queue'
+import ChosenPlayer from './ChosenPlayer'
 
-type PlayerProps = { players: Player[] }
+type PlayerProps = { players: PlayerWithStats[] }
 
 const AddGame = ({ players }: PlayerProps) => {
-  const [playerLists, setPlayerLists] = useState<{ winner: Player[]; loser: Player[] }>({
+  const [playerLists, setPlayerLists] = useState<{
+    winner: PlayerWithStats[]
+    loser: PlayerWithStats[]
+  }>({
     winner: players,
     loser: players,
   })
@@ -26,7 +30,7 @@ const AddGame = ({ players }: PlayerProps) => {
     setPlayerLists(prev => ({ ...prev, [side]: players }))
   }
 
-  const setPlayers = (side: 'winner' | 'loser') => (p: Player[]) => {
+  const setPlayers = (side: 'winner' | 'loser') => (p: PlayerWithStats[]) => {
     setPlayerLists(prev => ({
       ...prev,
       [side]: p,

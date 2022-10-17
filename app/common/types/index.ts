@@ -28,6 +28,8 @@ interface PlayerStats {
   eloData: number[]
 }
 
+type PlayerWithStats = Player & PlayerStats
+
 type HomeLeaderboard = PlayerExtended[]
 
 // Game types
@@ -90,4 +92,5 @@ export type {
   ProfileStatistic,
   PlayerStats,
   MutualGames,
+  PlayerWithStats,
 }
