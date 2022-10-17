@@ -25,6 +25,11 @@ const createPlayer = async (player: NewPlayer) => {
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
 
+const extendPlayerWithStats = async (p: Player | PlayerType) => {
+  const playerStats = await getPlayerStats(p.id)
+  return { ...p, ...playerStats }
+}
+
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
@@ -64,7 +69,9 @@ const getLatestPlayers = async (n = 20) => {
   const latestGames = await getLatestGames(n * 5)
   const players = latestGames.reduce((acc: PlayerType[], g) => [...acc, g.winner, g.loser], [])
   const uniquePlayers = _.uniqBy(players, pl => pl.id)
-  return uniquePlayers.slice(0, n)
+  const sliced = uniquePlayers.slice(0, n)
+  const extended = await Promise.all(sliced.map(extendPlayerWithStats))
+  return extended
 }
 
 const searchPlayers = async (
@@ -84,12 +91,7 @@ const searchPlayers = async (
 
   if (!stats) return jsonPlayers
 
-  const extendWithStats = async (p: Player) => {
-    const playerStats = await getPlayerStats(p.id)
-    return { ...p, ...playerStats }
-  }
-
-  const extendedPlayers = await Promise.all(jsonPlayers.map(extendWithStats))
+  const extendedPlayers = await Promise.all(jsonPlayers.map(extendPlayerWithStats))
   return extendedPlayers
 }
 
