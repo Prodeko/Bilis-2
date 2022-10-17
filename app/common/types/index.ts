@@ -61,7 +61,14 @@ interface ProfileStatistic {
   value: string
 }
 
+// Miscellaneous types
+type CSSStyles = {
+  readonly [key: string]: string
+}
+
+// Export types
 export type {
+  CSSStyles,
   Player,
   PlayerExtended,
   NewPlayer,
