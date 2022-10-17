@@ -1,0 +1,48 @@
+@use 'styles' as *;
+
+.container {
+  @include flex-y($spacing-8);
+
+  height: 100%;
+  width: 100%;
+}
+
+.search {
+  background-color: $color-base-white;
+  border: $color-primary-300;
+  border-radius: $border-radius-small;
+  padding: $spacing-12;
+  width: 100%;
+}
+
+.results {
+  background: $color-base-white;
+  border-radius: $border-radius-small;
+  overflow-y: scroll;
+}
+
+.results::-webkit-scrollbar {
+  width: $spacing-12 ;               /* width of the entire scrollbar */
+}
+
+.results::-webkit-scrollbar-track {
+  background-color: $color-primary-50;    /* color of the scroll thumb */
+  border-radius: $border-radius-large;
+}
+
+.results::-webkit-scrollbar-thumb {
+  background-color: $color-primary-100;    /* color of the scroll thumb */
+  border-radius: $border-radius-large;       /* roundness of the scroll thumb */
+}
+
+.player {
+  @extend %text-style-text-md-normal;
+
+  cursor: pointer;
+  padding: $spacing-8;
+  pointer-events: fill;
+}
+
+.player:hover, .selected {
+  background: $color-gray-100;
+}

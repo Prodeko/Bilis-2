@@ -1,15 +1,18 @@
+import type { CSSStyles } from '@common/types'
+import { Player } from '@common/types'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
 import { ChangeEventHandler, KeyboardEventHandler, useEffect, useState } from 'react'
+import profileStyles from './ProfilePage.module.scss'
+import landingPageStyles from './PlayerLandingPage.module.scss'
 
-import { Player } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import useDebounce from 'hooks/useDebounce'
+type Variation = 'profile' | 'landing'
 
-import styles from './PlayerSearch.module.scss'
+const PlayerSearch = ({ variation }: { variation: Variation }) => {
+  const styles: CSSStyles = variation.includes('profile') ? profileStyles : landingPageStyles
 
-const PlayerSearch = () => {
   const [query, setQuery] = useDebounce<string>('', 400)
   const [players, setPlayers] = useState<Player[]>([])
   const [isVisible, setIsVisible] = useState<boolean>(false)

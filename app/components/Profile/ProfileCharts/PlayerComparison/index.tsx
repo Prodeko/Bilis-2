@@ -1,4 +1,5 @@
 import Card from '@components/utility/Card'
+import PlayerSearch from '@components/utility/PlayerSearch'
 
 import styles from './PlayerComparison.module.scss'
 
@@ -44,16 +45,7 @@ const Result = ({ name }: { name: string }) => {
 }
 
 const PlayerComparison = () => {
-  return (
-    <Card>
-      <input className={styles.searchBar} placeholder="Search for a player..." />
-      <div className={styles.results}>
-        {mockResults.map(name => (
-          <Result name={name} key={name} />
-        ))}
-      </div>
-    </Card>
-  )
+  return <PlayerSearch variation="profile" />
 }
 
 export default PlayerComparison
