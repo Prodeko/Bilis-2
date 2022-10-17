@@ -53,31 +53,49 @@ const AddGame = ({ players }: PlayerProps) => {
           </div>
           <div className={styles.card}>
             <div className={styles.cardColumn}>
-              <div className={styles.searchCard}>
-                <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
-              </div>
-              <div className={styles.searchCard}>
-                <PlayerSearch
-                  closeSearch={resetPlayers('winner')}
-                  setPlayers={setPlayers('winner')}
+              {game.winnerId ? (
+                <ChosenPlayer
+                  player={players.find(p => p.id === game.winnerId) as PlayerWithStats}
+                  onClear={() => setGameField('winnerId')(undefined)}
                 />
-                <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
-              </div>
+              ) : (
+                <>
+                  <div className={styles.searchCard}>
+                    <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
+                  </div>
+                  <div className={styles.searchCard}>
+                    <PlayerSearch
+                      closeSearch={resetPlayers('winner')}
+                      setPlayers={setPlayers('winner')}
+                    />
+                    <PlayerList onChoose={setGameField('winnerId')} players={playerLists.winner} />
+                  </div>
+                </>
+              )}
             </div>
             <div className={styles.buttonWrapper}>
-              <button>Add Game</button>
+              <button type="button">Add Game</button>
             </div>
             <div className={styles.cardColumn}>
-              <div className={styles.searchCard}>
-                <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
-              </div>
-              <div className={styles.searchCard}>
-                <PlayerSearch
-                  closeSearch={resetPlayers('loser')}
-                  setPlayers={setPlayers('loser')}
+              {game.loserId ? (
+                <ChosenPlayer
+                  player={players.find(p => p.id === game.loserId) as PlayerWithStats}
+                  onClear={() => setGameField('loserId')(undefined)}
                 />
-                <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
-              </div>
+              ) : (
+                <>
+                  <div className={styles.searchCard}>
+                    <Queue onChoose={setGameField('loserId')} players={playerLists.loser} />
+                  </div>
+                  <div className={styles.searchCard}>
+                    <PlayerSearch
+                      closeSearch={resetPlayers('loser')}
+                      setPlayers={setPlayers('loser')}
+                    />
+                    <PlayerList onChoose={setGameField('loserId')} players={playerLists.loser} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

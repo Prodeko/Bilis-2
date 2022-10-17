@@ -166,21 +166,55 @@
 }
 
 .buttonWrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
 
   button {
     @extend %text-style-display-xs-semibold;
 
-    width: 50%;
-    height: 7rem;
     background: $color-primary-600;
-    border-radius: $border-radius-small;
     border: none;
+    border-radius: $border-radius-small;
     color: white;
     cursor: pointer;
+    height: 7rem;
+    width: 50%;
+  }
+}
+
+.chosenPlayer {
+  height: 100%;
+  width: 100%;
+
+  .title {
+    @extend %text-style-display-md-bold;
+
+    color: $color-gray-200;
+    text-align: center;
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h3 {
+      @extend %text-style-display-xs-semibold;
+
+      color: $color-gray-25;
+      text-align: center;
+    }
+
+    div {
+      display: flex;
+      flex-direction: row;
+      height: $spacing-48;
+      justify-content: space-between;
+      padding: $spacing-16;
+      width: 100%;
+    }
   }
 }
