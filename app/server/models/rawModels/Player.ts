@@ -12,6 +12,8 @@ class Player extends Model {
 
   declare emoji: string
 
+  declare motto: string
+
   declare elo: number
 }
 
@@ -40,6 +42,10 @@ Player.init(
       allowNull: false,
     },
     emoji: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    motto: {
       type: DataTypes.STRING,
       allowNull: false,
     },
