@@ -5,6 +5,7 @@ type Player = {
   lastName: string
   nickname: string
   emoji: string
+  motto: string
   elo: number
 }
 
