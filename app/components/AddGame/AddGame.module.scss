@@ -76,6 +76,7 @@
   grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   height: 100%;
   min-height: 0;
+  row-gap: 1.6rem;
 }
 
 .inputWrapper {
@@ -120,8 +121,9 @@
 }
 
 .searchCard {
+  column-gap: 2rem;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
 }
 
 .playerList {
@@ -143,5 +145,22 @@
     height: $spacing-48;
     justify-content: space-between;
     padding: $spacing-16;
+  }
+}
+
+.queueLabel {
+  align-items: center;
+  background: $color-primary-800;
+  border-top-left-radius: $border-radius-small;
+  border-top-right-radius: $border-radius-small;
+  display: flex;
+  height: 5rem;
+  justify-content: center;
+  width: 100%;
+
+  h3 {
+    @extend %text-style-display-xs-semibold;
+
+    color: white;
   }
 }

@@ -4,6 +4,7 @@ import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
 import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
+import Queue from './Queue'
 
 type PlayerProps = { players: Player[] }
 
@@ -49,6 +50,9 @@ const AddGame = ({ players }: PlayerProps) => {
           <div className={styles.card}>
             <div className={styles.cardColumn}>
               <div className={styles.searchCard}>
+                <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
+              </div>
+              <div className={styles.searchCard}>
                 <PlayerSearch
                   closeSearch={resetPlayers('winner')}
                   setPlayers={setPlayers('winner')}
@@ -58,6 +62,9 @@ const AddGame = ({ players }: PlayerProps) => {
             </div>
             <div className={styles.cardColumn} />
             <div className={styles.cardColumn}>
+              <div className={styles.searchCard}>
+                <Queue onChoose={setGameField('winnerId')} players={playerLists.winner} />
+              </div>
               <div className={styles.searchCard}>
                 <PlayerSearch
                   closeSearch={resetPlayers('loser')}
