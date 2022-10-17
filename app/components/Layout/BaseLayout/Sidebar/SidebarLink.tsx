@@ -14,7 +14,7 @@ interface Props {
 
 const SidebarLink = ({ path, children }: Props) => {
   const router = useRouter()
-  const isActive = router.pathname === path
+  const isActive = router.pathname.split('/')[1] === path.slice(1)
   return (
     <Link href={path}>
       <a
