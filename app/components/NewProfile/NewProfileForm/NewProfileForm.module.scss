@@ -22,10 +22,34 @@
 }
 
 .form {
+  align-items: center;
+  display: flex;
+  gap: $spacing-48;
+  width: 100%;
+}
+
+.fields {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   gap: $spacing-24;
+}
+
+.emojiCircle {
+  @extend %flex-center;
+
+  background-color: white;
+  border-radius: 100%;
+  font-size: 100px;
+  height: 28rem;
+  transition: all 0.2s ease-in;
+  width: 28rem;
+
+  &:hover {
+    box-shadow: rgb(0 0 0 / 10%) 0 5px 15px;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 }
 
 .button {
@@ -34,20 +58,27 @@
   align-items: center;
   align-self: flex-start;
   background: none;
-  background-color: $color-primary-600;
   border: none;
   border-radius: 0.8rem;
   color: inherit;
-  cursor: pointer;
   display: flex;
   gap: 1rem;
   padding: 1rem 1.8rem;
   transition: all 0.2s ease-in;
 
-  &:hover {
-    background-color: $color-primary-700;
-    box-shadow: rgb(0 0 0 / 10%) 0 5px 15px;
-    transform: scale(1.05);
+  &Inactive {
+    background-color: $color-primary-100;
+  }
+
+  &Active {
+    background-color: $color-primary-600;
+
+    &:hover {
+      background-color: $color-primary-700;
+      box-shadow: rgb(0 0 0 / 10%) 0 5px 15px;
+      cursor: pointer;
+      transform: scale(1.05);
+    }
   }
 
   .icon {
