@@ -13,7 +13,8 @@ const createPlayer = async (player: NewPlayer) => {
       player.firstName.length > 0 &&
       player.lastName.length > 0 &&
       player.nickname.length > 0 &&
-      player.emoji.length > 0
+      player.emoji.length > 0 &&
+      player.motto.length > 0
     ) {
       return { ...player, elo: 400 }
     } else {
