@@ -7,18 +7,25 @@ import { Player } from '@server/models'
 import { getLatestGames } from '../games'
 
 const createPlayer = async (player: NewPlayer) => {
-  const createdPlayer = await Player.create(player)
+  // Ghetto validation
+  const validateAndFormatPlayer = (player: NewPlayer): NewPlayer => {
+    if (
+      player.firstName.length > 0 &&
+      player.lastName.length > 0 &&
+      player.nickname.length > 0 &&
+      player.emoji.length > 0
+    ) {
+      return { ...player, elo: 400 }
+    } else {
+      throw new Error('Malformmated id!')
+    }
+  }
+
+  const createdPlayer = await Player.create(validateAndFormatPlayer(player))
   return createdPlayer
 }
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
-
-const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
-  const player = await getPlayerById(id)
-  if (!player) throw Error(`Player with id ${id} not found`)
-  const updated = await player.update(data)
-  return updated
-}
 
 const clearPlayersDEV = () =>
   Player.destroy({
@@ -74,12 +81,4 @@ const searchPlayers = async (query: string): Promise<Player[]> => {
   return jsonPlayers
 }
 
-export {
-  getPlayers,
-  createPlayer,
-  clearPlayersDEV,
-  getPlayerById,
-  updatePlayerById,
-  getLatestPlayers,
-  searchPlayers,
-}
+export { getPlayers, createPlayer, clearPlayersDEV, getPlayerById, getLatestPlayers, searchPlayers }

@@ -4,6 +4,8 @@ import Field from './Field'
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 import React from 'react'
 import EmojiPicker from 'emoji-picker-react'
+import axios from 'axios'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 const NewProfileForm = () => {
   const [firstName, setFirstName] = useState<string>('')
@@ -13,10 +15,15 @@ const NewProfileForm = () => {
   const [emoji, setEmoji] = useState<string>('')
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
 
-  const submitNewPlayer = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submitNewPlayer = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    console.log('Submitted following data:')
-    console.log({ firstName, lastName, nickname, motto })
+    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/player`, {
+      firstName,
+      lastName,
+      nickname,
+      motto,
+      emoji,
+    })
   }
 
   const isValid =
