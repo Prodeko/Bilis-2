@@ -15,8 +15,11 @@ const Field = ({ value, setValue, placeholder, label }: FieldProps) => {
 
   return (
     <div className={styles.field}>
-      <label className={styles.label}>{label}</label>
+      <label htmlFor={label} className={styles.label}>
+        {label}
+      </label>
       <input
+        id={label}
         placeholder={placeholder}
         value={value}
         type="text"
