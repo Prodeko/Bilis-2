@@ -36,3 +36,9 @@ $header-height: 30rem;
   padding-right: $padding;
 }
 
+// Sizes
+@mixin size($height, $width: $height) {
+  height: $height;
+  width: $width;
+}
+
