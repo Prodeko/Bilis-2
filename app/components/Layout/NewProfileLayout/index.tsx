@@ -1,4 +1,4 @@
-import styles from './ProfileLayout.module.scss'
+import styles from './NewProfileLayout.module.scss'
 
 interface Props {
   children: JSX.Element | JSX.Element[]

@@ -1,4 +1,4 @@
-import NewProfileLayout from '@components/Layout/ProfileLayout/newProfileLayout'
+import NewProfileLayout from '@components/Layout/NewProfileLayout'
 import BackButton from '@components/NewProfile/BackButton'
 import NewProfileForm from '@components/NewProfile/NewProfileForm'
 
