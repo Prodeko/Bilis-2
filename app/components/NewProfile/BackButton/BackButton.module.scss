@@ -1,15 +1,16 @@
+@use 'styles' as *;
+
 .button {
   background: none;
   border: none;
-  color: inherit;
   cursor: pointer;
-  font: inherit;
-  outline: inherit;
-  padding: 0;
+  left: $spacing-32;
+  position: absolute;
+  top: $spacing-32;
 }
 
 .icon {
+  @include size(3.2rem);
+
   color: white;
-  height: 3.2rem;
-  width: 3.2rem;
 }
