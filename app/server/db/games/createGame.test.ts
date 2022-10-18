@@ -10,6 +10,7 @@ const mockWinner: PlayerType = {
   nickname: 'asd',
   emoji: '🥵',
   elo: 400,
+  motto: 'jouh',
 }
 
 const mockLoser: PlayerType = {
@@ -19,6 +20,7 @@ const mockLoser: PlayerType = {
   nickname: 'asd',
   emoji: '🥵',
   elo: 420,
+  motto: 'nice',
 }
 
 const players = {
