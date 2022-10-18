@@ -42,40 +42,52 @@ const NewProfileForm = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>New profile</h1>
       <form className={styles.form}>
-        <div className={styles.fields}>
-          <Field placeholder="Teemu" value={firstName} setValue={setFirstName} label="First name" />
-          <Field placeholder="Teekkari" value={lastName} setValue={setLastName} label="Last name" />
-          <Field placeholder="Teksa" value={nickname} setValue={setNickname} label="Nickname" />
-          <Field
-            placeholder="Ei tänään, eikä huomenna."
-            value={motto}
-            setValue={setMotto}
-            label="Motto"
-          />
-        </div>
-        {emojiSelectorOpen ? (
-          <EmojiPicker
-            onEmojiClick={emoji => {
-              setEmoji(emoji.emoji)
-              setEmojiSelectorOpen(false)
-            }}
-            height={280}
-            width={280}
-            previewConfig={{ showPreview: false }}
-          />
-        ) : (
-          <div onClick={() => setEmojiSelectorOpen(true)} className={styles.emojiCircle}>
-            {emoji === '' ? '?' : emoji}
+        <div className={styles.formInputs}>
+          <div className={styles.fields}>
+            <Field
+              placeholder="Teemu"
+              value={firstName}
+              setValue={setFirstName}
+              label="First name"
+            />
+            <Field
+              placeholder="Teekkari"
+              value={lastName}
+              setValue={setLastName}
+              label="Last name"
+            />
+            <Field placeholder="Teksa" value={nickname} setValue={setNickname} label="Nickname" />
+            <Field
+              placeholder="Ei tänään, eikä huomenna."
+              value={motto}
+              setValue={setMotto}
+              label="Motto"
+            />
           </div>
-        )}
+          {emojiSelectorOpen ? (
+            <EmojiPicker
+              onEmojiClick={emoji => {
+                setEmoji(emoji.emoji)
+                setEmojiSelectorOpen(false)
+              }}
+              height={280}
+              width={280}
+              previewConfig={{ showPreview: false }}
+            />
+          ) : (
+            <div onClick={() => setEmojiSelectorOpen(true)} className={styles.emojiCircle}>
+              {emoji === '' ? '?' : emoji}
+            </div>
+          )}
+        </div>
+        <button
+          className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
+          onClick={submitNewPlayer}
+        >
+          Create player
+          <BsFillPersonPlusFill className={styles.icon} />
+        </button>
       </form>
-      <button
-        className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
-        onClick={submitNewPlayer}
-      >
-        Create player
-        <BsFillPersonPlusFill className={styles.icon} />
-      </button>
     </div>
   )
 }

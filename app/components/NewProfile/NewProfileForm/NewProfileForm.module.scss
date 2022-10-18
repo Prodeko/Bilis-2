@@ -5,20 +5,26 @@
 }
 
 .container {
-  @include flex-y($gap: $spacing-24);
+  @include flex-y($gap: $spacing-32);
 
   width: 80%;
 }
 
 .form {
-  @include flex-x($gap: $spacing-48);
+  @include flex-y($gap: $spacing-24);
 
   align-items: center;
 }
 
+.formInputs {
+  @include flex-x($gap: $spacing-32);
+
+  width: 100%;
+}
+
 .fields {
-  @include flex-y($gap: $spacing-24);
-  
+  @include flex-y($gap: $spacing-16);
+
   flex-grow: 1;
 }
 
