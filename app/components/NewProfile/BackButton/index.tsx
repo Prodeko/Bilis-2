@@ -4,10 +4,10 @@ import styles from './BackButton.module.scss'
 
 const BackButton = () => {
   return (
-    <Link href="/">
-      <button className={styles.button} onClick={() => null}>
+    <Link href="/player">
+      <a className={styles.button}>
         <BsArrowLeft className={styles.icon} />
-      </button>
+      </a>
     </Link>
   )
 }
