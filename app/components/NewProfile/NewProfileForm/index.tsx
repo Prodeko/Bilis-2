@@ -40,7 +40,7 @@ const NewProfileForm = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>New profile</h1>
+      <h1 className={styles.title}>New Profile</h1>
       <form className={styles.form}>
         <div className={styles.formInputs}>
           <div className={styles.fields}>
@@ -48,13 +48,13 @@ const NewProfileForm = () => {
               placeholder="Teemu"
               value={firstName}
               setValue={setFirstName}
-              label="First name"
+              label="First Name"
             />
             <Field
               placeholder="Teekkari"
               value={lastName}
               setValue={setLastName}
-              label="Last name"
+              label="Last Name"
             />
             <Field placeholder="Teksa" value={nickname} setValue={setNickname} label="Nickname" />
             <Field
@@ -81,6 +81,7 @@ const NewProfileForm = () => {
           )}
         </div>
         <button
+          disabled={!isValid}
           className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
           onClick={submitNewPlayer}
         >
