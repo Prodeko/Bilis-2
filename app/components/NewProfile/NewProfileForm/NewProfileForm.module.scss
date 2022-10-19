@@ -1,0 +1,79 @@
+@use 'styles' as *;
+
+.title {
+  @extend %text-style-display-lg-bold;
+}
+
+.container {
+  @include flex-y($gap: $spacing-32);
+
+  width: 80%;
+}
+
+.form {
+  @include flex-y($gap: $spacing-24);
+
+  align-items: center;
+}
+
+.formInputs {
+  @include flex-x($gap: $spacing-32);
+
+  width: 100%;
+}
+
+.fields {
+  @include flex-y($gap: $spacing-16);
+
+  flex-grow: 1;
+}
+
+.emojiCircle {
+  @extend %flex-center;
+  @include size(28rem);
+
+  background-color: $color-base-white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 10rem;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    @extend %shadow-xl;
+
+    transform: scale(1.05);
+  }
+}
+
+.button {
+  @include flex-x($gap: $spacing-8);
+  @extend %text-style-text-md-semibold;
+
+  align-items: center;
+  align-self: flex-start;
+  border: none;
+  border-radius: $border-radius-small;
+  color: inherit;
+  padding: $spacing-8 $spacing-16;
+  transition: all 0.2s ease-out;
+
+  &Inactive {
+    background-color: $color-primary-100;
+  }
+
+  &Active {
+    background-color: $color-primary-600;
+
+    &:hover {
+      @extend %shadow-xl;
+
+      background-color: $color-primary-700;
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+
+  .icon {
+    @include size(2.4rem);
+  }
+}

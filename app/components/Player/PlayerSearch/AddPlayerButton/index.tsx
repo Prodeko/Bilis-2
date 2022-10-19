@@ -5,7 +5,7 @@ import styles from './AddPlayerButton.module.scss'
 
 const AddPlayerButton = () => {
   return (
-    <Link href="/player/add">
+    <Link href="/player/new">
       <button className={styles.button}>
         <FiUserPlus className={styles.icon} /> <span>create a new player</span>
       </button>

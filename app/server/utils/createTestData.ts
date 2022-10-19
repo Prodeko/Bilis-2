@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { NewPlayer, PlayerExtended } from '@common/types'
 import { clearGamesDEV, createGame } from '@server/db/games'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
+import { DEFAULT_ELO } from '@common/utils/constants'
 
 const randomFirstNames: string[] = [
   'Aada',
@@ -50,7 +51,7 @@ const randomLastNames: string[] = [
   'Järvinen',
 ]
 
-const randomEmojis: string[] = ['🥵', '😫', '🫥']
+const randomEmojis: string[] = ['🥵', '😫', '🫥', '🫡', '🥶', '🤑', '👻', '💩', '🤡', '😸']
 
 const generateNickname = (firstName: String, lastName: String) => {
   return (
@@ -70,35 +71,37 @@ const generatePlayer = (): NewPlayer => {
     lastName,
     nickname: generateNickname(firstName, lastName),
     emoji: _.sample(randomEmojis) as string,
-    elo: Math.random() * 1200,
+    elo: DEFAULT_ELO,
+    motto: 'Raikku is the way of life',
   }
 }
 
 const createPlayers = async () => {
-  const PLAYER_COUNT = 100
+  const PLAYER_COUNT = 200
   const players = _.times(PLAYER_COUNT, generatePlayer)
   await Promise.all(players.map(createPlayer))
 }
 
 const createGames = async () => {
-  const GAME_COUNT = 150
+  const GAME_COUNT = 20000
   const allPlayers = await getPlayers()
-  const games = _.times(GAME_COUNT, () => {
+
+  for (let idx = 0; idx < GAME_COUNT; idx++) {
     const winner = _.sample(allPlayers) as PlayerExtended
     const loser = _.sample(allPlayers) as PlayerExtended
-    return {
+    const game = {
       winnerId: winner.id,
       loserId: loser.id,
       underTable: Math.random() < 0.1,
     }
-  })
-  await Promise.all(games.map(createGame))
+    await createGame(game)
+  }
 }
 
 const main = async () => {
+  await clearGamesDEV()
   await clearPlayersDEV()
   await createPlayers()
-  await clearGamesDEV()
   await createGames()
 }
 

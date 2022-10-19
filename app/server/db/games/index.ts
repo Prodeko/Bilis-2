@@ -104,9 +104,12 @@ const createGame = async (game: CreateGameType) => {
   return createdGame
 }
 
+// NOTE!! Only use in dev, destroys everything in database
 const clearGamesDEV = () =>
   Game.destroy({
     where: {},
+    truncate: true,
+    cascade: true,
   })
 
 export {

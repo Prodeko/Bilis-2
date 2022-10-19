@@ -1,4 +1,6 @@
-.container {  
+@use 'styles' as *;
+
+.container {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   height: 100%;

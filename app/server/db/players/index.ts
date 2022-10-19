@@ -7,7 +7,22 @@ import { Player } from '@server/models'
 import { getLatestGames } from '../games'
 
 const createPlayer = async (player: NewPlayer) => {
-  const createdPlayer = await Player.create(player)
+  // Ghetto validation
+  const validateAndFormatPlayer = (player: NewPlayer): NewPlayer => {
+    if (
+      player.firstName.length > 0 &&
+      player.lastName.length > 0 &&
+      player.nickname.length > 0 &&
+      player.emoji.length > 0 &&
+      player.motto.length > 0
+    ) {
+      return { ...player, elo: 400 }
+    } else {
+      throw new Error('Malformmated id!')
+    }
+  }
+
+  const createdPlayer = await Player.create(validateAndFormatPlayer(player))
   return createdPlayer
 }
 
@@ -20,9 +35,12 @@ const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
   return updated
 }
 
+// NOTE!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
   Player.destroy({
     where: {},
+    truncate: true,
+    cascade: true,
   })
 
 const getPlayers = async (): Promise<PlayerExtended[]> => {

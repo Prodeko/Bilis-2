@@ -1,0 +1,15 @@
+@use 'styles' as *;
+
+.field {
+  @include flex-y($gap: $spacing-4)
+}
+
+.label {
+  @extend %text-style-text-sm-medium;
+}
+
+.input {
+  border: none;
+  border-radius: $border-radius-small;
+  padding: $spacing-8 $spacing-12;
+}
