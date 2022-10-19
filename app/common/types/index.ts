@@ -51,7 +51,7 @@ type RecentGame = {
   loserEloChange: string
 }
 
-interface GameWithPlayers extends Player {
+interface GameWithPlayers extends Game {
   winner: Player
   loser: Player
 }
