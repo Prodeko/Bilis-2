@@ -1,10 +1,11 @@
 import type { CSSStyles } from '@common/types'
 import { Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import useDebounce from '@hooks/useDebounce'
+import useKeyPress from '@hooks/useKeyPress'
 import axios from 'axios'
 import Link from 'next/link'
-import Router from 'next/router'
-import { ChangeEventHandler, KeyboardEventHandler, useEffect, useState } from 'react'
+import { ChangeEventHandler, useEffect, useState } from 'react'
 import profileStyles from './ProfilePage.module.scss'
 import landingPageStyles from './PlayerLandingPage.module.scss'
 
@@ -16,7 +17,7 @@ const PlayerSearch = ({ variation }: { variation: Variation }) => {
   const [query, setQuery] = useDebounce<string>('', 400)
   const [players, setPlayers] = useState<Player[]>([])
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const [selectedIdx, setSelectedIdx] = useState<number>(0)
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, 'player')
 
   useEffect(() => {
     const search = async (q: string) => {
@@ -34,23 +35,6 @@ const PlayerSearch = ({ variation }: { variation: Variation }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
-
-  const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = e => {
-    switch (e.key) {
-      case 'ArrowUp':
-        setSelectedIdx(Math.max(0, selectedIdx - 1))
-        break
-
-      case 'ArrowDown':
-        setSelectedIdx(Math.min(players.length, selectedIdx + 1))
-        break
-
-      case 'Enter':
-        const id = players[selectedIdx].id
-        Router.push(`player/${id}`)
-        break
-    }
-  }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
