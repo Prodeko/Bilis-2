@@ -19,6 +19,7 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
+    order: [['createdAt', 'ASC']],
   })
   const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
 
