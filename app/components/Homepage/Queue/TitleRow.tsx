@@ -17,7 +17,7 @@ interface Props {
 }
 
 const TitleRow = ({ queue, setQueue }: Props) => {
-  const { players } = usePlayers()
+  const { players } = usePlayers(0)
 
   const options: OptionType[] = useMemo(
     () =>

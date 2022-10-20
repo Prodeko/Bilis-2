@@ -1,37 +1,21 @@
-import { Player } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import useDebounce from '@hooks/useDebounce'
+import usePlayers from '@hooks/usePlayers'
 import useKeyPress from '@hooks/useKeyPress'
-import axios from 'axios'
 import Link from 'next/link'
-import { ChangeEventHandler, useEffect, useState } from 'react'
+import { ChangeEventHandler, useState } from 'react'
 import styles from './PlayerSearchLink.module.scss'
 
 const PlayerSearchLink = () => {
-  const [query, setQuery] = useDebounce<string>('', 400)
-  const [players, setPlayers] = useState<Player[]>([])
   const [isVisible, setIsVisible] = useState<boolean>(false)
+  const { players, setQuery } = usePlayers(400)
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, 'player')
 
-  useEffect(() => {
-    const search = async (q: string) => {
-      const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
-        params: { query: q },
-      })
-      setPlayers(res.data)
-    }
-
-    if (query.length !== 0) {
-      search(query)
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    if (e.target.value.length !== 0) {
+      setQuery(e.target.value)
       setIsVisible(true)
     } else {
       setIsVisible(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query])
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    setQuery(e.target.value)
     setSelectedIdx(0)
   }
 
