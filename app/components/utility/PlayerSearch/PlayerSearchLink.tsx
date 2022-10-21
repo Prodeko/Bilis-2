@@ -10,12 +10,8 @@ const PlayerSearchLink = () => {
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, 'player')
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-    if (e.target.value.length !== 0) {
-      setQuery(e.target.value)
-      setIsVisible(true)
-    } else {
-      setIsVisible(false)
-    }
+    setQuery(e.target.value)
+    setIsVisible(true)
     setSelectedIdx(0)
   }
 
