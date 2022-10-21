@@ -1,0 +1,19 @@
+ @use 'styles' as *;
+
+.container {
+  @include flex-y($spacing-8);
+
+  height: 100%;
+  width: 100%;
+}
+
+.search {
+  @extend %text-style-text-xl-medium;
+
+  background-color: $color-base-white;
+  border: $color-primary-300;
+  border-radius: $border-radius-small;
+
+  // padding: $spacing-12;
+  width: 100%;
+}
