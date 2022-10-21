@@ -41,7 +41,7 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
           { label: 'Win Percentage', value: `${winPercentage}%` },
         ]}
       />
-      <ProfileCharts eloData={eloData} />
+      <ProfileCharts eloData={eloData} currentPlayerId={id} />
     </ProfileLayout>
   )
 }
