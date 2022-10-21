@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(404).json({ error: `No player found with ID ${opposingPlayerId}` })
       } else {
         const mutualGamesStats = await getMutualGamesCount(currentPlayerId, opposingPlayerId)
-        res.status(200).json(mutualGamesStats)
+        res.status(200).json({ mutualGames: mutualGamesStats, currentPlayer, opposingPlayer })
       }
     } else {
       res.status(400).json({ error: 'IDs must be type of number' })
