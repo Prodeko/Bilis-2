@@ -37,8 +37,6 @@ const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
     }
   }
 
-  console.log(pieChartProps)
-
   return (
     <div className={styles.container}>
       <PlayerSearchSelect handleClick={handleClick} />
