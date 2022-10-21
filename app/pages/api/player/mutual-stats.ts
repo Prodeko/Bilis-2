@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isNumber } from '@common/types/guards'
 import { getPlayerById } from '@server/db/players'
-import { getMutualGames } from '@server/db/games'
+import { getMutualGamesCount } from '@server/db/games'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       } else if (!opposingPlayer) {
         res.status(404).json({ error: `No player found with ID ${opposingPlayerId}` })
       } else {
-        const mutualGamesStats = await getMutualGames(currentPlayerId, opposingPlayerId)
+        const mutualGamesStats = await getMutualGamesCount(currentPlayerId, opposingPlayerId)
         res.status(200).json(mutualGamesStats)
       }
     } else {

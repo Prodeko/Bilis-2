@@ -51,6 +51,12 @@ type RecentGame = {
   loserEloChange: string
 }
 
+interface MutualGames {
+  currentPlayerGamesWon: number
+  opposingPlayerGamesWon: number
+  totalGames: number
+}
+
 interface GameWithPlayers extends Game {
   winner: Player
   loser: Player
@@ -83,4 +89,5 @@ export type {
   HomeLeaderboard,
   ProfileStatistic,
   PlayerStats,
+  MutualGames,
 }

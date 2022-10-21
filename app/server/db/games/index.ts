@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 
-import type { GameWithPlayers, NewGame, PlayerStats } from '@common/types'
+import type { GameWithPlayers, NewGame, PlayerStats, MutualGames } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
@@ -41,13 +41,7 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   }
 }
 
-interface MutualGames {
-  currentPlayerGamesWon: number
-  opposingPlayerGamesWon: number
-  totalGames: number
-}
-
-const getMutualGames = async (
+const getMutualGamesCount = async (
   currentPlayerId: number,
   opposingPlayerId: number
 ): Promise<MutualGames> => {
@@ -153,5 +147,5 @@ export {
   getLatestGames,
   clearGamesDEV,
   getRecentGames,
-  getMutualGames,
+  getMutualGamesCount,
 }
