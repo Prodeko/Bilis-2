@@ -9,8 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const query = req.query.query as unknown
 
     if (isString(query)) {
-      const searchWords = query.split(' ')
-      const players = await searchPlayers(searchWords)
+      const players = await searchPlayers(query)
       res.status(200).json(players)
     } else {
       res.status(400).json({ error: 'ID must be type of string' })

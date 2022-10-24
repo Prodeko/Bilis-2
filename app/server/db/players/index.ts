@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import { Op } from 'sequelize'
-
 import { NewPlayer, PlayerExtended, Player as PlayerType } from '@common/types'
 import { Player } from '@server/models'
-
 import { getLatestGames } from '@server/db/games'
+import { Sequelize } from 'sequelize'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -70,48 +69,18 @@ const getLatestPlayers = async (n = 20) => {
   return uniquePlayers.slice(0, n)
 }
 
-const searchPlayers = async (searchWords: string[]): Promise<Player[]> => {
-  const findValidPlayers = async (query: string) => {
-    const players = await Player.findAll({
-      where: {
-        [Op.or]: [
-          {
-            firstName: {
-              [Op.iLike]: `%${query}%`,
-            },
-          },
-          {
-            lastName: {
-              [Op.iLike]: `%${query}%`,
-            },
-          },
-        ],
-      },
-    })
-    return players
-  }
-
-  // Returns valid players responding to each searchword
-  const validPlayersArrays = await Promise.all(searchWords.map(findValidPlayers))
-
-  const jsonPlayersArrays = validPlayersArrays.map(playerArr =>
-    playerArr.map(player => player.toJSON() as Player)
+const searchPlayers = async (query: string): Promise<Player[]> => {
+  const fullName = Sequelize.where(
+    Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
+    {
+      [Op.iLike]: `%${query}%`,
+    }
   )
-
-  // Choose players that appear in each array
-  const [firstArray, ...remainingArrays] = jsonPlayersArrays
-  const validPlayers = firstArray.filter(firstPlayer => {
-    return remainingArrays.every(playerArr => {
-      return playerArr.some(anotherPlayer => {
-        return (
-          firstPlayer.firstName === anotherPlayer.firstName &&
-          firstPlayer.lastName === anotherPlayer.lastName
-        )
-      })
-    })
+  const players = await Player.findAll({
+    where: fullName,
   })
 
-  return validPlayers
+  return players
 }
 
 export {
