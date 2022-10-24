@@ -3,6 +3,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:migrate:up": "yarn ts-node ./server/utils/migrator up",
+    "dev:migrate:create": "yarn ts-node ./server/utils/migrator create --folder ./server/migrations --name new-migration.ts",
+    "dev:migrate:down": "yarn ts-node ./server/utils/migrator down",
+    "dev:migrate:pending": "yarn ts-node ./server/utils/migrator pending",
+    "dev:migrate:executed": "yarn ts-node ./server/utils/migrator executed",
+    "dev:create-test-data": "yarn ts-node -r tsconfig-paths/register ./server/utils/createTestData",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
