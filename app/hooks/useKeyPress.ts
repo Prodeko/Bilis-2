@@ -12,7 +12,7 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, baseRoute?: string) => {
         break
 
       case 'ArrowDown':
-        setSelectedIdx(Math.min(arr.length, selectedIdx + 1))
+        setSelectedIdx(Math.min(arr.length - 1, selectedIdx + 1))
         break
 
       case 'Enter':
