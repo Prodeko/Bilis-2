@@ -1,12 +1,7 @@
 import { NewPlayer } from '.'
 
 export const isNumber = (supposedNumber: unknown): supposedNumber is number => {
-  const forcedNumber = Number(supposedNumber)
-
-  if (Number.isNaN(forcedNumber)) {
-    return false
-  }
-  return true
+  return typeof supposedNumber === 'number' && !isNaN(supposedNumber)
 }
 
 export const isNewPlayer = (supposedNewPlayer: unknown): supposedNewPlayer is NewPlayer => {

@@ -5,8 +5,8 @@ import { getMutualGamesCount } from '@server/db/games'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const currentPlayerId = req.query.id1 as unknown
-    const opposingPlayerId = req.query.id2 as unknown
+    const currentPlayerId = Number(req.query.id1) as unknown
+    const opposingPlayerId = Number(req.query.id2) as unknown
 
     if (isNumber(currentPlayerId) && isNumber(opposingPlayerId)) {
       const [currentPlayer, opposingPlayer] = await Promise.all([
