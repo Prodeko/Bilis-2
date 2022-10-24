@@ -1,6 +1,10 @@
-// Player types
-type Player = {
+// Base types
+interface WithId {
   id: number
+}
+
+// Player types
+interface Player extends WithId {
   firstName: string
   lastName: string
   nickname: string
@@ -11,12 +15,12 @@ type Player = {
 
 type NewPlayer = Omit<Player, 'id'>
 
-type PlayerExtended = Player & {
+interface PlayerExtended extends Player {
   position: number
   fullName: string
 }
 
-type PlayerStats = {
+interface PlayerStats {
   wonGames: number
   lostGames: number
   totalGames: number
@@ -27,8 +31,7 @@ type PlayerStats = {
 type HomeLeaderboard = PlayerExtended[]
 
 // Game types
-type Game = {
-  id: number
+interface Game extends WithId {
   winnerId: number
   loserId: number
   winnerEloBefore: number
@@ -39,8 +42,6 @@ type Game = {
   createdAt: Date
 }
 
-type NewGame = Omit<Game, 'id'>
-
 type RecentGame = {
   id: number
   time: string
@@ -50,10 +51,18 @@ type RecentGame = {
   loserEloChange: string
 }
 
-type GameWithPlayers = Game & {
+interface MutualGames {
+  currentPlayerGamesWon: number
+  opposingPlayerGamesWon: number
+  totalGames: number
+}
+
+interface GameWithPlayers extends Game {
   winner: Player
   loser: Player
 }
+
+type NewGame = Omit<Game, 'id'>
 
 // Profile types
 interface ProfileStatistic {
@@ -61,7 +70,15 @@ interface ProfileStatistic {
   value: string
 }
 
+// Miscellaneous types
+type CSSStyles = {
+  readonly [key: string]: string
+}
+
+// Export types
 export type {
+  WithId,
+  CSSStyles,
   Player,
   PlayerExtended,
   NewPlayer,
@@ -72,4 +89,5 @@ export type {
   HomeLeaderboard,
   ProfileStatistic,
   PlayerStats,
+  MutualGames,
 }

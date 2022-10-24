@@ -86,14 +86,20 @@ const createGames = async () => {
   const GAME_COUNT = 20000
   const allPlayers = await getPlayers()
 
-  for (let idx = 0; idx < GAME_COUNT; idx++) {
+  const games = _.times(GAME_COUNT, () => {
     const winner = _.sample(allPlayers) as PlayerExtended
-    const loser = _.sample(allPlayers) as PlayerExtended
+    const remainingPlayers = allPlayers.filter(player => player.id !== winner.id)
+
+    const loser = _.sample(remainingPlayers) as PlayerExtended
     const game = {
       winnerId: winner.id,
       loserId: loser.id,
       underTable: Math.random() < 0.1,
     }
+    return game
+  })
+
+  for await (const game of games) {
     await createGame(game)
   }
 }

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 import Select, { SingleValue } from 'react-select'
 
 import type { Player } from '@common/types'
@@ -13,17 +13,20 @@ interface OptionType {
 
 interface Props {
   queue: Player[]
-  setQueue: any
+  setQueue: Dispatch<SetStateAction<Player[]>>
 }
 
 const TitleRow = ({ queue, setQueue }: Props) => {
-  const { players } = usePlayers()
+  const { players } = usePlayers(0)
 
   const options: OptionType[] = useMemo(
     () =>
       players
-        .filter(o => !queue.some(qP => qP.id === o.id))
-        .map(p => ({ label: `#${p.id} ${p.firstName} ${p.lastName}`, value: p })),
+        .filter(player => !queue.some(queuePlayer => queuePlayer.id === player.id))
+        .map(player => ({
+          label: `#${player.id} ${player.firstName} ${player.lastName}`,
+          value: player,
+        })),
     [players, queue]
   )
 

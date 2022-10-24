@@ -1,58 +1,47 @@
-import Card from '@components/utility/Card'
-
+import PlayerSearchSelect from '@components/utility/PlayerSearch/PlayerSearchSelect'
+import type { Player, MutualGames } from '@common/types'
+import PieChart from '@components/utility/PieChart'
+import axios from 'axios'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { useState } from 'react'
 import styles from './PlayerComparison.module.scss'
+import { SingleValue } from 'react-select'
 
-const mockResults = [
-  'Adam',
-  'Alex',
-  'Aaron',
-  'Ben',
-  'Carl',
-  'Dan',
-  'David',
-  'Edward',
-  'Fred',
-  'Frank',
-  'George',
-  'Hal',
-  'Hank',
-  'Ike',
-  'Raikku',
-  'John',
-  'Jack',
-  'Joe',
-  'Larry',
-  'Monte',
-  'Matthew',
-  'Mark',
-  'Nathan',
-  'Otto',
-  'Paul',
-  'Peter',
-  'Roger',
-  'Roger',
-  'Steve',
-  'Thomas',
-  'Tim',
-  'Ty',
-  'Victor',
-  'Walter',
-]
-
-const Result = ({ name }: { name: string }) => {
-  return <p className={styles.result}>{name}</p>
+interface PieChartProps {
+  currentPlayer: Player
+  opposingPlayer: Player
+  mutualGames: MutualGames
 }
 
-const PlayerComparison = () => {
+interface OptionType {
+  label: string
+  value: Player
+}
+
+const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
+  const [pieChartProps, setPieChartProps] = useState<PieChartProps | undefined>(undefined)
+
+  const handleClick = async (newValue: SingleValue<OptionType>) => {
+    if (newValue?.value) {
+      try {
+        const response = await axios.get(`${NEXT_PUBLIC_API_URL}/player/mutual-stats`, {
+          params: { id1: currentPlayerId, id2: newValue.value },
+        })
+        const data = response.data as PieChartProps
+        setPieChartProps(data)
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      console.warn('Trying to select player for player comparison but failed')
+    }
+  }
+
   return (
-    <Card>
-      <input className={styles.searchBar} placeholder="Search for a player..." />
-      <div className={styles.results}>
-        {mockResults.map(name => (
-          <Result name={name} key={name} />
-        ))}
-      </div>
-    </Card>
+    <div className={styles.container}>
+      <PlayerSearchSelect handleClick={handleClick} />
+      {pieChartProps && <PieChart {...pieChartProps} />}
+    </div>
   )
 }
 

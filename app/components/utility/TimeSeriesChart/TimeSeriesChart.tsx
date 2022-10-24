@@ -28,7 +28,7 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
   }
 
   const black = '#111'
-  const white = '#eee'
+  const white = '#ddd'
 
   const series: ApexOptions['series'] = [
     {
@@ -94,7 +94,7 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
     // Define elo curve characteristics
     stroke: {
       curve: 'straight',
-      colors: [`${black}`],
+      colors: [`${white}`],
       width: 4,
     },
 

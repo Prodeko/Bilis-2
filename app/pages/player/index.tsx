@@ -1,8 +1,8 @@
 import PlayerLandingLayout from '@components/Layout/PlayerLandingLayout'
 import SearchContainer from '@components/Layout/PlayerLandingLayout/SearchContainer'
-import PlayerSearch from '@components/Player/PlayerSearch'
-import AddPlayerButton from '@components/Player/PlayerSearch/AddPlayerButton'
-import Header from '@components/Player/PlayerSearch/Header'
+import PlayerSearchLink from '@components/utility/PlayerSearch/PlayerSearchLink'
+import AddPlayerButton from '@components/Player/AddPlayerButton'
+import Header from '@components/Player/Header'
 
 const PlayerPage = () => {
   return (
@@ -10,7 +10,7 @@ const PlayerPage = () => {
       <AddPlayerButton />
       <SearchContainer>
         <Header />
-        <PlayerSearch />
+        <PlayerSearchLink />
       </SearchContainer>
     </PlayerLandingLayout>
   )

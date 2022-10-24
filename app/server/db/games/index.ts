@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 
-import type { GameWithPlayers, NewGame, PlayerStats } from '@common/types'
+import type { GameWithPlayers, NewGame, PlayerStats, MutualGames } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
@@ -19,6 +19,7 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
+    order: [['createdAt', 'ASC']],
   })
   const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
 
@@ -37,6 +38,33 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
     totalGames,
     winPercentage,
     eloData,
+  }
+}
+
+const getMutualGamesCount = async (
+  currentPlayerId: number,
+  opposingPlayerId: number
+): Promise<MutualGames> => {
+  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
+    Game.count({
+      where: {
+        winnerId: currentPlayerId,
+        loserId: opposingPlayerId,
+      },
+    }),
+    Game.count({
+      where: {
+        winnerId: opposingPlayerId,
+        loserId: currentPlayerId,
+      },
+    }),
+  ])
+  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
+
+  return {
+    currentPlayerGamesWon,
+    opposingPlayerGamesWon,
+    totalGames,
   }
 }
 
@@ -119,4 +147,5 @@ export {
   getLatestGames,
   clearGamesDEV,
   getRecentGames,
+  getMutualGamesCount,
 }

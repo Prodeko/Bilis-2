@@ -89,7 +89,6 @@ const Home: NextPage<PlayerProps> = ({ players }: PlayerProps) => {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
-    console.log(res.data)
   }
 
   return (

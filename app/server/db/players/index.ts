@@ -1,10 +1,9 @@
 import _ from 'lodash'
 import { Op } from 'sequelize'
-
 import { NewPlayer, PlayerExtended, Player as PlayerType } from '@common/types'
 import { Player } from '@server/models'
-
-import { getLatestGames } from '../games'
+import { getLatestGames } from '@server/db/games'
+import { Sequelize } from 'sequelize'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -71,25 +70,17 @@ const getLatestPlayers = async (n = 20) => {
 }
 
 const searchPlayers = async (query: string): Promise<Player[]> => {
+  const fullName = Sequelize.where(
+    Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
+    {
+      [Op.iLike]: `%${query}%`,
+    }
+  )
   const players = await Player.findAll({
-    where: {
-      [Op.or]: [
-        {
-          firstName: {
-            [Op.iLike]: `%${query}%`,
-          },
-        },
-        {
-          lastName: {
-            [Op.iLike]: `%${query}%`,
-          },
-        },
-      ],
-    },
+    where: fullName,
   })
 
-  const jsonPlayers = players.map(p => p.toJSON())
-  return jsonPlayers
+  return players
 }
 
 export {

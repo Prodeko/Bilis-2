@@ -35,13 +35,13 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
       />
       <ProfileStats
         stats={[
-          { label: 'Elo', value: round(elo).toString() },
+          { label: 'Elo', value: elo.toString() },
           { label: 'Total Games', value: totalGames.toString() },
           { label: 'Wins / Losses', value: `${wonGames} / ${lostGames}` },
           { label: 'Win Percentage', value: `${winPercentage}%` },
         ]}
       />
-      <ProfileCharts eloData={eloData} />
+      <ProfileCharts eloData={eloData} currentPlayerId={id} />
     </ProfileLayout>
   )
 }

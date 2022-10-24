@@ -1,47 +1,7 @@
 @use 'styles' as *;
 
 .container {
-  background-color: $color-gray-800;
-  border-radius: $border-radius-small;
-
-  // @include flex-y($gap: $spacing-16);
   display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
-  overflow-y: auto;
-  padding: $spacing-16;
-  row-gap: $spacing-16;
-}
-
-.searchBar {
-  @extend %text-style-text-xl-medium;
-
-  background-color: inherit;
-  border: none;
-  border-bottom: 1px solid $color-gray-500;
-  color: $color-gray-100;
-  padding-bottom: $spacing-16;
-  width: 100%;
-
-  &::placeholder {
-    color: $color-gray-500;
-  }
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.results {
-  @include flex-y($gap: $spacing-24);
-
-  flex-shrink: 1;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.result {
-  @extend %text-style-text-md-medium;
-
-  color: $color-gray-100;
+  grid-template-rows: auto minmax(0, 1fr);
+  row-gap: $spacing-24;
 }
