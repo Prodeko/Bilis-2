@@ -1,8 +1,8 @@
 import { KeyboardEventHandler, useState } from 'react'
-import type { Base } from '@common/types'
+import type { WithId } from '@common/types'
 import Router from 'next/router'
 
-const useKeyPress = <T extends Base>(arr: Array<T>, baseRoute?: string) => {
+const useKeyPress = <T extends WithId>(arr: Array<T>, baseRoute?: string) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0)
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = e => {

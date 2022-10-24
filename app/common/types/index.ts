@@ -1,10 +1,10 @@
 // Base types
-interface Base {
+interface WithId {
   id: number
 }
 
 // Player types
-interface Player extends Base {
+interface Player extends WithId {
   firstName: string
   lastName: string
   nickname: string
@@ -31,7 +31,7 @@ interface PlayerStats {
 type HomeLeaderboard = PlayerExtended[]
 
 // Game types
-interface Game extends Base {
+interface Game extends WithId {
   winnerId: number
   loserId: number
   winnerEloBefore: number
@@ -77,7 +77,7 @@ type CSSStyles = {
 
 // Export types
 export type {
-  Base,
+  WithId,
   CSSStyles,
   Player,
   PlayerExtended,
