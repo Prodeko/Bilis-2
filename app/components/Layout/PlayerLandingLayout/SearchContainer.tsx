@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { ReactNode } from 'react'
 
 import styles from './PlayerLandingLayout.module.scss'
