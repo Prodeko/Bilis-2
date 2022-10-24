@@ -1,13 +1,24 @@
 import usePlayers from '@hooks/usePlayers'
 import useKeyPress from '@hooks/useKeyPress'
 import Link from 'next/link'
+import Router from 'next/router'
 import { ChangeEventHandler, useState } from 'react'
 import styles from './PlayerSearchLink.module.scss'
 
 const PlayerSearchLink = () => {
+  const createEnterFunction = (baseRoute: string) => {
+    function onEnter(id: number) {
+      Router.push(`${baseRoute}/${id}`)
+    }
+    return onEnter
+  }
+
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
-  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, 'player')
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(
+    players,
+    createEnterFunction('player')
+  )
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)

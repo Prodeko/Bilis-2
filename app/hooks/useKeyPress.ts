@@ -1,8 +1,7 @@
 import { KeyboardEventHandler, useState } from 'react'
 import type { WithId } from '@common/types'
-import Router from 'next/router'
 
-const useKeyPress = <T extends WithId>(arr: Array<T>, baseRoute?: string) => {
+const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (id: number) => void) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0)
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = e => {
@@ -16,10 +15,8 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, baseRoute?: string) => {
         break
 
       case 'Enter':
-        if (baseRoute) {
-          const id = arr[selectedIdx].id
-          Router.push(`${baseRoute}/${id}`)
-        }
+        const id = arr[selectedIdx].id
+        enterFunction(id)
         break
     }
   }
