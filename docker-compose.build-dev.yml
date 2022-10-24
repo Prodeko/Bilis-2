@@ -1,9 +1,0 @@
-version: "3.8"
-
-services:
-  next:
-    image: node:16
-    command: yarn
-    working_dir: /usr/src/app
-    volumes:
-      - ./app:/usr/src/app

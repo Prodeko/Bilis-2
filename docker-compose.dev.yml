@@ -4,8 +4,7 @@ services:
   next:
     image: node:16
     container_name: next-app-dev
-    tty: true
-    command: yarn dev
+    command: /bin/sh -c "while sleep 1000; do :; done"
     working_dir: /usr/src/app
     env_file: .dev.env
     depends_on:
@@ -13,10 +12,14 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./app:/usr/src/app
+      - ./app:/usr/src/app:cached
+      # node modules are stored in an isolated volume which is not shown in host OS directory listing.
+      # This improves performance.
+      - node_modules:/usr/src/app/node_modules
   db:
     image: postgres
     restart: always
+    tty: true
     volumes:
       - db-data:/var/lib/postgresql/data/
     env_file:
@@ -26,3 +29,4 @@ services:
 
 volumes:
   db-data:
+  node_modules:
