@@ -7,6 +7,7 @@ import BaseLayout from '@components/Layout/BaseLayout'
 import { StateProvider, reducer } from '@state/index'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const AnyComponent = Component as any // TODO: Temp fix
   return (
     <>
       <Head>
@@ -15,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <StateProvider reducer={reducer}>
         <BaseLayout>
-          <Component {...pageProps} />
+          <AnyComponent {...pageProps} />
         </BaseLayout>
       </StateProvider>
     </>

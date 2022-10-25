@@ -14,6 +14,7 @@ interface Props {
 
 const PlayerSearchSelect = ({ handleClick }: Props) => {
   const { players } = usePlayers(0)
+  const anyHandleClick = handleClick as any // TODO: Temp fix
 
   const options = players.map(player => ({
     label: `${player.firstName} ${player.lastName}`,
@@ -24,7 +25,7 @@ const PlayerSearchSelect = ({ handleClick }: Props) => {
     <Select
       className={styles.search}
       options={options}
-      onChange={handleClick} // No clue why ide is complaining about this, code works fine right now
+      onChange={anyHandleClick}
       placeholder="Search for a player..."
     />
   )
