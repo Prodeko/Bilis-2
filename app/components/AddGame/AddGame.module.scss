@@ -44,11 +44,10 @@
 }
 
 .playerLabel {
-  align-items: center;
+  @extend %flex-center;
+
   background: $color-gradient-gray-800-700;
-  display: flex;
   height: 100%;
-  justify-content: center;
   width: 7.2rem;
 
   h3 {
@@ -159,6 +158,8 @@
 }
 
 .playerList {
+  @extend %scrollbar;
+
   background: $color-gray-800;
   border-bottom-left-radius: $border-radius-small;
   border-bottom-right-radius: $border-radius-small;
@@ -181,13 +182,12 @@
 }
 
 .queueLabel {
-  align-items: center;
+  @extend %flex-center;
+
   background: $color-primary-800;
   border-top-left-radius: $border-radius-small;
   border-top-right-radius: $border-radius-small;
-  display: flex;
   height: 5rem;
-  justify-content: center;
   width: 100%;
 
   h3 {
@@ -198,11 +198,10 @@
 }
 
 .buttonWrapper {
+  @extend %flex-center;
   @include flex-y($gap: 3rem);
 
-  align-items: center;
   height: 100%;
-  justify-content: center;
   width: 100%;
 
   button {
