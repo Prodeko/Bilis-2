@@ -20,6 +20,6 @@
     "css.validate": false,
     "scss.validate": false,
     "stylelint.validate": ["css", "scss"],
-    "stylelint.configBasedir": "./app",
+    "stylelint.configBasedir": "./",
     "recommendations": ["esbenp.prettier-vscode"]
 }
