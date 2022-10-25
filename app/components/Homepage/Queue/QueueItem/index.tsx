@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { Player } from '@common/types'
 
 import styles from './QueueItem.module.scss'
@@ -17,7 +19,9 @@ const QueueItem = ({ place, player, setQueue, queue }: QueueItemProps) => {
   return (
     <div className={styles.container}>
       <div>{place}.</div>
-      <div>{`${player.emoji} ${player.firstName} ${player.lastName}`}</div>
+      <Link
+        href={`/player/${player.id}`}
+      >{`${player.emoji} ${player.firstName} ${player.lastName}`}</Link>
       <button onClick={removePlayer} className={styles.removeBtn} type="button">
         remove
       </button>

@@ -13,15 +13,14 @@
   width: 100%;
 }
 
-.playerSelect {
-  @extend %text-style-text-md-semibold;
-
-  border-radius: $border-radius-small;
-  color: $color-primary-700;
-  justify-self: right;
-  text-transform: uppercase;
+.search {
+  position: absolute;
+  right: $spacing-16;
+  top: $spacing-24;
   width: 30rem;
+  z-index: 2;
 }
+
 
 .list {
   @extend %scrollbar;
