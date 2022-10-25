@@ -1,3 +1,7 @@
+// disable annoying esling warnings
+
+/* eslint-disable react/require-default-props */
+
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -15,7 +19,12 @@ interface PlayerSearchLinkProps {
   filterFunction?: (e: Player) => boolean
 }
 
-const PlayerSearchLink = ({ placeholder, handleSelect, filterFunction }: PlayerSearchLinkProps) => {
+const PlayerSearchLink = ({
+  placeholder = 'Search for a player',
+  handleSelect,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  filterFunction = (_p: Player) => true,
+}: PlayerSearchLinkProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
   const filteredPlayers = players.filter(filterFunction ?? (() => true))
@@ -56,12 +65,6 @@ const PlayerSearchLink = ({ placeholder, handleSelect, filterFunction }: PlayerS
       </ul>
     </div>
   )
-}
-
-PlayerSearchLink.defaultProps = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  filterFunction: (_p: Player) => true,
-  placeholder: 'Search for a player',
 }
 
 export default PlayerSearchLink
