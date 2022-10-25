@@ -37,4 +37,4 @@ jobs:
           app-name: 'bilis2'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D3D21B3D903846EC9FBE10CA4DEA792E }}
-          package: ./app/package.prod.json
+          package: app
