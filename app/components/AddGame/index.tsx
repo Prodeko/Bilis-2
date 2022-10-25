@@ -4,6 +4,7 @@ import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
 import ChosenPlayer from './ChosenPlayer'
 import ChoosePlayer from './ChoosePlayer'
+import UnderTableInput from './UnderTableInput'
 
 type PlayerProps = { players: PlayerWithStats[] }
 
@@ -67,6 +68,7 @@ const AddGame = ({ players }: PlayerProps) => {
             </div>
             <div className={styles.buttonWrapper}>
               <button type="button">Add Game</button>
+              <UnderTableInput onChange={checked => setGameField('underTable')(checked)} />
             </div>
             <div className={styles.cardColumn}>
               {game.loserId ? (

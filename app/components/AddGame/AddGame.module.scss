@@ -166,8 +166,9 @@
 }
 
 .buttonWrapper {
+  @include flex-y($gap: 3rem);
+
   align-items: center;
-  display: flex;
   height: 100%;
   justify-content: center;
   width: 100%;
@@ -182,6 +183,21 @@
     cursor: pointer;
     height: 7rem;
     width: 50%;
+  }
+
+  .underTable {
+    @include flex-x($gap: 3rem);
+
+    input {
+      height: 3rem;
+      width: 3rem;
+    }
+
+    p {
+      @extend %text-style-display-xs-semibold;
+
+      color: white;
+    }
   }
 }
 

@@ -17,7 +17,6 @@ interface Props {
   players: PlayerWithStats[]
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Home: NextPage<Props> = ({ leaderboard, recentGames, players }: Props) => {
   return (
     <HomeLayout>
