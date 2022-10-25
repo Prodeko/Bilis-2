@@ -15,24 +15,11 @@
 }
 
 .results {
+  @extend %scrollbar;
+
   background: $color-base-white;
   border-radius: $border-radius-small;
   max-height: $spacing-256;
-  overflow-y: scroll;
-}
-
-.results::-webkit-scrollbar {
-  width: $spacing-12 ;               /* width of the entire scrollbar */
-}
-
-.results::-webkit-scrollbar-track {
-  background-color: $color-primary-50;    /* color of the scroll thumb */
-  border-radius: $border-radius-large;
-}
-
-.results::-webkit-scrollbar-thumb {
-  background-color: $color-primary-100;    /* color of the scroll thumb */
-  border-radius: $border-radius-large;       /* roundness of the scroll thumb */
 }
 
 .player {

@@ -1,0 +1,30 @@
+@use "./colors" as *;
+@use "./borders" as *;
+@use "./spacing" as *;
+
+%scrollbar {
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar { 
+    opacity: 0;              
+    width: $spacing-12;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {    
+      opacity: 1;           
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: $color-primary-50;    
+      border-radius: $border-radius-large;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-primary-300;    
+      border-radius: $border-radius-large;       
+    }
+  }
+
+}
+
