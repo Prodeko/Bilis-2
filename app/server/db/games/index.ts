@@ -108,6 +108,7 @@ const createGame = async (game: CreateGameType) => {
     getGameCountForPlayer(game.winnerId),
     getGameCountForPlayer(game.loserId),
   ])
+
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
   const [winnerEloChange, loserEloChange] = getScoreChange(

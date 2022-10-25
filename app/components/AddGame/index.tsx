@@ -1,5 +1,7 @@
 import { NewGame, PlayerWithStats } from '@common/types'
 import { useState } from 'react'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import axios from 'axios'
 import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
 import ChosenPlayer from './ChosenPlayer'
@@ -36,11 +38,10 @@ const AddGame = ({ players }: PlayerProps) => {
     }))
   }
 
-  // const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
-  //   console.log(res.data)
-  // }
+  const onSubmit = async () => {
+    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
+    console.log(res.data)
+  }
 
   return (
     <div className={styles.container}>
@@ -67,7 +68,9 @@ const AddGame = ({ players }: PlayerProps) => {
               )}
             </div>
             <div className={styles.buttonWrapper}>
-              <button type="button">Add Game</button>
+              <button onClick={onSubmit} type="button">
+                Add Game
+              </button>
               <UnderTableInput onChange={checked => setGameField('underTable')(checked)} />
             </div>
             <div className={styles.cardColumn}>
