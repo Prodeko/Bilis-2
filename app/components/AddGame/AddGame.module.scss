@@ -227,7 +227,25 @@
     @extend %text-style-display-md-bold;
 
     color: $color-gray-200;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
     text-align: center;
+    
+    button {
+      background-color: $color-gray-100;
+      border: none;
+      border-radius: 6.4rem;
+      cursor: pointer;
+      height: 6.4rem;
+      width: 6.4rem;
+  
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 
   .table {

@@ -1,4 +1,5 @@
 import { PlayerStats, Player } from '@common/types'
+import { round } from 'lodash'
 import styles from './AddGame.module.scss'
 
 type PlayerWithStats = Player & PlayerStats
@@ -12,10 +13,10 @@ const ChosenPlayer = ({ player, onClear }: Props) => {
         <h3>
           {player.firstName} {player.lastName}
         </h3>
+        <button onClick={onClear} type="button">
+          <img src="/images/edit-pencil.svg" alt="edit pencil" />
+        </button>
       </div>
-      <button type="button" onClick={onClear}>
-        clear
-      </button>
       <div className={styles.table}>
         <div>
           <h3>Games</h3>
@@ -27,7 +28,7 @@ const ChosenPlayer = ({ player, onClear }: Props) => {
         </div>
         <div>
           <h3>Win percentage</h3>
-          <h3>{player.winPercentage}%</h3>
+          <h3>{round(player.winPercentage, 2)}%</h3>
         </div>
       </div>
     </div>
