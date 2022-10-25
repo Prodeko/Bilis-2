@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/javascript-node
 {
 	"name": "Node.js",
-	"dockerComposeFile": "../../docker-compose.dev.yml",
+	"dockerComposeFile": "../docker-compose.dev.yml",
 	"service": "next",
 	"workspaceFolder": "/usr/src/app",
 	// Configure tool-specific properties.
