@@ -1,24 +1,22 @@
 import _ from 'lodash'
-import { Op } from 'sequelize'
-import { NewPlayer, PlayerExtended, Player as PlayerType } from '@common/types'
+import { Op, Sequelize } from 'sequelize'
 import { Player } from '@server/models'
-import { getLatestGames } from '@server/db/games'
-import { Sequelize } from 'sequelize'
+import { getLatestGames, getPlayerStats } from '@server/db/games'
+import { Player as PlayerType, NewPlayer, PlayerExtended, PlayerWithStats } from '@common/types'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
-  const validateAndFormatPlayer = (player: NewPlayer): NewPlayer => {
+  const validateAndFormatPlayer = (p: NewPlayer): NewPlayer => {
     if (
-      player.firstName.length > 0 &&
-      player.lastName.length > 0 &&
-      player.nickname.length > 0 &&
-      player.emoji.length > 0 &&
-      player.motto.length > 0
+      p.firstName.length > 0 &&
+      p.lastName.length > 0 &&
+      p.nickname.length > 0 &&
+      p.emoji.length > 0 &&
+      p.motto.length > 0
     ) {
-      return { ...player, elo: 400 }
-    } else {
-      throw new Error('Malformmated id!')
+      return { ...p, elo: 400 }
     }
+    throw new Error('Malformmated id!')
   }
 
   const createdPlayer = await Player.create(validateAndFormatPlayer(player))
@@ -26,6 +24,11 @@ const createPlayer = async (player: NewPlayer) => {
 }
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
+
+const extendPlayerWithStats = async (p: Player | PlayerType) => {
+  const playerStats = await getPlayerStats(p.id)
+  return { ...p, ...playerStats }
+}
 
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
   const player = await getPlayerById(id)
@@ -66,10 +69,15 @@ const getLatestPlayers = async (n = 20) => {
   const latestGames = await getLatestGames(n * 5)
   const players = latestGames.reduce((acc: PlayerType[], g) => [...acc, g.winner, g.loser], [])
   const uniquePlayers = _.uniqBy(players, pl => pl.id)
-  return uniquePlayers.slice(0, n)
+  const sliced = uniquePlayers.slice(0, n)
+  const extended = await Promise.all(sliced.map(extendPlayerWithStats))
+  return extended
 }
 
-const searchPlayers = async (query: string): Promise<Player[]> => {
+const searchPlayers = async (
+  query: string,
+  stats: boolean = false
+): Promise<Player[] | PlayerWithStats[]> => {
   const fullName = Sequelize.where(
     Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
     {
@@ -79,8 +87,12 @@ const searchPlayers = async (query: string): Promise<Player[]> => {
   const players = await Player.findAll({
     where: fullName,
   })
+  const jsonPlayers = players.map(p => p.toJSON())
 
-  return players
+  if (!stats) return jsonPlayers
+
+  const extendedPlayers = await Promise.all(jsonPlayers.map(extendPlayerWithStats))
+  return extendedPlayers
 }
 
 export {
