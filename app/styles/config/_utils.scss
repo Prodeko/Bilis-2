@@ -1,0 +1,20 @@
+@use "./colors" as *;
+@use "./borders" as *;
+@use "./spacing" as *;
+
+%scrollbar {
+  &::-webkit-scrollbar {
+    width: $spacing-12 ;               /* width of the entire scrollbar */
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: $color-primary-50;    /* color of the scroll thumb */
+    border-radius: $border-radius-large;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-primary-300;    /* color of the scroll thumb */
+    border-radius: $border-radius-large;       /* roundness of the scroll thumb */
+  }
+}
+

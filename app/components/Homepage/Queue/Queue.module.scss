@@ -24,6 +24,8 @@
 }
 
 .list {
+  @extend %scrollbar;
+
   color: $color-gray-200;
   display: flex;
   flex-direction: column;
