@@ -15,6 +15,8 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
     return <div className={styles.nogames}>No matches between these two players</div>
   }
 
+  const AnyApexCharts = ApexCharts as any // TODO: Temp fix
+
   // const black = '#111'
   const white = '#eee'
 
@@ -70,8 +72,7 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
       },
     },
   }
-
-  return <ApexCharts options={options} type="pie" series={series} height="90%" width="100%" />
+  return <AnyApexCharts options={options} type="pie" series={series} height="90%" width="100%" />
 }
 
 export default PieChart

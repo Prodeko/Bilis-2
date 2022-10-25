@@ -18,6 +18,8 @@ type Props = {
 }
 
 const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
+  const AnyApexCharts = ApexCharts as any // TODO: Temp fix
+
   // Do not show the graph if data includes only one entry (DEFAULT_ELO)
   if (data.length <= 1) {
     return (
@@ -165,8 +167,9 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
       },
     },
   }
-
-  return <ApexCharts options={options} type="area" series={series} height={height} width="100%" />
+  return (
+    <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+  )
 }
 
 export default TimeSeriesChart
