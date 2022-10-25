@@ -58,7 +58,7 @@ const AddGame = ({ players, onClose }: PlayerProps) => {
             <h3>New Game</h3>
           </div>
           <div className={styles.card}>
-            <div className={styles.cardColumn}>
+            <div className={game.winnerId ? styles.cardColumn__selected : styles.cardColumn}>
               {game.winnerId ? (
                 <ChosenPlayer
                   player={players.find(p => p.id === game.winnerId) as PlayerWithStats}
@@ -79,7 +79,7 @@ const AddGame = ({ players, onClose }: PlayerProps) => {
               </button>
               <UnderTableInput onChange={checked => setGameField('underTable')(checked)} />
             </div>
-            <div className={styles.cardColumn}>
+            <div className={game.loserId ? styles.cardColumn__selected : styles.cardColumn}>
               {game.loserId ? (
                 <ChosenPlayer
                   player={players.find(p => p.id === game.loserId) as PlayerWithStats}

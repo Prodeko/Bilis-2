@@ -24,6 +24,8 @@
   width: 85%;
 
   .closeButton {
+    @extend %flex-center;
+
     background-color: $color-primary-800;
     border: none;
     border-radius: 6.4rem;
@@ -89,13 +91,25 @@
   padding: $spacing-64;
 }
 
-.cardColumn {
+%card-column {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   height: 100%;
   min-height: 0;
   row-gap: 1.6rem;
 }
+
+.cardColumn {
+  @extend %card-column;
+
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+
+  &__selected {
+    @extend %card-column;
+
+    grid-template-rows: minmax(0, 1fr);
+  }
+}
+
 
 .inputWrapper {
   @include padding-x($spacing-12);
@@ -220,7 +234,10 @@
 }
 
 .chosenPlayer {
+  @include flex-y(0);
+
   height: 100%;
+  justify-content: center;
   width: 100%;
 
   .title {
@@ -234,6 +251,8 @@
     text-align: center;
     
     button {
+      @extend %flex-center;
+
       background-color: $color-gray-100;
       border: none;
       border-radius: 6.4rem;
