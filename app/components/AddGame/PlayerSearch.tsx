@@ -11,7 +11,7 @@ type SearchProps = {
 }
 
 const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
-  const [query, setQuery] = useDebounce<string>('', 1000)
+  const [query, setQuery] = useDebounce<string>('', 400)
 
   useEffect(() => {
     const search = async (q: string) => {
