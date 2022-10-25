@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 import Select, { SingleValue } from 'react-select'
 
 import type { Player } from '@common/types'
+import PlayerSearchLink from '@components/utility/PlayerSearch/PlayerSearchLink'
 import usePlayers from 'hooks/usePlayers'
 
 import styles from './Queue.module.scss'
@@ -41,12 +42,7 @@ const TitleRow = ({ queue, setQueue }: Props) => {
   return (
     <div className={styles.titlerow}>
       <h2 className={styles.title}>Queue</h2>
-      <Select
-        className={styles.playerSelect}
-        options={options}
-        onChange={handleChange}
-        placeholder="add player to queue"
-      />
+      <PlayerSearchLink />
     </div>
   )
 }
