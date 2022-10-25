@@ -42,7 +42,9 @@ const TitleRow = ({ queue, setQueue }: Props) => {
   return (
     <div className={styles.titlerow}>
       <h2 className={styles.title}>Queue</h2>
-      <PlayerSearchLink />
+      <span className={styles.search}>
+        <PlayerSearchLink />
+      </span>
     </div>
   )
 }
