@@ -1,5 +1,7 @@
 {
-  "name": "app",
+  "name": "bilis-2",
+  "version": "1.0.0",
+  "repository": "git@github.com:Prodeko/Bilis-2.git",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,10 +13,13 @@
     "dev:create-test-data": "yarn ts-node -r tsconfig-paths/register ./server/utils/createTestData",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "jest": "yarn jest",
     "cypress": "cypress run",
     "build-and-test": "yarn build && yarn start-server-and-test start 3000 'cypress'",
-    "stylify": "stylelint **/*.scss"
+    "stylify": "stylelint **/*.scss",
+    "prettify": "prettier --write './app/**/*.{ts,tsx,js,jsx}'",
+    "lint": "eslint ."
+
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
