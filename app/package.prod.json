@@ -1,0 +1,10 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "start": "yarn --no-lockfile && next start -p $PORT"
+  },
+  "dependencies": {
+    "next": "12.2.4"
+  }
+}
