@@ -8,9 +8,9 @@ import ChosenPlayer from './ChosenPlayer'
 import ChoosePlayer from './ChoosePlayer'
 import UnderTableInput from './UnderTableInput'
 
-type PlayerProps = { players: PlayerWithStats[] }
+type PlayerProps = { players: PlayerWithStats[]; onClose: () => void }
 
-const AddGame = ({ players }: PlayerProps) => {
+const AddGame = ({ players, onClose }: PlayerProps) => {
   const [playerLists, setPlayerLists] = useState<{
     winner: PlayerWithStats[]
     loser: PlayerWithStats[]
@@ -38,14 +38,20 @@ const AddGame = ({ players }: PlayerProps) => {
     }))
   }
 
+  // TODO validate that all fields are present
   const onSubmit = async () => {
     const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
     console.log(res.data)
+    onClose()
+    // TODO show success msg
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
+        <button className={styles.closeButton} type="button" onClick={onClose}>
+          <img src="/images/close-cross.svg" alt="close icon" />
+        </button>
         <PlayerLabel type="winner" />
         <div className={styles.cardWrapper}>
           <div className={styles.cardLabel}>

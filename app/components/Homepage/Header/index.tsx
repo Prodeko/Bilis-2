@@ -1,8 +1,8 @@
-import billiardPic from '../../../public/images/billiard.jpg'
 import Image from 'next/image'
 
 import Filter from '@components/utility/Filter'
 import MottoCard from '@components/utility/MottoCard'
+import billiardPic from '../../../public/images/billiard.jpg'
 
 import styles from './Header.module.scss'
 

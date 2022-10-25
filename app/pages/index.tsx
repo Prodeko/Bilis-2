@@ -10,6 +10,8 @@ import Recents from '@components/Homepage/Recents'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
 import AddGame from '@components/AddGame'
+import { useState } from 'react'
+import AddGameButton from '@components/Homepage/AddGameButton'
 
 interface Props {
   leaderboard: HomeLeaderboard
@@ -18,13 +20,18 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ leaderboard, recentGames, players }: Props) => {
+  const [gameModalOpen, setGameModalOpen] = useState(false)
+  const closeModal = () => setGameModalOpen(false)
+  const openModal = () => setGameModalOpen(true)
+
   return (
     <HomeLayout>
       <Header />
       <HomeGrid>
-        <AddGame players={players} />
+        {gameModalOpen && <AddGame onClose={closeModal} players={players} />}
         <Leaderboard leaderboard={leaderboard} />
         <Queue />
+        <AddGameButton onOpen={openModal} />
         <Recents recentGames={recentGames} />
       </HomeGrid>
     </HomeLayout>
