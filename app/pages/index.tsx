@@ -1,17 +1,17 @@
-import type { NextPage } from 'next'
-import type { HomeLeaderboard, PlayerWithStats, RecentGame } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
+import type { NextPage } from 'next'
+import { useState } from 'react'
 
+import type { HomeLeaderboard, PlayerWithStats, RecentGame } from '@common/types'
+import AddGame from '@components/AddGame'
+import AddGameButton from '@components/Homepage/AddGameButton'
 import Header from '@components/Homepage/Header'
 import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
 import Recents from '@components/Homepage/Recents'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
-import AddGame from '@components/AddGame'
-import { useState } from 'react'
-import AddGameButton from '@components/Homepage/AddGameButton'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 interface Props {
   leaderboard: HomeLeaderboard
@@ -41,7 +41,9 @@ const Home: NextPage<Props> = ({ leaderboard, recentGames, players }: Props) => 
 export async function getServerSideProps() {
   const [leaderboard, recentGames, players] = (
     await Promise.all([
-      axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`),
+      axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
+        params: { amount: 40 },
+      }),
       axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
       axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
     ])
