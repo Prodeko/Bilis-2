@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import type { HomeLeaderboard } from '@common/types'
+import { isNumber, isString } from '@common/types/guards'
 import { getPlayers } from '@server/db/players'
 
 export default async function handler(
@@ -8,13 +9,16 @@ export default async function handler(
   res: NextApiResponse<HomeLeaderboard | { message: string }>
 ) {
   const query = req.query.amount
-  let amount: number | undefined
-  if (typeof query === 'string') {
-    amount = parseInt(query, 10)
-    if (Number.isNaN(amount)) {
-      res.status(400).json({ message: 'Amount is not a number' })
-    }
+  if (!query || !isString(query)) {
+    res.status(400).json({ message: 'Query value "amount" is not of type string' })
+    return // without this typescript doesn't realize that query is of type string
   }
-  const leaderboard = await getPlayers(amount)
-  res.status(200).json(leaderboard)
+
+  const amount = parseInt(query, 10)
+  if (isNumber(amount)) {
+    const leaderboard = await getPlayers(amount)
+    res.status(200).json(leaderboard)
+  } else {
+    res.status(400).json({ message: 'Amount is not a number' })
+  }
 }
