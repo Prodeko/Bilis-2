@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
-import { Player } from '@server/models'
+
+import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
-import { Player as PlayerType, NewPlayer, PlayerExtended, PlayerWithStats } from '@common/types'
+import { Player } from '@server/models'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -45,8 +46,9 @@ const clearPlayersDEV = () =>
     cascade: true,
   })
 
-const getPlayers = async (): Promise<PlayerExtended[]> => {
+const getPlayers = async (amount: number | undefined = undefined): Promise<PlayerExtended[]> => {
   const players = await Player.findAll({
+    limit: amount,
     order: [['elo', 'DESC']],
   })
 
