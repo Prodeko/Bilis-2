@@ -42,7 +42,7 @@ export async function getServerSideProps() {
   const [leaderboard, recentGames, players] = (
     await Promise.all([
       axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
-        params: { amount: 40 },
+        params: { amount: 50 },
       }),
       axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
       axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
