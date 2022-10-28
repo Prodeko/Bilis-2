@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { round } from 'lodash'
 import type { GetServerSideProps, NextPage } from 'next'
 
 import { Player, PlayerStats } from '@common/types'
@@ -23,6 +22,7 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
   totalGames,
   winPercentage,
   eloData,
+  motto,
 }: PlayerWithStatistics) => {
   return (
     <ProfileLayout>
@@ -32,6 +32,7 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
         id={id}
         firstName={firstName}
         lastName={lastName}
+        motto={motto}
       />
       <ProfileStats
         stats={[
