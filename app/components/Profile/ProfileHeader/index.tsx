@@ -9,7 +9,8 @@ const ProfileHeader = ({
   lastName,
   nickname,
   emoji,
-}: Pick<Player, 'firstName' | 'lastName' | 'id' | 'nickname' | 'emoji'>) => {
+  motto,
+}: Pick<Player, 'firstName' | 'lastName' | 'id' | 'nickname' | 'emoji' | 'motto'>) => {
   const name = `${firstName} "${nickname}" ${lastName}`
 
   return (
@@ -21,7 +22,7 @@ const ProfileHeader = ({
           <p>#{id}</p>
         </div>
       </div>
-      <MottoCard text="Voihan juukelispuukelis" author={name} />
+      <MottoCard text={motto} author={name} />
     </div>
   )
 }

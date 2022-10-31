@@ -4,6 +4,7 @@ import { Op, Sequelize } from 'sequelize'
 import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { Player } from '@server/models'
+import dbConf from '@server/utils/dbConf'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -25,6 +26,8 @@ const createPlayer = async (player: NewPlayer) => {
 }
 
 const getPlayerById = async (id: number) => Player.findByPk(id)
+
+const getRandomPlayer = async () => Player.findOne({ order: dbConf.sequelize.random() })
 
 const extendPlayerWithStats = async (p: Player | PlayerType) => {
   const playerStats = await getPlayerStats(p.id)
@@ -102,6 +105,7 @@ export {
   createPlayer,
   clearPlayersDEV,
   getPlayerById,
+  getRandomPlayer,
   updatePlayerById,
   getLatestPlayers,
   searchPlayers,

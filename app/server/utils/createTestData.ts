@@ -1,9 +1,9 @@
 import _ from 'lodash'
 
 import { NewPlayer, PlayerExtended } from '@common/types'
+import { DEFAULT_ELO } from '@common/utils/constants'
 import { clearGamesDEV, createGame } from '@server/db/games'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
-import { DEFAULT_ELO } from '@common/utils/constants'
 
 const randomFirstNames: string[] = [
   'Aada',
@@ -51,6 +51,17 @@ const randomLastNames: string[] = [
   'Järvinen',
 ]
 
+const randomMottos: string[] = [
+  'Alkoholiongelma on se, että ei ole alkoholia',
+  'Sovitaanko että sinä olet vahtimestari ja minä maailmanmestari',
+  'Poranssi on mun lempiväri',
+  'Jos voittaa niin voittaa',
+  'Raikku ist the way of life',
+  'Juubelis',
+  'Uuusko',
+  'Raineri',
+]
+
 const randomEmojis: string[] = ['🥵', '😫', '🫥', '🫡', '🥶', '🤑', '👻', '💩', '🤡', '😸']
 
 const generateNickname = (firstName: String, lastName: String) => {
@@ -72,7 +83,7 @@ const generatePlayer = (): NewPlayer => {
     nickname: generateNickname(firstName, lastName),
     emoji: _.sample(randomEmojis) as string,
     elo: DEFAULT_ELO,
-    motto: 'Raikku is the way of life',
+    motto: _.sample(randomMottos) as string,
   }
 }
 
