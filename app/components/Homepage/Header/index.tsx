@@ -6,8 +6,8 @@ import { Player } from '@common/types'
 import Filter from '@components/utility/Filter'
 import MottoCard from '@components/utility/MottoCard'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import billiardPic from '@public/images/billiard.jpg'
 
-import billiardPic from '../../../public/images/billiard.jpg'
 import styles from './Header.module.scss'
 
 interface Props {
