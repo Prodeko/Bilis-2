@@ -1,11 +1,11 @@
 // Grids
 @mixin grid-cols($nof_cols) {
   display: grid;
-  grid-template-columns: repeat($nof_cols, 1fr);
+  grid-template-columns: repeat($nof_cols, minmax(0, 1fr));
 }
 @mixin grid-rows($nof_rows) {
   display: grid;
-  grid-template-rows: repeat($nof_rows, 1fr);
+  grid-template-rows: repeat($nof_rows, minmax(0, 1fr));
 }
 
 // Flexbox
