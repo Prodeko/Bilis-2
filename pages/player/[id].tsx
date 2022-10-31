@@ -1,5 +1,5 @@
-import axios from 'axios'
 import type { GetServerSideProps, NextPage } from 'next'
+import ErrorPage from 'next/error'
 
 import { Player, PlayerStats } from '@common/types'
 import ProfileLayout from '@components/Layout/ProfileLayout'
@@ -9,8 +9,12 @@ import ProfileStats from '@components/Profile/ProfileStats/'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 type PlayerWithStatistics = Player & PlayerStats
+type ErrorType = {
+  errorCode: false | number
+}
+type Props = PlayerWithStatistics & ErrorType
 
-const PlayerPage: NextPage<PlayerWithStatistics> = ({
+const PlayerPage: NextPage<Props> = ({
   id,
   firstName,
   lastName,
@@ -23,7 +27,18 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
   winPercentage,
   eloData,
   motto,
-}: PlayerWithStatistics) => {
+  errorCode,
+}: Props) => {
+  if (errorCode) {
+    if (errorCode === 400) {
+      return <ErrorPage title={`Player ID must be a number`} statusCode={errorCode} />
+    } else if (errorCode === 404) {
+      return <ErrorPage title={`Player with ID ${id} not found`} statusCode={errorCode} />
+    } else {
+      return <ErrorPage title={`Unexpected error occurred`} statusCode={errorCode} />
+    }
+  }
+
   return (
     <ProfileLayout>
       <ProfileHeader
@@ -48,11 +63,12 @@ const PlayerPage: NextPage<PlayerWithStatistics> = ({
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
-  const profileData = res.data
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
+  const errorCode = res.status === 200 ? false : res.status
+  const profileData = (await res.json()) as PlayerWithStatistics
 
   return {
-    props: { ...profileData },
+    props: { ...profileData, errorCode, id: context.query.id },
   }
 }
 
