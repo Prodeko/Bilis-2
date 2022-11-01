@@ -1,4 +1,4 @@
-import styles from './AddGame.module.scss'
+import styles from './Card.module.scss'
 
 const Title = ({ title }: { title: string }) => {
   return (

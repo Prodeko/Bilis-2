@@ -1,6 +1,6 @@
-import { PlayerStats, Player } from '@common/types'
+import type { PlayerStats, Player } from '@common/types'
 import { round } from 'lodash'
-import styles from './AddGame.module.scss'
+import styles from './Card.module.scss'
 
 type PlayerWithStats = Player & PlayerStats
 

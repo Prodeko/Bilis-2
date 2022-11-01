@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useEffect } from 'react'
-import { PlayerWithStats } from '@common/types'
+import type { PlayerWithStats } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
-import styles from './AddGame.module.scss'
+import styles from './Card.module.scss'
 
 type SearchProps = {
   setPlayers: (players: PlayerWithStats[]) => void

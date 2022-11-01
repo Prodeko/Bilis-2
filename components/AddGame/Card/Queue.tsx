@@ -1,6 +1,6 @@
-import { Player } from '@common/types'
+import type { Player } from '@common/types'
 import { round } from 'lodash'
-import styles from './AddGame.module.scss'
+import styles from './Card.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void }
 
