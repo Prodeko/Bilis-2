@@ -6,6 +6,31 @@ import { isNumber } from '@common/types/guards'
 import { getPlayerStats } from '@server/db/games'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 
+const handleFetch = async (res: NextApiResponse, id: number) => {
+  const [player, playerStats] = await Promise.all([getPlayerById(id), getPlayerStats(id)])
+
+  if (!player) {
+    return res.status(404).json({ error: `No player found with ID ${id}` })
+  }
+
+  const jsonPlayer = player.toJSON() as Player
+  return res.status(200).json({
+    ...jsonPlayer,
+    ...playerStats,
+    winPercentage: round(playerStats.winPercentage, 2).toFixed(2),
+    elo: round(jsonPlayer.elo, 2).toFixed(2),
+  })
+}
+
+const handlePut = async (req: NextApiRequest, res: NextApiResponse, id: number) => {
+  try {
+    const player = await updatePlayerById(id, req.body)
+    return res.status(200).json(player.toJSON())
+  } catch (e) {
+    return res.status(404).json({ error: `No player found with ID ${id}` })
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = Number(req.query.id) as unknown
   if (!isNumber(id)) {
@@ -13,26 +38,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'GET') {
-    const [player, playerStats] = await Promise.all([getPlayerById(id), getPlayerStats(id)])
-
-    if (player) {
-      const jsonPlayer = player.toJSON() as Player
-      return res.status(200).json({
-        ...jsonPlayer,
-        ...playerStats,
-        winPercentage: round(playerStats.winPercentage, 2).toFixed(2),
-        elo: round(jsonPlayer.elo, 2).toFixed(2),
-      })
-    }
-    return res.status(404).json({ error: `No player found with ID ${id}` })
+    return handleFetch(res, id)
   }
   if (req.method === 'PUT') {
-    try {
-      const player = await updatePlayerById(id, req.body)
-      return res.status(200).json(player.toJSON())
-    } catch (e) {
-      return res.status(404).json({ error: `No player found with ID ${id}` })
-    }
+    return handlePut(req, res, id)
   }
   return res.status(405)
 }
