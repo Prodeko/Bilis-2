@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import styles from './Card.module.scss'
 import axios from 'axios'
-import ChosenPlayer from './ChosenPlayer'
+import SelectedPlayer from './SelectedPlayer'
 import PlayerSelection from './PlayerSelection'
 import Title from './Title'
 import UnderTableInput from './UnderTableInput'
@@ -54,7 +54,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
       <div className={styles.card}>
         <div className={game.winnerId ? styles.cardColumn__selected : styles.cardColumn}>
           {game.winnerId ? (
-            <ChosenPlayer
+            <SelectedPlayer
               player={players.find(p => p.id === game.winnerId) as PlayerWithStats}
               onClear={() => setGameField('winnerId')(undefined)}
             />
@@ -75,7 +75,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
         </div>
         <div className={game.loserId ? styles.cardColumn__selected : styles.cardColumn}>
           {game.loserId ? (
-            <ChosenPlayer
+            <SelectedPlayer
               player={players.find(p => p.id === game.loserId) as PlayerWithStats}
               onClear={() => setGameField('loserId')(undefined)}
             />

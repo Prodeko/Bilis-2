@@ -1,5 +1,12 @@
 @use 'styles' as *;
 
+%card-column {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  row-gap: 1.6rem;
+}
+
 .cardWrapper {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
@@ -25,13 +32,6 @@
   height: 100%;
   min-height: 0;
   padding: $spacing-64;
-}
-
-%card-column {
-  display: grid;
-  height: 100%;
-  min-height: 0;
-  row-gap: 1.6rem;
 }
 
 .cardColumn {
@@ -81,59 +81,3 @@
   }
 }
 
-.chosenPlayer {
-  @include flex-y(0);
-
-  height: 100%;
-  justify-content: center;
-  width: 100%;
-
-  .title {
-    @extend %text-style-display-md-bold;
-
-    color: $color-gray-200;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    text-align: center;
-    
-    button {
-      @extend %flex-center;
-
-      background-color: $color-gray-100;
-      border: none;
-      border-radius: 6.4rem;
-      cursor: pointer;
-      height: 6.4rem;
-      width: 6.4rem;
-  
-      svg {
-        height: 100%;
-        width: 100%;
-      }
-    }
-  }
-
-  .table {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    h3 {
-      @extend %text-style-display-xs-semibold;
-
-      color: $color-gray-25;
-      text-align: center;
-    }
-
-    div {
-      display: flex;
-      flex-direction: row;
-      height: $spacing-48;
-      justify-content: space-between;
-      padding: $spacing-16;
-      width: 100%;
-    }
-  }
-}
