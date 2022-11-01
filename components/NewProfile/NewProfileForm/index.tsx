@@ -1,15 +1,22 @@
 import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 
+import { Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 import Field from './Field'
 import styles from './NewProfileForm.module.scss'
 
-const NewProfileForm = () => {
+type Props = {
+  player?: Player
+}
+
+const NewProfileForm = ({ player }: Props) => {
+  const isUpdate = player !== undefined
+
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [nickname, setNickname] = useState<string>('')
@@ -18,6 +25,16 @@ const NewProfileForm = () => {
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
 
   const router = useRouter()
+
+  useEffect(() => {
+    if (isUpdate) {
+      setFirstName(player.firstName)
+      setLastName(player.lastName)
+      setNickname(player.nickname)
+      setMotto(player.motto)
+      setEmoji(player.emoji)
+    }
+  }, [player, isUpdate])
 
   const submitNewPlayer = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -99,6 +116,10 @@ const NewProfileForm = () => {
       </form>
     </div>
   )
+}
+
+NewProfileForm.defaultProps = {
+  player: undefined,
 }
 
 export default NewProfileForm
