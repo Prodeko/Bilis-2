@@ -4,16 +4,16 @@
 
 1. Kloonaa repositorio `git clone git@github.com:Prodeko/Bilis-2.git`
 2. (Käynnistä Docker ja varmista, että docker-compose on myös asennettuna)
-3. Luo .env file kopioimalla /app kansion .env.template tiedosto ja päivittämällä muuttujien arvot
-4. Aja scripti `yarn build-dev`. Tämä skripti asentaa npm-modulit dockerin sisällä oikeaan kansioon. Tämä siksi, että tietyistä paketeista saadaan oikeat versiot dockeria varten.
-5. Käynnistä kehitysympäristö käskyllä `yarn dev`
-6. Testit (jest ja cypress) ajetaan käskyllä `yarn test`
+3. Luo .env.local file kopioimalla /app kansion .env.template tiedosto ja päivittämällä muuttujien arvot
+4. Avaa VS Code dev container app/-hakemistossa (F1 ja Open folder in container). Samalla asentuvat yarn paketit.
+5. Käynnistä kehitysympäristö käskyllä `yarn dev` devikontissa.
+5. Testit (jest ja cypress) ajetaan käskyllä `yarn test`
+
+Rebuildaus onnistuu painamalla F1 ja valitsemalla Rebuild container.
 
 Sovellus käynnistyy porttiin 3000. Siirry siis selaimella [http://localhost:3000](http://localhost:3000).
 
 ## Muut komennot
-
-Näitä komentoja varten kehitysympäristön on oltava käynnissä.
 
 #### `yarn dev:migrate:create`
 
@@ -38,6 +38,11 @@ Listaa ajamattomat migraatiot.
 #### `yarn dev:create-test-data [player_amount=20] [game_amount=30]`
 
 Generoi testidataa databaseen. Hakasuluissa argumentit skriptille ja oletusarvot.
+
+## Debuggaus
+
+Voit myös debuggailla sovellusta käyttämällä VS Coden Run and debug -välilehteä. 
+Lisää breakpointeja ja tarkastele senhetkistä muuttujakontekstia sivuja ladatessa.
 
 ## Projektin erityisyyksiä (TÄRKEÄ!!)
 

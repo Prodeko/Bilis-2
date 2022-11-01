@@ -13,12 +13,12 @@
       "react"
   ],
   "parserOptions": {
-    "project": "./app/tsconfig.json",
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
         "jsx": true
     }
   },
-  "ignorePatterns": "app/**/*.js",
+  "ignorePatterns": "./**/*.js",
   "rules": {
       /*"prettier/prettier": ["error"],
       "react-hooks/exhaustive-deps":          "warn",
