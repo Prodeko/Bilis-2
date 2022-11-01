@@ -2,6 +2,11 @@
 
 ## Käynnistys ja kehittäminen
 
+### Migraatio uuteen ympäristöön
+Asenna Remote extension VS Codeen. Aja myös docker(-/ )compose -f docker-compose.dev.yml down
+
+---
+
 1. Kloonaa repositorio `git clone git@github.com:Prodeko/Bilis-2.git`
 2. (Käynnistä Docker ja varmista, että docker-compose on myös asennettuna)
 3. Luo .env.local file kopioimalla /app kansion .env.template tiedosto ja päivittämällä muuttujien arvot
