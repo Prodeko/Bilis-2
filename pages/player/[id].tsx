@@ -10,34 +10,30 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 type PlayerWithStatistics = Player & PlayerStats
 type ErrorType = {
-  errorCode: false | number
+  error: string
+  statusCode: number
 }
-type Props = PlayerWithStatistics & ErrorType
+type Props = PlayerWithStatistics | ErrorType
 
-const PlayerPage: NextPage<Props> = ({
-  id,
-  firstName,
-  lastName,
-  nickname,
-  elo,
-  emoji,
-  lostGames,
-  wonGames,
-  totalGames,
-  winPercentage,
-  eloData,
-  motto,
-  errorCode,
-}: Props) => {
-  if (errorCode) {
-    if (errorCode === 400) {
-      return <ErrorPage title={`Player ID must be a number`} statusCode={errorCode} />
-    } else if (errorCode === 404) {
-      return <ErrorPage title={`Player with ID ${id} not found`} statusCode={errorCode} />
-    } else {
-      return <ErrorPage title={`Unexpected error occurred`} statusCode={errorCode} />
-    }
+const PlayerPage: NextPage<Props> = (props: Props) => {
+  if ('error' in props) {
+    return <ErrorPage title={props.error} statusCode={props.statusCode} />
   }
+
+  const {
+    id,
+    firstName,
+    lastName,
+    nickname,
+    elo,
+    emoji,
+    lostGames,
+    wonGames,
+    totalGames,
+    winPercentage,
+    eloData,
+    motto,
+  } = props
 
   return (
     <ProfileLayout>
@@ -64,11 +60,19 @@ const PlayerPage: NextPage<Props> = ({
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const res = await fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
-  const errorCode = res.status === 200 ? false : res.status
-  const profileData = (await res.json()) as PlayerWithStatistics
+  const profileData = await res.json()
+
+  if (profileData.body?.error) {
+    return {
+      props: {
+        error: profileData.body.error,
+        statusCode: profileData.statusCode,
+      },
+    }
+  }
 
   return {
-    props: { ...profileData, errorCode, id: context.query.id },
+    props: profileData,
   }
 }
 
