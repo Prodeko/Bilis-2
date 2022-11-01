@@ -19,22 +19,24 @@ type SubmitPlayerData = Omit<NewPlayer, 'elo'>
 const NewProfileForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
-  const [firstName, setFirstName] = useState<string>('')
-  const [lastName, setLastName] = useState<string>('')
-  const [nickname, setNickname] = useState<string>('')
-  const [motto, setMotto] = useState<string>('')
-  const [emoji, setEmoji] = useState<string>('')
+  const [playerData, setPlayerData] = useState<SubmitPlayerData>({
+    firstName: '',
+    lastName: '',
+    nickname: '',
+    motto: '',
+    emoji: '',
+  })
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
 
   const router = useRouter()
 
+  const setPlayerKey = (key: keyof SubmitPlayerData) => (val: any) => {
+    setPlayerData(p => ({ ...p, [key]: val }))
+  }
+
   useEffect(() => {
     if (isUpdate) {
-      setFirstName(player.firstName)
-      setLastName(player.lastName)
-      setNickname(player.nickname)
-      setMotto(player.motto)
-      setEmoji(player.emoji)
+      setPlayerData(player)
     }
   }, [player, isUpdate])
 
@@ -51,22 +53,11 @@ const NewProfileForm = ({ player }: Props) => {
   const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const updateFunc = isUpdate ? updatePlayer(player.id) : submitNewPlayer
-    updateFunc({
-      firstName,
-      lastName,
-      nickname,
-      motto,
-      emoji,
-    })
+    updateFunc(playerData)
   }
 
-  const isValid =
-    firstName !== '' &&
-    lastName !== '' &&
-    nickname !== '' &&
-    motto !== '' &&
-    emoji !== '' &&
-    emojiSelectorOpen === false
+  const allFieldsValid = Object.values(playerData).every(v => v !== '')
+  const isValid = allFieldsValid && emojiSelectorOpen === false
 
   return (
     <div className={styles.container}>
@@ -76,28 +67,33 @@ const NewProfileForm = ({ player }: Props) => {
           <div className={styles.fields}>
             <Field
               placeholder="Teemu"
-              value={firstName}
-              setValue={setFirstName}
+              value={playerData.firstName}
+              setValue={setPlayerKey('firstName')}
               label="First Name"
             />
             <Field
               placeholder="Teekkari"
-              value={lastName}
-              setValue={setLastName}
+              value={playerData.lastName}
+              setValue={setPlayerKey('lastName')}
               label="Last Name"
             />
-            <Field placeholder="Teksa" value={nickname} setValue={setNickname} label="Nickname" />
+            <Field
+              placeholder="Teksa"
+              value={playerData.nickname}
+              setValue={setPlayerKey('nickname')}
+              label="Nickname"
+            />
             <Field
               placeholder="Ei tänään, eikä huomenna."
-              value={motto}
-              setValue={setMotto}
+              value={playerData.motto}
+              setValue={setPlayerKey('motto')}
               label="Motto"
             />
           </div>
           {emojiSelectorOpen ? (
             <EmojiPicker
               onEmojiClick={e => {
-                setEmoji(e.emoji)
+                setPlayerKey('emoji')(e.emoji)
                 setEmojiSelectorOpen(false)
               }}
               height={280}
@@ -112,7 +108,7 @@ const NewProfileForm = ({ player }: Props) => {
               onClick={() => setEmojiSelectorOpen(true)}
               className={styles.emojiCircle}
             >
-              {emoji === '' ? '?' : emoji}
+              {playerData.emoji === '' ? '?' : playerData.emoji}
             </div>
           )}
         </div>
