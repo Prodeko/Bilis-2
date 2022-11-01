@@ -20,10 +20,10 @@ const Queue = ({ players, onChoose }: ListProps) => {
             tabIndex={0}
             role="button"
           >
-            <p>
+            <span>
               {p.emoji} {p.firstName} {p.lastName}
-            </p>
-            <p>{round(p.elo)}</p>
+            </span>
+            <span>{round(p.elo)}</span>
           </div>
         ))}
       </div>
