@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 
-import { Player } from '@common/types'
+import { NewPlayer, Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 import Field from './Field'
@@ -13,6 +13,8 @@ import styles from './NewProfileForm.module.scss'
 type Props = {
   player?: Player
 }
+
+type SubmitPlayerData = Omit<NewPlayer, 'elo'>
 
 const NewProfileForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
@@ -36,16 +38,26 @@ const NewProfileForm = ({ player }: Props) => {
     }
   }, [player, isUpdate])
 
-  const submitNewPlayer = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const updatePlayer = async (data: SubmitPlayerData) => {
+    console.log('UPDATE WITH', data)
+    router.push(`/player/${player?.id}`)
+  }
+
+  const submitNewPlayer = async (data: SubmitPlayerData) => {
+    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/player`, data)
+    router.push(`/player/${res.data.id}`)
+  }
+
+  const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/player`, {
+    const updateFunc = isUpdate ? updatePlayer : submitNewPlayer
+    updateFunc({
       firstName,
       lastName,
       nickname,
       motto,
       emoji,
     })
-    router.push(`/player/${res.data.id}`)
   }
 
   const isValid =
@@ -108,7 +120,7 @@ const NewProfileForm = ({ player }: Props) => {
           type="button"
           disabled={!isValid}
           className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
-          onClick={submitNewPlayer}
+          onClick={submit}
         >
           Create player
           <BsFillPersonPlusFill className={styles.icon} />
