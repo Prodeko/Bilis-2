@@ -1,7 +1,7 @@
 import type { PlayerWithStats } from '@common/types'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
-import styles from './Card.module.scss'
+import styles from './PlayerSelection.module.scss'
 import Queue from './Queue'
 
 type PlayerProps = {
@@ -11,7 +11,7 @@ type PlayerProps = {
   closeSearch: () => void
 }
 
-const ChoosePlayer = ({ onChoose, setPlayers, closeSearch, players }: PlayerProps) => {
+const PlayerSelection = ({ onChoose, setPlayers, closeSearch, players }: PlayerProps) => {
   return (
     <>
       <div className={styles.searchCard}>
@@ -25,4 +25,4 @@ const ChoosePlayer = ({ onChoose, setPlayers, closeSearch, players }: PlayerProp
   )
 }
 
-export default ChoosePlayer
+export default PlayerSelection

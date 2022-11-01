@@ -4,7 +4,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import styles from './Card.module.scss'
 import axios from 'axios'
 import ChosenPlayer from './ChosenPlayer'
-import ChoosePlayer from './ChoosePlayer'
+import PlayerSelection from './PlayerSelection'
 import Title from './Title'
 import UnderTableInput from './UnderTableInput'
 
@@ -59,7 +59,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
               onClear={() => setGameField('winnerId')(undefined)}
             />
           ) : (
-            <ChoosePlayer
+            <PlayerSelection
               onChoose={setGameField('winnerId')}
               players={playerLists.winner}
               closeSearch={resetPlayers('winner')}
@@ -80,7 +80,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
               onClear={() => setGameField('loserId')(undefined)}
             />
           ) : (
-            <ChoosePlayer
+            <PlayerSelection
               onChoose={setGameField('loserId')}
               players={playerLists.loser}
               closeSearch={resetPlayers('loser')}

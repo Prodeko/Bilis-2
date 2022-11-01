@@ -3,7 +3,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useEffect } from 'react'
 import type { PlayerWithStats } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
-import styles from './Card.module.scss'
+import styles from './PlayerSelection.module.scss'
 
 type SearchProps = {
   setPlayers: (players: PlayerWithStats[]) => void
