@@ -1,12 +1,13 @@
-import styles from './NewProfileForm.module.scss'
-import { useState } from 'react'
-import Field from './Field'
-import { BsFillPersonPlusFill } from 'react-icons/bs'
-import React from 'react'
-import EmojiPicker from 'emoji-picker-react'
 import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
+import EmojiPicker from 'emoji-picker-react'
 import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { BsFillPersonPlusFill } from 'react-icons/bs'
+
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+
+import Field from './Field'
+import styles from './NewProfileForm.module.scss'
 
 const NewProfileForm = () => {
   const [firstName, setFirstName] = useState<string>('')
@@ -27,7 +28,7 @@ const NewProfileForm = () => {
       motto,
       emoji,
     })
-    router.push('/player/' + res.data.id)
+    router.push(`/player/${res.data.id}`)
   }
 
   const isValid =
@@ -66,8 +67,8 @@ const NewProfileForm = () => {
           </div>
           {emojiSelectorOpen ? (
             <EmojiPicker
-              onEmojiClick={emoji => {
-                setEmoji(emoji.emoji)
+              onEmojiClick={e => {
+                setEmoji(e.emoji)
                 setEmojiSelectorOpen(false)
               }}
               height={280}
@@ -75,12 +76,19 @@ const NewProfileForm = () => {
               previewConfig={{ showPreview: false }}
             />
           ) : (
-            <div onClick={() => setEmojiSelectorOpen(true)} className={styles.emojiCircle}>
+            <div
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => setEmojiSelectorOpen(true)}
+              onClick={() => setEmojiSelectorOpen(true)}
+              className={styles.emojiCircle}
+            >
               {emoji === '' ? '?' : emoji}
             </div>
           )}
         </div>
         <button
+          type="button"
           disabled={!isValid}
           className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
           onClick={submitNewPlayer}
