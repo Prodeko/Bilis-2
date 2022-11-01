@@ -7,6 +7,7 @@ import PlayerLabel from './PlayerLabel'
 import CloseButton from './CloseButton'
 import ChosenPlayer from './ChosenPlayer'
 import ChoosePlayer from './ChoosePlayer'
+import Title from './Title'
 import UnderTableInput from './UnderTableInput'
 
 type PlayerProps = { players: PlayerWithStats[]; onClose: () => void }
@@ -53,9 +54,7 @@ const AddGame = ({ players, onClose }: PlayerProps) => {
         <CloseButton onClose={onClose} />
         <PlayerLabel type="winner" />
         <div className={styles.cardWrapper}>
-          <div className={styles.cardLabel}>
-            <h3>New Game</h3>
-          </div>
+          <Title title="New Game" />
           <div className={styles.card}>
             <div className={game.winnerId ? styles.cardColumn__selected : styles.cardColumn}>
               {game.winnerId ? (
