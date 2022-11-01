@@ -4,6 +4,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import styles from './AddGame.module.scss'
 import PlayerLabel from './PlayerLabel'
+import CloseButton from './CloseButton'
 import ChosenPlayer from './ChosenPlayer'
 import ChoosePlayer from './ChoosePlayer'
 import UnderTableInput from './UnderTableInput'
@@ -49,9 +50,7 @@ const AddGame = ({ players, onClose }: PlayerProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <button className={styles.closeButton} type="button" onClick={onClose}>
-          <img src="/images/close-cross.svg" alt="close icon" />
-        </button>
+        <CloseButton onClose={onClose} />
         <PlayerLabel type="winner" />
         <div className={styles.cardWrapper}>
           <div className={styles.cardLabel}>
