@@ -61,7 +61,7 @@ const NewProfileForm = ({ player }: Props) => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>New Profile</h1>
+      <h1 className={styles.title}>{isUpdate ? 'Update Profile' : 'New Profile'}</h1>
       <form className={styles.form}>
         <div className={styles.formInputs}>
           <div className={styles.fields}>
@@ -118,7 +118,7 @@ const NewProfileForm = ({ player }: Props) => {
           className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
           onClick={submit}
         >
-          Create player
+          {isUpdate ? 'Update player' : 'Create player'}
           <BsFillPersonPlusFill className={styles.icon} />
         </button>
       </form>
