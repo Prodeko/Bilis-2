@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Player } from '@common/types'
 import { isNumber } from '@common/types/guards'
 import { getPlayerStats } from '@server/db/games'
-import { getPlayerById } from '@server/db/players'
+import { getPlayerById, updatePlayerById } from '@server/db/players'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = Number(req.query.id) as unknown
@@ -25,6 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     }
     return res.status(404).json({ error: `No player found with ID ${id}` })
+  }
+  if (req.method === 'PUT') {
+    try {
+      const player = await updatePlayerById(id, req.body)
+      return res.status(200).json(player.toJSON())
+    } catch (e) {
+      return res.status(404).json({ error: `No player found with ID ${id}` })
+    }
   }
   return res.status(405)
 }
