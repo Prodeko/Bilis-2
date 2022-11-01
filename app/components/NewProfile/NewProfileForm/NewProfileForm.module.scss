@@ -19,11 +19,12 @@
 .formInputs {
   @include flex-x($gap: $spacing-32);
 
+  align-items: center;
   width: 100%;
 }
 
 .fields {
-  @include flex-y($gap: $spacing-16);
+  @include flex-y($gap: $spacing-24);
 
   flex-grow: 1;
 }
