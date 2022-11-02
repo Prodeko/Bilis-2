@@ -1,4 +1,4 @@
-import styles from './AddGame.module.scss'
+import styles from './AddGameModal.module.scss'
 
 interface Props {
   onClose: () => void
