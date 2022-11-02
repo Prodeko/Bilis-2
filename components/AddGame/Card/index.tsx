@@ -1,5 +1,4 @@
-import type { NewGame, PlayerWithStats } from '@common/types'
-import { useState } from 'react'
+import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import styles from './Card.module.scss'
 import axios from 'axios'
@@ -7,6 +6,7 @@ import SelectedPlayer from './SelectedPlayer'
 import PlayerSelection from './PlayerSelection'
 import Title from './Title'
 import UnderTableInput from './UnderTableInput'
+import useModalState from './useModalState'
 
 type PlayerProps = {
   players: PlayerWithStats[]
@@ -14,32 +14,7 @@ type PlayerProps = {
 }
 
 const Card = ({ players, onClose }: PlayerProps) => {
-  const [playerLists, setPlayerLists] = useState<{
-    winner: PlayerWithStats[]
-    loser: PlayerWithStats[]
-  }>({
-    winner: players,
-    loser: players,
-  })
-
-  const [game, setGame] = useState<Partial<NewGame>>({
-    underTable: false,
-  })
-
-  const setGameField = (key: keyof NewGame) => (val: any) => {
-    setGame({ ...game, [key]: val })
-  }
-
-  const resetPlayers = (side: 'winner' | 'loser') => () => {
-    setPlayerLists(prev => ({ ...prev, [side]: players }))
-  }
-
-  const setPlayers = (side: 'winner' | 'loser') => (p: PlayerWithStats[]) => {
-    setPlayerLists(prev => ({
-      ...prev,
-      [side]: p,
-    }))
-  }
+  const { playerLists, game, setGameField, resetPlayers, setPlayers } = useModalState(players)
 
   // TODO validate that all fields are present
   const onSubmit = async () => {
