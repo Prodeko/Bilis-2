@@ -1,27 +1,44 @@
 import type { PlayerWithStats } from '@common/types'
-import PlayerSearch from './PlayerSearch'
-import PlayerList from './PlayerList'
+import SelectedPlayer from './SelectedPlayer'
+import ChoosePlayer from './ChoosePlayer'
 import styles from './PlayerSelection.module.scss'
-import Queue from './Queue'
 
-type PlayerProps = {
-  onChoose: (id: number) => void
-  setPlayers: (arg: PlayerWithStats[]) => void
+interface Props {
+  playerId: number | undefined
   players: PlayerWithStats[]
-  closeSearch: () => void
+  playerLists: {
+    winner: PlayerWithStats[]
+    loser: PlayerWithStats[]
+  }
+  setGameField: (val: any) => void
+  resetPlayers: () => void
+  setPlayers: (players: PlayerWithStats[]) => void
 }
 
-const PlayerSelection = ({ onChoose, setPlayers, closeSearch, players }: PlayerProps) => {
+const PlayerSelection = ({
+  playerId,
+  players,
+  playerLists,
+  setGameField,
+  resetPlayers,
+  setPlayers,
+}: Props) => {
   return (
-    <>
-      <div className={styles.searchCard}>
-        <Queue onChoose={onChoose} players={players} />
-      </div>
-      <div className={styles.searchCard}>
-        <PlayerSearch closeSearch={closeSearch} setPlayers={setPlayers} />
-        <PlayerList onChoose={onChoose} players={players} />
-      </div>
-    </>
+    <div className={playerId ? styles.cardColumn__selected : styles.cardColumn}>
+      {playerId ? (
+        <SelectedPlayer
+          player={players.find(p => p.id === playerId) as PlayerWithStats}
+          onClear={() => setGameField(undefined)}
+        />
+      ) : (
+        <ChoosePlayer
+          onChoose={setGameField}
+          players={playerLists.winner}
+          closeSearch={resetPlayers}
+          setPlayers={setPlayers}
+        />
+      )}
+    </div>
   )
 }
 

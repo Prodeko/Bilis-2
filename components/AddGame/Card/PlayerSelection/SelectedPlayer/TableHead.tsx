@@ -1,5 +1,7 @@
 import styles from './SelectedPlayer.module.scss'
 import type { PlayerStats, Player } from '@common/types'
+import Image from 'next/image'
+import PencilImage from '@public/images/edit-pencil.svg'
 
 type PlayerWithStats = Player & PlayerStats
 
@@ -11,16 +13,16 @@ interface Props {
 const TableHead = ({ onClear, player }: Props) => {
   return (
     <thead className={styles.title}>
-      <th>
-        <td>
+      <tr>
+        <th>
           {player.firstName} {player.lastName}
-        </td>
-        <td>
+        </th>
+        <th>
           <button onClick={onClear} type="button">
-            <img src="/images/edit-pencil.svg" alt="edit pencil" />
+            <Image src={PencilImage} width={40} alt="edit pencil" />
           </button>
-        </td>
-      </th>
+        </th>
+      </tr>
     </thead>
   )
 }

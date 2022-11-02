@@ -3,7 +3,9 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useEffect } from 'react'
 import type { PlayerWithStats } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
-import styles from './PlayerSelection.module.scss'
+import styles from './ChoosePlayer.module.scss'
+import SearchIcon from '@public/images/search-icon.svg'
+import Image from 'next/image'
 
 type SearchProps = {
   setPlayers: (players: PlayerWithStats[]) => void
@@ -32,7 +34,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor="search" className={styles.searchIcon}>
-        <img src="/images/search-icon.svg" alt="search icon" />
+        <Image src={SearchIcon} width={40} alt="Search Icon" />
       </label>
       <input
         id="search"
