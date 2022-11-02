@@ -27,38 +27,4 @@
   padding: $spacing-64;
 }
 
-.buttonWrapper {
-  @extend %flex-center;
-  @include flex-y($gap: 3rem);
-
-  height: 100%;
-  width: 100%;
-
-  button {
-    @extend %text-style-display-xs-semibold;
-
-    background: $color-primary-600;
-    border: none;
-    border-radius: $border-radius-small;
-    color: white;
-    cursor: pointer;
-    height: 7rem;
-    width: 50%;
-  }
-
-  .underTable {
-    @include flex-x($gap: 3rem);
-
-    input {
-      height: 3rem;
-      width: 3rem;
-    }
-
-    p {
-      @extend %text-style-display-xs-semibold;
-
-      color: white;
-    }
-  }
-}
 

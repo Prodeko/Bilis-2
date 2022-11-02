@@ -1,10 +1,10 @@
 import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import styles from './Card.module.scss'
 import axios from 'axios'
+import styles from './Card.module.scss'
+import GameCreation from './GameCreation'
 import PlayerSelection from './PlayerSelection'
 import Title from './Title'
-import UnderTableInput from './UnderTableInput'
 import useModalState from './useModalState'
 
 type PlayerProps = {
@@ -22,6 +22,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
     onClose()
     // TODO show success msg
   }
+
   return (
     <div className={styles.cardWrapper}>
       <Title title="New Game" />
@@ -34,12 +35,7 @@ const Card = ({ players, onClose }: PlayerProps) => {
           setPlayers={setPlayers('winner')}
           resetPlayers={resetPlayers('winner')}
         />
-        <div className={styles.buttonWrapper}>
-          <button onClick={onSubmit} type="button">
-            Add Game
-          </button>
-          <UnderTableInput onChange={checked => setGameField('underTable')(checked)} />
-        </div>
+        <GameCreation onSubmit={onSubmit} setGameField={setGameField('underTable')} />
         <PlayerSelection
           playerId={game.loserId}
           players={players}

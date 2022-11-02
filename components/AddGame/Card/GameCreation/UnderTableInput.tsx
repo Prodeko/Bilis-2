@@ -1,4 +1,4 @@
-import styles from './Card.module.scss'
+import styles from './GameCreation.module.scss'
 
 type Props = {
   onChange: (checked: boolean) => void
@@ -7,8 +7,8 @@ type Props = {
 const UnderTableInput = ({ onChange }: Props) => {
   return (
     <div className={styles.underTable}>
-      <input type="checkbox" onChange={v => onChange(v.target.checked)} />
-      <p>Under-table</p>
+      <input id="checkbox" type="checkbox" onChange={v => onChange(v.target.checked)} />
+      <label htmlFor="checkbox">Under-table</label>
     </div>
   )
 }
