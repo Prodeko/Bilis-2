@@ -29,8 +29,7 @@ const Header = ({ randomPlayer }: Props) => {
 
   return (
     <header className={styles.header}>
-      {/* BUG This image kills the container at the moment */}
-      {/* <Image src={billiardPic} alt="Billiard Table" layout="fill" objectFit="cover" /> */}
+      <Image src={billiardPic} alt="Billiard Table" layout="fill" objectFit="cover" />
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
