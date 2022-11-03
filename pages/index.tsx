@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 
 import type { HomeLeaderboard, Player, PlayerWithStats, RecentGame } from '@common/types'
-import AddGame from '@components/AddGame'
+import AddGame from '@components/AddGameModal'
 import AddGameButton from '@components/Homepage/AddGameButton'
 import Header from '@components/Homepage/Header'
 import Leaderboard from '@components/Homepage/Leaderboard'

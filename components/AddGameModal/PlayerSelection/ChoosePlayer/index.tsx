@@ -1,7 +1,7 @@
-import { PlayerWithStats } from '@common/types'
+import type { PlayerWithStats } from '@common/types'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
-import styles from './AddGame.module.scss'
+import styles from './ChoosePlayer.module.scss'
 import Queue from './Queue'
 
 type PlayerProps = {

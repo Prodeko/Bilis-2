@@ -1,6 +1,6 @@
-import { Player } from '@common/types'
+import type { Player } from '@common/types'
 import { round } from 'lodash'
-import styles from './AddGame.module.scss'
+import styles from './ChoosePlayer.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void }
 
@@ -16,10 +16,10 @@ const PlayerList = ({ players, onChoose }: ListProps) => {
           tabIndex={0}
           role="button"
         >
-          <p>
+          <span>
             {p.emoji} {p.firstName} {p.lastName}
-          </p>
-          <p>{round(p.elo)}</p>
+          </span>
+          <span>{round(p.elo)}</span>
         </div>
       ))}
     </div>

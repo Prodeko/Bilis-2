@@ -1,4 +1,4 @@
-import styles from './AddGame.module.scss'
+import styles from './AddGameModal.module.scss'
 
 const PlayerLabel = ({ type }: { type: 'winner' | 'loser' }) => {
   const text = type === 'winner' ? 'W I N N E R' : 'L O S E R'
