@@ -1,0 +1,27 @@
+@use 'styles' as *;
+
+.notification_container {
+  width: 100%;
+  z-index: 10;
+  font-size: 400%;
+} 
+
+.notification {
+  padding: 1%;
+}
+.notification h4 {
+  margin-right: 10px;
+  display: inline;
+}
+.notification p {
+  display: inline;
+}
+.notification.success {
+  background-color: $color-success-500;
+}
+.notification.warning {
+  background-color: $color-warning-400;
+}
+.notification.danger {
+  background-color: $color-error-500;
+}
