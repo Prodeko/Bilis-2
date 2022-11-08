@@ -133,6 +133,26 @@ const createGame = async (game: CreateGameType) => {
   return createdGame
 }
 
+const removeLatestGame = async () => {
+  const latest = await Game.findOne({
+    order: [['createdAt', 'DESC']],
+  })
+
+  if (!latest) throw Error('No games in database')
+
+  const removeLatestPromise = await Promise.all([
+    updatePlayerById(latest.winnerId, { elo: latest.winnerEloBefore }),
+    updatePlayerById(latest.loserId, { elo: latest.loserEloBefore }),
+    Game.destroy({
+      where: {
+        id: latest.id,
+      },
+    }),
+  ])
+
+  return latest
+}
+
 // NOTE!! Only use in dev, destroys everything in database
 const clearGamesDEV = () =>
   Game.destroy({
@@ -142,6 +162,7 @@ const clearGamesDEV = () =>
   })
 
 export {
+  removeLatestGame,
   createGame,
   getGameCountForPlayer,
   getPlayerStats,
