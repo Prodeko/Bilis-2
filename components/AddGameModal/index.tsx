@@ -17,6 +17,8 @@ type PlayerProps = {
 const AddGame = ({ players, onClose }: PlayerProps) => {
   const { playerLists, game, setGameField, resetPlayers, setPlayers } = useModalState(players)
 
+  const isActive = Boolean(game.winnerId && game.loserId)
+
   // TODO validate that all fields are present
   const onSubmit = async () => {
     const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
@@ -41,7 +43,11 @@ const AddGame = ({ players, onClose }: PlayerProps) => {
               setPlayers={setPlayers('winner')}
               resetPlayers={resetPlayers('winner')}
             />
-            <GameCreation onSubmit={onSubmit} setGameField={setGameField('underTable')} />
+            <GameCreation
+              isActive={isActive}
+              onSubmit={onSubmit}
+              setGameField={setGameField('underTable')}
+            />
             <PlayerSelection
               playerId={game.loserId}
               players={players}

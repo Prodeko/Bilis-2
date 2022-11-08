@@ -16,7 +16,17 @@
     color: white;
     cursor: pointer;
     height: 7rem;
+    transition: all 0.3s;
     width: 50%;
+  }
+
+  button:disabled {
+    background: $color-primary-200;
+    cursor: not-allowed;
+  }
+
+  button:hover {
+    background: $color-primary-700;
   }
 
   .underTable {

@@ -1,10 +1,11 @@
 interface Props {
   onSubmit: () => void
+  isActive: boolean
 }
 
-const SubmitButton = ({ onSubmit }: Props) => {
+const SubmitButton = ({ onSubmit, isActive }: Props) => {
   return (
-    <button onClick={onSubmit} type="button">
+    <button disabled={!isActive} onClick={onSubmit} type="button">
       Add Game
     </button>
   )
