@@ -5,3 +5,28 @@
 
   color: $color-gray-50;
 }
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.removeButton {
+  @include flex-x($spacing-12);
+  @extend %text-style-display-xs-semibold;
+
+  background-color: $color-primary-25;
+  border: none;
+  border-color: $color-primary-25;
+  border-radius: $border-radius-small;
+  color: $color-primary-700;
+  cursor: pointer;
+  padding: $spacing-8 $spacing-16;
+
+  transition: all 0.3s;
+}
+
+.removeButton:hover {
+  background-color: red;
+  color: $color-primary-25;
+}
