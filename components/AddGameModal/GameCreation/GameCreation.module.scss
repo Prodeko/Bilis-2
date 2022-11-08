@@ -24,6 +24,12 @@
 
   button:hover {
     background: $color-primary-700;
+    transform: translateY(-$spacing-4);
+  }
+
+  button:active {
+    background: $color-primary-800;
+    transform: translateY(0);
   }
 
   .underTable {
