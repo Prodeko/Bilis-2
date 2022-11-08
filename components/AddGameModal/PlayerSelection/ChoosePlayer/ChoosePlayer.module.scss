@@ -2,22 +2,19 @@
 
 .playerList {
   @extend %scrollbar;
+  @include flex-y(null);
+  @include size(100%);
 
   background: $color-gray-800;
   border-bottom-left-radius: $border-radius-small;
   border-bottom-right-radius: $border-radius-small;
   color: $color-gray-200;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   overflow-y: scroll;
-  width: 100%;
 
   .playerRow {
     @extend %text-style-text-xl-semibold;
+    @include flex-x(null);
 
-    display: flex;
-    flex-direction: row;
     height: $spacing-48;
     justify-content: space-between;
     padding: $spacing-16;
@@ -26,54 +23,47 @@
 
 .queueLabel {
   @extend %flex-center;
+  @include size($height: $spacing-48, $width: 100%);
 
   background: $color-primary-800;
   border-top-left-radius: $border-radius-small;
   border-top-right-radius: $border-radius-small;
-  height: 5rem;
-  width: 100%;
 
   h3 {
     @extend %text-style-display-xs-semibold;
 
-    color: white;
+    color: $color-base-white;
   }
 }
 
 .inputWrapper {
   @include padding-x($spacing-12);
   @include padding-y($spacing-8);
+  @include flex-x($gap: $spacing-8);
+  @include size($height: $spacing-48, $width: 100%);
 
   align-items: center;
   background: $color-primary-800;
   border-top-left-radius: $border-radius-small;
   border-top-right-radius: $border-radius-small;
-  display: flex;
-  flex-direction: row;
-  height: $spacing-48;
-  width: 100%;
 
   .searchIcon {
-    display: flex;
-    height: 2rem;
-    width: 2rem;
+    @include size($spacing-20);
+    @extend %flex-center;
 
     svg {
-      height: 100%;
-      width: 100%;
+      @include size(100%);
     }
   }
 
   input {
     @extend %text-style-text-md-normal;
+    @include size(100%);
 
     background: inherit;
     border: none;
-    color: $color-gray-400;
-    height: 100%;
-    margin-left: 0.8rem;
+    color: $color-gray-300;
     outline: none;
-    width: 100%;
   }
 
   input::placeholder {
@@ -82,7 +72,6 @@
 }
 
 .searchCard {
-  column-gap: 2rem;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  @include grid-cols(1);
+  column-gap: $spacing-20;
 }
