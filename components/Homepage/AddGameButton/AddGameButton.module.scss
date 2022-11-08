@@ -4,9 +4,9 @@
     @extend %flex-center;
     @extend %text-style-display-md-semibold;
 
-    background: url("/images/add-game-background.png");
+    background-image: url("/images/add-game-background.png");
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     border-radius: $border-radius-large;
     color: $color-gray-400;
     cursor: pointer;
