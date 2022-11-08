@@ -1,20 +1,19 @@
 @use 'styles' as *;
 
 %card-column {
-  display: grid;
-  height: 100%;
+  @include grid-rows(1);
+
   min-height: 0;
-  row-gap: 1.6rem;
+  max-height: 100%;
+  row-gap: $spacing-16;
 }
 
 .cardColumn {
   @extend %card-column;
-
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  @include grid-rows(2);
 
   &__selected {
     @extend %card-column;
-
-    grid-template-rows: minmax(0, 1fr);
+    @include grid-rows(1);
   }
 }
