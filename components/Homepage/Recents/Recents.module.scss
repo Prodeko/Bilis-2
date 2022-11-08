@@ -12,7 +12,6 @@
 }
 
 .removeButton {
-  @include flex-x($spacing-12);
   @extend %text-style-display-xs-semibold;
 
   background-color: $color-primary-25;
