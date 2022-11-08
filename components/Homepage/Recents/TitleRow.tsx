@@ -1,21 +1,25 @@
-import { Game } from '@common/types'
+import { Game, RecentGame } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { NextApiResponse } from 'next'
 import styles from './Recents.module.scss'
 
-const TitleRow = () => {
+interface Props {
+  recentGames: RecentGame[]
+  setRecentGames: (x: RecentGame[]) => void
+}
+
+const TitleRow = ({ recentGames, setRecentGames }: Props) => {
   const handleRemove = async () => {
     window.alert('Remove the latest game?')
     const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
 
     if (typeof data == 'string') {
       console.error(data)
-    } else if (typeof data == 'object') {
-      console.log(
-        `Removed game id ${data.id} with winner ${data.winnerId} and loser ${data.loserId}`
-      )
+      return
     }
+
+    setRecentGames(recentGames.slice(1))
   }
 
   return (
