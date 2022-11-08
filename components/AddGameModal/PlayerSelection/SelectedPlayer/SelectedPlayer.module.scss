@@ -1,67 +1,56 @@
 @use 'styles' as *;
 
 .chosenPlayer {
-  @include flex-y($gap: $spacing-32);
+  @include flex-y($gap: $spacing-40);
+  @include size(100%);
 
-  height: 100%;
   justify-content: center;
-  width: 100%;
+}
 
-  .title {
-    @extend %text-style-display-md-bold;
+.head {
+  @extend %text-style-display-md-bold;
 
-    color: $color-gray-200;
-    display: flex;
-    flex-direction: row;
+  color: $color-gray-200;
+  display: flex;
+  justify-content: space-between;
+
+  tr {
+    @extend %flex-center;
+
     justify-content: space-between;
-    margin-bottom: 2rem;
-    text-align: center;
-
-    tr {
-      display: flex;
-      flex-direction: row;
-      height: $spacing-48;
-      justify-content: space-between;
-      padding: $spacing-16;
-      width: 100%;
-    }
-    
-    button {
-      @extend %flex-center;
-
-      background-color: $color-gray-100;
-      border: none;
-      border-radius: 6.4rem;
-      cursor: pointer;
-      height: 6.4rem;
-      width: 6.4rem;
+    width: 100%;
+  }
   
-      svg {
-        height: 100%;
-        width: 100%;
-      }
+  button {
+    @extend %flex-center;
+    @include size($spacing-64);
+
+    background-color: $color-gray-100;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    svg {
+      @include size(100%);
     }
   }
+}
 
-  .table {
-    display: flex;
-    flex-direction: column;
+.body {
+  @include flex-y($gap: $spacing-12);
+  width: 100%;
+
+  td {
+    @extend %text-style-display-xs-semibold;
+
+    color: $color-gray-25;
+    text-align: center;
+  }
+
+  tr {
+    @include flex-x(null);
+
+    justify-content: space-between;
     width: 100%;
-
-    td {
-      @extend %text-style-display-xs-semibold;
-
-      color: $color-gray-25;
-      text-align: center;
-    }
-
-    tr {
-      display: flex;
-      flex-direction: row;
-      height: $spacing-48;
-      justify-content: space-between;
-      padding: $spacing-16;
-      width: 100%;
-    }
   }
 }

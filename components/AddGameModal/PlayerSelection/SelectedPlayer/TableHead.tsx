@@ -12,7 +12,7 @@ interface Props {
 
 const TableHead = ({ onClear, player }: Props) => {
   return (
-    <thead className={styles.title}>
+    <thead className={styles.head}>
       <tr>
         <th>
           {player.firstName} {player.lastName}

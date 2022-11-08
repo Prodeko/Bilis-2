@@ -9,7 +9,7 @@ type Props = {
 
 const TableBody = ({ player }: Props) => {
   return (
-    <tbody className={styles.table}>
+    <tbody className={styles.body}>
       <tr>
         <td>Games</td>
         <td>{player.totalGames}</td>
