@@ -16,12 +16,7 @@
     cursor: pointer;
     transition: all 0.3s;
   }
-
-  button:disabled {
-    background: $color-primary-200;
-    cursor: not-allowed;
-  }
-
+  
   button:hover {
     background: $color-primary-700;
     transform: translateY(-$spacing-4);
@@ -30,6 +25,12 @@
   button:active {
     background: $color-primary-800;
     transform: translateY(0);
+  }
+
+  button:disabled {
+    background: $color-primary-200;
+    cursor: not-allowed;
+    transform: none;
   }
 
   .underTable {
