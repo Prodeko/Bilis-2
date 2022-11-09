@@ -35,15 +35,18 @@
 
   .underTable {
     @include flex-x($gap: $spacing-32);
-
+    
     input {
-      @include size($height: $spacing-32)
+      @include size($height: $spacing-32);
+
+      cursor: pointer;
     }
 
     label {
       @extend %text-style-display-xs-semibold;
 
       color: $color-base-white;
+      cursor: pointer;
     }
   }
 }
