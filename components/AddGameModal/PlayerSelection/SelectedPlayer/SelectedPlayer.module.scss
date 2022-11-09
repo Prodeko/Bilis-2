@@ -25,13 +25,14 @@
     @extend %flex-center;
     @include size($spacing-64);
 
-    background-color: $color-gray-100;
+    background-color: $color-gray-300;
     border: none;
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s;
 
-    svg {
-      @include size(100%);
+    &:hover {
+      background-color: $color-primary-25;
     }
   }
 }
