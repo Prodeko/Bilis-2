@@ -46,33 +46,6 @@
   }
 }
 
-.cardWrapper {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  height: 100%;
-  min-height: 0;
-}
-
-.cardLabel {
-  background: $color-gradient-primary-900-700;
-  padding: 6.4rem;
-  text-align: center;
-
-  h3 {
-    @extend %text-style-display-lg-bold;
-    @include gradient-text($color-gradient-white-300-100);
-  }
-}
-
-.card {
-  @include grid-cols(3);
-
-  column-gap: $spacing-32;
-  height: 100%;
-  min-height: 0;
-  padding: $spacing-64;
-}
-
 .playerLabel {
   @extend %flex-center;
 
@@ -98,5 +71,3 @@
     writing-mode: vertical-lr;
   }
 }
-
-
