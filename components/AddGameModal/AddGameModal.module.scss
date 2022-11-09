@@ -33,9 +33,15 @@
     left: -$spacing-32;
     position: absolute;
     top: -$spacing-32;
+    transition: all 0.3s;
 
     svg {
       @include size(100%);
+    }
+
+    &:hover {
+      @extend %shadow-md;
+      background-color: $color-primary-900;
     }
   }
 }
