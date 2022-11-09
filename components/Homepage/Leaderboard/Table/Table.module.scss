@@ -3,9 +3,9 @@
 %row {
   @include padding-y($padding: $spacing-8);
   @include padding-x($padding: $spacing-16);
+  @include grid-cols(12);
 
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
   width: 100%;
 }
 

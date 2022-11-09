@@ -1,10 +1,11 @@
 @use 'styles' as *;
 
 .container {
+  @include grid-cols(2);
+
   background-image: $color-gradient-mixed-900-400;
   column-gap: $spacing-128;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
   padding: $spacing-48;
