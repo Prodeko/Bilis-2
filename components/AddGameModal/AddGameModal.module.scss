@@ -74,16 +74,22 @@
   height: 100%;
   width: 7.2rem;
 
+  .letter {
+    &__winner {
+      @include text-shadow-inner($color-success-500);
+    }
+
+    &__loser {
+      @include text-shadow-inner($color-error-500);
+    }
+  }
+
   h3 {
     @extend %text-style-display-md-bold;
 
-    color: $color-success-500;
+    // color: $color-success-500;
     text-orientation: upright;
     writing-mode: vertical-lr;
-  }
-
-  .loser {
-    color: $color-error-500;
   }
 }
 
