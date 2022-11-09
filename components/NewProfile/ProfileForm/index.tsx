@@ -8,7 +8,7 @@ import { NewPlayer, Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 import Field from './Field'
-import styles from './NewProfileForm.module.scss'
+import styles from './ProfileForm.module.scss'
 
 type Props = {
   player?: Player
@@ -16,7 +16,7 @@ type Props = {
 
 type SubmitPlayerData = Omit<NewPlayer, 'elo'>
 
-const NewProfileForm = ({ player }: Props) => {
+const ProfileForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
   const [playerData, setPlayerData] = useState<SubmitPlayerData>({
@@ -126,8 +126,8 @@ const NewProfileForm = ({ player }: Props) => {
   )
 }
 
-NewProfileForm.defaultProps = {
+ProfileForm.defaultProps = {
   player: undefined,
 }
 
-export default NewProfileForm
+export default ProfileForm

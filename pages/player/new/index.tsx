@@ -1,12 +1,12 @@
 import NewProfileLayout from '@components/Layout/NewProfileLayout'
 import BackButton from '@components/NewProfile/BackButton'
-import NewProfileForm from '@components/NewProfile/NewProfileForm'
+import ProfileForm from '@components/NewProfile/ProfileForm'
 
 const newPlayer = () => {
   return (
     <NewProfileLayout>
       <BackButton />
-      <NewProfileForm />
+      <ProfileForm />
     </NewProfileLayout>
   )
 }
