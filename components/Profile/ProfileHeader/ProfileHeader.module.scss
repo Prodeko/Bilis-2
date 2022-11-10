@@ -38,7 +38,7 @@
 
       align-items: center;
       align-self: flex-start;
-      background-color: $color-gray-100;
+      background-color: $color-gray-300;
       border: none;
       border-radius: $border-radius-small;
       color: $color-primary-700;
@@ -49,7 +49,7 @@
       &:hover {
         @extend %shadow-xl;
 
-        background-color: $color-gray-300;
+        background-color: $color-gray-100;
       }
 
       .icon {
