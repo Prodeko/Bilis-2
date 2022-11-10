@@ -5,7 +5,7 @@
   @extend %text-style-display-sm-bold;
   @extend %flex-center;
 
-  background-color: $color-primary-25;
+  background-color: $color-primary-100;
   border: none;
   border-color: $color-primary-25;
   border-radius: $border-radius-small;
@@ -20,5 +20,5 @@
 }
 
 .button:hover {
-  background-color: $color-primary-100;
+  background-color: $color-primary-25;
 }
