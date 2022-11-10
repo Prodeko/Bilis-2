@@ -1,7 +1,7 @@
-import { Game, RecentGame } from '@common/types'
+import { RecentGame } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
-import { NextApiResponse } from 'next'
+import { useState } from 'react'
 import styles from './Recents.module.scss'
 
 interface Props {
@@ -11,15 +11,13 @@ interface Props {
 
 const TitleRow = ({ recentGames, setRecentGames }: Props) => {
   const handleRemove = async () => {
-    window.alert('Remove the latest game?')
-    const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
+    if (window.confirm('Remove the latest game?')) {
+      const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
 
-    if (typeof data == 'string') {
-      console.error(data)
-      return
+      if (typeof data == 'string') return console.error(data)
+
+      setRecentGames(recentGames.slice(1))
     }
-
-    setRecentGames(recentGames.slice(1))
   }
 
   return (
