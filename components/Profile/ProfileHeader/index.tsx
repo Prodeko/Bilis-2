@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { Player } from '@common/types'
 import MottoCard from '@components/utility/MottoCard'
@@ -17,23 +17,16 @@ const ProfileHeader = ({
 }: Pick<Player, 'firstName' | 'lastName' | 'id' | 'nickname' | 'emoji' | 'motto'>) => {
   const name = `${firstName} "${nickname}" ${lastName}`
 
-  const router = useRouter()
-
-  const editClicked = () => {
-    router.push(`/player/${id}/edit`)
-  }
-
   return (
     <div className={styles.profileheader}>
       <div className={styles.emojiCircle}>{emoji}</div>
       <div className={styles.profileinfo}>
         <h1 className={styles['profileinfo--primary']}>{name}</h1>
-        <div className={styles['profileinfo--secondary']}>
-          <button type="button" onClick={editClicked}>
-            <Image className={styles.icon} src={Settings} />
-            Update player
-          </button>
-        </div>
+        <Link href={`/player/${id}/edit`}>
+          <a className={styles['profileinfo--secondary']}>
+            <Image className={styles.icon} src={Settings} /> Update player
+          </a>
+        </Link>
       </div>
       <MottoCard text={motto} author={name} />
     </div>

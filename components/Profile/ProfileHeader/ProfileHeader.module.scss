@@ -32,29 +32,27 @@
   }
 
   &--secondary {
-    button {
-      @include flex-x($gap: $spacing-8);
-      @extend %text-style-text-md-semibold;
+    @include flex-x($gap: $spacing-8);
+    @extend %text-style-text-md-semibold;
 
-      align-items: center;
-      align-self: flex-start;
-      background-color: $color-gray-300;
-      border: none;
-      border-radius: $border-radius-small;
-      color: $color-primary-700;
-      cursor: pointer;
-      padding: $spacing-16 $spacing-16;
-      transition: all 0.2s ease-out;
+    align-items: center;
+    align-self: flex-start;
+    background-color: $color-gray-300;
+    border: none;
+    border-radius: $border-radius-small;
+    color: $color-primary-700;
+    cursor: pointer;
+    padding: $spacing-16 $spacing-16;
+    transition: all 0.2s ease-out;
 
-      &:hover {
-        @extend %shadow-xl;
+    &:hover {
+      @extend %shadow-xl;
 
-        background-color: $color-gray-100;
-      }
+      background-color: $color-gray-100;
+    }
 
-      .icon {
-        @include size(2.4rem);
-      }
+    .icon {
+      @include size(2.4rem);
     }
   }
 }
