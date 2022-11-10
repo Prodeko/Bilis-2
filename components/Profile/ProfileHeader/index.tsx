@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
-import { BsFillGearFill } from 'react-icons/bs'
+import Image from 'next/image'
 
 import { Player } from '@common/types'
 import MottoCard from '@components/utility/MottoCard'
+import Settings from '@public/images/settings-01.svg'
 
 import styles from './ProfileHeader.module.scss'
 
@@ -29,7 +30,7 @@ const ProfileHeader = ({
         <h1 className={styles['profileinfo--primary']}>{name}</h1>
         <div className={styles['profileinfo--secondary']}>
           <button type="button" onClick={editClicked}>
-            <BsFillGearFill className={styles.icon} />
+            <Image className={styles.icon} src={Settings} />
             Update player
           </button>
         </div>
