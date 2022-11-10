@@ -2,7 +2,8 @@ import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { BsFillPersonPlusFill } from 'react-icons/bs'
+import Image from 'next/image'
+import UserPlus from '@public/images/user-plus-01.svg'
 
 import { NewPlayer, Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
@@ -118,8 +119,8 @@ const ProfileForm = ({ player }: Props) => {
           className={`${styles.button} ${isValid ? styles.buttonActive : styles.buttonInactive}`}
           onClick={submit}
         >
-          {isUpdate ? 'Update player' : 'Create player'}
-          <BsFillPersonPlusFill className={styles.icon} />
+          {isUpdate ? 'Save changes' : 'Create player'}
+          <Image src={UserPlus} className={styles.icon} />
         </button>
       </form>
     </div>
