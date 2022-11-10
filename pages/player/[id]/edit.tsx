@@ -10,7 +10,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 const editPlayer = ({ player }: { player: Player }) => {
   return (
     <NewProfileLayout>
-      <BackButton />
+      <BackButton route={`/player/${player.id}`} />
       <ProfileForm player={player} />
     </NewProfileLayout>
   )

@@ -5,7 +5,7 @@ import ProfileForm from '@components/NewProfile/ProfileForm'
 const newPlayer = () => {
   return (
     <NewProfileLayout>
-      <BackButton />
+      <BackButton route={`/player`} />
       <ProfileForm />
     </NewProfileLayout>
   )
