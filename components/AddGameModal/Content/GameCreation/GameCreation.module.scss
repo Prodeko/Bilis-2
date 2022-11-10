@@ -1,0 +1,52 @@
+@use 'styles' as *;
+
+.buttonWrapper {
+  @extend %flex-center;
+  @include flex-y($gap: $spacing-32);
+  @include size(100%);
+
+  button {
+    @extend %text-style-display-xs-semibold;
+    @include size($height: $spacing-64, $width: 50%);
+
+    background: $color-primary-600;
+    border: none;
+    border-radius: $border-radius-small;
+    color: $color-base-white;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  button:hover {
+    background: $color-primary-700;
+    transform: translateY(-$spacing-4);
+  }
+
+  button:active {
+    background: $color-primary-800;
+    transform: translateY(0);
+  }
+
+  button:disabled {
+    background: $color-primary-200;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .underTable {
+    @include flex-x($gap: $spacing-32);
+    
+    input {
+      @include size($height: $spacing-32);
+
+      cursor: pointer;
+    }
+
+    label {
+      @extend %text-style-display-xs-semibold;
+
+      color: $color-base-white;
+      cursor: pointer;
+    }
+  }
+}

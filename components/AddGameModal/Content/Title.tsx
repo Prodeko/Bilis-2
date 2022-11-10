@@ -1,4 +1,4 @@
-import styles from './AddGameModal.module.scss'
+import styles from './Content.module.scss'
 
 const Title = ({ title }: { title: string }) => {
   return (

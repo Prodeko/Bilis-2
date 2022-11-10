@@ -1,0 +1,57 @@
+@use 'styles' as *;
+
+.chosenPlayer {
+  @include flex-y($gap: $spacing-40);
+  @include size(100%);
+
+  justify-content: center;
+}
+
+.head {
+  @extend %text-style-display-md-bold;
+
+  color: $color-gray-200;
+  display: flex;
+  justify-content: space-between;
+
+  tr {
+    @extend %flex-center;
+
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  button {
+    @extend %flex-center;
+    @include size($spacing-64);
+
+    background-color: $color-gray-300;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $color-primary-25;
+    }
+  }
+}
+
+.body {
+  @include flex-y($gap: $spacing-12);
+  width: 100%;
+
+  td {
+    @extend %text-style-display-xs-semibold;
+
+    color: $color-gray-25;
+    text-align: center;
+  }
+
+  tr {
+    @include flex-x(null);
+
+    justify-content: space-between;
+    width: 100%;
+  }
+}

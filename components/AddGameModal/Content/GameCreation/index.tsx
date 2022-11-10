@@ -5,12 +5,13 @@ import styles from './GameCreation.module.scss'
 interface Props {
   onSubmit: () => void
   setGameField: (val: any) => void
+  isActive: boolean
 }
 
-const GameCreation = ({ onSubmit, setGameField }: Props) => {
+const GameCreation = ({ onSubmit, setGameField, isActive }: Props) => {
   return (
     <div className={styles.buttonWrapper}>
-      <SubmitButton onSubmit={onSubmit} />
+      <SubmitButton isActive={isActive} onSubmit={onSubmit} />
       <UnderTableInput onChange={setGameField} />
     </div>
   )

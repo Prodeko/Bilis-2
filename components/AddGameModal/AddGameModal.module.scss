@@ -3,71 +3,47 @@
 .container {
   @extend %flex-center;
   @extend %background-blur-sm;
+  @include size(100%);
 
-  height: 100%;
   left: 0;
   position: fixed;
   top: 0;
-  width: 100%;
   z-index: 10;
 }
 
 .modal {
+  @include size(80%);
+
   background: $color-gradient-gray-800-700;
   border-radius: $border-radius-large;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  height: 85%;
   justify-content: space-between;
   min-height: 0;
   position: relative;
-  width: 85%;
 
   .closeButton {
     @extend %flex-center;
+    @include size($spacing-64);
 
     background-color: $color-primary-800;
     border: none;
-    border-radius: 6.4rem;
+    border-radius: 50%;
     cursor: pointer;
-    height: 6.4rem;
-    left: -3.2rem;
+    left: -$spacing-32;
     position: absolute;
-    top: -3.2rem;
-    width: 6.4rem;
+    top: -$spacing-32;
+    transition: all 0.3s;
 
     svg {
-      height: 100%;
-      width: 100%;
+      @include size(100%);
+    }
+
+    &:hover {
+      @extend %shadow-md;
+      background-color: $color-primary-900;
     }
   }
-}
-
-.cardWrapper {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  height: 100%;
-  min-height: 0;
-}
-
-.cardLabel {
-  background: $color-gradient-primary-900-700;
-  padding: 6.4rem;
-  text-align: center;
-
-  h3 {
-    @extend %text-style-display-lg-bold;
-    @include gradient-text($color-gradient-white-300-100);
-  }
-}
-
-.card {
-  column-gap: $spacing-32;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 100%;
-  min-height: 0;
-  padding: $spacing-64;
 }
 
 .playerLabel {
@@ -77,17 +53,21 @@
   height: 100%;
   width: 7.2rem;
 
+  .letter {
+    &__winner {
+      @include text-shadow-inner($color-success-500);
+    }
+
+    &__loser {
+      @include text-shadow-inner($color-error-500);
+    }
+  }
+
   h3 {
     @extend %text-style-display-md-bold;
 
-    color: $color-success-500;
+    // color: $color-success-500;
     text-orientation: upright;
     writing-mode: vertical-lr;
   }
-
-  .loser {
-    color: $color-error-500;
-  }
 }
-
-

@@ -34,7 +34,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor="search" className={styles.searchIcon}>
-        <Image src={SearchIcon} width={40} alt="Search Icon" />
+        <Image src={SearchIcon} width={20} alt="Search Icon" />
       </label>
       <input
         id="search"
