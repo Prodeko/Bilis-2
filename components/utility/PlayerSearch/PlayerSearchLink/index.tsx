@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, Dispatch, SetStateAction } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 
@@ -15,17 +15,23 @@ import usePlayers from '@hooks/usePlayers'
 
 import styles from './PlayerSearchLink.module.scss'
 
-const PlayerSearchLink = () => {
+interface Props {
+  visible: boolean
+  setVisible: Dispatch<SetStateAction<boolean>>
+  onClick: () => void
+  onBlur: () => void
+}
+
+const PlayerSearchLink = ({ visible, setVisible, onClick, onBlur }: Props) => {
   const getRoute = (id: number) => `player/${id}`
   const handleSelect = ({ id }: Player) => Router.push(getRoute(id))
 
-  const [isVisible, setIsVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, handleSelect)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
-    setIsVisible(true)
+    setVisible(true)
     setSelectedIdx(0)
   }
 
@@ -34,12 +40,12 @@ const PlayerSearchLink = () => {
       <input
         className={styles.search}
         placeholder={'Search for a player'}
-        onClick={() => setIsVisible(true)}
+        onClick={onClick}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
-        onBlur={() => setIsVisible(false)}
+        onBlur={onBlur}
       />
-      {isVisible && (
+      {visible && (
         <ul className={styles.results}>
           {players.map((player, i) => (
             <Link href={getRoute(player.id)} passHref>

@@ -1,8 +1,20 @@
 @use 'styles' as *;
 
-.searchContainer {
+%searchContainer {
   text-align: left;
   width: 50%;
+  transition: all 1s;
+}
+
+.searchContainer {
+  @extend %searchContainer;
+  min-height: 10%;
+
+  &__extended {
+    @extend %searchContainer;
+
+    min-height: 50%;
+  }
 }
 
 .header {
