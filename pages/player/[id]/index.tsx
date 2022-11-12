@@ -1,56 +1,43 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import ErrorPage from 'next/error'
+import { round } from 'lodash'
 
-import { Player, PlayerStats } from '@common/types'
+import type { Player, PlayerStats } from '@common/types'
 import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileCharts from '@components/Profile/ProfileCharts'
 import ProfileHeader from '@components/Profile/ProfileHeader'
 import ProfileStats from '@components/Profile/ProfileStats/'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 
-type PlayerWithStatistics = Player & PlayerStats
+type PlayerProps = {
+  player: Player
+  playerStats: PlayerStats
+}
+
 type ErrorType = {
   error: string
   statusCode: number
 }
-type Props = PlayerWithStatistics | ErrorType
+type Props = PlayerProps | ErrorType
 
 const PlayerPage: NextPage<Props> = (props: Props) => {
   if ('error' in props) {
     return <ErrorPage title={props.error} statusCode={props.statusCode} />
   }
 
-  const {
-    id,
-    firstName,
-    lastName,
-    nickname,
-    elo,
-    emoji,
-    lostGames,
-    wonGames,
-    totalGames,
-    winPercentage,
-    eloData,
-    motto,
-  } = props
+  const { player, playerStats } = props
+  const { id, elo } = player
+  const { totalGames, wonGames, lostGames, winPercentage, eloData } = playerStats
 
   return (
     <ProfileLayout>
-      <ProfileHeader
-        emoji={emoji}
-        nickname={nickname}
-        id={id}
-        firstName={firstName}
-        lastName={lastName}
-        motto={motto}
-      />
+      <ProfileHeader player={player} />
       <ProfileStats
         stats={[
-          { label: 'Elo', value: elo.toString() },
+          { label: 'Elo', value: round(elo, 2).toFixed(2) },
           { label: 'Total Games', value: totalGames.toString() },
           { label: 'Wins / Losses', value: `${wonGames} / ${lostGames}` },
-          { label: 'Win Percentage', value: `${winPercentage}%` },
+          { label: 'Win Percentage', value: `${round(winPercentage, 2).toFixed(2)}%` },
         ]}
       />
       <ProfileCharts eloData={eloData} currentPlayerId={id} />
