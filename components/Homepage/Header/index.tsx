@@ -15,7 +15,9 @@ interface Props {
 }
 
 const Header = ({ randomPlayer }: Props) => {
-  const [player, setPlayer] = useState<Player>(randomPlayer)
+  const [currentPlayer, setCurrentPlayer] = useState<Player>(randomPlayer)
+  const [upcomingPlayer, setUpcomingPlayer] = useState<Player | undefined>(undefined)
+  const [switching, setSwitching] = useState<boolean>(false)
 
   const getRandomPlayer = async () => {
     const result = await axios.get(`${NEXT_PUBLIC_API_URL}/player/random`)
@@ -23,9 +25,22 @@ const Header = ({ randomPlayer }: Props) => {
   }
 
   useEffect(() => {
-    const timer = setInterval(async () => setPlayer(await getRandomPlayer()), 60 * 1000)
+    const timer = setInterval(async () => setUpcomingPlayer(await getRandomPlayer()), 60 * 1000)
     return () => clearInterval(timer)
-  })
+  }, [])
+
+  useEffect(() => {
+    const switchMotto = async () => {
+      setSwitching(true)
+      setTimeout(() => {
+        setSwitching(false)
+        if (upcomingPlayer) setCurrentPlayer(upcomingPlayer)
+      }, 1000)
+    }
+    switchMotto()
+  }, [upcomingPlayer])
+
+  const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
 
   return (
     <header className={styles.header}>
@@ -33,10 +48,9 @@ const Header = ({ randomPlayer }: Props) => {
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
-          <MottoCard
-            text={player.motto}
-            author={`${player.firstName} "${player.nickname}" ${player.lastName}`}
-          />
+          <div className={switching ? styles.motto__switch : styles.motto}>
+            <MottoCard text={currentPlayer.motto} author={author} />
+          </div>
         </div>
       </Filter>
     </header>
