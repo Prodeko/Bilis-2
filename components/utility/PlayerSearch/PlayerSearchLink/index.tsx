@@ -41,14 +41,10 @@ const PlayerSearchLink = ({
       <input
         className={styles.search}
         placeholder={placeholder}
-        onClick={() => {
-          if (!isVisible) setIsVisible(true)
-        }}
+        onClick={() => setIsVisible(true)}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
-        onBlur={() => {
-          if (isVisible) setIsVisible(false)
-        }}
+        onBlur={() => setIsVisible(false)}
       />
       <ul className={styles.results}>
         {isVisible &&
