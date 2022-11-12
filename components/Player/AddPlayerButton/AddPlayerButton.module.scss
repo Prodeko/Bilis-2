@@ -2,12 +2,12 @@
 
 .button {
   @include flex-x($spacing-12);
-  @extend %text-style-display-sm-bold;
+  @extend %text-style-text-xl-bold;
   @extend %flex-center;
 
-  background-color: $color-primary-100;
+  background-color: $color-primary-50;
   border: none;
-  border-color: $color-primary-25;
+  border-color: $color-primary-50;
   border-radius: $border-radius-small;
   color: $color-primary-700;
   cursor: pointer;
@@ -16,9 +16,14 @@
   right: $spacing-64;
   text-transform: uppercase;
   top: $spacing-64;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .button:hover {
-  background-color: $color-primary-25;
+  background-color: $color-base-white;
+
+  transform: translateY(-$spacing-4);
+}
+.button:active {
+  transform: translateY(0);
 }
