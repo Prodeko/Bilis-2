@@ -1,15 +1,15 @@
 @use 'styles' as *;
 
 .sidebar {
-  @include padding-x($spacing-24);
-  @include padding-y($spacing-24);
-
   background: $color-gradient-mixed-900-600;
-  height: 100vh;
+  max-height: 100vh;
+  padding: $spacing-24;
   z-index: 10;
 }
 
 .linkContainer {
+  @include flex-y($gap: $spacing-24);
+
   display: flex;
   flex-direction: column;
   gap: $spacing-24;
@@ -17,29 +17,29 @@
 
 .sidebarLink {
   @extend %flex-center;
+  @include size($spacing-80);
 
   border-radius: 50%;
   color: $color-gray-300;
   cursor: pointer;
-  height: 8rem;
-  transition: all 0.2s;
-  width: 8rem;
-
+  transition: all 0.3s;
+  
   &:hover {
-    color: $color-gray-25;
+    background-color: $color-gray-400;
+    color: $color-primary-800;
   }
-
+  
   &--active {
     background-color: $color-gray-25;
     color: $color-primary-800;
-
+    
     &:hover {
+      background-color: $color-gray-25;
       color: $color-primary-800;
     }
   }
 }
 
 .sidebarIcon {
-  height: 4rem;
-  width: 4rem;
+  @include size($spacing-40);
 }
