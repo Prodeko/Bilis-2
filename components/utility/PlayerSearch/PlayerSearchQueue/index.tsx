@@ -11,7 +11,7 @@ import { Player } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
 
-import styles from './PlayerSearchLink.module.scss'
+import styles from './PlayerSearchQueue.module.scss'
 
 interface PlayerSearchLinkProps {
   handleSelect: (e: Player) => void
@@ -41,18 +41,14 @@ const PlayerSearchLink = ({
       <input
         className={styles.search}
         placeholder={placeholder}
-        onClick={() => {
-          if (!isVisible) setIsVisible(true)
-        }}
+        onClick={() => setIsVisible(true)}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
-        onBlur={() => {
-          if (isVisible) setIsVisible(false)
-        }}
+        onBlur={() => setIsVisible(false)}
       />
-      <ul className={styles.results}>
-        {isVisible &&
-          filteredPlayers.map((player, i) => (
+      {isVisible && (
+        <ul className={styles.results}>
+          {filteredPlayers.map((player, i) => (
             <li
               key={player.id}
               className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
@@ -62,7 +58,8 @@ const PlayerSearchLink = ({
               {`${player.firstName} ${player.lastName}`}
             </li>
           ))}
-      </ul>
+        </ul>
+      )}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import type { Player } from '@common/types'
-import PlayerSearchLink from '@components/utility/PlayerSearch/PlayerSearchLink'
+import PlayerSearchQueue from '@components/utility/PlayerSearch/PlayerSearchQueue'
 
 import styles from './Queue.module.scss'
 
@@ -18,7 +18,7 @@ const TitleRow = ({ queue, setQueue }: Props) => {
     <div className={styles.titlerow}>
       <h2 className={styles.title}>Queue</h2>
       <span className={styles.search}>
-        <PlayerSearchLink
+        <PlayerSearchQueue
           placeholder="Add player to queue"
           handleSelect={handleSelect}
           filterFunction={player => !queue.some(queuePlayer => queuePlayer.id === player.id)}

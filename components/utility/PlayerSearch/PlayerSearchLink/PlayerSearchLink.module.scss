@@ -1,0 +1,64 @@
+@use 'styles' as *;
+
+%resultContainer {
+  @extend %scrollbar;
+
+  border-radius: $border-radius-small;
+  flex-grow: 1;
+  transition: all 0.4s;
+}
+
+.container {
+  @include flex-y($spacing-8);
+
+  width: 100%;
+}
+
+.search {
+  background-color: $color-base-white;
+  border: $color-primary-300;
+  border-radius: $border-radius-small;
+  padding: $spacing-12;
+  width: 100%;
+}
+
+.results {
+  @extend %resultContainer;
+
+  height: 0;
+  
+  &__visible {
+    @extend %resultContainer;
+
+    height: 100%;
+  }
+}
+
+.playerWrapper {
+  flex-grow: 1;
+  min-height: 0%;
+  max-height: 100%;
+  border-radius: $border-radius-small;
+}
+
+.player {
+  @extend %text-style-text-md-normal;
+
+  background: $color-base-white;
+  cursor: pointer;
+  padding: $spacing-8;
+  pointer-events: fill;
+}
+
+.player:hover, .selected {
+  background: $color-gray-300;
+}
+
+.noplayers {
+  @extend %flex-center;
+  @extend %text-style-display-md-bold;
+
+  background-color: transparent;
+  color: $color-gray-50;
+  height: 100%;
+}

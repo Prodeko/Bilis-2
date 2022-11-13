@@ -1,8 +1,0 @@
-@use 'styles' as *;
-
-.header {
-  @extend %text-style-display-lg-semibold;
-
-  color: $color-base-white;
-  padding-bottom: $spacing-16
-}
