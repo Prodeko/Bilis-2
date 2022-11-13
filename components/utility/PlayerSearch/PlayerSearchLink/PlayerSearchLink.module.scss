@@ -1,5 +1,13 @@
 @use 'styles' as *;
 
+%resultContainer {
+  @extend %scrollbar;
+
+  background: $color-base-white;
+  border-radius: $border-radius-small;
+  transition: all 0.4s;
+}
+
 .container {
   @include flex-y($spacing-8);
 
@@ -15,11 +23,13 @@
 }
 
 .results {
-  @extend %scrollbar;
+  @extend %resultContainer;
+  max-height: 0;
 
-  background: $color-base-white;
-  border-radius: $border-radius-small;
-  max-height: $spacing-256;
+  &__visible {
+    @extend %resultContainer;
+    max-height: $spacing-256;
+  }
 }
 
 .player {

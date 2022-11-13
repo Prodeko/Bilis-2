@@ -45,22 +45,20 @@ const PlayerSearchLink = ({ visible, setVisible, onClick, onBlur }: Props) => {
         onChange={handleChange}
         onBlur={onBlur}
       />
-      {visible && (
-        <ul className={styles.results}>
-          {players.map((player, i) => (
-            <Link href={getRoute(player.id)} passHref>
-              <li
-                key={player.id}
-                className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
-                onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
-                onClick={() => handleSelect(players[i])}
-              >
-                <a>{`${player.firstName} ${player.lastName}`}</a>
-              </li>
-            </Link>
-          ))}
-        </ul>
-      )}
+      <ul className={visible ? styles.results__visible : styles.results}>
+        {players.map((player, i) => (
+          <Link href={getRoute(player.id)} passHref>
+            <li
+              key={player.id}
+              className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
+              onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
+              onClick={() => handleSelect(players[i])}
+            >
+              <a>{`${player.firstName} ${player.lastName}`}</a>
+            </li>
+          </Link>
+        ))}
+      </ul>
     </div>
   )
 }
