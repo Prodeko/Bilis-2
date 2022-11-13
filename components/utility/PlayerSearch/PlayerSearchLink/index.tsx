@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler, Dispatch, SetStateAction } from 'react'
+import { ChangeEventHandler } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 
@@ -17,12 +17,11 @@ import styles from './PlayerSearchLink.module.scss'
 
 interface Props {
   visible: boolean
-  setVisible: Dispatch<SetStateAction<boolean>>
   onClick: () => void
   onBlur: () => void
 }
 
-const PlayerSearchLink = ({ visible, setVisible, onClick, onBlur }: Props) => {
+const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
   const getRoute = (id: number) => `player/${id}`
   const handleSelect = ({ id }: Player) => Router.push(getRoute(id))
 
@@ -31,7 +30,7 @@ const PlayerSearchLink = ({ visible, setVisible, onClick, onBlur }: Props) => {
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
-    setVisible(true)
+    onClick()
     setSelectedIdx(0)
   }
 

@@ -28,7 +28,7 @@
 
   &__visible {
     @extend %resultContainer;
-    max-height: $spacing-256;
+    max-height: 100%;
   }
 }
 

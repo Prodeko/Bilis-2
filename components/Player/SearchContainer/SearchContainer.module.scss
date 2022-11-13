@@ -1,6 +1,9 @@
 @use 'styles' as *;
 
 %searchContainer {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  max-height: 40%;
   text-align: left;
   width: 50%;
   transition: all 1s;
@@ -8,12 +11,13 @@
 
 .searchContainer {
   @extend %searchContainer;
+
   min-height: 10%;
 
   &__extended {
     @extend %searchContainer;
 
-    min-height: 50%;
+    min-height: 40%;
   }
 }
 

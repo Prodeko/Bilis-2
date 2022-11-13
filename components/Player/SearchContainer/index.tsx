@@ -11,25 +11,20 @@ const SearchContainer = () => {
 
   const onBlur = () => {
     setVisible(false)
-    setExtended(false)
+    setTimeout(() => setExtended(false), 400) // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
   }
 
   const onClick = () => {
     if (!extended) {
       setExtended(true)
-      setTimeout(() => setVisible(true), 1000)
+      setTimeout(() => setVisible(true), 1000) // // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
     }
   }
 
   return (
     <div className={extended ? styles.searchContainer__extended : styles.searchContainer}>
       <Header />
-      <PlayerSearchLink
-        visible={visible}
-        setVisible={setVisible}
-        onClick={onClick}
-        onBlur={onBlur}
-      />
+      <PlayerSearchLink visible={visible} onClick={onClick} onBlur={onBlur} />
     </div>
   )
 }
