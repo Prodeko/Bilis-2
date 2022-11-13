@@ -31,8 +31,13 @@
     @extend %resultContainer;
 
     max-height: 100%;
-    height: 100%;
   }
+}
+
+.playerWrapper {
+  min-height: 0%;
+  max-height: 100%;
+  border-radius: $border-radius-small;
 }
 
 .player {
