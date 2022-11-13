@@ -25,16 +25,17 @@
 .results {
   @extend %resultContainer;
 
-  max-height: 0;
+  height: 0;
   
   &__visible {
     @extend %resultContainer;
 
-    max-height: 100%;
+    height: 100%;
   }
 }
 
 .playerWrapper {
+  flex-grow: 1;
   min-height: 0%;
   max-height: 100%;
   border-radius: $border-radius-small;
