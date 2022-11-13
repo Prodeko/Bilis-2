@@ -3,8 +3,8 @@
 %resultContainer {
   @extend %scrollbar;
 
-  background: $color-base-white;
   border-radius: $border-radius-small;
+  flex-grow: 1;
   transition: all 0.4s;
 }
 
@@ -24,17 +24,21 @@
 
 .results {
   @extend %resultContainer;
-  max-height: 0;
 
+  max-height: 0;
+  
   &__visible {
     @extend %resultContainer;
+
     max-height: 100%;
+    height: 100%;
   }
 }
 
 .player {
   @extend %text-style-text-md-normal;
 
+  background: $color-base-white;
   cursor: pointer;
   padding: $spacing-8;
   pointer-events: fill;
@@ -42,4 +46,13 @@
 
 .player:hover, .selected {
   background: $color-gray-300;
+}
+
+.noplayers {
+  @extend %flex-center;
+  @extend %text-style-display-md-bold;
+
+  background-color: transparent;
+  color: $color-gray-50;
+  height: 100%;
 }
