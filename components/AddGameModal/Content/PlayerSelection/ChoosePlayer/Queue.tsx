@@ -1,5 +1,4 @@
 import type { Player } from '@common/types'
-import { removeFromQueue } from '@state/reducer'
 import { StateContext } from '@state/state'
 import { round } from 'lodash'
 import { useContext } from 'react'
