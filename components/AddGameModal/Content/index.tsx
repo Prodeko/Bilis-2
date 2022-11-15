@@ -22,6 +22,12 @@ const Content = ({ players, onClose }: Props) => {
 
   // TODO validate that all fields are present
   const onSubmit = async () => {
+    if (game.winnerId == game.loserId) {
+      console.warn('Winner and loser cannot be same')
+      // TODO show error msg
+      return
+    }
+
     const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
     dispatch(removeFromQueue(game.winnerId ?? 0))
     dispatch(removeFromQueue(game.loserId ?? 0))
