@@ -1,20 +1,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Player } from '@common/types'
+import type { Player } from '@common/types'
 import MottoCard from '@components/utility/MottoCard'
 import Settings from '@public/images/settings-01.svg'
 
 import styles from './ProfileHeader.module.scss'
 
-const ProfileHeader = ({
-  id,
-  firstName,
-  lastName,
-  nickname,
-  emoji,
-  motto,
-}: Pick<Player, 'firstName' | 'lastName' | 'id' | 'nickname' | 'emoji' | 'motto'>) => {
+interface Props {
+  player: Player
+}
+
+const ProfileHeader = ({ player }: Props) => {
+  const { id, firstName, lastName, nickname, emoji, motto } = player
   const name = `${firstName} "${nickname}" ${lastName}`
 
   return (

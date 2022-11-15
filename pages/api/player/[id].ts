@@ -1,4 +1,3 @@
-import { round } from 'lodash'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import type { Player } from '@common/types'
@@ -15,10 +14,8 @@ const handleFetch = async (res: NextApiResponse, id: number) => {
 
   const jsonPlayer = player.toJSON() as Player
   return res.status(200).json({
-    ...jsonPlayer,
-    ...playerStats,
-    winPercentage: round(playerStats.winPercentage, 2).toFixed(2),
-    elo: round(jsonPlayer.elo, 2).toFixed(2),
+    player: jsonPlayer,
+    playerStats: playerStats,
   })
 }
 

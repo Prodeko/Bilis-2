@@ -25,6 +25,7 @@
 .profileinfo {
   @include flex-y($gap: $spacing-16);
 
+  align-items: center;
   color: $color-gray-100;
 
   &--primary {
@@ -36,14 +37,13 @@
     @extend %text-style-text-md-semibold;
 
     align-items: center;
-    align-self: flex-start;
     background-color: $color-gray-300;
     border: none;
     border-radius: $border-radius-small;
     color: $color-primary-700;
     cursor: pointer;
-    padding: $spacing-16 $spacing-16;
-    transition: all 0.2s ease-out;
+    padding: $spacing-16;
+    transition: all 0.3s;
 
     &:hover {
       @extend %shadow-xl;
@@ -52,7 +52,7 @@
     }
 
     .icon {
-      @include size(2.4rem);
+      @include size($spacing-24);
     }
   }
 }
