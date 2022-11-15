@@ -1,14 +1,14 @@
-import type { HomeLeaderboard } from '@common/types'
+import type { HomeLeaderboard, Player } from '@common/types'
 
 export type State = {
-  players: HomeLeaderboard
+  queue: Player[]
 }
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_PLAYERS':
+    case 'SET_QUEUE':
       return {
-        players: action.payload,
+        queue: action.payload,
       }
     default:
       return state
@@ -16,14 +16,13 @@ export const reducer = (state: State, action: Action): State => {
 }
 
 export type Action = {
-  type: 'SET_PLAYERS'
-  payload: HomeLeaderboard
+  type: 'SET_QUEUE'
+  payload: Player[]
 }
-// | {
-//     type: 'REMOVE_PLAYERS'
-//     payload: []
-//   }
 
-export const setPlayers = (players: HomeLeaderboard): Action => {
-  return { type: 'SET_PLAYERS', payload: players }
+export const setQueue = (queue: Player[]): Action => {
+  window.localStorage.setItem('prodeko-biliskilke-queue', JSON.stringify(queue))
+  return { type: 'SET_QUEUE', payload: queue }
 }
+export const removeFromQueue = (idToRemove: Player['id'], queue: Player[]): Action =>
+  setQueue(queue.filter(({ id }) => id !== idToRemove))

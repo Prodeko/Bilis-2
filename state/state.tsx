@@ -1,9 +1,11 @@
+import { Player } from '@common/types'
 import React, { createContext, useContext, useMemo, useReducer } from 'react'
 
 import { Action, State } from './reducer'
 
-const initialState: State = {
-  players: [],
+const queue = JSON.parse(window.localStorage.getItem('prodeko-biliskilke-queue') ?? '') as Player[]
+const initialState = {
+  queue,
 }
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
