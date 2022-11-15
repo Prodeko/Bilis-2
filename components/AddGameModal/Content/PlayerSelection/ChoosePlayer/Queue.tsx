@@ -1,10 +1,21 @@
 import type { Player } from '@common/types'
+import { removeFromQueue } from '@state/reducer'
+import { StateContext } from '@state/state'
 import { round } from 'lodash'
+import { useContext } from 'react'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void }
 
-const Queue = ({ players, onChoose }: ListProps) => {
+const Queue = ({ onChoose }: ListProps) => {
+  const [state, dispatch] = useContext(StateContext)
+  const players = state.queue
+
+  const handleChange = (id: Player['id']) => {
+    dispatch(removeFromQueue(id, players))
+    onChoose(id)
+  }
+
   return (
     <>
       <div className={styles.queueLabel}>
@@ -15,8 +26,8 @@ const Queue = ({ players, onChoose }: ListProps) => {
           <div
             className={styles.playerRow}
             key={p.id}
-            onClick={() => onChoose(p.id)}
-            onKeyDown={() => onChoose(p.id)}
+            onClick={() => handleChange(p.id)}
+            onKeyDown={() => handleChange(p.id)}
             tabIndex={0}
             role="button"
           >
