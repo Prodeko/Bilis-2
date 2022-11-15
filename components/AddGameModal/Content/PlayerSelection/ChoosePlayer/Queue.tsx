@@ -12,7 +12,6 @@ const Queue = ({ onChoose }: ListProps) => {
   const players = state.queue
 
   const handleChange = (id: Player['id']) => {
-    dispatch(removeFromQueue(id))
     onChoose(id)
   }
 
