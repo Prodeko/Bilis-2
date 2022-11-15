@@ -10,11 +10,6 @@ type ListProps = { players: Player[]; onChoose: (id: number) => void }
 const Queue = ({ onChoose }: ListProps) => {
   const [state, dispatch] = useContext(StateContext)
   const players = state.queue
-
-  const handleChange = (id: Player['id']) => {
-    onChoose(id)
-  }
-
   return (
     <>
       <div className={styles.queueLabel}>
@@ -25,8 +20,8 @@ const Queue = ({ onChoose }: ListProps) => {
           <div
             className={styles.playerRow}
             key={p.id}
-            onClick={() => handleChange(p.id)}
-            onKeyDown={() => handleChange(p.id)}
+            onClick={() => onChoose(p.id)}
+            onKeyDown={() => onChoose(p.id)}
             tabIndex={0}
             role="button"
           >
