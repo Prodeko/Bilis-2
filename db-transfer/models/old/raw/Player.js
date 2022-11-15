@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../../config/db.js";
+const { DataTypes, Model } = require('sequelize')
+const { oldSequelize } = require('../../../config/db.js')
 
 class Player extends Model {}
 
@@ -20,26 +20,27 @@ Player.init(
       allowNull: false,
     },
     fargo: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.NUMBER,
       allowNull: false,
     },
   },
   {
-    sequelize,
+    sequelize: oldSequelize,
     underscored: true,
-    timestamps: true,
-    modelName: "player",
+    timestamps: false,
+    modelName: 'player',
     defaultScope: {
       attributes: {
-        exclude: ["createdAt"],
+        exclude: ['createdAt'],
       },
     },
+    tableName: 'bilis_player',
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload();
+        await attrs.reload()
       },
     },
   }
-);
+)
 
-export default Player;
+module.exports = { Player }

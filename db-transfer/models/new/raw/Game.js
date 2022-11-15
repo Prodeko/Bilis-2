@@ -1,5 +1,5 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../../config/db.js";
+const { DataTypes, Model } = require('sequelize')
+const { newSequelize } = require('../../../config/db.js')
 
 class Game extends Model {}
 
@@ -33,17 +33,17 @@ Game.init(
     },
   },
   {
-    sequelize,
+    sequelize: newSequelize,
     underscored: true,
     timestamps: true,
     updatedAt: false,
-    modelName: "game",
+    modelName: 'game',
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload();
+        await attrs.reload()
       },
     },
   }
-);
+)
 
-export default Game;
+module.exports = { Game }
