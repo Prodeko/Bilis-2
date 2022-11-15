@@ -1,7 +1,7 @@
-import type { HomeLeaderboard, Player } from '@common/types'
+import type { Player } from '@common/types'
 
 const setLocalQueue = (queue: Player[]) =>
-  window.localStorage.setItem('prodeko-biliskilke-queue', JSON.stringify(queue))
+  localStorage.setItem('prodeko-biliskilke-queue', JSON.stringify(queue))
 
 export type State = {
   queue: Player[]

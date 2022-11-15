@@ -3,9 +3,8 @@ import React, { createContext, useContext, useMemo, useReducer } from 'react'
 
 import { Action, State } from './reducer'
 
-const queue = JSON.parse(window.localStorage.getItem('prodeko-biliskilke-queue') ?? '') as Player[]
 const initialState = {
-  queue,
+  queue: [],
 }
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
@@ -19,7 +18,11 @@ type StateProviderProps = {
 }
 
 export const StateProvider = ({ reducer, children }: StateProviderProps) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  let queue: Player[] = []
+  if (typeof window !== 'undefined') {
+    queue = JSON.parse(window.localStorage.getItem('prodeko-biliskilke-queue') ?? '') as Player[]
+  }
+  const [state, dispatch] = useReducer(reducer, { queue })
   return (
     <StateContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}
