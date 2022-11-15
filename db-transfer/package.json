@@ -2,15 +2,16 @@
   "name": "db-transfer",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "<jakala.leevi@gmail.com>",
+  "author": "webbi-team"
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
     "pg": "^8.8.0",
-    "sequelize": "^6.25.5"
+    "sequelize": "^6.25.5",
+    "umzug": "^3.2.1"
   }
 }

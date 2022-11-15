@@ -1,0 +1,17 @@
+services: 
+  old-database:
+    image: postgres:latest
+    ports:
+      - 5431:5432
+    environment:
+      POSTGRES_USER: devadmin
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: devdb
+  new-database:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: devadmin
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: devdb

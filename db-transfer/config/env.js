@@ -1,7 +1,7 @@
-import * as dotenv from "dotenv";
+const dotenv = require('dotenv')
 
 const init = () => {
-  dotenv.config();
-};
+  dotenv.config()
+}
 
-export default { init };
+module.exports = { init }

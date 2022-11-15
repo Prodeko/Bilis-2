@@ -1,11 +1,18 @@
-import { connectToDb } from "./config/db.js";
-import { Game, Player } from "./models/new/index.js";
+const { connectToDbs } = require('./config/db.js')
+const oldModels = require('./models/old/index.js')
+const newModels = require('./models/new/index.js')
 
 const main = async () => {
-  await connectToDb();
-  const players = await Player.findAll({});
-  const games = await Game.findAll({});
-  games.forEach(console.log);
-};
+  await connectToDbs()
+  const oldPlayas = await oldModels.Player.findAll({})
+  const creates = oldPlayas.map(p => ({
+    id: p.id,
+    firstName: p.firstName,
+    lastName: p.lastName,
+    elo: p.fargo,
+  }))
 
-main();
+  await newModels.Player.bulkCreate(creates)
+}
+
+main()
