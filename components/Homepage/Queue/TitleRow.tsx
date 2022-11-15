@@ -1,18 +1,17 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 
 import type { Player } from '@common/types'
 import PlayerSearchQueue from '@components/utility/PlayerSearch/PlayerSearchQueue'
 
 import styles from './Queue.module.scss'
+import { StateContext } from '@state/state'
+import { addToQueue } from '@state/reducer'
 
-interface Props {
-  queue: Player[]
-  setQueue: Dispatch<SetStateAction<Player[]>>
-}
+const TitleRow = () => {
+  const [{ queue }, dispatch] = useContext(StateContext)
 
-const TitleRow = ({ queue, setQueue }: Props) => {
-  const handleSelect = (newValue: Player) => {
-    setQueue([...queue, newValue])
+  const handleSelect = (player: Player) => {
+    dispatch(addToQueue(player))
   }
   return (
     <div className={styles.titlerow}>
