@@ -26,10 +26,7 @@ const PlayerSelection = ({
   return (
     <div className={playerId ? styles.cardColumn__selected : styles.cardColumn}>
       {playerId ? (
-        <SelectedPlayer
-          player={players.find(p => p.id === playerId) as PlayerWithStats}
-          onClear={() => setGameField(undefined)}
-        />
+        <SelectedPlayer playerId={playerId} onClear={() => setGameField(undefined)} />
       ) : (
         <ChoosePlayer
           onChoose={setGameField}
