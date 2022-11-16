@@ -8,6 +8,10 @@ const Queue = ({ onChoose }: ListProps) => {
   const [state, _dispatch] = useStateValue()
   const players = state.queue
 
+  if (players.length === 0) {
+    return <div className={styles.noplayers}>No players in queue</div>
+  }
+
   return (
     <div className={styles.playerList}>
       {players.map(p => (

@@ -8,6 +8,9 @@ type ListProps = {
 }
 
 const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
+  if (playerSearchList.length === 0) {
+    return <div className={styles.noplayers}>No players found</div>
+  }
   return (
     <div className={styles.playerList}>
       {playerSearchList.map(p => (
