@@ -6,9 +6,7 @@ import styles from './Content.module.scss'
 import useModalState from './useModalState'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
-import { useContext } from 'react'
-import { StateContext } from '@state/state'
-import { removeFromQueue } from '@state/reducer'
+import { useStateValue, removeFromQueue } from '@state/index'
 
 type Props = {
   players: PlayerWithStats[]
@@ -17,7 +15,7 @@ type Props = {
 
 const Content = ({ players, onClose }: Props) => {
   const { playerLists, game, setGameField, resetPlayers, setPlayers } = useModalState(players)
-  const [, dispatch] = useContext(StateContext)
+  const [, dispatch] = useStateValue()
   const isActive = Boolean(game.winnerId && game.loserId)
 
   // TODO validate that all fields are present

@@ -3,9 +3,7 @@ import Link from 'next/link'
 import { Player } from '@common/types'
 
 import styles from './QueueItem.module.scss'
-import { removeFromQueue } from '@state/reducer'
-import { StateContext } from '@state/state'
-import { useContext } from 'react'
+import { removeFromQueue, useStateValue } from '@state/index'
 
 interface QueueItemProps {
   place: number
@@ -13,7 +11,7 @@ interface QueueItemProps {
 }
 
 const QueueItem = ({ place, player }: QueueItemProps) => {
-  const [, dispatch] = useContext(StateContext)
+  const [, dispatch] = useStateValue()
   const { id, firstName, lastName, emoji } = player
 
   const removePlayer = () => {

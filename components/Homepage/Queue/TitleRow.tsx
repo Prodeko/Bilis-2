@@ -1,14 +1,12 @@
-import { useContext } from 'react'
-
 import type { Player } from '@common/types'
 import PlayerSearchQueue from '@components/utility/PlayerSearch/PlayerSearchQueue'
 
 import { addToQueue } from '@state/reducer'
-import { StateContext } from '@state/state'
+import { StateContext, useStateValue } from '@state/index'
 import styles from './Queue.module.scss'
 
 const TitleRow = () => {
-  const [{ queue }, dispatch] = useContext(StateContext)
+  const [{ queue }, dispatch] = useStateValue()
 
   const handleSelect = (player: Player) => {
     dispatch(addToQueue(player))

@@ -1,12 +1,11 @@
 import Card from '@components/utility/Card'
-import { StateContext } from '@state/state'
-import { useContext } from 'react'
+import { StateContext, useStateValue } from '@state/index'
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'
 
 const Queue = () => {
-  const [{ queue }] = useContext(StateContext)
+  const [{ queue }] = useStateValue()
 
   return (
     <Card rowspan="1 / 2" colspan="2 / 3">

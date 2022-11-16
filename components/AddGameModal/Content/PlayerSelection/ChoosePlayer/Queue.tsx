@@ -1,13 +1,12 @@
 import type { Player } from '@common/types'
-import { StateContext } from '@state/state'
+import { StateContext, useStateValue } from '@state/index'
 import { round } from 'lodash'
-import { useContext } from 'react'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = { players: Player[]; onChoose: (id: number) => void }
 
 const Queue = ({ onChoose }: ListProps) => {
-  const [state, dispatch] = useContext(StateContext)
+  const [state, dispatch] = useStateValue()
   const players = state.queue
   return (
     <>
