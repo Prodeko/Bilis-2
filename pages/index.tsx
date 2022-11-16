@@ -12,6 +12,7 @@ import Recents from '@components/Homepage/Recents'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
   leaderboard: HomeLeaderboard
@@ -28,13 +29,15 @@ const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer
   return (
     <HomeLayout>
       <Header randomPlayer={randomPlayer} />
-      <HomeGrid>
-        {gameModalOpen && <AddGame onClose={closeModal} players={players} />}
-        <Leaderboard leaderboard={leaderboard} />
-        <Queue />
-        <AddGameButton onOpen={openModal} />
-        <Recents recentGames={recentGames} />
-      </HomeGrid>
+      <QueueProvider reducer={reducer}>
+        <HomeGrid>
+          {gameModalOpen && <AddGame onClose={closeModal} players={players} />}
+          <Leaderboard leaderboard={leaderboard} />
+          <Queue />
+          <AddGameButton onOpen={openModal} />
+          <Recents recentGames={recentGames} />
+        </HomeGrid>
+      </QueueProvider>
     </HomeLayout>
   )
 }
