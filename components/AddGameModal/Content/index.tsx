@@ -6,7 +6,7 @@ import styles from './Content.module.scss'
 import useModalState from './useModalState'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
-import { useStateValue, removeFromQueue } from '@state/index'
+import { useStateValue, removeFromQueue } from '@state/Queue'
 
 type Props = {
   players: PlayerWithStats[]

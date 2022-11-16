@@ -4,7 +4,7 @@ import Head from 'next/head'
 import 'styles/globals.scss'
 
 import BaseLayout from '@components/Layout/BaseLayout'
-import { StateProvider, reducer } from '@state/index'
+import { StateProvider, reducer } from '@state/Queue'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any // TODO: Temp fix

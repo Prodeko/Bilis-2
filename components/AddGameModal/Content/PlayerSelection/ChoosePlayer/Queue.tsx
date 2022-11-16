@@ -1,5 +1,5 @@
 import type { Player } from '@common/types'
-import { StateContext, useStateValue } from '@state/index'
+import { StateContext, useStateValue } from '@state/Queue'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
 

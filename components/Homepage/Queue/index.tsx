@@ -1,5 +1,5 @@
 import Card from '@components/utility/Card'
-import { StateContext, useStateValue } from '@state/index'
+import { useStateValue } from '@state/Queue'
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Player } from '@common/types'
 
 import styles from './QueueItem.module.scss'
-import { removeFromQueue, useStateValue } from '@state/index'
+import { removeFromQueue, useStateValue } from '@state/Queue'
 
 interface QueueItemProps {
   place: number

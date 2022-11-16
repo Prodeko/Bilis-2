@@ -1,8 +1,7 @@
 import type { Player } from '@common/types'
 import PlayerSearchQueue from '@components/utility/PlayerSearch/PlayerSearchQueue'
 
-import { addToQueue } from '@state/reducer'
-import { StateContext, useStateValue } from '@state/index'
+import { addToQueue, useStateValue } from '@state/Queue'
 import styles from './Queue.module.scss'
 
 const TitleRow = () => {
