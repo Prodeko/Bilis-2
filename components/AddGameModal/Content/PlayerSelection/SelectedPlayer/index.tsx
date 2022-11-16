@@ -1,4 +1,4 @@
-import type { Player, PlayerStats } from '@common/types'
+import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -6,7 +6,6 @@ import styles from './SelectedPlayer.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'
 
-type PlayerWithStats = Player & PlayerStats
 type Props = {
   playerId: number
   onClear: () => void
