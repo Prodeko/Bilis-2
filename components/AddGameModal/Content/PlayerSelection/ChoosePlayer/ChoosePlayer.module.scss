@@ -72,6 +72,6 @@
 }
 
 .searchCard {
-  @include grid-cols(1);
-  column-gap: $spacing-20;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
 }
