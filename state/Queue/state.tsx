@@ -7,26 +7,26 @@ const initialState = {
   queue: [],
 }
 
-export const StateContext = createContext<[State, React.Dispatch<Action>]>([
+export const QueueContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState,
 ])
 
-type StateProviderProps = {
+type QueueProviderProps = {
   reducer: React.Reducer<State, Action>
   children: React.ReactElement
 }
 
-export const StateProvider = ({ reducer, children }: StateProviderProps) => {
+export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
   let queue: Player[] = []
   if (typeof window !== 'undefined') {
     queue = JSON.parse(window.localStorage.getItem('prodeko-biliskilke-queue') ?? '') as Player[]
   }
   const [state, dispatch] = useReducer(reducer, { queue })
   return (
-    <StateContext.Provider value={useMemo(() => [state, dispatch], [state])}>
+    <QueueContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}
-    </StateContext.Provider>
+    </QueueContext.Provider>
   )
 }
-export const useStateValue = () => useContext(StateContext)
+export const useStateValue = () => useContext(QueueContext)
