@@ -14,8 +14,8 @@ const handleFetch = async (res: NextApiResponse, id: number) => {
 
   const jsonPlayer = player.toJSON() as Player
   return res.status(200).json({
-    player: jsonPlayer,
-    playerStats: playerStats,
+    ...jsonPlayer,
+    ...playerStats,
   })
 }
 
