@@ -9,12 +9,13 @@ import axios from 'axios'
 import { useStateValue, removeFromQueue } from '@state/Queue'
 
 type Props = {
-  players: PlayerWithStats[]
+  recentPlayers: PlayerWithStats[]
   onClose: () => void
 }
 
-const Content = ({ players, onClose }: Props) => {
-  const { playerLists, game, setGameField, resetPlayers, setPlayers } = useModalState(players)
+const Content = ({ recentPlayers, onClose }: Props) => {
+  const { playerSearchLists, game, setGameField, resetPlayers, setPlayers } =
+    useModalState(recentPlayers)
   const [, dispatch] = useStateValue()
   const isActive = Boolean(game.winnerId && game.loserId)
 
@@ -40,8 +41,7 @@ const Content = ({ players, onClose }: Props) => {
       <div className={styles.card}>
         <PlayerSelection
           playerId={game.winnerId}
-          players={players}
-          playerLists={playerLists}
+          playerSearchList={playerSearchLists.winner}
           setGameField={setGameField('winnerId')}
           setPlayers={setPlayers('winner')}
           resetPlayers={resetPlayers('winner')}
@@ -53,8 +53,7 @@ const Content = ({ players, onClose }: Props) => {
         />
         <PlayerSelection
           playerId={game.loserId}
-          players={players}
-          playerLists={playerLists}
+          playerSearchList={playerSearchLists.loser}
           setGameField={setGameField('loserId')}
           setPlayers={setPlayers('loser')}
           resetPlayers={resetPlayers('loser')}

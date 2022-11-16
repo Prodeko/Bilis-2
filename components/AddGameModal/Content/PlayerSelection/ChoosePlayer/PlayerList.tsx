@@ -2,12 +2,15 @@ import type { Player } from '@common/types'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
 
-type ListProps = { players: Player[]; onChoose: (id: number) => void }
+type ListProps = {
+  playerSearchList: Player[]
+  onChoose: (id: number) => void
+}
 
-const PlayerList = ({ players, onChoose }: ListProps) => {
+const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
   return (
     <div className={styles.playerList}>
-      {players.map(p => (
+      {playerSearchList.map(p => (
         <div
           className={styles.playerRow}
           key={p.id}

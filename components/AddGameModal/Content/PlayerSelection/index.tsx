@@ -5,11 +5,7 @@ import styles from './PlayerSelection.module.scss'
 
 interface Props {
   playerId: number | undefined
-  players: PlayerWithStats[]
-  playerLists: {
-    winner: PlayerWithStats[]
-    loser: PlayerWithStats[]
-  }
+  playerSearchList: PlayerWithStats[]
   setGameField: (val: any) => void
   resetPlayers: () => void
   setPlayers: (players: PlayerWithStats[]) => void
@@ -17,8 +13,7 @@ interface Props {
 
 const PlayerSelection = ({
   playerId,
-  players,
-  playerLists,
+  playerSearchList,
   setGameField,
   resetPlayers,
   setPlayers,
@@ -30,7 +25,7 @@ const PlayerSelection = ({
       ) : (
         <ChoosePlayer
           onChoose={setGameField}
-          players={playerLists.winner}
+          playerSearchList={playerSearchList}
           closeSearch={resetPlayers}
           setPlayers={setPlayers}
         />

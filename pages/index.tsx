@@ -17,11 +17,16 @@ import { QueueProvider, reducer } from '@state/Queue'
 interface Props {
   leaderboard: HomeLeaderboard
   recentGames: RecentGame[]
-  players: PlayerWithStats[]
+  recentPlayers: PlayerWithStats[]
   randomPlayer: Player
 }
 
-const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer }: Props) => {
+const Home: NextPage<Props> = ({
+  leaderboard,
+  recentGames,
+  recentPlayers,
+  randomPlayer,
+}: Props) => {
   const [gameModalOpen, setGameModalOpen] = useState(false)
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
@@ -31,7 +36,7 @@ const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer
       <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
-          {gameModalOpen && <AddGame onClose={closeModal} players={players} />}
+          {gameModalOpen && <AddGame onClose={closeModal} recentPlayers={recentPlayers} />}
           <Leaderboard leaderboard={leaderboard} />
           <Queue />
           <AddGameButton onOpen={openModal} />
@@ -43,7 +48,7 @@ const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer
 }
 
 export async function getServerSideProps() {
-  const [leaderboard, recentGames, players, randomPlayer] = (
+  const [leaderboard, recentGames, recentPlayers, randomPlayer] = (
     await Promise.all([
       axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
         params: { amount: 50 },
@@ -54,7 +59,7 @@ export async function getServerSideProps() {
     ])
   ).map(result => result.data)
 
-  return { props: { leaderboard, recentGames, players, randomPlayer } }
+  return { props: { leaderboard, recentGames, recentPlayers, randomPlayer } }
 }
 
 export default Home

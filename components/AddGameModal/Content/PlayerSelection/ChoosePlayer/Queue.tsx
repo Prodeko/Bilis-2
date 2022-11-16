@@ -1,12 +1,11 @@
-import type { Player } from '@common/types'
-import { StateContext, useStateValue } from '@state/Queue'
+import { useStateValue } from '@state/Queue'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
 
-type ListProps = { players: Player[]; onChoose: (id: number) => void }
+type ListProps = { onChoose: (id: number) => void }
 
 const Queue = ({ onChoose }: ListProps) => {
-  const [state, dispatch] = useStateValue()
+  const [state, _dispatch] = useStateValue()
   const players = state.queue
   return (
     <>
