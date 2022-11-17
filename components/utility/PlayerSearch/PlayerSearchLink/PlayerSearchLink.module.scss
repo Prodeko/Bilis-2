@@ -3,9 +3,11 @@
 %resultContainer {
   @extend %scrollbar;
 
+  background: $color-base-white;
   border-radius: $border-radius-small;
   flex-grow: 1;
   transition: all 0.4s;
+  
 }
 
 .container {
@@ -44,7 +46,6 @@
 .player {
   @extend %text-style-text-md-normal;
 
-  background: $color-base-white;
   cursor: pointer;
   padding: $spacing-8;
   pointer-events: fill;
