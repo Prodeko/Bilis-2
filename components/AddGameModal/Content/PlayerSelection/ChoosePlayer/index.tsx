@@ -2,24 +2,26 @@ import type { PlayerWithStats } from '@common/types'
 import PlayerSearch from './PlayerSearch'
 import PlayerList from './PlayerList'
 import styles from './ChoosePlayer.module.scss'
-import Queue from './Queue'
+import QueuePlayers from './QueuePlayers'
+import QueueTitle from './QueueTitle'
 
 type PlayerProps = {
   onChoose: (id: number) => void
   setPlayers: (arg: PlayerWithStats[]) => void
-  players: PlayerWithStats[]
+  playerSearchList: PlayerWithStats[]
   closeSearch: () => void
 }
 
-const ChoosePlayer = ({ onChoose, setPlayers, closeSearch, players }: PlayerProps) => {
+const ChoosePlayer = ({ onChoose, setPlayers, closeSearch, playerSearchList }: PlayerProps) => {
   return (
     <>
       <div className={styles.searchCard}>
-        <Queue onChoose={onChoose} players={players} />
+        <QueueTitle />
+        <QueuePlayers onChoose={onChoose} />
       </div>
       <div className={styles.searchCard}>
         <PlayerSearch closeSearch={closeSearch} setPlayers={setPlayers} />
-        <PlayerList onChoose={onChoose} players={players} />
+        <PlayerList onChoose={onChoose} playerSearchList={playerSearchList} />
       </div>
     </>
   )

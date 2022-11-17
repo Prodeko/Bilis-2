@@ -12,15 +12,21 @@ import Recents from '@components/Homepage/Recents'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
   leaderboard: HomeLeaderboard
   recentGames: RecentGame[]
-  players: PlayerWithStats[]
+  recentPlayers: PlayerWithStats[]
   randomPlayer: Player
 }
 
-const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer }: Props) => {
+const Home: NextPage<Props> = ({
+  leaderboard,
+  recentGames,
+  recentPlayers,
+  randomPlayer,
+}: Props) => {
   const [gameModalOpen, setGameModalOpen] = useState(false)
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
@@ -28,19 +34,21 @@ const Home: NextPage<Props> = ({ leaderboard, recentGames, players, randomPlayer
   return (
     <HomeLayout>
       <Header randomPlayer={randomPlayer} />
-      <HomeGrid>
-        {gameModalOpen && <AddGame onClose={closeModal} players={players} />}
-        <Leaderboard leaderboard={leaderboard} />
-        <Queue />
-        <AddGameButton onOpen={openModal} />
-        <Recents recentGames={recentGames} />
-      </HomeGrid>
+      <QueueProvider reducer={reducer}>
+        <HomeGrid>
+          {gameModalOpen && <AddGame onClose={closeModal} recentPlayers={recentPlayers} />}
+          <Leaderboard leaderboard={leaderboard} />
+          <Queue />
+          <AddGameButton onOpen={openModal} />
+          <Recents recentGames={recentGames} />
+        </HomeGrid>
+      </QueueProvider>
     </HomeLayout>
   )
 }
 
 export async function getServerSideProps() {
-  const [leaderboard, recentGames, players, randomPlayer] = (
+  const [leaderboard, recentGames, recentPlayers, randomPlayer] = (
     await Promise.all([
       axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
         params: { amount: 50 },
@@ -51,7 +59,7 @@ export async function getServerSideProps() {
     ])
   ).map(result => result.data)
 
-  return { props: { leaderboard, recentGames, players, randomPlayer } }
+  return { props: { leaderboard, recentGames, recentPlayers, randomPlayer } }
 }
 
 export default Home

@@ -1,19 +1,20 @@
-import type { Player } from '@common/types'
+import { useStateValue } from '@state/Queue'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
 
-type ListProps = {
-  playerSearchList: Player[]
-  onChoose: (id: number) => void
-}
+type ListProps = { onChoose: (id: number) => void }
 
-const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
-  if (playerSearchList.length === 0) {
-    return <div className={styles.noplayers}>No players found</div>
+const Queue = ({ onChoose }: ListProps) => {
+  const [state, _dispatch] = useStateValue()
+  const players = state.queue
+
+  if (players.length === 0) {
+    return <div className={styles.noplayers}>No players in queue</div>
   }
+
   return (
     <div className={styles.playerList}>
-      {playerSearchList.map(p => (
+      {players.map(p => (
         <div
           className={styles.playerRow}
           key={p.id}
@@ -32,4 +33,4 @@ const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
   )
 }
 
-export default PlayerList
+export default Queue

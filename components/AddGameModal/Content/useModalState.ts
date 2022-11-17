@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import type { NewGame, PlayerWithStats } from '@common/types'
 
-const useModalState = (players: PlayerWithStats[]) => {
-  const [playerLists, setPlayerLists] = useState<{
+const useModalState = (recentPlayers: PlayerWithStats[]) => {
+  const [playerSearchLists, setPlayerSearchLists] = useState<{
     winner: PlayerWithStats[]
     loser: PlayerWithStats[]
   }>({
-    winner: players,
-    loser: players,
+    winner: recentPlayers,
+    loser: recentPlayers,
   })
 
   const [game, setGame] = useState<Partial<NewGame>>({
@@ -19,18 +19,18 @@ const useModalState = (players: PlayerWithStats[]) => {
   }
 
   const resetPlayers = (side: 'winner' | 'loser') => () => {
-    setPlayerLists(prev => ({ ...prev, [side]: players }))
+    setPlayerSearchLists(prev => ({ ...prev, [side]: recentPlayers }))
   }
 
   const setPlayers = (side: 'winner' | 'loser') => (p: PlayerWithStats[]) => {
-    setPlayerLists(prev => ({
+    setPlayerSearchLists(prev => ({
       ...prev,
       [side]: p,
     }))
   }
 
   return {
-    playerLists,
+    playerSearchLists,
     game,
     setGameField,
     resetPlayers,

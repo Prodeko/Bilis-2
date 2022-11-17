@@ -1,13 +1,8 @@
-import type { PlayerStats, Player } from '@common/types'
+import type { PlayerWithStats } from '@common/types'
 import styles from './SelectedPlayer.module.scss'
 import { round } from 'lodash'
 
-type PlayerWithStats = Player & PlayerStats
-type Props = {
-  player: PlayerWithStats
-}
-
-const TableBody = ({ player }: Props) => {
+const TableBody = ({ player }: { player: PlayerWithStats }) => {
   return (
     <tbody className={styles.body}>
       <tr>
