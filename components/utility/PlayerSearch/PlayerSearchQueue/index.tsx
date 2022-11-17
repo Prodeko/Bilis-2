@@ -13,18 +13,18 @@ import usePlayers from '@hooks/usePlayers'
 
 import styles from './PlayerSearchQueue.module.scss'
 
-interface PlayerSearchLinkProps {
+interface PlayerSearchQueueProps {
   handleSelect: (e: Player) => void
   placeholder?: string
   filterFunction?: (e: Player) => boolean
 }
 
-const PlayerSearchLink = ({
+const PlayerSearchQueue = ({
   placeholder = 'Search for a player',
   handleSelect,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   filterFunction = (_p: Player) => true,
-}: PlayerSearchLinkProps) => {
+}: PlayerSearchQueueProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
   const filteredPlayers = players.filter(filterFunction ?? (() => true))
@@ -64,4 +64,4 @@ const PlayerSearchLink = ({
   )
 }
 
-export default PlayerSearchLink
+export default PlayerSearchQueue
