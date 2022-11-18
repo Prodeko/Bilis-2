@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import ErrorPage from 'next/error'
 import { round } from 'lodash'
 
-import type { Player, PlayerWithStats } from '@common/types'
+import type { Player, PlayerWithStats, TimeSeriesGame } from '@common/types'
 import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileCharts from '@components/Profile/ProfileCharts'
 import ProfileHeader from '@components/Profile/ProfileHeader'
@@ -13,7 +13,12 @@ type ErrorType = {
   error: string
   statusCode: number
 }
-type Props = PlayerWithStats | ErrorType
+
+type GameData = {
+  gameData: TimeSeriesGame[]
+}
+
+type Props = (PlayerWithStats & GameData) | ErrorType
 
 const PlayerPage: NextPage<Props> = (props: Props) => {
   if ('error' in props) {
@@ -32,7 +37,7 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
     wonGames,
     lostGames,
     winPercentage,
-    eloData,
+    gameData,
   } = props
   const player: Player = { id, firstName, lastName, nickname, emoji, motto, elo }
 
@@ -47,7 +52,7 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
           { label: 'Win Percentage', value: `${round(winPercentage, 2).toFixed(2)}%` },
         ]}
       />
-      <ProfileCharts eloData={eloData} currentPlayerId={id} />
+      <ProfileCharts gameData={gameData} currentPlayerId={id} />
     </ProfileLayout>
   )
 }
