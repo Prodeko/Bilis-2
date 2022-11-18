@@ -6,3 +6,57 @@
 
   height: 100%;
 }
+
+%arrow__box {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow__box {
+  @include flex-y($gap: $spacing-4);
+  @extend %text-style-text-md-bold;
+
+  background: $color-gradient-gray-900-800;
+  border: 2px solid $color-base-black;
+  color: $color-primary-50;
+  padding: $spacing-8;
+  position: relative;
+
+  &::after {
+    @extend %arrow__box;
+
+    border-color: rgba(85, 85, 85, 0);
+    border-right-color: #555;
+    border-width: 10px;
+    margin-top: -10px;
+  }
+  
+  &::before {
+    @extend %arrow__box;
+
+    border-color: $color-base-black;
+    border-width: 13px;
+    margin-top: -13px;
+  }
+}
+
+.data__row {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-16;
+}
+
+.positive {
+  color: $color-success-500;
+}
+
+.negative {
+  color: $color-error-500;
+}
+
