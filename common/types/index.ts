@@ -25,7 +25,6 @@ interface PlayerStats {
   lostGames: number
   totalGames: number
   winPercentage: number
-  eloData: number[]
 }
 
 type PlayerWithStats = Player & PlayerStats
@@ -66,6 +65,12 @@ interface GameWithPlayers extends Game {
 
 type NewGame = Omit<Game, 'id'>
 
+interface TimeSeriesGame {
+  currentElo: number
+  opponentName: string
+  eloDiff: number
+}
+
 // Profile types
 interface ProfileStatistic {
   label: string
@@ -87,4 +92,5 @@ export type {
   PlayerStats,
   MutualGames,
   PlayerWithStats,
+  TimeSeriesGame,
 }
