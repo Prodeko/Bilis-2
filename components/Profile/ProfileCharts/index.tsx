@@ -10,13 +10,10 @@ interface Props {
 }
 
 const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
-  // TODO: Change layout to horizontal 2D layout and move titles to chart components.
   return (
     <div className={styles.container}>
-      <h2 className={styles.chartTitle}>Elo Graph</h2>
-      <h2 className={styles.chartTitle}>Player Comparison</h2>
-      {/* <div className={styles.eloGraph}>Elo graph comes here</div> */}
       <div className={styles.chartContainer}>
+        <h2 className={styles.chartTitle}>Elo Graph</h2>
         <TimeSeriesChart
           gameData={gameData}
           dataName="Elo Data"
@@ -24,7 +21,10 @@ const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
           height="100%"
         />
       </div>
-      <PlayerComparison currentPlayerId={currentPlayerId} />
+      <div className={styles.chartContainer}>
+        <h2 className={styles.chartTitle}>Player Comparison</h2>
+        <PlayerComparison currentPlayerId={currentPlayerId} />
+      </div>
     </div>
   )
 }

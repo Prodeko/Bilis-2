@@ -165,7 +165,9 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     },
   }
   return (
-    <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+    <div className={styles.chart}>
+      <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+    </div>
   )
 }
 

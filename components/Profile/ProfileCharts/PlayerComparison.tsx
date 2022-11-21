@@ -4,7 +4,7 @@ import PieChart from '@components/utility/PieChart'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useState } from 'react'
-import styles from './PlayerComparison.module.scss'
+import styles from './ProfileCharts.module.scss'
 import { SingleValue } from 'react-select'
 
 interface PieChartProps {
@@ -38,7 +38,7 @@ const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pieContainer}>
       <PlayerSearchSelect handleClick={handleClick} />
       {pieChartProps && <PieChart {...pieChartProps} />}
     </div>
