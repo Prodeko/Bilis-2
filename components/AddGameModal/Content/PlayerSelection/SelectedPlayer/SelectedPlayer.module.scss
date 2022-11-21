@@ -4,6 +4,7 @@
   @include flex-y($gap: $spacing-40);
   @include size(100%);
 
+  min-width: 0;
   justify-content: center;
 }
 
@@ -54,4 +55,12 @@
     justify-content: space-between;
     width: 100%;
   }
+}
+
+.gauge {
+  font-size: 1rem;
+  max-width: 100%;
+}
+
+.text-group {
 }
