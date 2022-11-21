@@ -52,7 +52,7 @@ const Content = ({ recentPlayers, onClose }: Props) => {
               resetPlayers={resetPlayers('winner')}
             />
           ),
-          [game.winnerId]
+          [game.winnerId, playerSearchLists.winner]
         )}
         <GameCreation
           isActive={isActive}
@@ -70,7 +70,7 @@ const Content = ({ recentPlayers, onClose }: Props) => {
               resetPlayers={resetPlayers('loser')}
             />
           ),
-          [game.loserId]
+          [game.loserId, playerSearchLists.loser]
         )}
       </div>
     </div>
