@@ -15,7 +15,7 @@ const useModalState = (recentPlayers: PlayerWithStats[]) => {
   })
 
   const setGameField = (key: keyof NewGame) => (val: any) => {
-    setGame({ ...game, [key]: val })
+    setGame((g: Partial<NewGame>) => ({ ...g, [key]: val }))
   }
 
   const resetPlayers = (side: 'winner' | 'loser') => () => {
