@@ -19,6 +19,7 @@ const EloMeter = ({ player }: { player: Player }) => {
         cornerRadius={1}
         hideText={true}
         id={`gauge-chart-${player.id}`}
+        needleColor={'#ddd'}
         nrOfLevels={20}
         percent={pointerPosition}
       />
