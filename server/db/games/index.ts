@@ -51,30 +51,22 @@ const getPlayerDetailedGames = async (playerId: number) => {
   const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
 
   const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
-    let currentElo: number
-    let opponentID: number
-    let eloDiff: number
-
-    if (game.winnerId === playerId) {
-      currentElo = game.winnerEloAfter
-      eloDiff = game.winnerEloAfter - game.winnerEloBefore
-      opponentID = game.loserId
-    } else {
-      currentElo = game.loserEloAfter
-      eloDiff = game.loserEloAfter - game.loserEloBefore
-      opponentID = game.winnerId
-    }
+    const isWinner = game.winnerId === playerId
+    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
+    const eloDiff = isWinner
+      ? game.winnerEloAfter - game.winnerEloBefore
+      : game.loserEloAfter - game.loserEloBefore
+    const opponentID = isWinner ? game.winnerId : game.loserId
 
     // Calculate necessary info for the game
-    const opponent = (await getPlayerById(opponentID)) as Player
-    const opponentName = `${opponent.firstName} ${opponent.lastName}`
+    const opponent = await getPlayerById(opponentID)
 
-    return { currentElo, opponentName, eloDiff }
+    return { currentElo, opponent, eloDiff }
   }
 
   const ZEROTH_GAME: TimeSeriesGame = {
     currentElo: DEFAULT_ELO, // Everybody starts from 400 elo
-    opponentName: '',
+    opponent: null,
     eloDiff: 0,
   }
   const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))

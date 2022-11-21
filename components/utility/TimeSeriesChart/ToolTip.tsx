@@ -7,7 +7,11 @@ interface Props {
 }
 
 const Tooltip = ({ gameData, dataPointIndex }: Props) => {
-  const eloDiff = gameData[dataPointIndex].eloDiff
+  const dataPoint = gameData[dataPointIndex]
+  const eloDiff = dataPoint.eloDiff
+  const opponentName = dataPoint?.opponent
+    ? `${dataPoint.opponent.firstName} ${dataPoint.opponent.lastName}`
+    : ''
 
   return (
     <div className={styles.arrow__box}>
@@ -17,11 +21,12 @@ const Tooltip = ({ gameData, dataPointIndex }: Props) => {
       </div>
       <div className={styles.data__row}>
         <span>Opponent: </span>
-        <span>{gameData[dataPointIndex].opponentName}</span>
+        <span>{opponentName}</span>
       </div>
       <div className={styles.data__row}>
         <span>Elo Change: </span>
         <span className={eloDiff >= 0 ? styles.positive : styles.negative}>
+          {/* Add plus if positve */}
           {eloDiff >= 0 && '+'}
           {eloDiff.toFixed(2)}
         </span>

@@ -67,7 +67,7 @@ type NewGame = Omit<Game, 'id'>
 
 interface TimeSeriesGame {
   currentElo: number
-  opponentName: string
+  opponent: Player | null
   eloDiff: number
 }
 
