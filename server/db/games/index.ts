@@ -7,7 +7,7 @@ import type {
   MutualGames,
   TimeSeriesGame,
 } from '@common/types'
-import { DEFAULT_ELO } from '@common/utils/constants'
+import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { Game, Player } from '@server/models'
@@ -64,11 +64,6 @@ const getPlayerDetailedGames = async (playerId: number) => {
     return { currentElo, opponent, eloDiff }
   }
 
-  const ZEROTH_GAME: TimeSeriesGame = {
-    currentElo: DEFAULT_ELO, // Everybody starts from 400 elo
-    opponent: null,
-    eloDiff: 0,
-  }
   const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
   const gameData = [ZEROTH_GAME, ...playedGames]
 
