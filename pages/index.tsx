@@ -8,7 +8,7 @@ import AddGameButton from '@components/Homepage/AddGameButton'
 import Header from '@components/Homepage/Header'
 import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
-import Recents from '@components/Homepage/Recents'
+import Games from '@components/Homepage/Games'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
@@ -40,7 +40,7 @@ const Home: NextPage<Props> = ({
           <Leaderboard leaderboard={leaderboard} />
           <Queue />
           <AddGameButton onOpen={openModal} />
-          <Recents recentGames={recentGames} />
+          <Games games={recentGames} />
         </HomeGrid>
       </QueueProvider>
     </HomeLayout>
