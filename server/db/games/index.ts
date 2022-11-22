@@ -56,15 +56,17 @@ const getPlayerDetailedGames = async (playerId: number) => {
     const eloDiff = isWinner
       ? game.winnerEloAfter - game.winnerEloBefore
       : game.loserEloAfter - game.loserEloBefore
-    const opponentID = isWinner ? game.winnerId : game.loserId
+    const opponentID = game.winnerId === playerId ? game.loserId : game.winnerId
 
     // Calculate necessary info for the game
-    const opponent = await getPlayerById(opponentID)
+    const rawOpponent = await getPlayerById(opponentID)
+    const opponent = rawOpponent?.toJSON()
 
     return { currentElo, opponent, eloDiff }
   }
 
   const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
+  // console.log(playedGames)
   const gameData = [ZEROTH_GAME, ...playedGames]
 
   return gameData
