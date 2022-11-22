@@ -23,10 +23,11 @@ interface Props {
 
 const Home: NextPage<Props> = ({
   leaderboard,
-  recentGames,
+  recentGames: initialGames,
   recentPlayers,
   randomPlayer,
 }: Props) => {
+  const [games, setGames] = useState<RecentGame[]>(initialGames)
   const [gameModalOpen, setGameModalOpen] = useState(false)
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
@@ -36,11 +37,13 @@ const Home: NextPage<Props> = ({
       <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
-          {gameModalOpen && <AddGame onClose={closeModal} recentPlayers={recentPlayers} />}
+          {gameModalOpen && (
+            <AddGame onClose={closeModal} setGames={setGames} recentPlayers={recentPlayers} />
+          )}
           <Leaderboard leaderboard={leaderboard} />
           <Queue />
           <AddGameButton onOpen={openModal} />
-          <Games games={recentGames} />
+          <Games games={games} setGames={setGames} />
         </HomeGrid>
       </QueueProvider>
     </HomeLayout>
