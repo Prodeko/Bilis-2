@@ -6,3 +6,41 @@
 
   height: 100%;
 }
+
+%arrow__box {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow__box {
+  @include flex-y($gap: $spacing-4);
+  @extend %text-style-text-md-bold;
+
+  background: $color-gradient-gray-900-800;
+  padding: $spacing-8;
+  position: relative;
+}
+
+.data__row {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-16;
+}
+
+.positive {
+  color: $color-success-500;
+}
+
+.negative {
+  color: $color-error-500;
+}
+
+.chart {
+  max-height: 100%;
+}

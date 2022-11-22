@@ -1,29 +1,30 @@
 import TimeSeriesChart from '@components/utility/TimeSeriesChart/TimeSeriesChart'
+import { TimeSeriesGame } from '@common/types'
 
 import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'
 
 interface Props {
-  eloData: number[]
+  gameData: TimeSeriesGame[]
   currentPlayerId: number
 }
 
-const ProfileCharts = ({ eloData, currentPlayerId }: Props) => {
-  // TODO: Change layout to horizontal 2D layout and move titles to chart components.
+const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.chartTitle}>Elo Graph</h2>
-      <h2 className={styles.chartTitle}>Player Comparison</h2>
-      {/* <div className={styles.eloGraph}>Elo graph comes here</div> */}
       <div className={styles.chartContainer}>
+        <h2 className={styles.chartTitle}>Elo Graph</h2>
         <TimeSeriesChart
-          data={eloData}
+          gameData={gameData}
           dataName="Elo Data"
           chartTitle="All Time Elo"
           height="100%"
         />
       </div>
-      <PlayerComparison currentPlayerId={currentPlayerId} />
+      <div className={styles.chartContainer}>
+        <h2 className={styles.chartTitle}>Player Comparison</h2>
+        <PlayerComparison currentPlayerId={currentPlayerId} />
+      </div>
     </div>
   )
 }

@@ -1,5 +1,8 @@
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
+import { renderToString } from 'react-dom/server'
+import type { TimeSeriesGame } from '@common/types'
+import Tooltip from './ToolTip'
 
 import styles from './TimeSeriesChart.module.scss'
 
@@ -9,19 +12,20 @@ const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307
 
 type HeightOptions = '100%' | '75%' | '50%'
-
 type Props = {
-  data: number[]
+  gameData: TimeSeriesGame[]
   dataName: string
   chartTitle: string
   height?: HeightOptions
 }
 
-const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
+const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
   const AnyApexCharts = ApexCharts as any // TODO: Temp fix
 
+  const eloData = gameData.map(game => game.currentElo)
+
   // Do not show the graph if data includes only one entry (DEFAULT_ELO)
-  if (data.length <= 1) {
+  if (gameData.length <= 1) {
     return (
       <div className={styles.nodata}>
         <p>No elo data available</p>
@@ -35,7 +39,7 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
   const series: ApexOptions['series'] = [
     {
       name: dataName,
-      data,
+      data: eloData,
     },
   ]
 
@@ -112,18 +116,11 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
     },
 
     // Pops up while hovering over data points and gives info on them
+    // Custom example: https://codepen.io/apexcharts/pen/NBdyvV
+    // Rendering custom tooltips: https://github.com/apexcharts/react-apexcharts/issues/65
     tooltip: {
-      style: {
-        fontSize: '1.6rem',
-      },
-      theme: 'dark',
-      x: {
-        show: true,
-      },
-      y: {
-        formatter: function (val: number) {
-          return val.toFixed(1)
-        },
+      custom: function ({ dataPointIndex }) {
+        return renderToString(<Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />)
       },
     },
 
@@ -168,7 +165,9 @@ const TimeSeriesChart = ({ data, dataName, chartTitle, height }: Props) => {
     },
   }
   return (
-    <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+    <div className={styles.chart}>
+      <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+    </div>
   )
 }
 

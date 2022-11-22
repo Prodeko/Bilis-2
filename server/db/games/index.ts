@@ -1,7 +1,13 @@
 import { Op } from 'sequelize'
 
-import type { GameWithPlayers, NewGame, PlayerStats, MutualGames } from '@common/types'
-import { DEFAULT_ELO } from '@common/utils/constants'
+import type {
+  GameWithPlayers,
+  NewGame,
+  PlayerStats,
+  MutualGames,
+  TimeSeriesGame,
+} from '@common/types'
+import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { Game, Player } from '@server/models'
@@ -21,24 +27,47 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
     },
     order: [['createdAt', 'ASC']],
   })
-  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
 
-  const totalGames = jsonGames.length
-  const wonGames = jsonGames.filter(game => game.winnerId === playerId).length
+  const totalGames = games.length
+  const wonGames = games.filter(game => game.winnerId === playerId).length
   const lostGames = totalGames - wonGames
   const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
-
-  const pickElo = (game: GameWithPlayers) =>
-    game.winnerId === playerId ? game.winnerEloAfter : game.loserEloAfter
-  const eloData = [DEFAULT_ELO, ...jsonGames.map(pickElo)] // Everybody starts from 400 elo
 
   return {
     wonGames,
     lostGames,
     totalGames,
     winPercentage,
-    eloData,
   }
+}
+
+const getPlayerDetailedGames = async (playerId: number) => {
+  const games = await Game.findAll({
+    where: {
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+    order: [['createdAt', 'ASC']],
+  })
+  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
+
+  const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
+    const isWinner = game.winnerId === playerId
+    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
+    const eloDiff = isWinner
+      ? game.winnerEloAfter - game.winnerEloBefore
+      : game.loserEloAfter - game.loserEloBefore
+    const opponentID = isWinner ? game.winnerId : game.loserId
+
+    // Calculate necessary info for the game
+    const opponent = await getPlayerById(opponentID)
+
+    return { currentElo, opponent, eloDiff }
+  }
+
+  const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
+  const gameData = [ZEROTH_GAME, ...playedGames]
+
+  return gameData
 }
 
 const getMutualGamesCount = async (
@@ -170,4 +199,5 @@ export {
   clearGamesDEV,
   getRecentGames,
   getMutualGamesCount,
+  getPlayerDetailedGames,
 }
