@@ -1,4 +1,5 @@
 import type { Player } from '@common/types'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
 
@@ -8,27 +9,31 @@ type ListProps = {
 }
 
 const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
-  if (playerSearchList.length === 0) {
-    return <div className={styles.noplayers}>No players found</div>
-  }
+  const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
+  const hasPlayers = playerSearchList.length > 0
+
   return (
-    <div className={styles.playerList}>
-      {playerSearchList.map(p => (
-        <div
-          className={styles.playerRow}
-          key={p.id}
-          onClick={() => onChoose(p.id)}
-          onKeyDown={() => onChoose(p.id)}
-          tabIndex={0}
-          role="button"
-        >
-          <span>
-            {p.emoji} {p.firstName} {p.lastName}
-          </span>
-          <span>{round(p.elo)}</span>
-        </div>
-      ))}
-    </div>
+    <ul ref={parent} className={styles.playerList}>
+      {hasPlayers ? (
+        playerSearchList.map(p => (
+          <li
+            className={styles.playerRow}
+            key={p.id}
+            onClick={() => onChoose(p.id)}
+            onKeyDown={() => onChoose(p.id)}
+            tabIndex={0}
+            role="button"
+          >
+            <span>
+              {p.emoji} {p.firstName} {p.lastName}
+            </span>
+            <span>{round(p.elo)}</span>
+          </li>
+        ))
+      ) : (
+        <li className={styles.noplayers}>No players found</li>
+      )}
+    </ul>
   )
 }
 
