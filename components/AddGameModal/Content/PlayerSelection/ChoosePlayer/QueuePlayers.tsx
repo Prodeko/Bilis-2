@@ -1,10 +1,12 @@
 import { useStateValue } from '@state/Queue'
 import { round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 type ListProps = { onChoose: (id: number) => void }
 
 const Queue = ({ onChoose }: ListProps) => {
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const [state, _dispatch] = useStateValue()
   const players = state.queue
 
@@ -13,9 +15,10 @@ const Queue = ({ onChoose }: ListProps) => {
   }
 
   return (
-    <div className={styles.playerList}>
+    // Does not work at the moment
+    <ul ref={parent} className={styles.playerList}>
       {players.map(p => (
-        <div
+        <li
           className={styles.playerRow}
           key={p.id}
           onClick={() => onChoose(p.id)}
@@ -27,9 +30,9 @@ const Queue = ({ onChoose }: ListProps) => {
             {p.emoji} {p.firstName} {p.lastName}
           </span>
           <span>{round(p.elo)}</span>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
