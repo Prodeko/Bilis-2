@@ -9,7 +9,7 @@ const Recents = ({ games: initialGames }: { games: RecentGame[] }) => {
   return (
     <Card colspan="2 / 4" rowspan="2 / 3">
       <TitleRow games={games} setGames={setGames} />
-      <Table games={games} />
+      <Table games={games} setGames={setGames} />
     </Card>
   )
 }
