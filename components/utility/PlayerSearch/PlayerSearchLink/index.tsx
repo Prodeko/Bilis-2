@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { Player } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './PlayerSearchLink.module.scss'
 
@@ -27,6 +28,7 @@ const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
 
   const { players, setQuery } = usePlayers(400)
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, handleSelect)
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
@@ -46,7 +48,7 @@ const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
       />
       {/* The following line keeps the borders round, even if the list is not 100% height */}
       <div className={styles.playerWrapper}>
-        <ul className={visible ? styles.results__visible : styles.results}>
+        <ul ref={parent} className={visible ? styles.results__visible : styles.results}>
           {players.length > 0 ? (
             players.map((player, i) => (
               <Link href={getRoute(player.id)} passHref>
