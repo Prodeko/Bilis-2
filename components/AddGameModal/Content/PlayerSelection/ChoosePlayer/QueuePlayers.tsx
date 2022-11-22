@@ -1,7 +1,7 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useStateValue } from '@state/Queue'
 import { filter, round } from 'lodash'
 import styles from './ChoosePlayer.module.scss'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 type ListProps = {
   onChoose: (id: number) => void

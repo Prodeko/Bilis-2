@@ -1,6 +1,8 @@
 @use 'styles' as *;
 
 %card-bg {
+  @include size(100%);
+  
   background: $color-gray-800;
   border-bottom-left-radius: $border-radius-small;
   border-bottom-right-radius: $border-radius-small;
@@ -11,7 +13,6 @@
   @extend %scrollbar;
   @extend %card-bg;
   @include flex-y(null);
-  @include size(100%);
 
   overflow-y: scroll;
 
