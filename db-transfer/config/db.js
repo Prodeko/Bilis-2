@@ -5,14 +5,25 @@ const path = require('path')
 
 envConfig.init()
 
-const { DB_USER, DB_PASSWORD, DB_HOST, OLD_DB_PORT, NEW_DB_PORT, DB_NAME } = process.env
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  OLD_DB_PORT,
+  DB_NAME,
+  PROD_DB_HOST,
+  PROD_DB_PORT,
+  PROD_DB_NAME,
+  PROD_DB_USER,
+  PROD_DB_PASSWORD,
+} = process.env
 
 const oldSequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${OLD_DB_PORT}/${DB_NAME}`
 )
 
 const newSequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${NEW_DB_PORT}/${DB_NAME}`
+  `postgres://${PROD_DB_USER}:${PROD_DB_PASSWORD}@${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}?sslmode=require`
 )
 
 const migrationConf = {
