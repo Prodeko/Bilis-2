@@ -17,8 +17,10 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => v
 
       case 'Enter':
         // eslint-disable-next-line no-case-declarations
-        const e = arr[selectedIdx]
-        enterFunction(e)
+        if (arr.length > 0) {
+          const e = arr[selectedIdx]
+          enterFunction(e)
+        }
         break
 
       default:
