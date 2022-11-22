@@ -99,22 +99,23 @@ const getMutualGamesCount = async (
   }
 }
 
-const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
-  const games = await Game.findAll({
+const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> => {
+  const { rows: games } = await Game.findAndCountAll({
     order: [['createdAt', 'DESC']],
     include: [
       { model: Player, as: 'winner' },
       { model: Player, as: 'loser' },
     ],
     limit: n,
+    offset,
   })
 
   const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
   return jsonGames
 }
 
-const getRecentGames = async (n = 20) => {
-  const recentGames = await getLatestGames(n)
+const getRecentGames = async (n = 20, offset = 0) => {
+  const recentGames = await getLatestGames(n, offset)
 
   return recentGames.map(game => ({
     id: game.id,
