@@ -107,7 +107,7 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> =>
       { model: Player, as: 'loser' },
     ],
     limit: n,
-    offset,
+    offset: offset * n,
   })
 
   const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
