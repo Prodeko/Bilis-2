@@ -41,6 +41,7 @@ const Content = ({ recentPlayers, onClose }: Props) => {
       <div className={styles.card}>
         <PlayerSelection
           playerId={game.winnerId}
+          otherPlayerId={game.loserId}
           playerSearchList={playerSearchLists.winner}
           setGameField={setGameField('winnerId')}
           setPlayers={setPlayers('winner')}
@@ -53,6 +54,7 @@ const Content = ({ recentPlayers, onClose }: Props) => {
         />
         <PlayerSelection
           playerId={game.loserId}
+          otherPlayerId={game.winnerId}
           playerSearchList={playerSearchLists.loser}
           setGameField={setGameField('loserId')}
           setPlayers={setPlayers('loser')}
