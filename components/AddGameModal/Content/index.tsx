@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import type { PlayerWithStats } from '@common/types'
 import PlayerSelection from './PlayerSelection'
 import GameCreation from './GameCreation'
@@ -41,37 +39,25 @@ const Content = ({ recentPlayers, onClose }: Props) => {
     <div className={styles.cardWrapper}>
       <Title title="New Game" />
       <div className={styles.card}>
-        {useMemo(
-          // Prevent extra rerender of elometer animation when game state changes
-          () => (
-            <PlayerSelection
-              playerId={game.winnerId}
-              playerSearchList={playerSearchLists.winner}
-              setGameField={setGameField('winnerId')}
-              setPlayers={setPlayers('winner')}
-              resetPlayers={resetPlayers('winner')}
-            />
-          ),
-          [game.winnerId, playerSearchLists.winner]
-        )}
+        <PlayerSelection
+          playerId={game.winnerId}
+          playerSearchList={playerSearchLists.winner}
+          setGameField={setGameField('winnerId')}
+          setPlayers={setPlayers('winner')}
+          resetPlayers={resetPlayers('winner')}
+        />
         <GameCreation
           isActive={isActive}
           onSubmit={onSubmit}
           setGameField={setGameField('underTable')}
         />
-        {useMemo(
-          // Prevent extra rerender of elometer animation when game state changes
-          () => (
-            <PlayerSelection
-              playerId={game.loserId}
-              playerSearchList={playerSearchLists.loser}
-              setGameField={setGameField('loserId')}
-              setPlayers={setPlayers('loser')}
-              resetPlayers={resetPlayers('loser')}
-            />
-          ),
-          [game.loserId, playerSearchLists.loser]
-        )}
+        <PlayerSelection
+          playerId={game.loserId}
+          playerSearchList={playerSearchLists.loser}
+          setGameField={setGameField('loserId')}
+          setPlayers={setPlayers('loser')}
+          resetPlayers={resetPlayers('loser')}
+        />
       </div>
     </div>
   )

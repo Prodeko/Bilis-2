@@ -2,6 +2,7 @@ import type { Player } from '@common/types'
 import GaugeChart from 'react-gauge-chart'
 import styles from './SelectedPlayer.module.scss'
 import { round } from 'lodash'
+import { memo } from 'react'
 
 // API: https://github.com/Martin36/react-gauge-chart
 
@@ -30,4 +31,4 @@ const EloMeter = ({ player }: { player: Player }) => {
   )
 }
 
-export default EloMeter
+export default memo(EloMeter)
