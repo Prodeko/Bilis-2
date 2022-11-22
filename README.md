@@ -18,6 +18,11 @@ Rebuildaus onnistuu painamalla F1 ja valitsemalla Rebuild container.
 
 Sovellus käynnistyy porttiin 3000. Siirry siis selaimella [http://localhost:3000](http://localhost:3000).
 
+### Git devikontissa
+
+Jos git valittaa puuttuvasta avaimesta, laita .env tiedostoon SSH_KEY_PATH, jossa määrittelet polun hostikoneella sijaitsevan ssh avaimeen.
+
+
 ## Muut komennot
 
 #### `yarn dev:migrate:create`
