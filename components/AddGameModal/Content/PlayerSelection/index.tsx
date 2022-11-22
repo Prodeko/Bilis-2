@@ -6,6 +6,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 interface Props {
   playerId: number | undefined
+  otherPlayerId: number | undefined
   playerSearchList: PlayerWithStats[]
   setGameField: (val: any) => void
   resetPlayers: () => void
@@ -14,6 +15,7 @@ interface Props {
 
 const PlayerSelection = ({
   playerId,
+  otherPlayerId,
   playerSearchList,
   setGameField,
   resetPlayers,
@@ -28,6 +30,7 @@ const PlayerSelection = ({
       ) : (
         <ChoosePlayer
           onChoose={setGameField}
+          filterId={otherPlayerId}
           playerSearchList={playerSearchList}
           closeSearch={resetPlayers}
           setPlayers={setPlayers}

@@ -8,16 +8,23 @@ import QueueTitle from './QueueTitle'
 type PlayerProps = {
   onChoose: (id: number) => void
   setPlayers: (arg: PlayerWithStats[]) => void
+  filterId: number | undefined
   playerSearchList: PlayerWithStats[]
   closeSearch: () => void
 }
 
-const ChoosePlayer = ({ onChoose, setPlayers, closeSearch, playerSearchList }: PlayerProps) => {
+const ChoosePlayer = ({
+  onChoose,
+  filterId,
+  setPlayers,
+  closeSearch,
+  playerSearchList,
+}: PlayerProps) => {
   return (
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers onChoose={onChoose} />
+        <QueuePlayers filterId={filterId} onChoose={onChoose} />
       </div>
       <div className={styles.searchCard}>
         <PlayerSearch closeSearch={closeSearch} setPlayers={setPlayers} />
