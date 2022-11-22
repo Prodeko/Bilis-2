@@ -3,11 +3,11 @@ import styles from './Table.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'
 
-const Table = ({ recentGames }: { recentGames: RecentGame[] }) => {
+const Table = ({ games }: { games: RecentGame[] }) => {
   return (
     <table className={styles.table}>
       <TableHead />
-      <TableBody recentGames={recentGames} />
+      <TableBody games={games} />
     </table>
   )
 }

@@ -6,10 +6,12 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { ChangeEventHandler, useState } from 'react'
+import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './PlayerSearchQueue.module.scss'
 
@@ -29,6 +31,7 @@ const PlayerSearchQueue = ({
   const { players, setQuery } = usePlayers(400)
   const filteredPlayers = players.filter(filterFunction ?? (() => true))
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
@@ -38,28 +41,33 @@ const PlayerSearchQueue = ({
 
   return (
     <div className={styles.container}>
-      <input
-        className={styles.search}
-        placeholder={placeholder}
-        onClick={() => setIsVisible(true)}
-        onKeyDown={handleKeyPress}
-        onChange={handleChange}
-        onBlur={() => setIsVisible(false)}
-      />
-      {isVisible && (
-        <ul className={styles.results}>
-          {filteredPlayers.map((player, i) => (
-            <li
-              key={player.id}
-              className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
-              onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
-              onClick={() => handleSelect(filteredPlayers[i])}
-            >
-              {`${player.firstName} ${player.lastName}`}
-            </li>
-          ))}
-        </ul>
-      )}
+      <label htmlFor="queue" className={isVisible ? styles.search__visible : styles.search}>
+        <input
+          className={styles.input}
+          id="queue"
+          placeholder={placeholder}
+          onClick={() => setIsVisible(true)}
+          onKeyDown={handleKeyPress}
+          onChange={handleChange}
+        />
+        <button
+          className={isVisible ? styles.button__visible : styles.button}
+          onClick={() => setIsVisible(false)}
+        >
+          <FiX />
+        </button>
+      </label>
+      <ul ref={parent} className={isVisible ? styles.results__visible : styles.results}>
+        {filteredPlayers.map((player, i) => (
+          <li
+            key={player.id}
+            className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
+            onClick={() => handleSelect(filteredPlayers[i])}
+          >
+            {`${player.firstName} ${player.lastName}`}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

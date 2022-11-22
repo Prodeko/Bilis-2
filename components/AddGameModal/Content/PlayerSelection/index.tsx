@@ -2,6 +2,7 @@ import type { PlayerWithStats } from '@common/types'
 import SelectedPlayer from './SelectedPlayer'
 import ChoosePlayer from './ChoosePlayer'
 import styles from './PlayerSelection.module.scss'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 interface Props {
   playerId: number | undefined
@@ -18,8 +19,10 @@ const PlayerSelection = ({
   resetPlayers,
   setPlayers,
 }: Props) => {
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 500 })
+
   return (
-    <div className={playerId ? styles.cardColumn__selected : styles.cardColumn}>
+    <div ref={parent} className={playerId ? styles.cardColumn__selected : styles.cardColumn}>
       {playerId ? (
         <SelectedPlayer playerId={playerId} onClear={() => setGameField(undefined)} />
       ) : (

@@ -1,5 +1,34 @@
 @use 'styles' as *;
 
+%results {
+  @extend %scrollbar;
+  @include flex-y(null);
+
+  background: $color-base-white;
+  border-radius: $border-radius-small;
+  transition: all 0.5s;
+}
+
+%button {
+  @include size($spacing-24);
+  @extend %flex-center;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+%search {
+  @include flex-x($spacing-16);
+
+  background-color: $color-base-white;
+  border-radius: $border-radius-small;
+  justify-content: space-between;
+  padding: $spacing-12;
+  width: 100%;
+}
+
 .container {
   @include flex-y($spacing-8);
 
@@ -7,19 +36,54 @@
 }
 
 .search {
-  background-color: $color-base-white;
-  border: $color-primary-300;
-  border-radius: $border-radius-small;
-  padding: $spacing-12;
+  @extend %search;
+
+  cursor: pointer;
+
+  &__visible {
+    @extend %search;
+    
+    cursor: auto;
+  }
+}
+
+.input {
+  border: none;
   width: 100%;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    cursor: auto;
+  }
+}
+
+.button {
+  @extend %button;
+
+  scale: 0;
+
+  &__visible {
+    @extend %button;
+
+    scale: 1;
+
+    &:hover {
+      scale: 1.5;
+    }
+  }
 }
 
 .results {
-  @extend %scrollbar;
+  @extend %results;
+  
+  max-height: 0;
+  
+  &__visible {
+    @extend %results;
 
-  background: $color-base-white;
-  border-radius: $border-radius-small;
-  max-height: $spacing-256;
+    max-height: $spacing-256;
+  }
 }
 
 .player {
