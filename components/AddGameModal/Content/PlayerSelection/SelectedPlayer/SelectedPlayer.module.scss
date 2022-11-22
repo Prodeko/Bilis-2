@@ -1,9 +1,16 @@
 @use 'styles' as *;
 
+%number {
+  color: $color-gray-50;
+  bottom: 4rem;
+  position: absolute;
+}
+
 .chosenPlayer {
   @include flex-y($gap: $spacing-40);
   @include size(100%);
 
+  min-width: 0;
   justify-content: center;
 }
 
@@ -54,4 +61,32 @@
     justify-content: space-between;
     width: 100%;
   }
+}
+
+.gauge {
+  max-width: 100%;
+  position: relative;
+}
+
+.minelo {
+  @extend %text-style-text-lg-semibold;
+  @extend %number;
+
+  right: 95%;
+}
+
+.maxelo {
+  @extend %text-style-text-lg-semibold;
+  @extend %number;
+
+  left: 95%;
+}
+
+.currentelo {
+  @extend %text-style-display-sm-semibold;
+  @extend %number;
+
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
 }

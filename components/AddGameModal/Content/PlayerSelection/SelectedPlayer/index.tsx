@@ -3,6 +3,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styles from './SelectedPlayer.module.scss'
+import EloMeter from './EloMeter'
 import TableBody from './TableBody'
 import TableHead from './TableHead'
 
@@ -27,6 +28,7 @@ const SelectedPlayer = ({ playerId, onClear }: Props) => {
   return (
     <table className={styles.chosenPlayer}>
       <TableHead player={player} onClear={onClear} />
+      <EloMeter player={player} />
       <TableBody player={player} />
     </table>
   )
