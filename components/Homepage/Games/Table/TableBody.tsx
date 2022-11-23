@@ -12,6 +12,7 @@ interface Props {
 }
 
 const TableBody = ({ games, setGames }: Props) => {
+  const [parent, enableAnimations] = useAutoAnimate<HTMLTableSectionElement>({ duration: 200 })
   const [page, setPage] = useState(1)
   const loader = useRef(null)
 
@@ -23,7 +24,9 @@ const TableBody = ({ games, setGames }: Props) => {
         },
       })
       .then(res => {
+        enableAnimations(false)
         setGames(prev => [...new Set([...prev, ...res.data])])
+        setTimeout(() => enableAnimations(true), 100)
       })
   }, [page])
 
@@ -37,7 +40,7 @@ const TableBody = ({ games, setGames }: Props) => {
   useEffect(() => {
     const option = {
       root: document.querySelector('#games'),
-      rootMargin: '40px',
+      rootMargin: '50%',
       threshold: 0,
     }
     const observer = new IntersectionObserver(handleObserver, option)
@@ -45,11 +48,11 @@ const TableBody = ({ games, setGames }: Props) => {
   }, [handleObserver])
 
   return (
-    <tbody id="games" className={styles.tablebody}>
+    <tbody ref={parent} id="games" className={styles.tablebody}>
       {games.map(game => {
         return <GamesRow key={game.id} game={game} />
       })}
-      <div ref={loader} />
+      <tr ref={loader} />
     </tbody>
   )
 }

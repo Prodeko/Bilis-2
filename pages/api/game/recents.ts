@@ -7,8 +7,8 @@ import { isString, isUndefined } from 'lodash'
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RecentGame[]>) {
   if (isString(req.query.offset)) {
     const offset = parseInt(req.query.offset)
-    res.status(200).json(await getRecentGames(10, offset))
+    res.status(200).json(await getRecentGames(20, offset))
   } else {
-    res.status(200).json(await getRecentGames(10))
+    res.status(200).json(await getRecentGames(20))
   }
 }
