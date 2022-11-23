@@ -1,7 +1,7 @@
 @use 'styles' as *;
 
 %resultContainer {
-  @extend %scrollbar;
+  @include scrollbar(false);
 
   background: $color-base-white;
   border-radius: $border-radius-small;

@@ -15,7 +15,7 @@
 }
 
 .tablebody {
-  @extend %scrollbar;
+  @include scrollbar(true);
 
   display: flex;
   flex-direction: column;
