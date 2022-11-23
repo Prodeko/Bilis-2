@@ -1,4 +1,4 @@
-import type { PlayerWithStats } from '@common/types'
+import type { PlayerWithStats, RecentGame } from '@common/types'
 import PlayerSelection from './PlayerSelection'
 import GameCreation from './GameCreation'
 import Title from './Title'
@@ -7,13 +7,15 @@ import useModalState from './useModalState'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { useStateValue, removeFromQueue } from '@state/Queue'
+import { Dispatch, SetStateAction } from 'react'
 
 type Props = {
   recentPlayers: PlayerWithStats[]
   onClose: () => void
+  setGames: Dispatch<SetStateAction<RecentGame[]>>
 }
 
-const Content = ({ recentPlayers, onClose }: Props) => {
+const Content = ({ recentPlayers, onClose, setGames }: Props) => {
   const { playerSearchLists, game, setGameField, resetPlayers, setPlayers } =
     useModalState(recentPlayers)
   const [, dispatch] = useStateValue()
@@ -30,6 +32,7 @@ const Content = ({ recentPlayers, onClose }: Props) => {
     const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
     dispatch(removeFromQueue(game.winnerId ?? 0))
     dispatch(removeFromQueue(game.loserId ?? 0))
+    setGames(prev => [res.data, ...prev])
     console.log(res.data)
     onClose()
     // TODO show success msg

@@ -6,6 +6,7 @@ import type {
   PlayerStats,
   MutualGames,
   TimeSeriesGame,
+  RecentGame,
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
@@ -99,36 +100,39 @@ const getMutualGamesCount = async (
   }
 }
 
-const getLatestGames = async (n = 20): Promise<GameWithPlayers[]> => {
-  const games = await Game.findAll({
+const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> => {
+  const { rows: games } = await Game.findAndCountAll({
     order: [['createdAt', 'DESC']],
     include: [
       { model: Player, as: 'winner' },
       { model: Player, as: 'loser' },
     ],
     limit: n,
+    offset: offset * n,
   })
 
   const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
   return jsonGames
 }
 
-const getRecentGames = async (n = 20) => {
-  const recentGames = await getLatestGames(n)
+const getRecentGames = async (n = 20, offset = 0) => {
+  const recentGames = await getLatestGames(n, offset)
 
-  return recentGames.map(game => ({
-    id: game.id,
-    time: new Date(game.createdAt).toLocaleDateString('fi-FI', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }),
-    winner: `${game.winner.firstName} ${game.winner.lastName}`,
-    winnerEloChange: `${Math.round(game.winnerEloBefore)} » ${Math.round(game.winnerEloAfter)}`,
-    loser: `${game.loser.firstName} ${game.loser.lastName}`,
-    loserEloChange: `${Math.round(game.loserEloBefore)} » ${Math.round(game.loserEloAfter)}`,
-  }))
+  return recentGames.map(formatRecentGame)
 }
+
+const formatRecentGame = (game: GameWithPlayers): RecentGame => ({
+  id: game.id,
+  time: new Date(game.createdAt).toLocaleDateString('fi-FI', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  }),
+  winner: `${game.winner.firstName} ${game.winner.lastName}`,
+  winnerEloChange: `${Math.round(game.winnerEloBefore)} » ${Math.round(game.winnerEloAfter)}`,
+  loser: `${game.loser.firstName} ${game.loser.lastName}`,
+  loserEloChange: `${Math.round(game.loserEloBefore)} » ${Math.round(game.loserEloAfter)}`,
+})
 
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
 
@@ -150,18 +154,29 @@ const createGame = async (game: CreateGameType) => {
   )
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
-  const createdGame = await Game.create({
-    ...game,
-    winnerEloAfter,
-    loserEloAfter,
-    winnerEloBefore: winner.elo,
-    loserEloBefore: loser.elo,
-  })
+  const createdGame: GameWithPlayers = (
+    await Game.create(
+      {
+        ...game,
+        winnerEloAfter,
+        loserEloAfter,
+        winnerEloBefore: winner.elo,
+        loserEloBefore: loser.elo,
+      },
+      {
+        include: [
+          { model: Player, as: 'winner' },
+          { model: Player, as: 'loser' },
+        ],
+      }
+    )
+  ).toJSON() as GameWithPlayers
+
   await Promise.all([
     updatePlayerById(winner.id, { elo: winnerEloAfter }),
     updatePlayerById(loser.id, { elo: loserEloAfter }),
   ])
-  return createdGame
+  return formatRecentGame(createdGame)
 }
 
 const removeLatestGame = async () => {

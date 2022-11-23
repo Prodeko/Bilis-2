@@ -28,7 +28,10 @@ const ChoosePlayer = ({
       </div>
       <div className={styles.searchCard}>
         <PlayerSearch closeSearch={closeSearch} setPlayers={setPlayers} />
-        <PlayerList onChoose={onChoose} playerSearchList={playerSearchList} />
+        <PlayerList
+          onChoose={onChoose}
+          playerSearchList={playerSearchList.filter(p => p.id !== filterId)}
+        />
       </div>
     </>
   )
