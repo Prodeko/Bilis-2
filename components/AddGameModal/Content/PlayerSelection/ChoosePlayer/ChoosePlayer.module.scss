@@ -10,7 +10,7 @@
 }
 
 .playerList {
-  @extend %scrollbar;
+  @include scrollbar(true);
   @extend %card-bg;
   @include flex-y(null);
 

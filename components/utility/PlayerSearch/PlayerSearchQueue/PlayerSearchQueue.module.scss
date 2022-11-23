@@ -1,7 +1,7 @@
 @use 'styles' as *;
 
 %results {
-  @extend %scrollbar;
+  @include scrollbar(false);
   @include flex-y(null);
 
   background: $color-base-white;

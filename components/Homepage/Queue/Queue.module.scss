@@ -23,7 +23,7 @@
 
 
 .list {
-  @extend %scrollbar;
+  @include scrollbar(true);
 
   color: $color-gray-200;
   display: flex;
