@@ -58,7 +58,11 @@ const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
                   onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
                   onClick={() => handleSelect(players[i])}
                 >
-                  <a>{`${player.firstName} ${player.lastName}`}</a>
+                  <a className={styles.playerInfo}>
+                    <span>#{player.id}</span>
+                    <span>{`${player.firstName} "${player.nickname}" ${player.lastName}`}</span>
+                    <span>{Math.floor(player.elo)}</span>
+                  </a>
                 </li>
               </Link>
             ))

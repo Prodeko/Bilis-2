@@ -64,7 +64,7 @@ const PlayerSearchQueue = ({
             className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
             onClick={() => handleSelect(filteredPlayers[i])}
           >
-            {`${player.firstName} ${player.lastName}`}
+            {`#${player.id} ${player.firstName} "${player.nickname}" ${player.lastName}`}
           </li>
         ))}
       </ul>
