@@ -84,14 +84,29 @@ const searchPlayers = async (
   query: string,
   stats: boolean = false
 ): Promise<Player[] | PlayerWithStats[]> => {
-  const fullName = Sequelize.where(
-    Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
-    {
+  const options = [
+    Sequelize.where(
+      Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
+      {
+        [Op.iLike]: `%${query}%`,
+      }
+    ),
+    Sequelize.where(
+      Sequelize.fn('concat', Sequelize.col('last_name'), ' ', Sequelize.col('first_name')),
+      {
+        [Op.iLike]: `%${query}%`,
+      }
+    ),
+    Sequelize.where(Sequelize.col('nickname'), {
       [Op.iLike]: `%${query}%`,
-    }
-  )
+    }),
+    Sequelize.where(Sequelize.cast(Sequelize.col('id'), 'varchar'), {
+      [Op.iLike]: `%${query}%`,
+    }),
+  ]
+
   const players = await Player.findAll({
-    where: fullName,
+    where: { [Op.or]: options },
   })
   const jsonPlayers = players.map(p => p.toJSON())
 
