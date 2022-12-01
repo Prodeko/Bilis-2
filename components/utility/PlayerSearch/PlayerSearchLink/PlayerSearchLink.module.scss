@@ -44,7 +44,7 @@
 }
 
 .player {
-  @extend %text-style-text-md-normal;
+  @extend %text-style-text-lg-normal;
 
   cursor: pointer;
   padding: $spacing-8;
@@ -54,6 +54,16 @@
 .player:hover, .selected {
   background: $color-gray-300;
 }
+
+.playerInfo {
+  @include grid-cols(3);
+
+  &>*:last-child {
+    text-align: right;
+  }
+
+}
+
 
 .noplayers {
   @extend %flex-center;
