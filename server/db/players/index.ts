@@ -5,6 +5,7 @@ import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { Player } from '@server/models'
 import dbConf from '@server/utils/dbConf'
+import { Col } from 'sequelize/types/utils'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -84,26 +85,26 @@ const searchPlayers = async (
   query: string,
   stats: boolean = false
 ): Promise<Player[] | PlayerWithStats[]> => {
-  const options = [
-    Sequelize.where(
-      Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
-      {
-        [Op.iLike]: `%${query}%`,
-      }
-    ),
-    Sequelize.where(
-      Sequelize.fn('concat', Sequelize.col('last_name'), ' ', Sequelize.col('first_name')),
-      {
-        [Op.iLike]: `%${query}%`,
-      }
-    ),
-    Sequelize.where(Sequelize.col('nickname'), {
-      [Op.iLike]: `%${query}%`,
-    }),
-    Sequelize.where(Sequelize.cast(Sequelize.col('id'), 'varchar'), {
-      [Op.iLike]: `%${query}%`,
-    }),
+  const col_options = [
+    ['first_name', 'last_name', 'nickname'],
+    ['first_name', 'nickname', 'last_name'],
+    ['last_name', 'first_name', 'nickname'],
+    ['last_name', 'nickname', 'first_name'],
+    ['nickname', 'first_name', 'last_name'],
+    ['nickname', 'last_name', 'first_name'],
+    ['id'],
   ]
+  const options = col_options.map(opt =>
+    Sequelize.where(
+      Sequelize.fn(
+        'concat',
+        ...opt.reduce<(string | Col)[]>((prev, col) => [...prev, Sequelize.col(col), ' '], [])
+      ),
+      {
+        [Op.iLike]: `%${query}%`,
+      }
+    )
+  )
 
   const players = await Player.findAll({
     where: { [Op.or]: options },
