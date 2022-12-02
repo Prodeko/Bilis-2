@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const includeStats = req.query.stats === 'true'
 
     if (isString(query)) {
-      const players = await searchPlayers(query, includeStats)
+      const players = await searchPlayers(query, includeStats, 20)
       res.status(200).json(players)
     } else {
       res.status(400).json({ error: 'ID must be type of string' })
