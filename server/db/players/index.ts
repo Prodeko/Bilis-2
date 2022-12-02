@@ -5,6 +5,8 @@ import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { Player } from '@server/models'
 import dbConf from '@server/utils/dbConf'
+import type { Col } from 'sequelize/types/utils'
+import { permutator } from '@common/utils/helperFunctions'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -82,16 +84,21 @@ const getLatestPlayers = async (n = 20) => {
 
 const searchPlayers = async (
   query: string,
-  stats: boolean = false
+  stats: boolean = false,
+  limit = undefined
 ): Promise<Player[] | PlayerWithStats[]> => {
-  const fullName = Sequelize.where(
-    Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
-    {
-      [Op.iLike]: `%${query}%`,
-    }
-  )
+  const colOptions = ['first_name', 'last_name', 'nickname', 'id']
+  const permutations = permutator(colOptions)
+
+  const options = permutations.map(perm => {
+    return Sequelize.where(Sequelize.fn('concat', ...perm.map(col => Sequelize.col(col))), {
+      [Op.iLike]: `%${query.replaceAll(' ', '%')}%`,
+    })
+  })
+
   const players = await Player.findAll({
-    where: fullName,
+    where: { [Op.or]: options },
+    limit: limit,
   })
   const jsonPlayers = players.map(p => p.toJSON())
 
