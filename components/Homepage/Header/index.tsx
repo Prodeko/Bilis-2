@@ -20,7 +20,7 @@ const Header = ({ randomPlayer }: Props) => {
   const [switching, setSwitching] = useState<boolean>(false)
 
   const getRandomPlayer = async () => {
-    const result = await axios.get(`${NEXT_PUBLIC_API_URL}/player/random`)
+    const result = await axios.get(`/api/player/random`)
     return result.data as Player
   }
 

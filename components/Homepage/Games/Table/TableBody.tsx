@@ -18,7 +18,7 @@ const TableBody = ({ games, setGames }: Props) => {
 
   useEffect(() => {
     axios
-      .get(`${NEXT_PUBLIC_API_URL}/game/recents`, {
+      .get(`/api/game/recents`, {
         params: {
           offset: page,
         },

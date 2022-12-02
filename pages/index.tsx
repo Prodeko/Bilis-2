@@ -53,12 +53,12 @@ const Home: NextPage<Props> = ({
 export async function getServerSideProps() {
   const [leaderboard, recentGames, recentPlayers, randomPlayer] = (
     await Promise.all([
-      axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
+      axios.get(`/api/leaderboard`, {
         params: { amount: 50 },
       }),
-      axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
-      axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
-      axios.get(`${NEXT_PUBLIC_API_URL}/player/random`),
+      axios.get(`/api/game/recents`),
+      axios.get(`/api/player/latest`),
+      axios.get(`/api/player/random`),
     ])
   ).map(result => result.data)
 

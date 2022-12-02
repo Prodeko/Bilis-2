@@ -24,7 +24,7 @@ const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
   const handleClick = async (newValue: SingleValue<OptionType>) => {
     if (newValue?.value) {
       try {
-        const response = await axios.get(`${NEXT_PUBLIC_API_URL}/player/mutual-stats`, {
+        const response = await axios.get(`/api/player/mutual-stats`, {
           params: { id1: currentPlayerId, id2: newValue.value },
         })
         const data = response.data as PieChartProps

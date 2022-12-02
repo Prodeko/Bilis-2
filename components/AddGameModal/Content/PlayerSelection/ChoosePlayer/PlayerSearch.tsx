@@ -19,7 +19,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
 
   useEffect(() => {
     const search = async (q: string) => {
-      const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+      const res = await axios.get(`/api/player`, {
         params: { query: q, stats: true },
       })
       setPlayers(res.data)

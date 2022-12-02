@@ -58,7 +58,7 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const res = await fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
+  const res = await fetch(`/api/player/${context.query.id}`)
   const profileData = await res.json()
 
   if (profileData.body?.error) {
