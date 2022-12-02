@@ -5,7 +5,8 @@ import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { Player } from '@server/models'
 import dbConf from '@server/utils/dbConf'
-import { Col } from 'sequelize/types/utils'
+import type { Col } from 'sequelize/types/utils'
+import { permutator } from '@common/utils/helperFunctions'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation
@@ -85,26 +86,14 @@ const searchPlayers = async (
   query: string,
   stats: boolean = false
 ): Promise<Player[] | PlayerWithStats[]> => {
-  const col_options = [
-    ['first_name', 'last_name', 'nickname'],
-    ['first_name', 'nickname', 'last_name'],
-    ['last_name', 'first_name', 'nickname'],
-    ['last_name', 'nickname', 'first_name'],
-    ['nickname', 'first_name', 'last_name'],
-    ['nickname', 'last_name', 'first_name'],
-    ['id'],
-  ]
-  const options = col_options.map(opt =>
-    Sequelize.where(
-      Sequelize.fn(
-        'concat',
-        ...opt.reduce<(string | Col)[]>((prev, col) => [...prev, Sequelize.col(col), ' '], [])
-      ),
-      {
-        [Op.iLike]: `%${query}%`,
-      }
-    )
-  )
+  const colOptions = ['first_name', 'last_name', 'nickname', 'id']
+  const permutations = permutator(colOptions)
+
+  const options = permutations.map(perm => {
+    return Sequelize.where(Sequelize.fn('concat', ...perm.map(col => Sequelize.col(col))), {
+      [Op.iLike]: `%${query.replaceAll(' ', '%')}%`,
+    })
+  })
 
   const players = await Player.findAll({
     where: { [Op.or]: options },
