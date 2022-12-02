@@ -14,9 +14,10 @@
 .removeButton {
   @extend %text-style-display-xs-semibold;
 
+  background-color: $color-error-500;
   border-radius: $border-radius-small;
-  color: $color-primary-700;
   border: none;
+  color: $color-primary-25;
   cursor: pointer;
   padding: $spacing-8 $spacing-16;
 
@@ -24,6 +25,5 @@
 }
 
 .removeButton:hover {
-  background-color: $color-error-300;
-  color: $color-primary-25;
+  background-color: $color-error-600;
 }
