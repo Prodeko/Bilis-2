@@ -21,7 +21,7 @@ const Header = ({ randomPlayer }: Props) => {
   const [switching, setSwitching] = useState<boolean>(false)
 
   const setRandomPlayer = async () => {
-    const result = await axios.get(`${NEXT_PUBLIC_API_URL}/player/random`)
+    const result = await axios.get(`api/player/random`)
     const player = result.data as Player
     setUpcomingPlayer(player)
   }
@@ -37,7 +37,7 @@ const Header = ({ randomPlayer }: Props) => {
 
   // Switch the motto while pushing the motto card into the side of the page
   useEffect(() => {
-    const switchMotto = async () => {
+    const switchMotto = () => {
       setTimeout(() => setSwitching(false), 2000)
       setSwitching(true)
       if (upcomingPlayer) setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)

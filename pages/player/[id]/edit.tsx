@@ -18,7 +18,7 @@ const editPlayer = ({ player }: { player: Player }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const playerId = params?.id
-  const res = await axios.get(`${NEXT_PUBLIC_API_URL}/player/${playerId}`)
+  const res = await axios.get(`/api/player/${playerId}`)
 
   return { props: { player: res.data } }
 }

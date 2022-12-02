@@ -29,7 +29,7 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
       return
     }
 
-    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/game`, game)
+    const res = await axios.post(`/api/game`, game)
     dispatch(removeFromQueue(game.winnerId ?? 0))
     dispatch(removeFromQueue(game.loserId ?? 0))
     setGames(prev => [res.data, ...prev])

@@ -12,7 +12,7 @@ const usePlayers = (delayMs: number) => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(`${NEXT_PUBLIC_API_URL}/player`, {
+        const result = await axios.get(`/api/player`, {
           params: { query },
         })
         setPlayers(result.data as Player[])
