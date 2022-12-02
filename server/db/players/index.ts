@@ -84,7 +84,8 @@ const getLatestPlayers = async (n = 20) => {
 
 const searchPlayers = async (
   query: string,
-  stats: boolean = false
+  stats: boolean = false,
+  limit = undefined
 ): Promise<Player[] | PlayerWithStats[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']
   const permutations = permutator(colOptions)
@@ -97,6 +98,7 @@ const searchPlayers = async (
 
   const players = await Player.findAll({
     where: { [Op.or]: options },
+    limit: limit,
   })
   const jsonPlayers = players.map(p => p.toJSON())
 
