@@ -2,10 +2,10 @@ import path from 'path'
 import { Sequelize } from 'sequelize'
 import { SequelizeStorage, Umzug } from 'umzug'
 
-const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD } = process.env
+const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT } = process.env
 
 const sequelize = new Sequelize(
-  `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}`
+  `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=require`
 )
 
 const umzug = new Umzug({

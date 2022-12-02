@@ -1,2 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-export const { NEXT_PUBLIC_API_URL } = process.env
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
+
+export { NEXT_PUBLIC_API_URL }
