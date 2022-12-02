@@ -22,14 +22,19 @@
   @include padding-y($padding: $spacing-4);
   @include padding-x($padding: $spacing-8);
   
-  background: $color-error-600;
+  background: $color-error-500;
   border: none;
   color: $color-base-white;
   cursor: pointer;
   justify-self: right;
   scale: 0;
   text-transform: uppercase;
+  transition: all 0.3s;
   width: fit-content; // will be set to inline-block on hover
+
+  &:hover {
+    background-color: $color-error-600;
+  }
 }
 
 .container:hover > .removeBtn {
