@@ -85,7 +85,7 @@ const getLatestPlayers = async (n = 20) => {
 const searchPlayers = async (
   query: string,
   stats: boolean = false,
-  limit = undefined
+  limit?: number
 ): Promise<Player[] | PlayerWithStats[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']
   const permutations = permutator(colOptions)
