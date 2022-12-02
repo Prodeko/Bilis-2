@@ -26,13 +26,13 @@ const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
   const getRoute = (id: number) => `player/${id}`
   const handleSelect = ({ id }: Player) => Router.push(getRoute(id))
 
-  const { players, setQuery } = usePlayers(200)
+  const { players, setQuery } = usePlayers(300)
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, handleSelect)
-  const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
+  const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 300 })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     enableAnimations(false)
-    setTimeout(() => enableAnimations(true), 400)
+    setTimeout(() => enableAnimations(true), 300)
     setQuery(e.target.value)
     onClick()
     setSelectedIdx(0)
