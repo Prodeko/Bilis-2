@@ -56,9 +56,9 @@ export async function getServerSideProps() {
       axios.get(`/api/leaderboard`, {
         params: { amount: 50 },
       }),
-      axios.get(`/api/game/recents`),
-      axios.get(`/api/player/latest`),
-      axios.get(`/api/player/random`),
+      axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
+      axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
+      axios.get(`${NEXT_PUBLIC_API_URL}/player/random`),
     ])
   ).map(result => result.data)
 
