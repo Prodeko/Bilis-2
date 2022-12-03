@@ -12,32 +12,29 @@ import { Player } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { addToQueue, useStateValue } from '@state/Queue'
 
 import styles from './PlayerSearchQueue.module.scss'
 
-interface PlayerSearchQueueProps {
-  handleSelect: (e: Player) => void
-  placeholder?: string
-  filterFunction?: (e: Player) => boolean
-}
-
-const PlayerSearchQueue = ({
-  placeholder = 'Search for a player',
-  handleSelect,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  filterFunction = (_p: Player) => true,
-}: PlayerSearchQueueProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false)
-  const { players, setQuery } = usePlayers(400)
-  const filteredPlayers = players.filter(filterFunction ?? (() => true))
-  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
-  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
-
+const PlayerSearchQueue = () => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
     setIsVisible(true)
     setSelectedIdx(0)
   }
+
+  const handleSelect = (player: Player) => {
+    dispatch(addToQueue(player))
+  }
+
+  const [{ queue }, dispatch] = useStateValue()
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const { players, setQuery } = usePlayers(400)
+  const filteredPlayers = players.filter(
+    player => !queue.some(queuePlayer => queuePlayer.id === player.id)
+  )
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   return (
     <div className={styles.container}>
@@ -45,7 +42,7 @@ const PlayerSearchQueue = ({
         <input
           className={styles.input}
           id="queue"
-          placeholder={placeholder}
+          placeholder={'Add player to queue'}
           onClick={() => setIsVisible(true)}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
