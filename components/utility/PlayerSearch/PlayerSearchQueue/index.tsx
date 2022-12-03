@@ -55,15 +55,22 @@ const PlayerSearchQueue = () => {
         </button>
       </label>
       <ul ref={parent} className={isVisible ? styles.results__visible : styles.results}>
-        {filteredPlayers.map((player, i) => (
-          <li
-            key={player.id}
-            className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
-            onClick={() => handleSelect(filteredPlayers[i])}
-          >
-            {`#${player.id} ${player.firstName} "${player.nickname}" ${player.lastName}`}
-          </li>
-        ))}
+        {filteredPlayers.length > 0 ? (
+          filteredPlayers.map((player, i) => (
+            <li
+              key={player.id}
+              className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
+              onClick={() => handleSelect(filteredPlayers[i])}
+            >
+              <span className={styles.id}>{`#${player.id}`}</span>
+              <span
+                className={styles.name}
+              >{`${player.firstName} "${player.nickname}" ${player.lastName}`}</span>
+            </li>
+          ))
+        ) : (
+          <li className={styles.noplayers}>No Players Found</li>
+        )}
       </ul>
     </div>
   )
