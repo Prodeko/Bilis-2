@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, FocusEvent, Dispatch, SetStateAction } from 'react'
+import { useState, ChangeEventHandler, Dispatch, SetStateAction } from 'react'
 import { FiX } from 'react-icons/fi'
 import axios from 'axios'
 
