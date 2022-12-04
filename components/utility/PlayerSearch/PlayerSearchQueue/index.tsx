@@ -46,6 +46,7 @@ const PlayerSearchQueue = () => {
           onClick={() => setIsVisible(true)}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
+          autoComplete="off"
         />
         <button
           className={isVisible ? styles.button__visible : styles.button}
