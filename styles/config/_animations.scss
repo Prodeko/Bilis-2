@@ -1,4 +1,5 @@
 @use './shadows' as *;
+@use './colors' as *;
 
 %animation-ping {
   @keyframes ping {
@@ -12,6 +13,23 @@
   animation-iteration-count: 1;
   animation-name: ping;
   animation-timing-function: (0, 0, 0.2, 1);
+}
+
+%animation-remove-game {
+  @keyframes removeGame {
+    0%, 100% {
+      background-color: inherit;
+    }
+
+    50% {
+      background-color: $color-error-600;
+    }
+  }
+
+  animation-delay: 0.25s;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: removeGame
 }
 
 @mixin gradient-animation( $before-left, $before-right, $after-left, $after-right, $trans-time ){
