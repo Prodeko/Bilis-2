@@ -26,7 +26,7 @@ const Modal = ({ games, setGames, closeModal }: Props) => {
       <div className={styles.modal}>
         <header className={styles.header}>Do you want to delete the last game?</header>
         <div className={styles.buttons}>
-          <button className={styles.delete} type="button" onClick={handleRemove}>
+          <button className={styles.delete} type="button" autoFocus onClick={handleRemove}>
             Delete Game
           </button>
           <button className={styles.cancel} type="button" onClick={closeModal}>
