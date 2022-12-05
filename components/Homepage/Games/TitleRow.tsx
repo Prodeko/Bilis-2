@@ -1,7 +1,8 @@
+import { useState } from 'react'
+
 import { RecentGame } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import axios from 'axios'
 import styles from './Games.module.scss'
+import Modal from './Modal'
 
 interface Props {
   games: RecentGame[]
@@ -9,22 +10,17 @@ interface Props {
 }
 
 const TitleRow = ({ games, setGames }: Props) => {
-  const handleRemove = async () => {
-    if (window.confirm('Remove the latest game?')) {
-      const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
+  const [visible, setVisible] = useState<boolean>(false)
 
-      if (typeof data == 'string') return console.error(data)
-
-      setGames(games.slice(1))
-    }
-  }
+  const closeModal = () => setVisible(false)
 
   return (
     <div className={styles.titleRow}>
       <h2 className={styles.title}>Games</h2>
-      <button className={styles.removeButton} onClick={handleRemove}>
+      <button className={styles.removeButton} onClick={() => setVisible(true)}>
         Remove latest
       </button>
+      {visible && <Modal games={games} setGames={setGames} closeModal={closeModal} />}
     </div>
   )
 }

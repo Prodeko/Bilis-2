@@ -1,0 +1,69 @@
+@use 'styles' as *;
+
+%button {
+  @extend %text-style-text-xl-semibold;
+
+  border: none;
+  border-radius: $border-radius-small;
+  cursor: pointer;
+  padding: $spacing-16;
+  transition: all 0.3s;
+  
+  &:hover {
+    transform: translateY(-3%);
+  }
+
+  &:active {
+    transform: translateY(3%);
+  }
+}
+
+.modal {
+  @include size(30%);
+
+  background: $color-gradient-gray-800-700;
+  border-radius: $border-radius-large;
+  color: $color-gray-300;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.header {
+  @extend %text-style-display-md-bold;
+
+  background: $color-gradient-primary-900-700;
+  text-align: center;
+  padding: $spacing-32; 
+}
+
+.buttons {
+  @include flex-y($spacing-24);
+
+  justify-content: center;
+  padding: $spacing-64;
+}
+
+.delete {
+  @extend %button;
+
+  background-color: $color-error-600;
+  color: $color-gray-200;
+
+  &:hover {
+    background-color: $color-error-700; 
+  }
+}
+
+.cancel {
+  @extend %button;
+
+  background-color: $color-primary-600;
+  color: $color-gray-200;
+
+  &:hover {
+    background-color: $color-primary-700; 
+  }
+}
