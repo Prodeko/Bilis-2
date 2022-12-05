@@ -20,8 +20,10 @@ const QueueItem = ({ place, player }: QueueItemProps) => {
 
   return (
     <li className={styles.container}>
-      <div>{place}.</div>
-      <Link href={`/player/${id}`}>{`${emoji} ${firstName} ${lastName}`}</Link>
+      <div className={styles.place}>{place}.</div>
+      <Link href={`/player/${id}`}>
+        <a className={styles.link}>{`${emoji} ${firstName} ${lastName}`}</a>
+      </Link>
       <button onClick={removePlayer} className={styles.removeBtn} type="button">
         remove
       </button>

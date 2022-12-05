@@ -1,33 +1,82 @@
-import usePlayers from '@hooks/usePlayers'
-import type { Player } from '@common/types'
-import styles from './PlayerSearchSelect.module.scss'
-import Select, { SingleValue } from 'react-select'
+import { useState, ChangeEventHandler, Dispatch, SetStateAction } from 'react'
+import { FiX } from 'react-icons/fi'
+import axios from 'axios'
 
-interface OptionType {
-  label: string
-  value: Player
-}
+import styles from './PlayerSearchSelect.module.scss'
+
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import usePlayers from '@hooks/usePlayers'
+import useKeyPress from '@hooks/useKeyPress'
+import type { Player } from '@common/types'
+import type { PieChartProps } from '@components/Profile/ProfileCharts/PlayerComparison'
 
 interface Props {
-  handleClick: (newValue: SingleValue<OptionType>) => Promise<void>
+  currentPlayerId: number
+  setPieChartProps: Dispatch<SetStateAction<PieChartProps | undefined>>
 }
 
-const PlayerSearchSelect = ({ handleClick }: Props) => {
-  const { players } = usePlayers(0)
-  const anyHandleClick = handleClick as any // TODO: Temp fix
+const PlayerSearchSelect = ({ currentPlayerId, setPieChartProps }: Props) => {
+  const [placeholder, setPlaceholder] = useState<string>('Search for a player')
+  const [visible, setVisible] = useState<boolean>(false)
+  const { players, setQuery } = usePlayers(400)
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
-  const options = players.map(player => ({
-    label: `${player.firstName} ${player.lastName}`,
-    value: player.id,
-  }))
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    setQuery(e.target.value)
+    setVisible(true)
+    setSelectedIdx(0)
+  }
+
+  const handleSelect = async (opposingPlayer: Player) => {
+    if (opposingPlayer.id) {
+      try {
+        const response = await axios.get(`${NEXT_PUBLIC_API_URL}/player/mutual-stats`, {
+          params: { id1: currentPlayerId, id2: opposingPlayer.id },
+        })
+        const data = response.data as PieChartProps
+        setPlaceholder(`${opposingPlayer.firstName} ${opposingPlayer.lastName}`)
+        setPieChartProps(data)
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      console.warn('Trying to select player for player comparison but failed')
+    }
+  }
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, handleSelect)
 
   return (
-    <Select
-      className={styles.search}
-      options={options}
-      onChange={anyHandleClick}
-      placeholder="Search for a player..."
-    />
+    <div className={styles.container}>
+      <label htmlFor="queue" className={visible ? styles.search__visible : styles.search}>
+        <input
+          className={styles.input}
+          id="queue"
+          placeholder={placeholder}
+          onBlur={() => setVisible(false)}
+          onClick={() => setVisible(true)}
+          onKeyDown={handleKeyPress}
+          onChange={handleChange}
+        />
+        <button
+          className={visible ? styles.button__visible : styles.button}
+          onClick={() => setVisible(false)}
+        >
+          <FiX />
+        </button>
+      </label>
+      <ul ref={parent} className={visible ? styles.results__visible : styles.results}>
+        {players.map((player, i) => (
+          <li
+            key={player.id}
+            className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
+            onClick={() => handleSelect(players[i])}
+          >
+            {`#${player.id} ${player.firstName} "${player.nickname}" ${player.lastName}`}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 

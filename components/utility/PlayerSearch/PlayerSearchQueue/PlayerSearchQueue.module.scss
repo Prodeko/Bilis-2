@@ -77,7 +77,7 @@
 .results {
   @extend %results;
   
-  max-height: 0;
+  max-height: 0rem;
   
   &__visible {
     @extend %results;
@@ -88,10 +88,30 @@
 
 .player {
   @extend %text-style-text-md-normal;
+  @include grid-cols(6);
 
   cursor: pointer;
-  padding: $spacing-8;
   pointer-events: fill;
+  
+  & > * {
+    padding: $spacing-8;
+  }
+}
+
+.id {
+  grid-column: 1 / 1;
+}
+
+.name {
+  grid-column: 2 / -1;
+}
+
+.noplayers {
+  @extend %flex-center;
+  @extend %text-style-display-sm-semibold;
+
+  text-align: center;
+  height: $spacing-256;
 }
 
 .player:hover, .selected {

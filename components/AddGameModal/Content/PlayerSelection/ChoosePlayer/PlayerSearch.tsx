@@ -42,6 +42,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
         id="search"
         onChange={({ target }) => setQuery(target.value)}
         placeholder="Search for player..."
+        autoComplete="off"
       />
     </div>
   )

@@ -2,13 +2,11 @@ import styles from './Table.module.scss'
 
 const TableHead = () => {
   return (
-    <thead>
-      <tr className={styles['row__header']}>
-        <th className={styles.position}>Position</th>
-        <th className={styles.player}>Player</th>
-        <th className={styles.elo}>Elo</th>
-      </tr>
-    </thead>
+    <div className={styles['row__header']}>
+      <span className={styles.position}>Position</span>
+      <span className={styles.player}>Player</span>
+      <span className={styles.elo}>Elo</span>
+    </div>
   )
 }
 

@@ -1,7 +1,9 @@
 import type { Player } from '@common/types'
 
+export const LOCAL_QUEUE_NAME = 'prodeko-biliskilke-queue'
+
 const setLocalQueue = (queue: Player[]) =>
-  localStorage.setItem('prodeko-biliskilke-queue', JSON.stringify(queue))
+  localStorage.setItem(LOCAL_QUEUE_NAME, JSON.stringify(queue))
 
 export type State = {
   queue: Player[]

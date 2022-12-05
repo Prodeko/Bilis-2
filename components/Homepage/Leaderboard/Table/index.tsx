@@ -6,10 +6,10 @@ import TableHead from './TableHead'
 
 const Table = ({ leaderboard }: { leaderboard: HomeLeaderboard }) => {
   return (
-    <table className={styles.table}>
+    <div className={styles.table}>
       <TableHead />
       <TableBody leaderboard={leaderboard} />
-    </table>
+    </div>
   )
 }
 

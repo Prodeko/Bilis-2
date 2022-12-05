@@ -1,15 +1,18 @@
 import type { HomeLeaderboard } from '@common/types'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import PlayerRow from './PlayerRow'
 import styles from './Table.module.scss'
 
 const TableBody = ({ leaderboard }: { leaderboard: HomeLeaderboard }) => {
+  const [parent, _enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 200 })
+
   return (
-    <tbody className={styles.tablebody}>
+    <div ref={parent} className={styles.tablebody}>
       {leaderboard.map((player, position) => {
         return <PlayerRow key={player.id} player={player} position={position + 1} />
       })}
-    </tbody>
+    </div>
   )
 }
 
