@@ -9,12 +9,15 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 interface Props {
   games: RecentGame[]
   setGames: Dispatch<SetStateAction<RecentGame[]>>
+  visible: boolean
 }
 
-const TableBody = ({ games, setGames }: Props) => {
+const TableBody = ({ games, setGames, visible }: Props) => {
   const [parent, enableAnimations] = useAutoAnimate<HTMLTableSectionElement>({ duration: 200 })
   const [page, setPage] = useState(1)
   const loader = useRef(null)
+
+  const [firstGame, ...otherGames] = games
 
   useEffect(() => {
     axios
@@ -49,8 +52,9 @@ const TableBody = ({ games, setGames }: Props) => {
 
   return (
     <tbody ref={parent} id="games" className={styles.tablebody}>
-      {games.map(game => {
-        return <GamesRow key={game.id} game={game} />
+      <GamesRow key={firstGame.id} game={firstGame} pulsing={visible} />
+      {otherGames.map(game => {
+        return <GamesRow key={game.id} game={game} pulsing={false} />
       })}
       <tr ref={loader} />
     </tbody>
