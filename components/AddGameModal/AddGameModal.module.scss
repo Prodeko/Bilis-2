@@ -1,16 +1,5 @@
 @use 'styles' as *;
 
-.container {
-  @extend %flex-center;
-  @extend %background-blur-sm;
-  @include size(100%);
-
-  left: 0;
-  position: fixed;
-  top: 0;
-  z-index: 10;
-}
-
 .modal {
   @include size(80%);
 

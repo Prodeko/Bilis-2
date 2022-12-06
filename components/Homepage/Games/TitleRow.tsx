@@ -1,30 +1,27 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import { RecentGame } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import axios from 'axios'
 import styles from './Games.module.scss'
+import Modal from './Modal'
 
 interface Props {
   games: RecentGame[]
   setGames: (x: RecentGame[]) => void
+  visible: boolean
+  closeModal: () => void
+  showModal: () => void
 }
 
-const TitleRow = ({ games, setGames }: Props) => {
-  const handleRemove = async () => {
-    if (window.confirm('Remove the latest game?')) {
-      const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
-
-      if (typeof data == 'string') return console.error(data)
-
-      setGames(games.slice(1))
-    }
-  }
+const TitleRow = ({ games, setGames, visible, closeModal, showModal }: Props) => {
+  const [parent] = useAutoAnimate<HTMLDivElement>({ duration: 250 })
 
   return (
-    <div className={styles.titleRow}>
+    <div ref={parent} className={styles.titleRow}>
       <h2 className={styles.title}>Games</h2>
-      <button className={styles.removeButton} onClick={handleRemove}>
+      <button className={styles.removeButton} onClick={showModal}>
         Remove latest
       </button>
+      {visible && <Modal games={games} setGames={setGames} closeModal={closeModal} />}
     </div>
   )
 }

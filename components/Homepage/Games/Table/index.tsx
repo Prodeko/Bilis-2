@@ -7,12 +7,13 @@ import TableHead from './TableHead'
 interface Props {
   games: RecentGame[]
   setGames: Dispatch<SetStateAction<RecentGame[]>>
+  visible: boolean
 }
-const Table = ({ games, setGames }: Props) => {
+const Table = ({ games, setGames, visible }: Props) => {
   return (
     <table className={styles.table}>
       <TableHead />
-      <TableBody games={games} setGames={setGames} />
+      <TableBody games={games} setGames={setGames} visible={visible} />
     </table>
   )
 }

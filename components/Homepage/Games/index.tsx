@@ -1,19 +1,31 @@
+import { useState, Dispatch, SetStateAction } from 'react'
+
 import { RecentGame } from '@common/types'
 import Card from '@components/utility/Card'
-import { Dispatch, SetStateAction } from 'react'
 import Table from './Table'
 import TitleRow from './TitleRow'
 interface Props {
   games: RecentGame[]
   setGames: Dispatch<SetStateAction<RecentGame[]>>
 }
-const Recents = ({ games, setGames }: Props) => {
+const Games = ({ games, setGames }: Props) => {
+  const [visible, setVisible] = useState<boolean>(false)
+
+  const closeModal = () => setVisible(false)
+  const showModal = () => setVisible(true)
+
   return (
     <Card colspan="2 / 4" rowspan="2 / 3">
-      <TitleRow games={games} setGames={setGames} />
-      <Table games={games} setGames={setGames} />
+      <TitleRow
+        games={games}
+        setGames={setGames}
+        visible={visible}
+        showModal={showModal}
+        closeModal={closeModal}
+      />
+      <Table games={games} setGames={setGames} visible={visible} />
     </Card>
   )
 }
 
-export default Recents
+export default Games
