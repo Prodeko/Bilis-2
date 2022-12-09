@@ -49,11 +49,15 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
       dropShadow: {
         blur: 4,
         enabled: true,
-        opacity: 0.2,
+        opacity: 0.4,
       },
       stacked: false,
+
+      // Toolbar includes zoom, home button, downloading files etdc...
       toolbar: {
-        autoSelected: 'zoom',
+        tools: {
+          download: false,
+        },
       },
       type: 'area',
       zoom: {
