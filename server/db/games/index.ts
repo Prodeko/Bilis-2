@@ -67,10 +67,9 @@ const getPlayerDetailedGames = async (playerId: number) => {
     const eloDiff = isWinner
       ? game.winnerEloAfter - game.winnerEloBefore
       : game.loserEloAfter - game.loserEloBefore
-    const opponent = isWinner ? game.loser : game.winner
-
-    // Calculate necessary info for the game
-
+    const opponent = isWinner
+      ? game.loser.firstName + ' ' + game.loser.lastName
+      : game.winner.firstName + ' ' + game.winner.lastName
     return { currentElo, opponent, eloDiff }
   }
 

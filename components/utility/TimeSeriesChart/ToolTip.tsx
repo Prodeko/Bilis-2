@@ -9,9 +9,7 @@ interface Props {
 const Tooltip = ({ gameData, dataPointIndex }: Props) => {
   const dataPoint = gameData[dataPointIndex]
   const eloDiff = dataPoint.eloDiff
-  const opponentName = dataPoint?.opponent
-    ? `${dataPoint.opponent.firstName} ${dataPoint.opponent.lastName}`
-    : ''
+  const opponentName = dataPoint?.opponent ? dataPoint.opponent : ''
 
   return (
     <div className={styles.arrow__box}>
