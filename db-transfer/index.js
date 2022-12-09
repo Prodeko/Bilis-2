@@ -1,4 +1,4 @@
-const { connectToDbs } = require('./config/db.js')
+const { connectToDbs, newSequelize } = require('./config/db.js')
 const oldModels = require('./models/old/index.js')
 const newModels = require('./models/new/index.js')
 
@@ -21,6 +21,17 @@ const getScoreChange = (winnerElo, winnerGames, loserElo, loserGames) => {
     (0 - 1 / (1 + 2 ** ((winnerElo - loserElo) / 100))) *
     ((winnerRobust - 1) / (loserRobust * winnerRobust))
   return [winnerChange, loserChange]
+}
+
+const updatePkSequences = () => {
+  return Promise.all([
+    newSequelize.query(
+      "SELECT setval('games_id_seq', COALESCE((SELECT MAX(id)+1 FROM games), 1), false);"
+    ),
+    newSequelize.query(
+      "SELECT setval('players_id_seq', COALESCE((SELECT MAX(id)+1 FROM players), 1), false);"
+    ),
+  ])
 }
 
 const DEFAULT_ELO = 400
@@ -91,6 +102,7 @@ const main = async () => {
     return newGame
   })
   await newModels.Game.bulkCreate(newGames)
+  await updatePkSequences()
 }
 
 main()
