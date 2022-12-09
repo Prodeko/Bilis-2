@@ -32,7 +32,11 @@
 .container {
   @include flex-y($spacing-8);
 
-  width: 100%;
+  position: absolute;
+  right: $spacing-24;
+  top: $spacing-24;
+  width: 50%;
+  z-index: 2;
 }
 
 .search {

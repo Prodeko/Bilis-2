@@ -1,9 +1,10 @@
 import Link from 'next/link'
 
 import { Player } from '@common/types'
-
-import styles from './QueueItem.module.scss'
 import { removeFromQueue, useStateValue } from '@state/Queue'
+import styles from './QueueItem.module.scss'
+
+import { FiTrash2 } from 'react-icons/fi'
 
 interface QueueItemProps {
   place: number
@@ -25,7 +26,7 @@ const QueueItem = ({ place, player }: QueueItemProps) => {
         <a className={styles.link}>{`${emoji} ${firstName} ${lastName}`}</a>
       </Link>
       <button onClick={removePlayer} className={styles.removeBtn} type="button">
-        remove
+        <FiTrash2 size={24} />
       </button>
     </li>
   )

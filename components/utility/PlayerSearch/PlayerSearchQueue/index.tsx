@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, FocusEventHandler, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
@@ -17,9 +17,27 @@ import { addToQueue, useStateValue } from '@state/Queue'
 import styles from './PlayerSearchQueue.module.scss'
 
 const PlayerSearchQueue = () => {
+  const [{ queue }, dispatch] = useStateValue()
+  const [visible, setVisible] = useState<boolean>(false)
+  const { players, setQuery } = usePlayers(400)
+  const filteredPlayers = players.filter(
+    player => !queue.some(queuePlayer => queuePlayer.id === player.id)
+  )
+  const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
+
+  const openDropdown = () => setVisible(true)
+  const closeDropdown = () => setVisible(false)
+
+  // Disable animations while dropdown closes
+  const handleBlur = () => {
+    closeDropdown()
+    enableAnimations(false)
+    setTimeout(() => enableAnimations(true), 500)
+  }
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
-    setIsVisible(true)
+    openDropdown()
     setSelectedIdx(0)
   }
 
@@ -27,35 +45,29 @@ const PlayerSearchQueue = () => {
     dispatch(addToQueue(player))
   }
 
-  const [{ queue }, dispatch] = useStateValue()
-  const [isVisible, setIsVisible] = useState<boolean>(false)
-  const { players, setQuery } = usePlayers(400)
-  const filteredPlayers = players.filter(
-    player => !queue.some(queuePlayer => queuePlayer.id === player.id)
-  )
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
-  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   return (
     <div className={styles.container}>
-      <label htmlFor="queue" className={isVisible ? styles.search__visible : styles.search}>
+      <label htmlFor="queue" className={visible ? styles.search__visible : styles.search}>
         <input
           className={styles.input}
           id="queue"
           placeholder={'Add player to queue'}
-          onClick={() => setIsVisible(true)}
+          onClick={openDropdown}
+          onBlur={handleBlur}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
           autoComplete="off"
         />
         <button
-          className={isVisible ? styles.button__visible : styles.button}
-          onClick={() => setIsVisible(false)}
+          className={visible ? styles.button__visible : styles.button}
+          onClick={closeDropdown}
         >
           <FiX />
         </button>
       </label>
-      <ul ref={parent} className={isVisible ? styles.results__visible : styles.results}>
+      <ul ref={parent} className={visible ? styles.results__visible : styles.results}>
         {filteredPlayers.length > 0 ? (
           filteredPlayers.map((player, i) => (
             <li

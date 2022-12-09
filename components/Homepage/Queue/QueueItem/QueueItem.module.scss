@@ -19,27 +19,25 @@
 
 .removeBtn {
   @extend %text-style-text-md-semibold;
-  @include padding-y($padding: $spacing-4);
-  @include padding-x($padding: $spacing-8);
+  @extend %flex-center;
   
-  background: $color-error-500;
+  background: none;
   border: none;
-  color: $color-base-white;
+  color: $color-error-500;
   cursor: pointer;
-  justify-self: right;
-  scale: 0;
   grid-column: 11 / -1;
-  text-transform: uppercase;
+  justify-self: right;
+  opacity: 0;
   transition: all 0.3s;
-  width: fit-content; // will be set to inline-block on hover
 
   &:hover {
-    background-color: $color-error-600;
+    color: $color-error-400;
+    scale: 1.1;
   }
 }
 
 .container:hover > .removeBtn {
-  scale: 1;
+  opacity: 1;
 }
 
 .place {
