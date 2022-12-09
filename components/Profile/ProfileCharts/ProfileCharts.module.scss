@@ -3,7 +3,6 @@
 .container {
   @include grid-cols(2);
 
-  background-image: $color-gradient-mixed-900-400;
   column-gap: $spacing-64;
   max-height: 100%;
   padding: $spacing-64;

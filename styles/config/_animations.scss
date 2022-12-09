@@ -1,5 +1,6 @@
 @use './shadows' as *;
 @use './colors' as *;
+@use './spacing' as *;
 
 %animation-ping {
   @keyframes ping {
@@ -31,6 +32,31 @@
   animation-iteration-count: infinite;
   animation-name: removeGame
 }
+
+%animation-spinner {
+  @keyframes spinner {
+    0% {
+      stroke-dashoffset: (0.66 * $spinner-size);
+    } 50% {
+      stroke-dashoffset: (3.14 * $spinner-size);
+    } 100% {
+      stroke-dashoffset: (0.66 * $spinner-size);
+    }
+
+    0% {
+      transform: rotate(0deg);
+    } 50% {
+      transform: rotate(720deg);
+    } 100% {
+      transform: rotate(1080deg);
+    }
+  }
+
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  animation-name: spinner;
+}
+
 
 @mixin gradient-animation( $before-left, $before-right, $after-left, $after-right, $trans-time ){
   background-image: linear-gradient(to right top, $before-left, $before-right);
