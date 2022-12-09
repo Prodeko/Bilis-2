@@ -6,10 +6,9 @@ import { getPlayerStats, getPlayerDetailedGames } from '@server/db/games'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 
 const handleFetch = async (res: NextApiResponse, id: number) => {
-  const [player, playerStats, gameData] = await Promise.all([
+  const [player, playerStats] = await Promise.all([
     getPlayerById(id),
     getPlayerStats(id),
-    getPlayerDetailedGames(id),
   ])
 
   if (!player) {
@@ -19,8 +18,7 @@ const handleFetch = async (res: NextApiResponse, id: number) => {
   const jsonPlayer = player.toJSON() as Player
   return res.status(200).json({
     ...jsonPlayer,
-    ...playerStats,
-    gameData,
+    ...playerStats
   })
 }
 

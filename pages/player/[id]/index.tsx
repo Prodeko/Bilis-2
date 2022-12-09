@@ -58,20 +58,25 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const res = await fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
-  const profileData = await res.json()
+  const profileQuery = fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
+  const gamesQuery = fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}/games`)
 
-  if (profileData.body?.error) {
+  const [resProfileData, resGamesData] = await Promise.all([profileQuery, gamesQuery])
+  
+  const profileData = await resProfileData.json()
+  const gameData = await resGamesData.json()
+
+  if (profileData.body?.error || gameData.body?.error) {
     return {
       props: {
-        error: profileData.body.error,
+        error: profileData.body.error ?? gameData.body?.error,
         statusCode: profileData.statusCode,
       },
     }
   }
 
   return {
-    props: profileData,
+    props: {...profileData, gameData},
   }
 }
 
