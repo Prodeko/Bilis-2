@@ -31,7 +31,7 @@ const PlayerSearchSelect = ({ currentPlayerId, setPieChartProps }: Props) => {
   const handleSelect = async (opposingPlayer: Player) => {
     if (opposingPlayer.id) {
       try {
-        const response = await axios.get(`${NEXT_PUBLIC_API_URL}/player/mutual-stats`, {
+        const response = await axios.get(`/api/player/mutual-stats`, {
           params: { id1: currentPlayerId, id2: opposingPlayer.id },
         })
         const data = response.data as PieChartProps

@@ -13,7 +13,7 @@ interface Props {
 
 const Modal = ({ games, setGames, closeModal }: Props) => {
   const handleRemove = async () => {
-    const { data } = await axios.delete(`${NEXT_PUBLIC_API_URL}/game/latest`)
+    const { data } = await axios.delete(`/api/game/latest`)
 
     if (typeof data == 'string') return console.error(data)
 
