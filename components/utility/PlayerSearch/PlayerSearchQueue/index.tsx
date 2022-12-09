@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, FocusEventHandler, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
@@ -23,10 +23,17 @@ const PlayerSearchQueue = () => {
   const filteredPlayers = players.filter(
     player => !queue.some(queuePlayer => queuePlayer.id === player.id)
   )
-  const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
+  const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
+
+  // Disable animations while dropdown closes
+  const handleBlur = () => {
+    closeDropdown()
+    enableAnimations(false)
+    setTimeout(() => enableAnimations(true), 500)
+  }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setQuery(e.target.value)
@@ -48,7 +55,7 @@ const PlayerSearchQueue = () => {
           id="queue"
           placeholder={'Add player to queue'}
           onClick={openDropdown}
-          onBlur={closeDropdown}
+          onBlur={handleBlur}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
           autoComplete="off"
