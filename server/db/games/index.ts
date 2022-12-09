@@ -47,6 +47,16 @@ const getPlayerDetailedGames = async (playerId: number) => {
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
+    include: [
+      {
+        model: Player,
+        as: 'winner',
+      },
+      {
+        model: Player,
+        as: 'loser',
+      },
+    ],
     order: [['createdAt', 'ASC']],
   })
   const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
@@ -57,11 +67,9 @@ const getPlayerDetailedGames = async (playerId: number) => {
     const eloDiff = isWinner
       ? game.winnerEloAfter - game.winnerEloBefore
       : game.loserEloAfter - game.loserEloBefore
-    const opponentID = game.winnerId === playerId ? game.loserId : game.winnerId
+    const opponent = isWinner ? game.loser : game.winner
 
     // Calculate necessary info for the game
-    const rawOpponent = await getPlayerById(opponentID)
-    const opponent = rawOpponent?.toJSON()
 
     return { currentElo, opponent, eloDiff }
   }
