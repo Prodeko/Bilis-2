@@ -142,6 +142,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
           color: `${white}`,
           fontSize: '2rem',
         },
+        offsetY: 100,
       },
     },
 
