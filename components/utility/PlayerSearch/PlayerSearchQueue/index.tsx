@@ -48,6 +48,7 @@ const PlayerSearchQueue = () => {
           id="queue"
           placeholder={'Add player to queue'}
           onClick={openDropdown}
+          onBlur={closeDropdown}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
           autoComplete="off"
