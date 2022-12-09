@@ -5,7 +5,7 @@ const DEFAULT_ELO = 400
 const DEFAULT_LEADERBOARD_SIZE = 20
 const ZEROTH_GAME: TimeSeriesGame = {
   currentElo: DEFAULT_ELO, // Everybody starts from 400 elo
-  opponent: null,
+  opponent: '',
   eloDiff: 0,
 }
 
