@@ -18,7 +18,7 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
   const AnyApexCharts = ApexCharts as any // TODO: Temp fix
 
   // const black = '#111'
-  const white = '#eee'
+  const white = '#ddd'
 
   const series: ApexOptions['series'] = [
     mutualGames.currentPlayerGamesWon,
@@ -30,6 +30,11 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
       type: 'pie',
     },
     colors: ['#033969', '#667085'],
+    dataLabels: {
+      style: {
+        fontSize: '2.4rem',
+      },
+    },
     // fill: {
     //   type: 'gradient',
     // },
@@ -45,6 +50,11 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
       },
     },
     labels: [currentPlayer.firstName, opposingPlayer.firstName],
+    legend: {
+      labels: {
+        colors: white,
+      },
+    },
     responsive: [
       {
         breakpoint: 480,
