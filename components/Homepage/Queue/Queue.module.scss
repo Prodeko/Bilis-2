@@ -13,15 +13,6 @@
   width: 100%;
 }
 
-.search {
-  position: absolute;
-  right: $spacing-16;
-  top: $spacing-24;
-  width: 50%;
-  z-index: 2;
-}
-
-
 .list {
   @include scrollbar(true);
 
