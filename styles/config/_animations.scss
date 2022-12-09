@@ -57,6 +57,25 @@
   animation-name: spinner;
 }
 
+@mixin animation-push-in($width) {
+  position: absolute;
+  width: $width;
+  
+  @keyframes push-in {
+    0% {
+      right: 0;
+    } 50% {
+      right: -$width; 
+    } 100% {
+      right: 0;
+    }
+  }
+
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-name: push-in;
+}
+
 
 @mixin gradient-animation( $before-left, $before-right, $after-left, $after-right, $trans-time ){
   background-image: linear-gradient(to right top, $before-left, $before-right);
