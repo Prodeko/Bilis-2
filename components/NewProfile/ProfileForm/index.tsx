@@ -51,7 +51,7 @@ const ProfileForm = ({ player }: Props) => {
     router.push(`/player/${res.data.id}`)
   }
 
-  const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const updateFunc = isUpdate ? updatePlayer(player.id) : submitNewPlayer
     updateFunc(playerData)
