@@ -34,7 +34,7 @@ const getRandomPlayer = async () =>
     order: dbConf.sequelize.random(),
     where: {
       motto: {
-        [Op.notIn]: [''],
+        [Op.ne]: '',
       },
     },
   })
