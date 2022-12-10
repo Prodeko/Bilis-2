@@ -17,7 +17,7 @@ const SearchContainer = () => {
   const onClick = () => {
     if (!extended) {
       setExtended(true)
-      setTimeout(() => setVisible(true), 1000) // // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
+      setTimeout(() => setVisible(true), 700) // // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
     }
   }
 

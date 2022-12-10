@@ -26,7 +26,7 @@ const ProfileHeader = ({ player }: Props) => {
           </a>
         </Link>
       </div>
-      <MottoCard text={motto} author={name} />
+      <MottoCard text={motto} author={name} switching={false} />
     </div>
   )
 }

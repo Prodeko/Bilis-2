@@ -5,7 +5,7 @@ const TableHead = () => {
     <div className={styles['row__header']}>
       <span className={styles.position}>Position</span>
       <span className={styles.player}>Player</span>
-      <span className={styles.elo}>Elo</span>
+      <span className={styles.elo}>Fargo</span>
     </div>
   )
 }

@@ -1,14 +1,25 @@
 @use 'styles' as *;
 
-.card {
+$motto-width: 72rem;
+
+%motto {
   @extend %shadow-lg;
   @include flex-y($gap: $spacing-8);
 
   background-image: $color-gradient-white-200-25;
-  border-radius: 16px 0 0 16px;
-  flex-grow: 1;
-  max-width: 72rem;
-  padding: $spacing-20;
+  border-radius: $border-radius-large 0 0 $border-radius-large;
+  max-width: 50%;
+  padding: $spacing-24;
+  width: $motto-width;
+}
+
+.card {
+  @extend %motto;
+}
+
+.card__switching {
+  @extend %motto;
+  @include animation-push-in($motto-width);
 }
 
 .quoteTitle {
