@@ -16,7 +16,7 @@ interface Props {
 
 const Header = ({ randomPlayer }: Props) => {
   const [currentPlayer, setCurrentPlayer] = useState<Player>(randomPlayer)
-  const [upcomingPlayer, setUpcomingPlayer] = useState<Player | undefined>(undefined)
+  const [upcomingPlayer, setUpcomingPlayer] = useState<Player>(randomPlayer)
   const [switching, setSwitching] = useState<boolean>(false)
 
   const getRandomPlayer = async () => {
@@ -30,12 +30,10 @@ const Header = ({ randomPlayer }: Props) => {
   }, [])
 
   useEffect(() => {
-    const switchMotto = async () => {
+    const switchMotto = () => {
       setSwitching(true)
-      setTimeout(() => {
-        setSwitching(false)
-        if (upcomingPlayer) setCurrentPlayer(upcomingPlayer)
-      }, 1000)
+      setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)
+      setTimeout(() => setSwitching(false), 1940) // This is 60 below 2000 => removes card flickering
     }
     switchMotto()
   }, [upcomingPlayer])
@@ -48,9 +46,7 @@ const Header = ({ randomPlayer }: Props) => {
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
-          <div className={switching ? styles.motto__switch : styles.motto}>
-            <MottoCard text={currentPlayer.motto} author={author} />
-          </div>
+          <MottoCard text={currentPlayer.motto} author={author} switching={switching} />
         </div>
       </Filter>
     </header>

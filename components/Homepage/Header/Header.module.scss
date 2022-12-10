@@ -1,22 +1,5 @@
 @use 'styles' as *;
 
-%motto {
-  transition: all 1s;
-  position: absolute;
-}
-
-@mixin motto-push-in($width) {
-  @extend %motto;
-  right: 0;
-  width: $width;
-
-  &__switch {
-    @extend %motto;
-    right: -$width;
-    width: $width;
-  }
-}
-
 .header {
   height: $header-height;
   position: relative;
@@ -35,8 +18,4 @@
   justify-content: space-between;
   margin-left: 5%;
   position: relative;
-}
-
-.motto {
-  @include motto-push-in($width: 72rem);
 }
