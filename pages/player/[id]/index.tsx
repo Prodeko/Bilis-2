@@ -46,7 +46,7 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
       <ProfileHeader player={player} />
       <ProfileStats
         stats={[
-          { label: 'Elo', value: round(elo, 2).toFixed(2) },
+          { label: 'Fargo', value: round(elo, 2).toFixed(2) },
           { label: 'Total Games', value: totalGames.toString() },
           { label: 'Wins / Losses', value: `${wonGames} / ${lostGames}` },
           { label: 'Win Percentage', value: `${round(winPercentage, 2).toFixed(2)}%` },

@@ -14,7 +14,7 @@ const Tooltip = ({ gameData, dataPointIndex }: Props) => {
   return (
     <div className={styles.arrow__box}>
       <div className={styles.data__row}>
-        <span>Elo: </span>
+        <span>Fargo: </span>
         <span>{gameData[dataPointIndex].currentElo.toFixed(2)}</span>
       </div>
       <div className={styles.data__row}>
@@ -22,7 +22,7 @@ const Tooltip = ({ gameData, dataPointIndex }: Props) => {
         <span>{opponentName}</span>
       </div>
       <div className={styles.data__row}>
-        <span>Elo Change: </span>
+        <span>Fargo Change: </span>
         <span className={eloDiff >= 0 ? styles.positive : styles.negative}>
           {/* Add plus if positve */}
           {eloDiff >= 0 && '+'}

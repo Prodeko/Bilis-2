@@ -28,7 +28,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
   if (gameData.length <= 1) {
     return (
       <div className={styles.nodata}>
-        <p>No elo data available</p>
+        <p>No fargo data available</p>
       </div>
     )
   }
@@ -98,7 +98,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
 
     // Define what happens when the data is missing
     noData: {
-      text: 'Missing Elo Data',
+      text: 'Missing Fargo Data',
     },
 
     // Define elo curve characteristics
@@ -161,7 +161,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
         },
       },
       title: {
-        text: 'Elo',
+        text: 'Fargo',
         style: {
           color: `${white}`,
           fontSize: '2rem',

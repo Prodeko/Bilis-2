@@ -13,11 +13,11 @@ const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.chartContainer}>
-        <h2 className={styles.chartTitle}>Elo Graph</h2>
+        <h2 className={styles.chartTitle}>Fargo Graph</h2>
         <TimeSeriesChart
           gameData={gameData}
-          dataName="Elo Data"
-          chartTitle="All Time Elo"
+          dataName="Fargo Data"
+          chartTitle="All Time Fargo"
           height="100%"
         />
       </div>
