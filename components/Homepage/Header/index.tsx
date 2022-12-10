@@ -16,30 +16,37 @@ interface Props {
 
 const Header = ({ randomPlayer }: Props) => {
   const [currentPlayer, setCurrentPlayer] = useState<Player>(randomPlayer)
-  const [upcomingPlayer, setUpcomingPlayer] = useState<Player>(randomPlayer)
+  const [upcomingPlayer, setUpcomingPlayer] = useState<Player | undefined>(undefined)
+  const [renderCount, setRenderCount] = useState<number>(0) // Used to prevent mottoswitch on first render
   const [switching, setSwitching] = useState<boolean>(false)
 
-  const getRandomPlayer = async () => {
+  const setRandomPlayer = async () => {
     const result = await axios.get(`${NEXT_PUBLIC_API_URL}/player/random`)
-    return result.data as Player
+    const player = result.data as Player
+    setUpcomingPlayer(player)
   }
 
+  // Fetch a new random player on set interval, default every 60 seconds
   useEffect(() => {
-    const timer = setInterval(async () => setUpcomingPlayer(await getRandomPlayer()), 60 * 1000)
+    const timer = setInterval(() => {
+      setRenderCount(prevCount => prevCount + 1)
+      setRandomPlayer()
+    }, 60 * 1000)
     return () => clearInterval(timer)
   }, [])
 
+  // Switch the motto while pushing the motto card into the side of the page
   useEffect(() => {
-    const switchMotto = () => {
+    const switchMotto = async () => {
+      setTimeout(() => setSwitching(false), 2000)
       setSwitching(true)
-      setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)
-      setTimeout(() => setSwitching(false), 1940) // This is 60 below 2000 => removes card flickering
+      if (upcomingPlayer) setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)
     }
-    switchMotto()
-  }, [upcomingPlayer])
+
+    if (Boolean(renderCount)) switchMotto() // Prevent switch on first render
+  }, [upcomingPlayer, renderCount])
 
   const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
-
   return (
     <header className={styles.header}>
       <Image src={billiardPic} alt="Billiard Table" layout="fill" objectFit="cover" />
