@@ -34,8 +34,8 @@
   @extend %text-style-display-md-bold;
 
   background: $color-gradient-primary-900-700;
-  text-align: center;
-  padding: $spacing-32; 
+  padding: $spacing-32;
+  text-align: center; 
 }
 
 .buttons {
@@ -54,16 +54,5 @@
 
   &:hover {
     background-color: $color-error-700; 
-  }
-}
-
-.cancel {
-  @extend %button;
-
-  background-color: $color-primary-600;
-  color: $color-gray-200;
-
-  &:hover {
-    background-color: $color-primary-700; 
   }
 }

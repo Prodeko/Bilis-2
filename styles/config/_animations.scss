@@ -17,7 +17,7 @@
 }
 
 %animation-remove-game {
-  @keyframes removeGame {
+  @keyframes remove-game {
     0%, 100% {
       background-color: inherit;
     }
@@ -30,24 +30,23 @@
   animation-delay: 0.25s;
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
-  animation-name: removeGame
+  animation-name: remove-game
 }
 
 %animation-spinner {
   @keyframes spinner {
     0% {
       stroke-dashoffset: (0.66 * $spinner-size);
-    } 50% {
-      stroke-dashoffset: (3.14 * $spinner-size);
-    } 100% {
-      stroke-dashoffset: (0.66 * $spinner-size);
+      transform: rotate(0deg);
     }
 
-    0% {
-      transform: rotate(0deg);
-    } 50% {
+    50% {
+      stroke-dashoffset: (3.14 * $spinner-size);
       transform: rotate(720deg);
-    } 100% {
+    }
+
+    100% {
+      stroke-dashoffset: (0.66 * $spinner-size);
       transform: rotate(1080deg);
     }
   }
@@ -58,15 +57,17 @@
 }
 
 @mixin animation-push-in($width) {
-  position: absolute;
-  width: $width;
   
   @keyframes push-in {
     0% {
       right: 0;
-    } 50% {
+    }
+
+    50% {
       right: -$width; 
-    } 100% {
+    }
+
+    100% {
       right: 0;
     }
   }
@@ -74,6 +75,8 @@
   animation-duration: 2s;
   animation-iteration-count: 1;
   animation-name: push-in;
+  position: absolute;
+  width: $width;
 }
 
 
