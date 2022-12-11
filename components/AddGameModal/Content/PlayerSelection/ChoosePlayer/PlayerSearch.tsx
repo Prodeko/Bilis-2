@@ -4,19 +4,26 @@ import SearchIcon from '@public/images/search-icon.svg'
 import axios from 'axios'
 import useDebounce from 'hooks/useDebounce'
 import Image from 'next/image'
-import { KeyboardEventHandler, useContext, useEffect } from 'react'
+import { Dispatch, KeyboardEventHandler, SetStateAction, useContext, useEffect } from 'react'
 import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
 interface Props {
   side: 'winner' | 'loser'
+  forceReRender: Dispatch<SetStateAction<null>>
 }
 
-const PlayerSearch = ({ side }: Props) => {
+const PlayerSearch = ({ side, forceReRender }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
-  const { setSelectedIdx, setPlayers, resetPlayers: closeSearch } = useContext(ModalContext)
+  const {
+    setSelectedIdx,
+    setPlayers,
+    resetPlayers: closeSearch,
+    refs,
+    setFocus,
+  } = useContext(ModalContext)
 
   useEffect(() => {
     const search = async (q: string) => {
@@ -35,7 +42,7 @@ const PlayerSearch = ({ side }: Props) => {
   }, [query])
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-    if (!!!setSelectedIdx) return null
+    if (!setSelectedIdx || !setFocus) return null
 
     switch (e.key) {
       case 'ArrowUp':
@@ -44,6 +51,14 @@ const PlayerSearch = ({ side }: Props) => {
 
       case 'ArrowDown':
         setSelectedIdx(i => i + 1)
+        break
+
+      case 'ArrowRight':
+        setFocus('loser')
+        break
+
+      case 'ArrowLeft':
+        setFocus('winner')
         break
     }
   }
@@ -59,6 +74,7 @@ const PlayerSearch = ({ side }: Props) => {
         placeholder="Search for player..."
         autoComplete="off"
         onKeyDown={handleKeyDown}
+        ref={refs?.[side]}
       />
     </div>
   )

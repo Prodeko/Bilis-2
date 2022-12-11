@@ -8,13 +8,14 @@ import styles from './ChoosePlayer.module.scss'
 type ListProps = {
   onChoose: (id: number) => void
   filterId: number | undefined
+  side: 'winner' | 'loser'
 }
 
-const Queue = ({ onChoose, filterId }: ListProps) => {
+const Queue = ({ onChoose, filterId, side }: ListProps) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const [state, _dispatch] = useStateValue()
   const players = state.queue.filter(p => p.id !== filterId)
-  const { selectedIdx } = useContext(ModalContext)
+  const { selectedIdx, focus } = useContext(ModalContext)
 
   if (players.length === 0) {
     return <div className={styles.noplayers}>No players in queue</div>
@@ -26,7 +27,9 @@ const Queue = ({ onChoose, filterId }: ListProps) => {
       {players.map((p, i) => (
         <li
           className={
-            i === players.length + selectedIdx ? styles.playerRow__selected : styles.playerRow
+            focus === side && i === players.length + selectedIdx
+              ? styles.playerRow__selected
+              : styles.playerRow
           }
           key={p.id}
           onClick={() => onChoose(p.id)}

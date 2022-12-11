@@ -1,6 +1,14 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react'
 import type { NewGame, PlayerWithStats } from '@common/types'
-import { createContext } from 'react'
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 export interface ModalContextType {
   playerSearchLists: {
@@ -13,6 +21,12 @@ export interface ModalContextType {
   setPlayers: (side: 'winner' | 'loser') => (p: PlayerWithStats[]) => void
   selectedIdx: number
   setSelectedIdx?: Dispatch<SetStateAction<number>>
+  refs?: {
+    winner: RefObject<HTMLInputElement>
+    loser: RefObject<HTMLInputElement>
+  }
+  focus: 'winner' | 'loser'
+  setFocus?: Dispatch<SetStateAction<'winner' | 'loser'>>
 }
 
 export const ModalContext = createContext<ModalContextType>({
@@ -25,6 +39,7 @@ export const ModalContext = createContext<ModalContextType>({
   resetPlayers: (side: 'winner' | 'loser') => null,
   setPlayers: (side: 'winner' | 'loser') => (p: PlayerWithStats[]) => null,
   selectedIdx: 0,
+  focus: 'winner',
 })
 
 const ModalContextProvider = ({
@@ -45,6 +60,12 @@ const ModalContextProvider = ({
   const [game, setGame] = useState<Partial<NewGame>>({
     underTable: false,
   })
+
+  const refs = { winner: useRef<HTMLInputElement>(null), loser: useRef<HTMLInputElement>(null) }
+  const [focus, setFocus] = useState<'winner' | 'loser'>('winner')
+  useEffect(() => {
+    refs[focus].current?.focus()
+  }, [focus])
 
   const setGameField = (key: keyof NewGame) => (val: any) => {
     setGame((g: Partial<NewGame>) => ({ ...g, [key]: val }))
@@ -71,6 +92,9 @@ const ModalContextProvider = ({
     setPlayers,
     selectedIdx,
     setSelectedIdx,
+    refs,
+    focus,
+    setFocus,
   }
 
   return <ModalContext.Provider value={contextProps}>{children}</ModalContext.Provider>

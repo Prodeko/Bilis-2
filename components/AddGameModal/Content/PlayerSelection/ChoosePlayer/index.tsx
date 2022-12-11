@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
@@ -13,6 +13,7 @@ type PlayerProps = {
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const { playerSearchLists, setGameField } = useContext(ModalContext)
+  const [r, forceReRender] = useState<null>(null)
 
   const onChoose = () => setGameField(`${side}Id`)
 
@@ -20,12 +21,13 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers filterId={filterId} onChoose={onChoose} />
+        <QueuePlayers filterId={filterId} onChoose={onChoose} side={side} />
       </div>
       <div className={styles.searchCard}>
-        <PlayerSearch side={side} />
+        <PlayerSearch side={side} forceReRender={forceReRender} />
         <PlayerList
           onChoose={onChoose}
+          side={side}
           playerSearchList={playerSearchLists[side].filter(p => p.id !== filterId)}
         />
       </div>

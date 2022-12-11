@@ -8,18 +8,21 @@ import styles from './ChoosePlayer.module.scss'
 type ListProps = {
   playerSearchList: Player[]
   onChoose: (id: number) => void
+  side: string
 }
 
-const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
+const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const hasPlayers = playerSearchList.length > 0
-  const { selectedIdx } = useContext(ModalContext)
+  const { selectedIdx, focus } = useContext(ModalContext)
   return (
     <ul ref={parent} className={styles.playerList}>
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
           <li
-            className={i == selectedIdx ? styles.playerRow__selected : styles.playerRow}
+            className={
+              focus === side && i == selectedIdx ? styles.playerRow__selected : styles.playerRow
+            }
             key={p.id}
             onClick={() => onChoose(p.id)}
             tabIndex={0}
