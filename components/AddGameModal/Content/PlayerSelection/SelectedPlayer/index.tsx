@@ -15,7 +15,7 @@ type Props = {
 
 const SelectedPlayer = ({ playerId, side }: Props) => {
   const [player, setPlayer] = useState<PlayerWithStats | undefined>(undefined)
-  const { setGameField } = useContext(ModalContext)
+  const { setGameField, setFocus } = useContext(ModalContext)
 
   useEffect(() => {
     axios.get(`/api/player/${playerId}`).then(res => {
@@ -23,13 +23,18 @@ const SelectedPlayer = ({ playerId, side }: Props) => {
     })
   }, [])
 
+  const onClear = () => {
+    setGameField(`${side}Id`)(undefined)
+    setFocus && setFocus(side)
+  }
+
   if (!player) {
     return null
   }
 
   return (
     <table className={styles.chosenPlayer}>
-      <TableHead player={player} onClear={() => setGameField(`${side}Id`)(undefined)} />
+      <TableHead player={player} onClear={onClear} />
       <EloMeter player={player} />
       <TableBody player={player} />
     </table>

@@ -10,7 +10,8 @@ const HomeLayout = ({
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
 }) => {
   return (
-    <div tabIndex={-1} onKeyDown={onKeyDown} className={styles['grid__layout']}>
+    // add id so that we can set the focus on this after a new game is added
+    <div id="home-layout" tabIndex={-1} onKeyDown={onKeyDown} className={styles['grid__layout']}>
       {children}
     </div>
   )

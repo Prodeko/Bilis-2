@@ -1,5 +1,5 @@
 import { useStateValue } from '@state/Queue'
-import { useContext, useMemo, useState } from 'react'
+import { useContext } from 'react'
 import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
@@ -32,7 +32,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers filterId={filterId} onChoose={onChoose} side={side} players={queuePlayers} />
+        <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
       </div>
       <div className={styles.searchCard}>
         <PlayerSearch side={side} onChoose={onChoose} />

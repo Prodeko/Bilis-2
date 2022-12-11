@@ -40,6 +40,7 @@ const Home: NextPage<Props> = ({
 
       case 'Escape':
         closeModal()
+        document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
         break
     }
   }

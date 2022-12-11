@@ -1,10 +1,9 @@
-import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import SearchIcon from '@public/images/search-icon.svg'
 import axios from 'axios'
 import useDebounce from 'hooks/useDebounce'
 import Image from 'next/image'
-import { Dispatch, KeyboardEventHandler, SetStateAction, useContext, useEffect } from 'react'
+import { KeyboardEventHandler, useContext, useEffect } from 'react'
 import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
@@ -24,6 +23,7 @@ const PlayerSearch = ({ side, onChoose }: Props) => {
     refs,
     setFocus,
     focus,
+    game,
   } = useContext(ModalContext)
 
   useEffect(() => {

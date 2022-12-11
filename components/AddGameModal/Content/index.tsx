@@ -1,21 +1,20 @@
-import type { PlayerWithStats, RecentGame } from '@common/types'
-import PlayerSelection from './PlayerSelection'
-import GameCreation from './GameCreation'
-import Title from './Title'
-import styles from './Content.module.scss'
-import useModalState, { ModalContext } from './ModalContextProvider'
+import type { RecentGame } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { removeFromQueue, useStateValue } from '@state/Queue'
 import axios from 'axios'
-import { useStateValue, removeFromQueue } from '@state/Queue'
 import { Dispatch, SetStateAction, useContext } from 'react'
+import styles from './Content.module.scss'
+import GameCreation from './GameCreation'
+import { ModalContext } from './ModalContextProvider'
+import PlayerSelection from './PlayerSelection'
+import Title from './Title'
 
 type Props = {
-  recentPlayers: PlayerWithStats[]
   onClose: () => void
   setGames: Dispatch<SetStateAction<RecentGame[]>>
 }
 
-const Content = ({ recentPlayers, onClose, setGames }: Props) => {
+const Content = ({ onClose, setGames }: Props) => {
   const { game } = useContext(ModalContext)
   const [, dispatch] = useStateValue()
 
@@ -33,6 +32,7 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
     setGames(prev => [res.data, ...prev])
     console.log(res.data)
     onClose()
+    document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
     // TODO show success msg
   }
 
