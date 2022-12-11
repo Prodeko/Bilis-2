@@ -3,9 +3,10 @@ import styles from './AddGameButton.module.scss'
 
 type Props = {
   onOpen: () => void
+  open: boolean
 }
 
-const AddGameButton = ({ onOpen }: Props) => {
+const AddGameButton = ({ onOpen, open }: Props) => {
   // TODO refactor card to support element without cardgrid
   const inlineStyles = {
     gridColumn: '3 / 3',
@@ -13,14 +14,7 @@ const AddGameButton = ({ onOpen }: Props) => {
   }
 
   return (
-    <div
-      className={styles.card}
-      style={inlineStyles}
-      onClick={onOpen}
-      onKeyDown={onOpen}
-      role="button"
-      tabIndex={0}
-    >
+    <div className={styles.card} style={inlineStyles} onClick={onOpen} role="button" id={'button'}>
       <Filter>
         <div className={styles.center}>
           <h3>Add New Game</h3>

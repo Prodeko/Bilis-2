@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import { KeyboardEventHandler, useState } from 'react'
 
 import type { HomeLeaderboard, Player, PlayerWithStats, RecentGame } from '@common/types'
 import AddGame from '@components/AddGameModal'
@@ -32,8 +32,20 @@ const Home: NextPage<Props> = ({
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    switch (e.key) {
+      case 'Enter':
+        openModal()
+        break
+
+      case 'Escape':
+        closeModal()
+        break
+    }
+  }
+
   return (
-    <HomeLayout>
+    <HomeLayout onKeyDown={handleKeyDown}>
       <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
@@ -42,7 +54,7 @@ const Home: NextPage<Props> = ({
           )}
           <Leaderboard leaderboard={leaderboard} />
           <Queue />
-          <AddGameButton onOpen={openModal} />
+          <AddGameButton onOpen={openModal} open={gameModalOpen} />
           <Games games={games} setGames={setGames} />
         </HomeGrid>
       </QueueProvider>
