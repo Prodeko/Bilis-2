@@ -56,10 +56,32 @@ Lisää breakpointeja ja tarkastele senhetkistä muuttujakontekstia sivuja ladat
 
 ## Projektin erityisyyksiä (TÄRKEÄ!!)
 
-### SASS ja moduulit
-Uutta komponenttia tehdessä luodaan pääluokan alle uusi kansio, jonka nimeksi tulee komponentin nimi, esimerkiksi Button. Tämän kansion sisälle tulee kaksi tiedostoa: index.tsx, joka on perinteinen React-komponentti ja "ComponentName".module.scss, johon tulee komponenttikohtainen SCSS-koodi.
+### Dokumentaatio
 
-#### SCSS
+#### TSDoc
+
+Virallinen dokumentointi: https://tsdoc.org/
+
+TSDoc:n avulla voidaan dokumentoidaan suoraan koodiin funktioiden, mitä kukin funktio tekee. TSDoc-koodipätkä kirjoitetaan `/** */`-merkkien väliin ja syntaksiin löytyy hyvät ohjeet dokumentaation omilta sivuilta ja esimerkkejä löytää myös projektin funktioista.
+
+Tärkeimpiä tageja ovat seuraavat:
+[`@param`](https://tsdoc.org/pages/tags/param/): Kuvaile funktio parametreja.
+[`@returns`](https://tsdoc.org/pages/tags/return/): Kuvaile, mitä funktio palauttaa.
+[`@throws`](https://tsdoc.org/pages/tags/throws/): Määritä funktion virhetyyppi
+[`@example`](https://tsdoc.org/pages/tags/example/): Tämän jälkeen voi määritellä koodiblokin, johon voi kirjoittaa esimerkin funktion käytöstä.
+
+Hyödyllisiä ovat myös:
+[`@link`](https://tsdoc.org/pages/tags/link/): Linkki repon muihin osioihin tai URL jollekin ulkoiselle internet-sivulle.
+[`@remarks`](https://tsdoc.org/pages/tags/remarks/): Anna lisähuomioita funktion toiminnasta. Tätä ei tarvitse käyttää peruskuvailun tekemiseen, sen voi kirjoittaa suoraan TSDoc:n yläosaan.
+[`@typeParam`](https://tsdoc.org/pages/tags/typeparam/): Kuvaile geneeristä tyyppiä.
+
+
+### SASS ja moduulit
 CSS-framworkkina käytämme SASSia, josta voi lukea lisää...
 - virallisesta dokumentaatiosta (https://sass-lang.com/guide)
 - SASS vs CSS (https://www.youtube.com/watch?v=g1kF45K-q7o&list=PL4-IK0AVhVjMYRhK9vRPatSlb-9r0aKgh&index=4
+
+#### Uuden komponentin luominen
+Uutta komponenttia tehdessä luodaan pääluokan alle uusi kansio, jonka nimeksi tulee komponentin nimi, esimerkiksi Button. Tämän kansion sisälle tulee kaksi tiedostoa: index.tsx, joka on perinteinen React-komponentti ja "ComponentName".module.scss, johon tulee komponenttikohtainen SCSS-koodi.
+
+Scss-moduuliin importataan aina `@use 'styles' as *;`. Tällä saadaan scss-moduulin sisäiseen käyttöön koko meidän `styles`-kansion sisäinen design-systeemi. Sieltä voi sitten käyttää suoraan muuttujia ($-merkki), mixinejä (@-merkki) ja placeholdereita (%-merkki).
