@@ -1,11 +1,16 @@
 import { KeyboardEventHandler, useState } from 'react'
 
 import type { WithId } from '@common/types'
+import axios from 'axios'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { addToQueue, useStateValue } from '@state/Queue'
 
 const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => void) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0)
+  const [_, dispatch] = useStateValue()
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
+    console.log(event.key)
     switch (event.key) {
       case 'ArrowUp':
         setSelectedIdx(Math.max(0, selectedIdx - 1))
@@ -22,6 +27,12 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => v
           enterFunction(e)
         }
         break
+      
+      // opsec
+      case 'Home':
+        axios
+          .get(`${NEXT_PUBLIC_API_URL}/player/m`)
+          .then(res => res?.data ?? dispatch(addToQueue(res.data)))
 
       default:
         break

@@ -20,7 +20,7 @@ const AddGame = ({ recentPlayers, onClose, setGames }: PlayerProps) => {
         <CloseButton onClose={onClose} />
         <PlayerLabel type="winner" />
         <ModalContextProvider recentPlayers={recentPlayers}>
-          <Content setGames={setGames} recentPlayers={recentPlayers} onClose={onClose} />
+          <Content setGames={setGames} onClose={onClose} />
         </ModalContextProvider>
         <PlayerLabel type="loser" />
       </div>

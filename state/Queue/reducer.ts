@@ -24,6 +24,11 @@ export const reducer = (state: State, action: Action): State => {
         queue: newQueue,
       }
     case 'ADD_TO_QUEUE':
+      if (state.queue.some(p => p.id === action.payload.id)) {
+        console.warn(`${action.payload.firstName} ${action.payload.lastName} is already in queue!`)
+        return state
+      }
+
       newQueue = [...state.queue, action.payload]
       setLocalQueue(newQueue)
       return {

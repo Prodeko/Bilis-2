@@ -4,6 +4,7 @@
   @include scrollbar(false);
   @include flex-y(null);
 
+  overflow-x: hidden;
   background: $color-base-white;
   border-radius: $border-radius-small;
   transition: all 0.5s;
