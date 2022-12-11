@@ -3,6 +3,7 @@ import SelectedPlayer from './SelectedPlayer'
 import ChoosePlayer from './ChoosePlayer'
 import styles from './PlayerSelection.module.scss'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
   playerId: number | undefined
@@ -11,6 +12,8 @@ interface Props {
   setGameField: (val: any) => void
   resetPlayers: () => void
   setPlayers: (players: PlayerWithStats[]) => void
+  selectedIdx: number
+  setSelectedIdx: Dispatch<SetStateAction<number>>
 }
 
 const PlayerSelection = ({
@@ -20,6 +23,8 @@ const PlayerSelection = ({
   setGameField,
   resetPlayers,
   setPlayers,
+  selectedIdx,
+  setSelectedIdx,
 }: Props) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 500 })
 
@@ -34,6 +39,8 @@ const PlayerSelection = ({
           playerSearchList={playerSearchList}
           closeSearch={resetPlayers}
           setPlayers={setPlayers}
+          selectedIdx={selectedIdx}
+          setSelectedIdx={setSelectedIdx}
         />
       )}
     </div>

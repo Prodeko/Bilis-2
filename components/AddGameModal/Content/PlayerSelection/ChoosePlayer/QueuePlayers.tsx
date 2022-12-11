@@ -6,9 +6,10 @@ import styles from './ChoosePlayer.module.scss'
 type ListProps = {
   onChoose: (id: number) => void
   filterId: number | undefined
+  selectedIdx: number
 }
 
-const Queue = ({ onChoose, filterId }: ListProps) => {
+const Queue = ({ onChoose, filterId, selectedIdx }: ListProps) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const [state, _dispatch] = useStateValue()
   const players = state.queue.filter(p => p.id !== filterId)
@@ -20,9 +21,11 @@ const Queue = ({ onChoose, filterId }: ListProps) => {
   return (
     // Does not work at the moment
     <ul ref={parent} className={styles.playerList}>
-      {players.map(p => (
+      {players.map((p, i) => (
         <li
-          className={styles.playerRow}
+          className={
+            i === players.length + selectedIdx ? styles.playerRow__selected : styles.playerRow
+          }
           key={p.id}
           onClick={() => onChoose(p.id)}
           onKeyDown={() => onChoose(p.id)}

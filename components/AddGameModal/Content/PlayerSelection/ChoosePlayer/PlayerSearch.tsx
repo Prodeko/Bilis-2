@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { useEffect } from 'react'
+import { Dispatch, KeyboardEventHandler, SetStateAction, useEffect } from 'react'
 import type { PlayerWithStats } from '@common/types'
 import useDebounce from 'hooks/useDebounce'
 import styles from './ChoosePlayer.module.scss'
@@ -10,9 +10,10 @@ import Image from 'next/image'
 type SearchProps = {
   setPlayers: (players: PlayerWithStats[]) => void
   closeSearch: () => void
+  setSelectedIdx: Dispatch<SetStateAction<number>>
 }
 
-const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
+const PlayerSearch = ({ setPlayers, closeSearch, setSelectedIdx }: SearchProps) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
@@ -33,6 +34,18 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    switch (e.key) {
+      case 'ArrowUp':
+        setSelectedIdx(i => i - 1)
+        break
+
+      case 'ArrowDown':
+        setSelectedIdx(i => i + 1)
+        break
+    }
+  }
+
   return (
     <div className={styles.inputWrapper}>
       <label htmlFor="search" className={styles.searchIcon}>
@@ -43,6 +56,7 @@ const PlayerSearch = ({ setPlayers, closeSearch }: SearchProps) => {
         onChange={({ target }) => setQuery(target.value)}
         placeholder="Search for player..."
         autoComplete="off"
+        onKeyDown={handleKeyDown}
       />
     </div>
   )

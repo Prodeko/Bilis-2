@@ -16,8 +16,15 @@ type Props = {
 }
 
 const Content = ({ recentPlayers, onClose, setGames }: Props) => {
-  const { playerSearchLists, game, setGameField, resetPlayers, setPlayers } =
-    useModalState(recentPlayers)
+  const {
+    playerSearchLists,
+    game,
+    setGameField,
+    resetPlayers,
+    setPlayers,
+    selectedIdx,
+    setSelectedIdx,
+  } = useModalState(recentPlayers)
   const [, dispatch] = useStateValue()
   const isActive = Boolean(game.winnerId && game.loserId)
 
@@ -49,6 +56,8 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
           setGameField={setGameField('winnerId')}
           setPlayers={setPlayers('winner')}
           resetPlayers={resetPlayers('winner')}
+          selectedIdx={selectedIdx}
+          setSelectedIdx={setSelectedIdx}
         />
         <GameCreation
           isActive={isActive}
@@ -62,6 +71,8 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
           setGameField={setGameField('loserId')}
           setPlayers={setPlayers('loser')}
           resetPlayers={resetPlayers('loser')}
+          selectedIdx={selectedIdx}
+          setSelectedIdx={setSelectedIdx}
         />
       </div>
     </div>

@@ -29,12 +29,16 @@ const useModalState = (recentPlayers: PlayerWithStats[]) => {
     }))
   }
 
+  const [selectedIdx, setSelectedIdx] = useState<number>(0)
+
   return {
     playerSearchLists,
     game,
     setGameField,
     resetPlayers,
     setPlayers,
+    selectedIdx,
+    setSelectedIdx,
   }
 }
 
