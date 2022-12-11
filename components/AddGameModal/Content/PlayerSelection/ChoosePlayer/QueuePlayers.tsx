@@ -1,18 +1,20 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useStateValue } from '@state/Queue'
 import { filter, round } from 'lodash'
+import { useContext } from 'react'
+import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
   onChoose: (id: number) => void
   filterId: number | undefined
-  selectedIdx: number
 }
 
-const Queue = ({ onChoose, filterId, selectedIdx }: ListProps) => {
+const Queue = ({ onChoose, filterId }: ListProps) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const [state, _dispatch] = useStateValue()
   const players = state.queue.filter(p => p.id !== filterId)
+  const { selectedIdx } = useContext(ModalContext)
 
   if (players.length === 0) {
     return <div className={styles.noplayers}>No players in queue</div>

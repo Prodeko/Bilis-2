@@ -1,46 +1,32 @@
-import type { PlayerWithStats } from '@common/types'
-import PlayerSearch from './PlayerSearch'
-import PlayerList from './PlayerList'
+import { useContext } from 'react'
+import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
+import PlayerList from './PlayerList'
+import PlayerSearch from './PlayerSearch'
 import QueuePlayers from './QueuePlayers'
 import QueueTitle from './QueueTitle'
-import { Dispatch, SetStateAction } from 'react'
 
 type PlayerProps = {
-  onChoose: (id: number) => void
-  setPlayers: (arg: PlayerWithStats[]) => void
   filterId: number | undefined
-  playerSearchList: PlayerWithStats[]
-  closeSearch: () => void
-  selectedIdx: number
-  setSelectedIdx: Dispatch<SetStateAction<number>>
+  side: 'winner' | 'loser'
 }
 
-const ChoosePlayer = ({
-  onChoose,
-  filterId,
-  setPlayers,
-  closeSearch,
-  playerSearchList,
-  selectedIdx,
-  setSelectedIdx,
-}: PlayerProps) => {
+const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
+  const { playerSearchLists, setGameField } = useContext(ModalContext)
+
+  const onChoose = () => setGameField(`${side}Id`)
+
   return (
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers selectedIdx={selectedIdx} filterId={filterId} onChoose={onChoose} />
+        <QueuePlayers filterId={filterId} onChoose={onChoose} />
       </div>
       <div className={styles.searchCard}>
-        <PlayerSearch
-          closeSearch={closeSearch}
-          setPlayers={setPlayers}
-          setSelectedIdx={setSelectedIdx}
-        />
+        <PlayerSearch side={side} />
         <PlayerList
           onChoose={onChoose}
-          playerSearchList={playerSearchList.filter(p => p.id !== filterId)}
-          selectedIdx={selectedIdx}
+          playerSearchList={playerSearchLists[side].filter(p => p.id !== filterId)}
         />
       </div>
     </>

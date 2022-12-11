@@ -3,11 +3,11 @@ import PlayerSelection from './PlayerSelection'
 import GameCreation from './GameCreation'
 import Title from './Title'
 import styles from './Content.module.scss'
-import useModalState from './useModalState'
+import useModalState, { ModalContext } from './ModalContextProvider'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
 import { useStateValue, removeFromQueue } from '@state/Queue'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 
 type Props = {
   recentPlayers: PlayerWithStats[]
@@ -16,17 +16,8 @@ type Props = {
 }
 
 const Content = ({ recentPlayers, onClose, setGames }: Props) => {
-  const {
-    playerSearchLists,
-    game,
-    setGameField,
-    resetPlayers,
-    setPlayers,
-    selectedIdx,
-    setSelectedIdx,
-  } = useModalState(recentPlayers)
+  const { game } = useContext(ModalContext)
   const [, dispatch] = useStateValue()
-  const isActive = Boolean(game.winnerId && game.loserId)
 
   // TODO validate that all fields are present
   const onSubmit = async () => {
@@ -49,31 +40,9 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
     <div className={styles.cardWrapper}>
       <Title title="New Game" />
       <div className={styles.card}>
-        <PlayerSelection
-          playerId={game.winnerId}
-          otherPlayerId={game.loserId}
-          playerSearchList={playerSearchLists.winner}
-          setGameField={setGameField('winnerId')}
-          setPlayers={setPlayers('winner')}
-          resetPlayers={resetPlayers('winner')}
-          selectedIdx={selectedIdx}
-          setSelectedIdx={setSelectedIdx}
-        />
-        <GameCreation
-          isActive={isActive}
-          onSubmit={onSubmit}
-          setGameField={setGameField('underTable')}
-        />
-        <PlayerSelection
-          playerId={game.loserId}
-          otherPlayerId={game.winnerId}
-          playerSearchList={playerSearchLists.loser}
-          setGameField={setGameField('loserId')}
-          setPlayers={setPlayers('loser')}
-          resetPlayers={resetPlayers('loser')}
-          selectedIdx={selectedIdx}
-          setSelectedIdx={setSelectedIdx}
-        />
+        <PlayerSelection playerId={game.winnerId} otherPlayerId={game.loserId} side={'winner'} />
+        <GameCreation onSubmit={onSubmit} />
+        <PlayerSelection playerId={game.loserId} otherPlayerId={game.winnerId} side={'loser'} />
       </div>
     </div>
   )

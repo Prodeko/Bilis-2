@@ -1,18 +1,19 @@
 import type { Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { round } from 'lodash'
+import { useContext } from 'react'
+import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
   playerSearchList: Player[]
   onChoose: (id: number) => void
-  selectedIdx: number
 }
 
-const PlayerList = ({ playerSearchList, onChoose, selectedIdx }: ListProps) => {
+const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const hasPlayers = playerSearchList.length > 0
-
+  const { selectedIdx } = useContext(ModalContext)
   return (
     <ul ref={parent} className={styles.playerList}>
       {hasPlayers ? (

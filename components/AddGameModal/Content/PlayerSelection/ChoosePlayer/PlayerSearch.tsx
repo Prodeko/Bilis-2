@@ -1,22 +1,22 @@
-import axios from 'axios'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { Dispatch, KeyboardEventHandler, SetStateAction, useEffect } from 'react'
 import type { PlayerWithStats } from '@common/types'
-import useDebounce from 'hooks/useDebounce'
-import styles from './ChoosePlayer.module.scss'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
 import SearchIcon from '@public/images/search-icon.svg'
+import axios from 'axios'
+import useDebounce from 'hooks/useDebounce'
 import Image from 'next/image'
+import { KeyboardEventHandler, useContext, useEffect } from 'react'
+import { ModalContext } from '../../ModalContextProvider'
+import styles from './ChoosePlayer.module.scss'
 
-type SearchProps = {
-  setPlayers: (players: PlayerWithStats[]) => void
-  closeSearch: () => void
-  setSelectedIdx: Dispatch<SetStateAction<number>>
+interface Props {
+  side: 'winner' | 'loser'
 }
 
-const PlayerSearch = ({ setPlayers, closeSearch, setSelectedIdx }: SearchProps) => {
+const PlayerSearch = ({ side }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
+  const { setSelectedIdx, setPlayers, resetPlayers: closeSearch } = useContext(ModalContext)
 
   useEffect(() => {
     const search = async (q: string) => {
@@ -29,12 +29,14 @@ const PlayerSearch = ({ setPlayers, closeSearch, setSelectedIdx }: SearchProps) 
     if (!isEmpty) {
       search(query)
     } else {
-      closeSearch()
+      closeSearch(side)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    if (!!!setSelectedIdx) return null
+
     switch (e.key) {
       case 'ArrowUp':
         setSelectedIdx(i => i - 1)
