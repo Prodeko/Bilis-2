@@ -10,7 +10,8 @@
   ],
   "plugins": [
       "prettier",
-      "react"
+      "react",
+      "eslint-plugin-tsdoc"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -34,7 +35,8 @@
       "react/function-component-definition": "off",
       "react/prop-types": "off",
       "import/prefer-default-export": "off",
-      "react/jsx-props-no-spreading": "off"
+      "react/jsx-props-no-spreading": "off",
+      "tsdoc/syntax": "warn"
   },
   "settings": {
     "import/extensions": [
