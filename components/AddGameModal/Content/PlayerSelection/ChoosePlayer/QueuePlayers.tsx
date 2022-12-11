@@ -25,6 +25,7 @@ const Queue = ({ onChoose, side, players }: ListProps) => {
     <ul ref={parent} className={styles.playerList}>
       {players.map((p, i) => (
         <li
+          id={i === players.length + selectedIdx && focus === side ? `add-game-list` : ''}
           className={
             focus === side && i === players.length + selectedIdx
               ? styles.playerRow__selected

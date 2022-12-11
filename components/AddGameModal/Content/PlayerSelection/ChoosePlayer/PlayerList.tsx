@@ -20,6 +20,7 @@ const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
           <li
+            id={i == selectedIdx && focus === side ? `add-game-list` : ''}
             className={
               focus === side && i == selectedIdx ? styles.playerRow__selected : styles.playerRow
             }

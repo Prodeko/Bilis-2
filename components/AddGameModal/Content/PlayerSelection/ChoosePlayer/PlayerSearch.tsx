@@ -45,13 +45,22 @@ const PlayerSearch = ({ side, onChoose }: Props) => {
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
     if (!setSelectedIdx || !setFocus) return null
 
+    const selectedElement = document.getElementById('add-game-list')
     switch (e.key) {
       case 'ArrowUp':
         setSelectedIdx(i => i - 1)
+        selectedElement?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
         break
 
       case 'ArrowDown':
         setSelectedIdx(i => i + 1)
+        selectedElement?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
         break
 
       case 'ArrowRight':
