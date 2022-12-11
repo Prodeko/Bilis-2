@@ -24,4 +24,4 @@ const getScoreChange = (
   return [winnerChange, loserChange]
 }
 
-export { getScoreChange }
+export { robustGameScore, getScoreChange }
