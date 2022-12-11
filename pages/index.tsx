@@ -36,7 +36,8 @@ const Home: NextPage<Props> = ({
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
     switch (e.key) {
       case 'Enter':
-        openModal()
+        // if queue is focused, don't open modal on enter
+        if (document.activeElement !== document?.getElementById('queue')) openModal()
         break
 
       case 'Escape':
