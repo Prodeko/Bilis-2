@@ -6,7 +6,7 @@
   @include padding-y($padding: $spacing-8);
   @include padding-x($padding: $spacing-16);
 
-  @include gradient-animation(
+  @include gradient-animation-on-hover(
       $before-left: $color-gray-800,
       $before-right: $color-gray-800,
       $after-left: $color-gray-800,

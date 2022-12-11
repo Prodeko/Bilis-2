@@ -9,17 +9,27 @@
   color: $color-gray-200;
 }
 
+%row {
+  @extend %text-style-text-xl-semibold;
+  @include flex-x(null);
+
+
+  align-items: center;
+  cursor: pointer;
+  height: $spacing-48;
+  justify-content: space-between;
+  padding: $spacing-16;
+}
+
 .playerList {
   @include scrollbar(true);
   @extend %card-bg;
   @include flex-y(null);
 
-  overflow-y: scroll;
 
   .playerRow {
-    @extend %text-style-text-xl-semibold;
-    @include flex-x(null);
-    @include gradient-animation(
+    @extend %row;
+    @include gradient-animation-on-hover(
       $before-left: $color-gray-800,
       $before-right: $color-gray-800,
       $after-left: $color-gray-800,
@@ -27,11 +37,16 @@
       $trans-time: 0.1s
     );
 
-    align-items: center;
-    cursor: pointer;
-    height: $spacing-48;
-    justify-content: space-between;
-    padding: $spacing-16;
+    &__selected {
+      @extend %row;
+      @include gradient-animation(
+        $before-left: $color-gray-800,
+        $before-right: $color-gray-800,
+        $after-left: $color-gray-800,
+        $after-right: $color-gray-700,
+        $trans-time: 0.1s
+      );
+    }
   }
 }
 
