@@ -1,3 +1,4 @@
+import { useStateValue } from '@state/Queue'
 import { useContext, useMemo, useState } from 'react'
 import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
@@ -12,24 +13,30 @@ type PlayerProps = {
 }
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
-  const { playerSearchLists, setGameField } = useContext(ModalContext)
-  const [r, forceReRender] = useState<null>(null)
+  const { playerSearchLists, setGameField, selectedIdx, setFocus } = useContext(ModalContext)
+  const [state] = useStateValue()
 
-  const onChoose = () => setGameField(`${side}Id`)
+  const queuePlayers = state.queue.filter(p => p.id !== filterId)
+  const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
+  const selectedPlayer =
+    queuePlayers?.[queuePlayers.length + selectedIdx] ||
+    playerSearchList?.[selectedIdx] ||
+    undefined
+
+  const onChoose = () => {
+    setFocus && setFocus(side === 'winner' ? 'loser' : 'winner')
+    setGameField(`${side}Id`)(selectedPlayer?.id)
+  }
 
   return (
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers filterId={filterId} onChoose={onChoose} side={side} />
+        <QueuePlayers filterId={filterId} onChoose={onChoose} side={side} players={queuePlayers} />
       </div>
       <div className={styles.searchCard}>
-        <PlayerSearch side={side} forceReRender={forceReRender} />
-        <PlayerList
-          onChoose={onChoose}
-          side={side}
-          playerSearchList={playerSearchLists[side].filter(p => p.id !== filterId)}
-        />
+        <PlayerSearch side={side} onChoose={onChoose} />
+        <PlayerList onChoose={onChoose} side={side} playerSearchList={playerSearchList} />
       </div>
     </>
   )

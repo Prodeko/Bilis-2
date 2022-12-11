@@ -10,10 +10,10 @@ import styles from './ChoosePlayer.module.scss'
 
 interface Props {
   side: 'winner' | 'loser'
-  forceReRender: Dispatch<SetStateAction<null>>
+  onChoose: () => void
 }
 
-const PlayerSearch = ({ side, forceReRender }: Props) => {
+const PlayerSearch = ({ side, onChoose }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
@@ -23,6 +23,7 @@ const PlayerSearch = ({ side, forceReRender }: Props) => {
     resetPlayers: closeSearch,
     refs,
     setFocus,
+    focus,
   } = useContext(ModalContext)
 
   useEffect(() => {
@@ -60,6 +61,10 @@ const PlayerSearch = ({ side, forceReRender }: Props) => {
       case 'ArrowLeft':
         setFocus('winner')
         break
+
+      case 'Enter':
+        onChoose()
+        break
     }
   }
 
@@ -74,6 +79,11 @@ const PlayerSearch = ({ side, forceReRender }: Props) => {
         placeholder="Search for player..."
         autoComplete="off"
         onKeyDown={handleKeyDown}
+        onClick={() => {
+          if (focus === side) return
+          setSelectedIdx && setSelectedIdx(0)
+          setFocus && setFocus(side)
+        }}
         ref={refs?.[side]}
       />
     </div>
