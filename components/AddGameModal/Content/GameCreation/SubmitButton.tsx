@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { ModalContext } from '../ModalContextProvider'
+import { useModalState } from '@state/Modal'
 
 interface Props {
   onSubmit: () => void
@@ -7,7 +6,7 @@ interface Props {
 }
 
 const SubmitButton = ({ onSubmit, isActive }: Props) => {
-  const { refs } = useContext(ModalContext)
+  const [{ refs }] = useModalState()
   return (
     <button disabled={!isActive} onClick={onSubmit} type="button" ref={refs?.addGame}>
       Add Game

@@ -1,8 +1,7 @@
 import { Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useModalState } from '@state/Modal'
 import { round } from 'lodash'
-import { useContext } from 'react'
-import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
@@ -14,23 +13,21 @@ type ListProps = {
 const Queue = ({ onChoose, side, players }: ListProps) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
-  const { selectedIdx, focus } = useContext(ModalContext)
+  const [{ selectedIdx, focus }] = useModalState()
 
   if (players.length === 0) {
     return <div className={styles.noplayers}>No players in queue</div>
   }
+
+  const isSelected = (i: number) => i === players.length + selectedIdx && focus === side
 
   return (
     // Does not work at the moment
     <ul ref={parent} className={styles.playerList}>
       {players.map((p, i) => (
         <li
-          id={i === players.length + selectedIdx && focus === side ? `add-game-list` : ''}
-          className={
-            focus === side && i === players.length + selectedIdx
-              ? styles.playerRow__selected
-              : styles.playerRow
-          }
+          id={isSelected(i) ? `add-game-list` : ''}
+          className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
           key={p.id}
           onClick={() => onChoose(p.id)}
           onKeyDown={() => onChoose(p.id)}

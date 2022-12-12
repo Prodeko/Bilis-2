@@ -1,12 +1,12 @@
 import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { setFocus, setPlayerId, useModalState } from '@state/Modal'
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
-import styles from './SelectedPlayer.module.scss'
+import { useEffect, useState } from 'react'
 import EloMeter from './EloMeter'
+import styles from './SelectedPlayer.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'
-import { ModalContext } from '../../ModalContextProvider'
 
 type Props = {
   playerId: number
@@ -15,7 +15,7 @@ type Props = {
 
 const SelectedPlayer = ({ playerId, side }: Props) => {
   const [player, setPlayer] = useState<PlayerWithStats | undefined>(undefined)
-  const { setGameField, setFocus } = useContext(ModalContext)
+  const [_, dispatch] = useModalState()
 
   useEffect(() => {
     axios.get(`/api/player/${playerId}`).then(res => {
@@ -24,13 +24,11 @@ const SelectedPlayer = ({ playerId, side }: Props) => {
   }, [])
 
   const onClear = () => {
-    setGameField(`${side}Id`)(undefined)
-    setFocus && setFocus(side)
+    dispatch(setPlayerId(side, undefined))
+    dispatch(setFocus(side))
   }
 
-  if (!player) {
-    return null
-  }
+  if (!player) return null
 
   return (
     <table className={styles.chosenPlayer}>

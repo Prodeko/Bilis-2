@@ -3,11 +3,11 @@ import { KeyboardEventHandler, useState } from 'react'
 import type { WithId } from '@common/types'
 import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { addToQueue, useStateValue } from '@state/Queue'
+import { addToQueue, useQueueState } from '@state/Queue'
 
 const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => void) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0)
-  const [_, dispatch] = useStateValue()
+  const [_, dispatch] = useQueueState()
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
     console.log(event.key)
@@ -27,7 +27,7 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => v
           enterFunction(e)
         }
         break
-      
+
       // opsec
       case 'Home':
         axios

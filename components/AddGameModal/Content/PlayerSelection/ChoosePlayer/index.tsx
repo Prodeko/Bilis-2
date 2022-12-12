@@ -1,6 +1,5 @@
-import { useStateValue } from '@state/Queue'
-import { useContext } from 'react'
-import { ModalContext } from '../../ModalContextProvider'
+import { setFocus, setPlayerId, useModalState } from '@state/Modal'
+import { useQueueState } from '@state/Queue'
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
 import PlayerSearch from './PlayerSearch'
@@ -13,8 +12,8 @@ type PlayerProps = {
 }
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
-  const { playerSearchLists, setGameField, selectedIdx, setFocus } = useContext(ModalContext)
-  const [state] = useStateValue()
+  const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
+  const [state] = useQueueState()
 
   const queuePlayers = state.queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
@@ -24,8 +23,8 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     undefined
 
   const onChoose = () => {
-    setFocus && setFocus(side === 'winner' ? 'loser' : 'winner')
-    setGameField(`${side}Id`)(selectedPlayer?.id)
+    dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
+    dispatch(setPlayerId(side, selectedPlayer?.id))
   }
 
   return (

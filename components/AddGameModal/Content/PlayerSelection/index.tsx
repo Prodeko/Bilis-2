@@ -1,9 +1,7 @@
-import type { PlayerWithStats } from '@common/types'
-import SelectedPlayer from './SelectedPlayer'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import ChoosePlayer from './ChoosePlayer'
 import styles from './PlayerSelection.module.scss'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Dispatch, SetStateAction, useContext } from 'react'
+import SelectedPlayer from './SelectedPlayer'
 
 interface Props {
   playerId: number | undefined

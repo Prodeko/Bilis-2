@@ -27,4 +27,4 @@ export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
     </QueueContext.Provider>
   )
 }
-export const useStateValue = () => useContext(QueueContext)
+export const useQueueState = () => useContext(QueueContext)

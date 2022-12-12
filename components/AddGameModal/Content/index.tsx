@@ -1,11 +1,11 @@
 import type { RecentGame } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { removeFromQueue, useStateValue } from '@state/Queue'
+import { useModalState } from '@state/Modal'
+import { removeFromQueue, useQueueState } from '@state/Queue'
 import axios from 'axios'
-import { Dispatch, SetStateAction, useContext } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import styles from './Content.module.scss'
 import GameCreation from './GameCreation'
-import { ModalContext } from './ModalContextProvider'
 import PlayerSelection from './PlayerSelection'
 import Title from './Title'
 
@@ -15,8 +15,8 @@ type Props = {
 }
 
 const Content = ({ onClose, setGames }: Props) => {
-  const { game } = useContext(ModalContext)
-  const [, dispatch] = useStateValue()
+  const [{ game }] = useModalState()
+  const [, dispatch] = useQueueState()
 
   // TODO validate that all fields are present
   const onSubmit = async () => {

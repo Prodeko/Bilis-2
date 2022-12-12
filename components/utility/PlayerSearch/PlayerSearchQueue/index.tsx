@@ -12,12 +12,12 @@ import { Player } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { addToQueue, useStateValue } from '@state/Queue'
+import { addToQueue, useQueueState } from '@state/Queue'
 
 import styles from './PlayerSearchQueue.module.scss'
 
 const PlayerSearchQueue = () => {
-  const [{ queue }, dispatch] = useStateValue()
+  const [{ queue }, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
   const filteredPlayers = players.filter(

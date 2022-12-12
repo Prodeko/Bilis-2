@@ -1,12 +1,12 @@
 import Card from '@components/utility/Card'
-import { useStateValue } from '@state/Queue'
+import { useQueueState } from '@state/Queue'
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const Queue = () => {
-  const [{ queue }] = useStateValue()
+  const [{ queue }] = useQueueState()
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   return (

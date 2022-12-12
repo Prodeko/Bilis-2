@@ -1,8 +1,7 @@
 import type { Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useModalState } from '@state/Modal'
 import { round } from 'lodash'
-import { useContext } from 'react'
-import { ModalContext } from '../../ModalContextProvider'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
@@ -14,16 +13,17 @@ type ListProps = {
 const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const hasPlayers = playerSearchList.length > 0
-  const { selectedIdx, focus } = useContext(ModalContext)
+  const [{ selectedIdx, focus }] = useModalState()
+
+  const isSelected = (i: number) => i == selectedIdx && focus === side
+
   return (
     <ul ref={parent} className={styles.playerList}>
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
           <li
-            id={i == selectedIdx && focus === side ? `add-game-list` : ''}
-            className={
-              focus === side && i == selectedIdx ? styles.playerRow__selected : styles.playerRow
-            }
+            id={isSelected(i) ? `add-game-list` : ''}
+            className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
             key={p.id}
             onClick={() => onChoose(p.id)}
             tabIndex={0}
