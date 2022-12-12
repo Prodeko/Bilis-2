@@ -1,5 +1,6 @@
 import { setFocus, setPlayerId, useModalState } from '@state/Modal'
 import { useQueueState } from '@state/Queue'
+
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
 import PlayerSearch from './PlayerSearch'

@@ -1,8 +1,8 @@
 import { isString } from 'lodash'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { searchPlayers, createPlayer } from '@server/db/players'
 import { isNewPlayer } from '@common/types/guards'
+import { createPlayer, searchPlayers } from '@server/db/players'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

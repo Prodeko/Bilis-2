@@ -1,4 +1,5 @@
 import { RecentGame } from '@common/types'
+
 import styles from './Table.module.scss'
 
 interface Props {

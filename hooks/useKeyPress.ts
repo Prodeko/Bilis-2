@@ -1,7 +1,7 @@
+import axios from 'axios'
 import { KeyboardEventHandler, useState } from 'react'
 
 import type { WithId } from '@common/types'
-import axios from 'axios'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { addToQueue, useQueueState } from '@state/Queue'
 

@@ -1,6 +1,7 @@
+import { RefObject } from 'react'
+
 import type { NewGame, Player, PlayerWithStats } from '@common/types'
 import { Game } from '@server/models'
-import { RefObject } from 'react'
 
 export type State = {
   playerSearchLists: {

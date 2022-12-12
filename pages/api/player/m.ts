@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import { Player } from '@common/types'
 import { getPlayerById } from '@server/db/players'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = 935

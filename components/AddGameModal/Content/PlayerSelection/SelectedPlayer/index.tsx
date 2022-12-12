@@ -1,8 +1,10 @@
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+
 import type { PlayerWithStats } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { setFocus, setPlayerId, useModalState } from '@state/Modal'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+
 import EloMeter from './EloMeter'
 import styles from './SelectedPlayer.module.scss'
 import TableBody from './TableBody'

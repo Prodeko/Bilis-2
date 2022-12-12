@@ -1,5 +1,6 @@
-import { PlayerWithStats } from '@common/types'
 import React, { createContext, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
+
+import { PlayerWithStats } from '@common/types'
 
 import { Action, State } from './reducer'
 

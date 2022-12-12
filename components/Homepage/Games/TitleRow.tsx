@@ -1,6 +1,6 @@
+import { RecentGame } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-import { RecentGame } from '@common/types'
 import styles from './Games.module.scss'
 import Modal from './Modal'
 

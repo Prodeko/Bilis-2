@@ -1,12 +1,12 @@
 import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import UserPlus from '@public/images/user-plus-01.svg'
 
 import { NewPlayer, Player } from '@common/types'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import UserPlus from '@public/images/user-plus-01.svg'
 
 import Field from './Field'
 import styles from './ProfileForm.module.scss'

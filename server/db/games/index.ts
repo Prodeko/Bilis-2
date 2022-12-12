@@ -2,11 +2,11 @@ import { Op } from 'sequelize'
 
 import type {
   GameWithPlayers,
+  MutualGames,
   NewGame,
   PlayerStats,
-  MutualGames,
-  TimeSeriesGame,
   RecentGame,
+  TimeSeriesGame,
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'

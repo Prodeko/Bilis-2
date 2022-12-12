@@ -1,7 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { getRecentGames } from '@server/db/games'
-import { RecentGame } from '@common/types'
 import { isString } from 'lodash'
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { RecentGame } from '@common/types'
+import { getRecentGames } from '@server/db/games'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RecentGame[]>) {
   if (isString(req.query.offset)) {

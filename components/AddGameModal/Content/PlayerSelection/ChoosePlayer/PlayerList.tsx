@@ -1,7 +1,9 @@
+import { round } from 'lodash'
+
 import type { Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useModalState } from '@state/Modal'
-import { round } from 'lodash'
+
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {

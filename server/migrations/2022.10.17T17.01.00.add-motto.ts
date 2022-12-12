@@ -1,5 +1,5 @@
-import { MigrationFn } from 'umzug'
 import Sequelize from 'sequelize'
+import { MigrationFn } from 'umzug'
 
 export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
   await queryInterface.addColumn('players', 'motto', {

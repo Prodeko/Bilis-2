@@ -1,18 +1,14 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler } from 'react'
-import Router from 'next/router'
 import Link from 'next/link'
+import Router from 'next/router'
+import { ChangeEventHandler } from 'react'
 
 import { Player } from '@common/types'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './PlayerSearchLink.module.scss'
 

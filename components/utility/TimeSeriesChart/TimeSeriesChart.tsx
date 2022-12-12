@@ -1,10 +1,11 @@
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
 import { renderToString } from 'react-dom/server'
+
 import type { TimeSeriesGame } from '@common/types'
-import Tooltip from './ToolTip'
 
 import styles from './TimeSeriesChart.module.scss'
+import Tooltip from './ToolTip'
 
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 

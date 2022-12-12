@@ -1,6 +1,8 @@
-import type { PlayerWithStats } from '@common/types'
-import styles from './SelectedPlayer.module.scss'
 import { round } from 'lodash'
+
+import type { PlayerWithStats } from '@common/types'
+
+import styles from './SelectedPlayer.module.scss'
 
 const TableBody = ({ player }: { player: PlayerWithStats }) => {
   return (

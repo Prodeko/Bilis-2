@@ -1,11 +1,13 @@
-import type { Game, PlayerWithStats, RecentGame } from '@common/types'
 import { Dispatch, SetStateAction } from 'react'
+
+import type { PlayerWithStats, RecentGame } from '@common/types'
+import ModalBlur from '@components/utility/ModalBlur'
+import { ModalProvider, reducer } from '@state/Modal'
+
 import styles from './AddGameModal.module.scss'
 import CloseButton from './CloseButton'
 import Content from './Content'
 import PlayerLabel from './PlayerLabel'
-import ModalBlur from '@components/utility/ModalBlur'
-import { ModalProvider, reducer } from '@state/Modal'
 
 type PlayerProps = {
   recentPlayers: PlayerWithStats[]

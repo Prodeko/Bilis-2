@@ -1,9 +1,10 @@
 import Card from '@components/utility/Card'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useQueueState } from '@state/Queue'
+
 import styles from './Queue.module.scss'
 import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const Queue = () => {
   const [{ queue }] = useQueueState()

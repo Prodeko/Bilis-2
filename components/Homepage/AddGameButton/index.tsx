@@ -1,4 +1,5 @@
 import Filter from '@components/utility/Filter'
+
 import styles from './AddGameButton.module.scss'
 
 type Props = {

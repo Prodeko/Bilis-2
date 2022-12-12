@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import type { Player, MutualGames } from '@common/types'
-import PlayerSearchSelect from '@components/utility/PlayerSearch/PlayerSearchSelect'
+import type { MutualGames, Player } from '@common/types'
 import PieChart from '@components/utility/PieChart'
+import PlayerSearchSelect from '@components/utility/PlayerSearch/PlayerSearchSelect'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './ProfileCharts.module.scss'

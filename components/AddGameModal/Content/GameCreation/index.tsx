@@ -1,4 +1,5 @@
 import { setUndertable, useModalState } from '@state/Modal'
+
 import styles from './GameCreation.module.scss'
 import SubmitButton from './SubmitButton'
 import UnderTableInput from './UnderTableInput'

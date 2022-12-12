@@ -1,4 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+
 import ChoosePlayer from './ChoosePlayer'
 import styles from './PlayerSelection.module.scss'
 import SelectedPlayer from './SelectedPlayer'
