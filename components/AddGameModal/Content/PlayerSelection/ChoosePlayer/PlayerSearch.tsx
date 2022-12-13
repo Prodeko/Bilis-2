@@ -26,7 +26,7 @@ const PlayerSearch = ({ side, onChoose }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
-  const [{ refs, focus, game }, dispatch] = useModalState()
+  const [{ refs, focus }, dispatch] = useModalState()
 
   useEffect(() => {
     const search = async (q: string) => {
