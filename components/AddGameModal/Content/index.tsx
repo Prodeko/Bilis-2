@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { RecentGame } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useModalState } from '@state/Modal'
 import { removeFromQueue, useQueueState } from '@state/Queue'
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Player as PlayerType } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { createGame } from '@server/db/games'
@@ -34,7 +35,7 @@ const loserGames = 50
 const mockUpdatePlayerById = jest.fn()
 
 jest.mock('@common/db/players', () => ({
-  getPlayerById: jest.fn(async id => {
+  getPlayerById: jest.fn(id => {
     return players[id]
   }),
   updatePlayerById: (...a: any) => mockUpdatePlayerById(...a),

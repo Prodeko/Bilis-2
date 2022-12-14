@@ -4,7 +4,6 @@ import { FiX } from 'react-icons/fi'
 
 import type { Player } from '@common/types'
 import type { PieChartProps } from '@components/Profile/ProfileCharts/PlayerComparison'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'

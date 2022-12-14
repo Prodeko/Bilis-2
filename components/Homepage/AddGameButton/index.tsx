@@ -7,7 +7,7 @@ type Props = {
   open: boolean
 }
 
-const AddGameButton = ({ onOpen, open }: Props) => {
+const AddGameButton = ({ onOpen }: Props) => {
   // TODO refactor card to support element without cardgrid
   const inlineStyles = {
     gridColumn: '3 / 3',

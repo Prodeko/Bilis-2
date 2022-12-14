@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 import { NewPlayer, Player } from '@common/types'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import UserPlus from '@public/images/user-plus-01.svg'
 
 import Field from './Field'
@@ -31,7 +30,7 @@ const ProfileForm = ({ player }: Props) => {
 
   const router = useRouter()
 
-  const setPlayerKey = (key: keyof SubmitPlayerData) => (val: any) => {
+  const setPlayerKey = (key: keyof SubmitPlayerData) => (val: unknown) => {
     setPlayerData(p => ({ ...p, [key]: val }))
   }
 
