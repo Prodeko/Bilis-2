@@ -129,16 +129,17 @@ const getRecentGames = async (n = 20, offset = 0) => {
 }
 
 const formatRecentGame = (game: GameWithPlayers): RecentGame => ({
-  id: game.id,
-  time: new Date(game.createdAt).toLocaleDateString('fi-FI', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
+  ...game,
+  winnerEloAfter: game.winnerEloAfter,
+  winnerEloBefore: game.winnerEloBefore,
+  loserEloAfter: game.loserEloAfter,
+  loserEloBefore: game.loserEloBefore,
+  time: new Date(game.createdAt).toLocaleString('fi-FI', {
+    dateStyle: 'short',
+    timeStyle: 'short',
   }),
-  winner: `${game.winner.firstName} ${game.winner.lastName}`,
-  winnerEloChange: `${Math.round(game.winnerEloBefore)} » ${Math.round(game.winnerEloAfter)}`,
-  loser: `${game.loser.firstName} ${game.loser.lastName}`,
-  loserEloChange: `${Math.round(game.loserEloBefore)} » ${Math.round(game.loserEloAfter)}`,
+  winner: `${game.winner.emoji} ${game.winner.firstName} "${game.winner.nickname}" ${game.winner.lastName}`,
+  loser: `${game.loser.emoji} ${game.loser.firstName} "${game.loser.nickname}" ${game.loser.lastName}`,
 })
 
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
