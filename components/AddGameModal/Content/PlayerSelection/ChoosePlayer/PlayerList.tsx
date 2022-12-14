@@ -1,6 +1,7 @@
 import { round } from 'lodash'
 
 import type { Player } from '@common/types'
+import { ADD_GAME_LIST_ID } from '@common/utils/constants'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useModalState } from '@state/Modal'
 
@@ -24,7 +25,7 @@ const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
           <li
-            id={isSelected(i) ? `add-game-list` : ''}
+            id={isSelected(i) ? ADD_GAME_LIST_ID : ''}
             className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
             key={p.id}
             onClick={() => onChoose(p.id)}

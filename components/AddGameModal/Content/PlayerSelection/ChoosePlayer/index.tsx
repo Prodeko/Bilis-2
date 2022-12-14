@@ -1,6 +1,13 @@
-import { setFocus, setPlayerId, useModalState } from '@state/Modal'
+import {
+  decrementSelectedIdx,
+  incrementSelectedIdx,
+  setFocus,
+  setPlayerId,
+  Side,
+  useModalState,
+} from '@state/Modal'
 import { useQueueState } from '@state/Queue'
-
+import { KeyboardEventHandler } from 'react'
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
 import PlayerSearch from './PlayerSearch'
@@ -9,14 +16,14 @@ import QueueTitle from './QueueTitle'
 
 type PlayerProps = {
   filterId: number | undefined
-  side: 'winner' | 'loser'
+  side: Side
 }
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
-  const [state] = useQueueState()
+  const [{ queue }] = useQueueState()
 
-  const queuePlayers = state.queue.filter(p => p.id !== filterId)
+  const queuePlayers = queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
   const selectedPlayer =
     queuePlayers?.[queuePlayers.length + selectedIdx] ||
@@ -28,6 +35,32 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     dispatch(setPlayerId(side, selectedPlayer?.id))
   }
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    switch (e.key) {
+      case 'ArrowUp':
+        // dont select users over the list
+        if (selectedIdx > -queuePlayers.length) dispatch(decrementSelectedIdx())
+        break
+
+      case 'ArrowDown':
+        // dont select users over the list
+        if (selectedIdx < playerSearchList.length) dispatch(incrementSelectedIdx())
+        break
+
+      case 'ArrowRight':
+        dispatch(setFocus('loser'))
+        break
+
+      case 'ArrowLeft':
+        dispatch(setFocus('winner'))
+        break
+
+      case 'Enter':
+        onChoose()
+        break
+    }
+  }
+
   return (
     <>
       <div className={styles.searchCard}>
@@ -35,7 +68,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
         <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
       </div>
       <div className={styles.searchCard}>
-        <PlayerSearch side={side} onChoose={onChoose} />
+        <PlayerSearch side={side} handleKeyDown={handleKeyDown} />
         <PlayerList onChoose={onChoose} side={side} playerSearchList={playerSearchList} />
       </div>
     </>

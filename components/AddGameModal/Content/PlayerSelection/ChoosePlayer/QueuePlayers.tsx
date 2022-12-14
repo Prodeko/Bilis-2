@@ -1,14 +1,14 @@
 import { round } from 'lodash'
 
 import { Player } from '@common/types'
+import { ADD_GAME_LIST_ID } from '@common/utils/constants'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useModalState } from '@state/Modal'
-
+import { Side, useModalState } from '@state/Modal'
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
   onChoose: (id: number) => void
-  side: 'winner' | 'loser'
+  side: Side
   players: Player[]
 }
 
@@ -28,7 +28,7 @@ const Queue = ({ onChoose, side, players }: ListProps) => {
     <ul ref={parent} className={styles.playerList}>
       {players.map((p, i) => (
         <li
-          id={isSelected(i) ? `add-game-list` : ''}
+          id={isSelected(i) ? ADD_GAME_LIST_ID : ''}
           className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
           key={p.id}
           onClick={() => onChoose(p.id)}

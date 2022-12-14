@@ -41,7 +41,7 @@ export const ModalProvider = ({ recentPlayers, reducer, children }: ModalProvide
   // keep the focus state and the focused input in sync
   useEffect(() => {
     state?.refs?.[state.focus]?.current?.focus()
-  }, [state.focus])
+  }, [state.focus, state?.refs])
 
   // when winner and loser are selected, focus on add game -button
   // NOTE: timeout is needed because otherwise when pressing enter to select player, react also consideres the keystroke as pressing the button

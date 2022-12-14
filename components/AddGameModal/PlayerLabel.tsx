@@ -1,6 +1,7 @@
+import { Side } from '@state/Modal'
 import styles from './AddGameModal.module.scss'
 
-const PlayerLabel = ({ type }: { type: 'winner' | 'loser' }) => {
+const PlayerLabel = ({ type }: { type: Side }) => {
   const text = type === 'winner' ? 'W I N N E R' : 'L O S E R'
   return (
     <div className={styles.playerLabel}>

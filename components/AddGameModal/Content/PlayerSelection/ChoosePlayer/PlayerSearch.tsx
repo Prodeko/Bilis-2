@@ -5,12 +5,11 @@ import { KeyboardEventHandler, useEffect } from 'react'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
 import SearchIcon from '@public/images/search-icon.svg'
 import {
-  decrementSelectedIdx,
-  incrementSelectedIdx,
   resetPlayers,
   setFocus,
   setPlayers,
   setSelectedIdx,
+  Side,
   useModalState,
 } from '@state/Modal'
 import useDebounce from 'hooks/useDebounce'
@@ -18,11 +17,11 @@ import useDebounce from 'hooks/useDebounce'
 import styles from './ChoosePlayer.module.scss'
 
 interface Props {
-  side: 'winner' | 'loser'
-  onChoose: () => void
+  side: Side
+  handleKeyDown: KeyboardEventHandler<HTMLInputElement>
 }
 
-const PlayerSearch = ({ side, onChoose }: Props) => {
+const PlayerSearch = ({ side, handleKeyDown }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>('', 400)
@@ -43,30 +42,6 @@ const PlayerSearch = ({ side, onChoose }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
-
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-    switch (e.key) {
-      case 'ArrowUp':
-        dispatch(decrementSelectedIdx())
-        break
-
-      case 'ArrowDown':
-        dispatch(incrementSelectedIdx())
-        break
-
-      case 'ArrowRight':
-        dispatch(setFocus('loser'))
-        break
-
-      case 'ArrowLeft':
-        dispatch(setFocus('winner'))
-        break
-
-      case 'Enter':
-        onChoose()
-        break
-    }
-  }
 
   return (
     <div className={styles.inputWrapper}>
