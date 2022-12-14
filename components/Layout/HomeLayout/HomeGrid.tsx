@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './HomeLayout.module.scss'

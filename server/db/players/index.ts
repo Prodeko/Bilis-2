@@ -1,12 +1,12 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
+import type { Col } from 'sequelize/types/utils'
 
 import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
+import { permutator } from '@common/utils/helperFunctions'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { Player } from '@server/models'
 import dbConf from '@server/utils/dbConf'
-import type { Col } from 'sequelize/types/utils'
-import { permutator } from '@common/utils/helperFunctions'
 
 const createPlayer = async (player: NewPlayer) => {
   // Ghetto validation

@@ -1,15 +1,15 @@
-import { useState, ChangeEventHandler, Dispatch, SetStateAction } from 'react'
-import { FiX } from 'react-icons/fi'
 import axios from 'axios'
+import { ChangeEventHandler, Dispatch, SetStateAction, useState } from 'react'
+import { FiX } from 'react-icons/fi'
 
-import styles from './PlayerSearchSelect.module.scss'
-
-import { NEXT_PUBLIC_API_URL } from '@config/index'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import usePlayers from '@hooks/usePlayers'
-import useKeyPress from '@hooks/useKeyPress'
 import type { Player } from '@common/types'
 import type { PieChartProps } from '@components/Profile/ProfileCharts/PlayerComparison'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import useKeyPress from '@hooks/useKeyPress'
+import usePlayers from '@hooks/usePlayers'
+
+import styles from './PlayerSearchSelect.module.scss'
 
 interface Props {
   currentPlayerId: number

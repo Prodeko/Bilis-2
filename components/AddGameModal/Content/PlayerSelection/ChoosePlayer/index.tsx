@@ -1,37 +1,75 @@
-import type { PlayerWithStats } from '@common/types'
-import PlayerSearch from './PlayerSearch'
-import PlayerList from './PlayerList'
+import {
+  decrementSelectedIdx,
+  incrementSelectedIdx,
+  setFocus,
+  setPlayerId,
+  Side,
+  useModalState,
+} from '@state/Modal'
+import { useQueueState } from '@state/Queue'
+import { KeyboardEventHandler } from 'react'
 import styles from './ChoosePlayer.module.scss'
+import PlayerList from './PlayerList'
+import PlayerSearch from './PlayerSearch'
 import QueuePlayers from './QueuePlayers'
 import QueueTitle from './QueueTitle'
 
 type PlayerProps = {
-  onChoose: (id: number) => void
-  setPlayers: (arg: PlayerWithStats[]) => void
   filterId: number | undefined
-  playerSearchList: PlayerWithStats[]
-  closeSearch: () => void
+  side: Side
 }
 
-const ChoosePlayer = ({
-  onChoose,
-  filterId,
-  setPlayers,
-  closeSearch,
-  playerSearchList,
-}: PlayerProps) => {
+const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
+  const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
+  const [{ queue }] = useQueueState()
+
+  const queuePlayers = queue.filter(p => p.id !== filterId)
+  const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
+  const selectedPlayer =
+    queuePlayers?.[queuePlayers.length + selectedIdx] ||
+    playerSearchList?.[selectedIdx] ||
+    undefined
+
+  const onChoose = () => {
+    dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
+    dispatch(setPlayerId(side, selectedPlayer?.id))
+  }
+
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    switch (e.key) {
+      case 'ArrowUp':
+        // dont select users over the list
+        if (selectedIdx > -queuePlayers.length) dispatch(decrementSelectedIdx())
+        break
+
+      case 'ArrowDown':
+        // dont select users over the list
+        if (selectedIdx < playerSearchList.length) dispatch(incrementSelectedIdx())
+        break
+
+      case 'ArrowRight':
+        dispatch(setFocus('loser'))
+        break
+
+      case 'ArrowLeft':
+        dispatch(setFocus('winner'))
+        break
+
+      case 'Enter':
+        onChoose()
+        break
+    }
+  }
+
   return (
     <>
       <div className={styles.searchCard}>
         <QueueTitle />
-        <QueuePlayers filterId={filterId} onChoose={onChoose} />
+        <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
       </div>
       <div className={styles.searchCard}>
-        <PlayerSearch closeSearch={closeSearch} setPlayers={setPlayers} />
-        <PlayerList
-          onChoose={onChoose}
-          playerSearchList={playerSearchList.filter(p => p.id !== filterId)}
-        />
+        <PlayerSearch side={side} handleKeyDown={handleKeyDown} />
+        <PlayerList onChoose={onChoose} side={side} playerSearchList={playerSearchList} />
       </div>
     </>
   )

@@ -1,16 +1,14 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
-      "airbnb",
-      "airbnb-typescript",
-      "plugin:prettier/recommended",
+      // "airbnb",
+      // "airbnb-typescript",
+      // "plugin:prettier/recommended",
       "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:jsx-a11y/recommended"
+      "plugin:react-hooks/recommended"
   ],
   "plugins": [
-      "prettier",
-      "react"
+      "eslint-plugin-unused-imports"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -19,6 +17,15 @@
     }
   },
   "ignorePatterns": "./**/*.js",
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx"],
+      "parserOptions": {
+        "project": null
+      }
+    }
+  ],
+  "root": true,
   "rules": {
       /*"prettier/prettier": ["error"],
       "react-hooks/exhaustive-deps":          "warn",
@@ -34,7 +41,13 @@
       "react/function-component-definition": "off",
       "react/prop-types": "off",
       "import/prefer-default-export": "off",
-      "react/jsx-props-no-spreading": "off"
+      "react/jsx-props-no-spreading": "off",
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		]
   },
   "settings": {
     "import/extensions": [
@@ -51,6 +64,9 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
+    },
+    "react": {
+      "version": "detect" // Detected react version automatically
     }
   }
 }

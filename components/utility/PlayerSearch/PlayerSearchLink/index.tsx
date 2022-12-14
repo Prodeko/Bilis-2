@@ -1,18 +1,14 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler } from 'react'
-import Router from 'next/router'
 import Link from 'next/link'
+import Router from 'next/router'
+import { ChangeEventHandler } from 'react'
 
 import { Player } from '@common/types'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import styles from './PlayerSearchLink.module.scss'
 
@@ -53,9 +49,8 @@ const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
         <ul ref={parent} className={visible ? styles.results__visible : styles.results}>
           {players.length > 0 ? (
             players.map((player, i) => (
-              <Link href={getRoute(player.id)} passHref>
+              <Link key={player.id} href={getRoute(player.id)} passHref>
                 <li
-                  key={player.id}
                   className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
                   onMouseDown={e => e.preventDefault()} // We need to block the onBlur effect first: https://stackoverflow.com/questions/17769005/onclick-and-onblur-ordering-issue/#57630197
                   onClick={() => handleSelect(players[i])}

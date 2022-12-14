@@ -1,4 +1,5 @@
 import { TimeSeriesGame } from '@common/types'
+
 import styles from './TimeSeriesChart.module.scss'
 
 interface Props {

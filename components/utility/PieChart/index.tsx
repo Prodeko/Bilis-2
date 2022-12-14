@@ -1,8 +1,11 @@
-import type { Player, MutualGames } from '@common/types'
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
+
+import type { MutualGames, Player } from '@common/types'
+
 import styles from './PieChart.module.scss'
+
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 type Props = {
   currentPlayer: Player

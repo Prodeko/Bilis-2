@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react'
 
-import { Action, State, LOCAL_QUEUE_NAME } from './reducer'
+import { Action, LOCAL_QUEUE_NAME, State } from './reducer'
 
 const initialState = {
   queue: [],
@@ -27,4 +27,4 @@ export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
     </QueueContext.Provider>
   )
 }
-export const useStateValue = () => useContext(QueueContext)
+export const useQueueState = () => useContext(QueueContext)

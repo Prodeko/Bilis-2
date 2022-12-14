@@ -2,11 +2,11 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
-import { useState, useEffect } from 'react'
-import LoadingSpinner from '@components/utility/LoadingSpinner'
+import { useEffect, useState } from 'react'
 import 'styles/globals.scss'
 
 import BaseLayout from '@components/Layout/BaseLayout'
+import LoadingSpinner from '@components/utility/LoadingSpinner'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any // TODO: Temp fix

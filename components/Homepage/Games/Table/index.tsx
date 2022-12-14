@@ -1,5 +1,7 @@
-import { RecentGame } from '@common/types'
 import { Dispatch, SetStateAction } from 'react'
+
+import { RecentGame } from '@common/types'
+
 import styles from './Table.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'

@@ -1,8 +1,10 @@
-import type { Player } from '@common/types'
-import GaugeChart from 'react-gauge-chart'
-import styles from './SelectedPlayer.module.scss'
 import { round } from 'lodash'
 import { memo } from 'react'
+import GaugeChart from 'react-gauge-chart'
+
+import type { Player } from '@common/types'
+
+import styles from './SelectedPlayer.module.scss'
 
 // API: https://github.com/Martin36/react-gauge-chart
 

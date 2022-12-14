@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { useState } from 'react'
 
-import Header from './Header'
 import PlayerSearchLink from '@components/utility/PlayerSearch/PlayerSearchLink'
+
+import Header from './Header'
 import styles from './SearchContainer.module.scss'
 
 const SearchContainer = () => {

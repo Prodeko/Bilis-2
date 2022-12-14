@@ -1,23 +1,19 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ChangeEventHandler, FocusEventHandler, useState } from 'react'
+import { ChangeEventHandler, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { addToQueue, useStateValue } from '@state/Queue'
+import { addToQueue, useQueueState } from '@state/Queue'
 
 import styles from './PlayerSearchQueue.module.scss'
 
 const PlayerSearchQueue = () => {
-  const [{ queue }, dispatch] = useStateValue()
+  const [{ queue }, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(400)
   const filteredPlayers = players.filter(

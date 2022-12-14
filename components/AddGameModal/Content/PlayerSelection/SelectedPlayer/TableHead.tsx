@@ -1,7 +1,9 @@
-import styles from './SelectedPlayer.module.scss'
-import type { PlayerWithStats } from '@common/types'
 import Image from 'next/image'
+
+import type { PlayerWithStats } from '@common/types'
 import PencilImage from '@public/images/edit-pencil.svg'
+
+import styles from './SelectedPlayer.module.scss'
 
 interface Props {
   player: PlayerWithStats

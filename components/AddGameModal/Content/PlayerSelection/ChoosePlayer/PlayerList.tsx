@@ -1,26 +1,34 @@
-import type { Player } from '@common/types'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { round } from 'lodash'
+
+import type { Player } from '@common/types'
+import { ADD_GAME_LIST_ID } from '@common/utils/constants'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useModalState } from '@state/Modal'
+
 import styles from './ChoosePlayer.module.scss'
 
 type ListProps = {
   playerSearchList: Player[]
   onChoose: (id: number) => void
+  side: string
 }
 
-const PlayerList = ({ playerSearchList, onChoose }: ListProps) => {
+const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
   const hasPlayers = playerSearchList.length > 0
+  const [{ selectedIdx, focus }] = useModalState()
+
+  const isSelected = (i: number) => i == selectedIdx && focus === side
 
   return (
     <ul ref={parent} className={styles.playerList}>
       {hasPlayers ? (
-        playerSearchList.map(p => (
+        playerSearchList.map((p, i) => (
           <li
-            className={styles.playerRow}
+            id={isSelected(i) ? ADD_GAME_LIST_ID : ''}
+            className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
             key={p.id}
             onClick={() => onChoose(p.id)}
-            onKeyDown={() => onChoose(p.id)}
             tabIndex={0}
             role="button"
           >

@@ -1,25 +1,24 @@
-import type { PlayerWithStats, RecentGame } from '@common/types'
-import PlayerSelection from './PlayerSelection'
-import GameCreation from './GameCreation'
-import Title from './Title'
-import styles from './Content.module.scss'
-import useModalState from './useModalState'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import axios from 'axios'
-import { useStateValue, removeFromQueue } from '@state/Queue'
 import { Dispatch, SetStateAction } from 'react'
 
+import type { RecentGame } from '@common/types'
+import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { useModalState } from '@state/Modal'
+import { removeFromQueue, useQueueState } from '@state/Queue'
+
+import styles from './Content.module.scss'
+import GameCreation from './GameCreation'
+import PlayerSelection from './PlayerSelection'
+import Title from './Title'
+
 type Props = {
-  recentPlayers: PlayerWithStats[]
   onClose: () => void
   setGames: Dispatch<SetStateAction<RecentGame[]>>
 }
 
-const Content = ({ recentPlayers, onClose, setGames }: Props) => {
-  const { playerSearchLists, game, setGameField, resetPlayers, setPlayers } =
-    useModalState(recentPlayers)
-  const [, dispatch] = useStateValue()
-  const isActive = Boolean(game.winnerId && game.loserId)
+const Content = ({ onClose, setGames }: Props) => {
+  const [{ game }] = useModalState()
+  const [, dispatch] = useQueueState()
 
   // TODO validate that all fields are present
   const onSubmit = async () => {
@@ -35,6 +34,7 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
     setGames(prev => [res.data, ...prev])
     console.log(res.data)
     onClose()
+    document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
     // TODO show success msg
   }
 
@@ -42,27 +42,9 @@ const Content = ({ recentPlayers, onClose, setGames }: Props) => {
     <div className={styles.cardWrapper}>
       <Title title="New Game" />
       <div className={styles.card}>
-        <PlayerSelection
-          playerId={game.winnerId}
-          otherPlayerId={game.loserId}
-          playerSearchList={playerSearchLists.winner}
-          setGameField={setGameField('winnerId')}
-          setPlayers={setPlayers('winner')}
-          resetPlayers={resetPlayers('winner')}
-        />
-        <GameCreation
-          isActive={isActive}
-          onSubmit={onSubmit}
-          setGameField={setGameField('underTable')}
-        />
-        <PlayerSelection
-          playerId={game.loserId}
-          otherPlayerId={game.winnerId}
-          playerSearchList={playerSearchLists.loser}
-          setGameField={setGameField('loserId')}
-          setPlayers={setPlayers('loser')}
-          resetPlayers={resetPlayers('loser')}
-        />
+        <PlayerSelection playerId={game.winnerId} otherPlayerId={game.loserId} side={'winner'} />
+        <GameCreation onSubmit={onSubmit} />
+        <PlayerSelection playerId={game.loserId} otherPlayerId={game.winnerId} side={'loser'} />
       </div>
     </div>
   )

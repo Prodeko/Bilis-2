@@ -1,18 +1,22 @@
+import { setUndertable, useModalState } from '@state/Modal'
+
+import styles from './GameCreation.module.scss'
 import SubmitButton from './SubmitButton'
 import UnderTableInput from './UnderTableInput'
-import styles from './GameCreation.module.scss'
 
 interface Props {
   onSubmit: () => void
-  setGameField: (val: any) => void
-  isActive: boolean
 }
 
-const GameCreation = ({ onSubmit, setGameField, isActive }: Props) => {
+const GameCreation = ({ onSubmit }: Props) => {
+  const [{ game }, dispatch] = useModalState()
+
+  const isActive = Boolean(game.winnerId && game.loserId)
+
   return (
     <div className={styles.buttonWrapper}>
       <SubmitButton isActive={isActive} onSubmit={onSubmit} />
-      <UnderTableInput onChange={setGameField} />
+      <UnderTableInput onChange={c => dispatch(setUndertable(c))} />
     </div>
   )
 }

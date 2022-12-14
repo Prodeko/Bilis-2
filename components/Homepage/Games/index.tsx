@@ -1,9 +1,11 @@
-import { useState, Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 import { RecentGame } from '@common/types'
 import Card from '@components/utility/Card'
+
 import Table from './Table'
 import TitleRow from './TitleRow'
+
 interface Props {
   games: RecentGame[]
   setGames: Dispatch<SetStateAction<RecentGame[]>>

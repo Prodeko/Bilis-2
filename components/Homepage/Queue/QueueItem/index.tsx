@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import { FiTrash2 } from 'react-icons/fi'
 
 import { Player } from '@common/types'
-import { removeFromQueue, useStateValue } from '@state/Queue'
-import styles from './QueueItem.module.scss'
+import { removeFromQueue, useQueueState } from '@state/Queue'
 
-import { FiTrash2 } from 'react-icons/fi'
+import styles from './QueueItem.module.scss'
 
 interface QueueItemProps {
   place: number
@@ -12,7 +12,7 @@ interface QueueItemProps {
 }
 
 const QueueItem = ({ place, player }: QueueItemProps) => {
-  const [, dispatch] = useStateValue()
+  const [, dispatch] = useQueueState()
   const { id, firstName, lastName, emoji } = player
 
   const removePlayer = () => {

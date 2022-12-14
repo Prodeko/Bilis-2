@@ -1,6 +1,6 @@
+import { round } from 'lodash'
 import type { GetServerSideProps, NextPage } from 'next'
 import ErrorPage from 'next/error'
-import { round } from 'lodash'
 
 import type { Player, PlayerWithStats, TimeSeriesGame } from '@common/types'
 import ProfileLayout from '@components/Layout/ProfileLayout'
