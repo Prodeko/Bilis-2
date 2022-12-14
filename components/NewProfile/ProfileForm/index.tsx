@@ -42,16 +42,16 @@ const ProfileForm = ({ player }: Props) => {
   }, [player, isUpdate])
 
   const updatePlayer = (id: number) => async (data: SubmitPlayerData) => {
-    const res = await axios.put(`${NEXT_PUBLIC_API_URL}/player/${id}`, data)
+    const res = await axios.put(`/api/player/${id}`, data)
     router.push(`/player/${res.data.id}`)
   }
 
   const submitNewPlayer = async (data: SubmitPlayerData) => {
-    const res = await axios.post(`${NEXT_PUBLIC_API_URL}/player`, data)
+    const res = await axios.post(`/api/player`, data)
     router.push(`/player/${res.data.id}`)
   }
 
-  const submit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const updateFunc = isUpdate ? updatePlayer(player.id) : submitNewPlayer
     updateFunc(playerData)

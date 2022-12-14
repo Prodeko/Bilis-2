@@ -16,7 +16,7 @@ const SelectedPlayer = ({ playerId, onClear }: Props) => {
   const [player, setPlayer] = useState<PlayerWithStats | undefined>(undefined)
 
   useEffect(() => {
-    axios.get(`${NEXT_PUBLIC_API_URL}/player/${playerId}`).then(res => {
+    axios.get(`/api/player/${playerId}`).then(res => {
       if (typeof res.data == 'object') setPlayer(res.data as PlayerWithStats)
     })
   }, [])
