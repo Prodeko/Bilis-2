@@ -6,7 +6,7 @@ services:
     container_name: next-app-dev
     command: /bin/sh -c "while sleep 1000; do :; done"
     working_dir: /usr/src/app
-    env_file: .dev.env
+    env_file: .env
     depends_on:
       - db
     ports:
@@ -24,7 +24,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data/
     env_file:
-      - .dev.env
+      - .env
     ports:
       - "5432:5432"
 
