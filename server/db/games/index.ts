@@ -12,7 +12,6 @@ import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { Game, Player } from '@server/models'
-import { floor } from 'lodash'
 
 const getGameCountForPlayer = async (playerId: number) => {
   return Game.count({
@@ -131,10 +130,10 @@ const getRecentGames = async (n = 20, offset = 0) => {
 
 const formatRecentGame = (game: GameWithPlayers): RecentGame => ({
   ...game,
-  winnerEloAfter: floor(game.winnerEloAfter),
-  winnerEloBefore: floor(game.winnerEloBefore),
-  loserEloAfter: floor(game.loserEloAfter),
-  loserEloBefore: floor(game.loserEloBefore),
+  winnerEloAfter: game.winnerEloAfter,
+  winnerEloBefore: game.winnerEloBefore,
+  loserEloAfter: game.loserEloAfter,
+  loserEloBefore: game.loserEloBefore,
   time: new Date(game.createdAt).toLocaleString('fi-FI', {
     dateStyle: 'short',
     timeStyle: 'short',
