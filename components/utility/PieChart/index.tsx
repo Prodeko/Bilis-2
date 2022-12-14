@@ -18,6 +18,7 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
     return <div className={styles.nogames}>No matches between these two players</div>
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const AnyApexCharts = ApexCharts as any // TODO: Temp fix
 
   // const black = '#111'

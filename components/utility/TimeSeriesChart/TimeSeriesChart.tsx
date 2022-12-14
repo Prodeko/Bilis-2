@@ -21,6 +21,7 @@ type Props = {
 }
 
 const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const AnyApexCharts = ApexCharts as any // TODO: Temp fix
 
   const eloData = gameData.map(game => game.currentElo)

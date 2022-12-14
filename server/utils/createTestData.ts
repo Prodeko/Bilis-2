@@ -64,7 +64,7 @@ const randomMottos: string[] = [
 
 const randomEmojis: string[] = ['🥵', '😫', '🫥', '🫡', '🥶', '🤑', '👻', '💩', '🤡', '😸']
 
-const generateNickname = (firstName: String, lastName: String) => {
+const generateNickname = (firstName: string, lastName: string) => {
   return (
     firstName.slice(0, Math.min(firstName.length, _.random(1, 4))) +
     lastName.slice(0, Math.min(lastName.length, _.random(1, 4))) +

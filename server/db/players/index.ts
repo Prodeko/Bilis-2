@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
-import type { Col } from 'sequelize/types/utils'
 
 import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
@@ -91,7 +90,7 @@ const getLatestPlayers = async (n = 20) => {
 
 const searchPlayers = async (
   query: string,
-  stats: boolean = false,
+  stats = false,
   limit?: number
 ): Promise<Player[] | PlayerWithStats[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']

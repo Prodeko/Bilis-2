@@ -2,7 +2,6 @@ import axios from 'axios'
 import Image from 'next/image'
 import { KeyboardEventHandler, useEffect } from 'react'
 
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import SearchIcon from '@public/images/search-icon.svg'
 import {
   resetPlayers,

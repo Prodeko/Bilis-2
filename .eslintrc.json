@@ -5,10 +5,12 @@
       // "airbnb-typescript",
       // "plugin:prettier/recommended",
       "plugin:react/recommended",
-      "plugin:react-hooks/recommended"
+      "plugin:react-hooks/recommended",
+      "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
-      "eslint-plugin-unused-imports"
+      "eslint-plugin-unused-imports",
+      "@typescript-eslint"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -47,7 +49,15 @@
       "unused-imports/no-unused-vars": [
         "warn",
         { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
-		]
+		],
+    "@typescript-eslint/no-unused-vars": [
+      "warn", // or "error"
+      { 
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
   },
   "settings": {
     "import/extensions": [

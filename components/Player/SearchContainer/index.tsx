@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState } from 'react'
 
 import PlayerSearchLink from '@components/utility/PlayerSearch/PlayerSearchLink'

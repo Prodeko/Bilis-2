@@ -9,6 +9,7 @@ import BaseLayout from '@components/Layout/BaseLayout'
 import LoadingSpinner from '@components/utility/LoadingSpinner'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const AnyComponent = Component as any // TODO: Temp fix
   const [loading, setLoading] = useState<boolean>(false)
 

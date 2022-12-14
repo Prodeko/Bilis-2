@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import { RecentGame } from '@common/types'
 import ModalBlur from '@components/utility/ModalBlur'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 
 import styles from './Modal.module.scss'
 
