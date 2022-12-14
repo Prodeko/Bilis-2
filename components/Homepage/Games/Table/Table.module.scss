@@ -71,9 +71,6 @@
   grid-column: 3 / 6;
   &:hover {
     text-decoration: underline;
-    &::first-letter {
-      text-decoration: none !important;
-    }
   }
 }
 
@@ -89,9 +86,6 @@
   grid-column: 8 / 11;
   &:hover {
     text-decoration: underline;
-    &::first-letter {
-      text-decoration: unset;
-    }
   }
 }
 
@@ -106,7 +100,7 @@
 .chevron {
   @include flex-y(null);
   @extend %flex-center;
-  font-size: 0.8em;
+  font-size: 0.6em;
   height:100%;
 
 }
