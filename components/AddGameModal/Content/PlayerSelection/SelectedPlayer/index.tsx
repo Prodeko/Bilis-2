@@ -1,24 +1,35 @@
 
 import type { PlayerWithStats } from '@common/types'
 import { setFocus, setPlayerId, Side, useModalState } from '@state/Modal'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import EloMeter from './EloMeter'
 import styles from './SelectedPlayer.module.scss'
 import TableBody from './TableBody'
 import TableHead from './TableHead'
 
 type Props = {
-  player: PlayerWithStats
+  playerId: number
   side: Side
 }
 
-const SelectedPlayer = ({ player, side }: Props) => {
+const SelectedPlayer = ({ playerId, side }: Props) => {
   const [_, dispatch] = useModalState()
 
-  const onClear = () => {
-    dispatch(setPlayerId(side, undefined))
+  const [player, setPlayer] = useState<PlayerWithStats | null>(null)
+
+  useEffect(() => {
+      axios.get(`/api/player/${playerId}`).then(res => {
+        setPlayer(res.data as PlayerWithStats)
+      })
+  }, [playerId])
+
+  const onClear = async () => {
+    await dispatch(setPlayerId(side, undefined))
     dispatch(setFocus(side))
   }
-  
+
+  if (!player) return null
   return (
     <table className={styles.chosenPlayer}>
       <TableHead player={player} onClear={onClear} />

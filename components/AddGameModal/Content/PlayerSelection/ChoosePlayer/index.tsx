@@ -27,8 +27,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
   const selectedPlayer =
     queuePlayers?.[queuePlayers.length + selectedIdx] ||
-    playerSearchList?.[selectedIdx] ||
-    undefined
+    playerSearchList?.[selectedIdx]
 
   const onChoose = () => {
     dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
