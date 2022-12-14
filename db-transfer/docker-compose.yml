@@ -1,4 +1,4 @@
-services: 
+services:
   old-database:
     image: postgres:latest
     ports:
