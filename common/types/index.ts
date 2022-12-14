@@ -43,13 +43,10 @@ interface Game extends WithId {
   createdAt: Date
 }
 
-type RecentGame = {
-  id: number
+interface RecentGame extends Game {
   time: string
   winner: string
-  winnerEloChange: string
   loser: string
-  loserEloChange: string
 }
 
 interface MutualGames {
