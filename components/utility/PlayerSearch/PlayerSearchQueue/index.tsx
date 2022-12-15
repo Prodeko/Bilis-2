@@ -1,7 +1,7 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-import { ChangeEventHandler, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
@@ -24,11 +24,13 @@ const PlayerSearchQueue = () => {
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
 
-  const clearInputField = () => {
-    setQuery('') // Reset query
-    const input = document?.getElementById?.('queue') as HTMLInputElement
-    input.focus()
-    input.value = ''
+  const clearInputField = (focusField: boolean) => {
+    return () => {
+      setQuery('') // Reset query
+      const input = document?.getElementById?.('queue') as HTMLInputElement
+      input.value = '' // Clear input field
+      focusField && input.focus()
+    }
   }
 
   // Disable animations while dropdown closes
@@ -38,9 +40,8 @@ const PlayerSearchQueue = () => {
     setTimeout(() => enableAnimations(true), 500)
   }
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
-    openDropdown()
     setSelectedIdx(0)
   }
 
@@ -50,6 +51,7 @@ const PlayerSearchQueue = () => {
 
   const handleSelect = (player: Player) => {
     dispatch(addToQueue(player))
+    clearInputField(false)()
     closeDropdown()
   }
 
@@ -71,7 +73,7 @@ const PlayerSearchQueue = () => {
         <button
           className={visible ? styles.button__visible : styles.button}
           onMouseDown={preventInputBlur}
-          onClick={clearInputField}
+          onClick={clearInputField(true)}
         >
           <FiX />
         </button>
