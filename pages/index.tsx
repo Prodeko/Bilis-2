@@ -44,7 +44,7 @@ const Home: NextPage<Props> = ({
         document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
         break
 
-      case 'q':
+      case 'KeyQ':
         // focus on queue.
         setTimeout(() => document?.getElementById('queue')?.focus(), 1)
         break
