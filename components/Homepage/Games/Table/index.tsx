@@ -13,10 +13,10 @@ interface Props {
 }
 const Table = ({ games, setGames, visible }: Props) => {
   return (
-    <table className={styles.table}>
+    <div className={styles.table}>
       <TableHead />
       <TableBody games={games} setGames={setGames} visible={visible} />
-    </table>
+    </div>
   )
 }
 

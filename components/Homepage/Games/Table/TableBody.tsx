@@ -14,7 +14,7 @@ interface Props {
 }
 
 const TableBody = ({ games, setGames, visible }: Props) => {
-  const [parent, enableAnimations] = useAutoAnimate<HTMLTableSectionElement>({ duration: 200 })
+  const [parent, enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 200 })
   const [page, setPage] = useState(1)
   const loader = useRef(null)
 
@@ -52,13 +52,13 @@ const TableBody = ({ games, setGames, visible }: Props) => {
   }, [handleObserver])
 
   return (
-    <tbody ref={parent} id="games" className={styles.tablebody}>
+    <div ref={parent} id="games" className={styles.tablebody}>
       <GamesRow key={firstGame.id} game={firstGame} pulsing={visible} />
       {otherGames.map(game => (
         <GamesRow key={game.id} game={game} pulsing={false} />
       ))}
       <tr ref={loader} />
-    </tbody>
+    </div>
   )
 }
 
