@@ -21,6 +21,13 @@
   padding: $spacing-16;
 }
 
+%title {
+  @extend %text-style-display-lg-bold;
+
+  text-align: center;
+  text-transform: capitalize;
+}
+
 .playerList {
   @include scrollbar(true);
   @extend %card-bg;
@@ -109,4 +116,18 @@
   @extend %card-bg;
   @extend %flex-center;
   @extend %text-style-display-md-semibold;
+}
+
+.title {
+  &__winner {
+    @extend %title;
+
+    color: $color-success-500;
+  }
+  
+  &__loser {
+    @extend %title;
+
+    color: $color-error-500;
+  }
 }

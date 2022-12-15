@@ -7,7 +7,6 @@ import { ModalProvider, reducer } from '@state/Modal'
 import styles from './AddGameModal.module.scss'
 import CloseButton from './CloseButton'
 import Content from './Content'
-import PlayerLabel from './PlayerLabel'
 
 type PlayerProps = {
   recentPlayers: PlayerWithStats[]
@@ -20,11 +19,9 @@ const AddGame = ({ recentPlayers, onClose, setGames }: PlayerProps) => {
     <ModalBlur>
       <div className={styles.modal}>
         <CloseButton onClose={onClose} />
-        <PlayerLabel type="winner" />
         <ModalProvider reducer={reducer} recentPlayers={recentPlayers}>
           <Content setGames={setGames} onClose={onClose} />
         </ModalProvider>
-        <PlayerLabel type="loser" />
       </div>
     </ModalBlur>
   )

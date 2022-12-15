@@ -6,11 +6,14 @@
   max-height: 100%;
   min-height: 0;
   row-gap: $spacing-16;
+  width: 100%;
 }
 
 .cardColumn {
   @extend %card-column;
-  @include grid-rows(2);
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
 
   &__selected {
     @extend %card-column;

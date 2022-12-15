@@ -1,13 +1,15 @@
+import { KeyboardEventHandler } from 'react'
+
 import {
+  Side,
   decrementSelectedIdx,
   incrementSelectedIdx,
   setFocus,
   setPlayerId,
-  Side,
   useModalState,
 } from '@state/Modal'
 import { useQueueState } from '@state/Queue'
-import { KeyboardEventHandler } from 'react'
+
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
 import PlayerSearch from './PlayerSearch'
@@ -26,8 +28,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const queuePlayers = queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
   const selectedPlayer =
-    queuePlayers?.[queuePlayers.length + selectedIdx] ||
-    playerSearchList?.[selectedIdx]
+    queuePlayers?.[queuePlayers.length + selectedIdx] || playerSearchList?.[selectedIdx]
 
   const onChoose = () => {
     dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
@@ -62,6 +63,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
 
   return (
     <>
+      <h2 className={side === 'winner' ? styles.title__winner : styles.title__loser}>{side}</h2>
       <div className={styles.searchCard}>
         <QueueTitle />
         <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
