@@ -30,6 +30,7 @@
 
     &:hover {
       @extend %shadow-md;
+
       background-color: $color-primary-900;
     }
   }

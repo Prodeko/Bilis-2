@@ -1,8 +1,8 @@
 @use 'styles' as *;
 
 %number {
-  color: $color-gray-50;
   bottom: 4rem;
+  color: $color-gray-50;
   position: absolute;
 }
 
@@ -10,8 +10,8 @@
   @include flex-y($gap: $spacing-40);
   @include size(100%);
 
-  min-width: 0;
   justify-content: center;
+  min-width: 0;
 }
 
 .head {
@@ -46,6 +46,7 @@
 
 .body {
   @include flex-y($gap: $spacing-12);
+
   width: 100%;
 
   td {

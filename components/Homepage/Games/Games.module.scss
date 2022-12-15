@@ -15,12 +15,11 @@
   @extend %text-style-display-xs-semibold;
 
   background-color: $color-error-500;
-  border-radius: $border-radius-small;
   border: none;
+  border-radius: $border-radius-small;
   color: $color-primary-25;
   cursor: pointer;
   padding: $spacing-8 $spacing-16;
-
   transition: all 0.3s;
 }
 

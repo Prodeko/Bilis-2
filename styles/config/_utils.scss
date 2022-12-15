@@ -3,6 +3,26 @@
 @use './spacing' as *;
 
 @mixin scrollbar($hover) {
+
+  @if $hover {
+    margin-right: -$spacing-12;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: opacify($color: $color-gray-600, $amount: 0.8);
+      visibility: hidden;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+      }
+    }
+  }
+
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -15,25 +35,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: $border-radius-small;
     background-color: $color-gray-400;
-  }
-
-  @if $hover {
-    margin-right: -$spacing-12;
-
-    &::-webkit-scrollbar-thumb {
-      background-color: opacify($color: $color-gray-600, $amount: 0.8);
-      visibility: hidden;
-    }
-    &::-webkit-scrollbar-track {
-      display: none;
-    }
-
-    &:hover {
-      &::-webkit-scrollbar-thumb {
-        visibility: visible;
-      }
-    }
+    border-radius: $border-radius-small;
   }
 }

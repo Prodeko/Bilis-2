@@ -21,9 +21,9 @@
 
 .button:hover {
   background-color: $color-base-white;
-
   transform: translateY(-$spacing-4);
 }
+
 .button:active {
   transform: translateY(0);
 }
