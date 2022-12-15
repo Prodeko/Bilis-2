@@ -1,7 +1,7 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEventHandler, MouseEvent, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
@@ -15,7 +15,7 @@ import styles from './PlayerSearchQueue.module.scss'
 const PlayerSearchQueue = () => {
   const [{ queue }, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
-  const { players, setQuery } = usePlayers(400)
+  const { players, setQuery } = usePlayers(200)
   const filteredPlayers = players.filter(
     player => !queue.some(queuePlayer => queuePlayer.id === player.id)
   )
@@ -23,6 +23,13 @@ const PlayerSearchQueue = () => {
 
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
+
+  const clearInputField = () => {
+    setQuery('') // Reset query
+    const input = document?.getElementById?.('queue') as HTMLInputElement
+    input.focus()
+    input.value = ''
+  }
 
   // Disable animations while dropdown closes
   const handleBlur = () => {
@@ -35,6 +42,10 @@ const PlayerSearchQueue = () => {
     setQuery(e.target.value)
     openDropdown()
     setSelectedIdx(0)
+  }
+
+  const preventInputBlur = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
   }
 
   const handleSelect = (player: Player) => {
@@ -51,7 +62,7 @@ const PlayerSearchQueue = () => {
           className={styles.input}
           id="queue"
           placeholder={'Add player to queue'}
-          onClick={openDropdown}
+          onFocus={openDropdown}
           onBlur={handleBlur}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
@@ -59,7 +70,8 @@ const PlayerSearchQueue = () => {
         />
         <button
           className={visible ? styles.button__visible : styles.button}
-          onClick={closeDropdown}
+          onMouseDown={preventInputBlur}
+          onClick={clearInputField}
         >
           <FiX />
         </button>
