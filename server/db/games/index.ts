@@ -194,6 +194,12 @@ const removeLatestGame = async () => {
 
   if (!latest) throw Error('No games in database')
 
+  Game.destroy({
+    where: {
+      id: latest.id,
+    },
+  })
+
   return latest
 }
 
