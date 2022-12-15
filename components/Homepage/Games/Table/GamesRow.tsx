@@ -1,7 +1,9 @@
-import { RecentGame } from '@common/types'
 import { round } from 'lodash'
 import Link from 'next/link'
 import { SlArrowRight } from 'react-icons/sl'
+
+import { RecentGame } from '@common/types'
+
 import styles from './Table.module.scss'
 
 interface Props {
@@ -15,7 +17,9 @@ const RecentsRow = ({ game, pulsing }: Props) => {
       <td className={styles.time}>{game.time}</td>
       <td className={styles.winner}>
         <Link href={`/player/${game.winnerId}`}>
-          <a>{game.winner}</a>
+          <a>
+            <span className={styles.link}>{game.winner}</span>
+          </a>
         </Link>
       </td>
       <td className={styles.winnerEloChange}>
@@ -27,7 +31,9 @@ const RecentsRow = ({ game, pulsing }: Props) => {
       </td>
       <td className={styles.loser}>
         <Link href={`/player/${game.loserId}`}>
-          <a>{game.loser}</a>
+          <a>
+            <span className={styles.link}>{game.loser}</span>
+          </a>
         </Link>
       </td>
       <td className={styles.loserEloChange}>

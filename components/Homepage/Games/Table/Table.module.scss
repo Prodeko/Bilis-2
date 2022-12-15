@@ -13,18 +13,18 @@
 
 %elo-change {
   @include grid-cols(3);
-  align-items: center;
 
-  width: 60%;
+  align-items: center;
   height: 100%;
+  width: 60%;
 
   & :nth-child(2) {
     text-align: center;
   }
+
   & :nth-child(3) {
     text-align: right;
   }
-
 }
 
 .table {
@@ -69,14 +69,14 @@
 
 .winner {
   grid-column: 3 / 6;
-  &:hover {
-    text-decoration: underline;
-  }
+  height: 100%;
 }
 
 .winnerEloChange {
   @extend %elo-change;
+
   grid-column: 6 / 8;
+
   &__header {
     grid-column: 6 / 8;
   }
@@ -84,14 +84,13 @@
 
 .loser {
   grid-column: 8 / 11;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .loserEloChange {
   @extend %elo-change;
+
   grid-column: 11 / 13;
+
   &__header {
     grid-column: 11 / 13;
   }
@@ -100,7 +99,18 @@
 .chevron {
   @include flex-y(null);
   @extend %flex-center;
-  font-size: 0.6em;
-  height:100%;
 
+  font-size: 0.6em;
+  height: 100%;
+}
+
+.link {
+  border-bottom: 1px solid transparent;
+  height: 100%;
+  padding-bottom: 3px;
+  transition: all 0.2s;
+
+  &:hover {
+    border-bottom: 1px solid $color-gray-200;
+  }
 }
