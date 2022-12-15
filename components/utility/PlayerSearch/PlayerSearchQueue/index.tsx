@@ -39,6 +39,7 @@ const PlayerSearchQueue = () => {
 
   const handleSelect = (player: Player) => {
     dispatch(addToQueue(player))
+    closeDropdown()
   }
 
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
