@@ -35,16 +35,30 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     dispatch(setPlayerId(side, selectedPlayer?.id))
   }
 
+  // Keep selected item scrolled in view
+  const smoothScroll = () => {
+    document.getElementById('add-game-list')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }
+
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
     switch (e.key) {
       case 'ArrowUp':
         // dont select users over the list
-        if (selectedIdx > -queuePlayers.length) dispatch(decrementSelectedIdx())
+        if (selectedIdx > -queuePlayers.length) {
+          dispatch(decrementSelectedIdx())
+          smoothScroll()
+        }
         break
 
       case 'ArrowDown':
         // dont select users over the list
-        if (selectedIdx < playerSearchList.length - 1) dispatch(incrementSelectedIdx())
+        if (selectedIdx < playerSearchList.length - 1) {
+          dispatch(incrementSelectedIdx())
+          smoothScroll()
+        }
         break
 
       case 'ArrowRight':

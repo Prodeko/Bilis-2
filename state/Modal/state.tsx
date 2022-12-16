@@ -51,14 +51,6 @@ export const ModalProvider = ({ recentPlayers, reducer, children }: ModalProvide
     }
   }, [state])
 
-  // Keep selected item scrolled in view
-  useEffect(() => {
-    document.getElementById('add-game-list')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    })
-  })
-
   return (
     <ModalContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}
