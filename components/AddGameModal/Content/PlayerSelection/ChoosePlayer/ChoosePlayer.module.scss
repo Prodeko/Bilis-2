@@ -13,7 +13,6 @@
   @extend %text-style-text-xl-semibold;
   @include flex-x(null);
 
-
   align-items: center;
   cursor: pointer;
   height: $spacing-48;
@@ -29,13 +28,6 @@
 
   .playerRow {
     @extend %row;
-    @include gradient-animation-on-hover(
-      $before-left: $color-gray-800,
-      $before-right: $color-gray-800,
-      $after-left: $color-gray-800,
-      $after-right: $color-gray-700,
-      $trans-time: 0.1s
-    );
 
     &__selected {
       @extend %row;
@@ -103,7 +95,7 @@
 .layout {
   @include grid-rows(2);
 
-  max-height: 90%;
+  height: 90%;
   row-gap: $spacing-24;
 }
 
