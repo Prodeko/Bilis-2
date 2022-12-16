@@ -18,7 +18,7 @@ const TableBody = ({ games, setGames, visible }: Props) => {
   const [page, setPage] = useState(1)
   const loader = useRef(null)
 
-  const [firstGame, ...otherGames] = games
+  const isPulsing = (idx: number) => idx == 0 && visible
 
   useEffect(() => {
     axios
@@ -53,9 +53,8 @@ const TableBody = ({ games, setGames, visible }: Props) => {
 
   return (
     <div ref={parent} id="games" className={styles.tablebody}>
-      <GamesRow key={firstGame.id} game={firstGame} pulsing={visible} />
-      {otherGames.map(game => (
-        <GamesRow key={game.id} game={game} pulsing={false} />
+      {games.map((game, idx) => (
+        <GamesRow key={game.id} game={game} pulsing={isPulsing(idx)} />
       ))}
       <tr ref={loader} />
     </div>
