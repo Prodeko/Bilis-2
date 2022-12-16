@@ -44,7 +44,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
 
       case 'ArrowDown':
         // dont select users over the list
-        if (selectedIdx < playerSearchList.length) dispatch(incrementSelectedIdx())
+        if (selectedIdx < playerSearchList.length - 1) dispatch(incrementSelectedIdx())
         break
 
       case 'ArrowRight':
