@@ -1,21 +1,21 @@
 @use 'styles' as *;
 
-%searchContainer {
+%search-container {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   max-height: 40%;
   text-align: left;
-  width: 50%;
   transition: all 0.7s;
+  width: 50%;
 }
 
 .searchContainer {
-  @extend %searchContainer;
+  @extend %search-container;
 
   min-height: 10%;
 
   &__extended {
-    @extend %searchContainer;
+    @extend %search-container;
 
     min-height: 40%;
   }

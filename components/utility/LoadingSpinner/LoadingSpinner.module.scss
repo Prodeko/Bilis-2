@@ -4,9 +4,9 @@
   @include flex-y($gap: $spacing-24);
 
   align-items: center;
-  justify-content: center;
   color: $color-gray-200;
   height: 100vh;
+  justify-content: center;
   width: 100vw;
 }
 
@@ -18,9 +18,8 @@
 .spinner {
   @include size($spinner-size);
 
-  x: 0px; 
-  y: 0px;
-  viewBox: 0 0 $spinner-size $spinner-size;
+  x: 0; 
+  y: 0;
 
   circle {
     @extend %animation-spinner;
@@ -28,8 +27,8 @@
     fill: transparent;
     stroke: $color-gray-200;
     stroke-dasharray: (3.14 * $spinner-size);
-    stroke-width: 4;
     stroke-linecap: round;
+    stroke-width: 4;
     transform-origin: (0.5 * $spinner-size) (0.5 * $spinner-size) 0;
   }
 }

@@ -1,13 +1,15 @@
+import { KeyboardEventHandler } from 'react'
+
 import {
+  Side,
   decrementSelectedIdx,
   incrementSelectedIdx,
   setFocus,
   setPlayerId,
-  Side,
   useModalState,
 } from '@state/Modal'
 import { useQueueState } from '@state/Queue'
-import { KeyboardEventHandler } from 'react'
+
 import styles from './ChoosePlayer.module.scss'
 import PlayerList from './PlayerList'
 import PlayerSearch from './PlayerSearch'
@@ -26,24 +28,37 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const queuePlayers = queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
   const selectedPlayer =
-    queuePlayers?.[queuePlayers.length + selectedIdx] ||
-    playerSearchList?.[selectedIdx]
+    queuePlayers?.[queuePlayers.length + selectedIdx] || playerSearchList?.[selectedIdx]
 
   const onChoose = () => {
     dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
     dispatch(setPlayerId(side, selectedPlayer?.id))
   }
 
+  // Keep selected item scrolled in view
+  const smoothScroll = () => {
+    document.getElementById('add-game-list')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }
+
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
     switch (e.key) {
       case 'ArrowUp':
         // dont select users over the list
-        if (selectedIdx > -queuePlayers.length) dispatch(decrementSelectedIdx())
+        if (selectedIdx > -queuePlayers.length) {
+          dispatch(decrementSelectedIdx())
+          smoothScroll()
+        }
         break
 
       case 'ArrowDown':
         // dont select users over the list
-        if (selectedIdx < playerSearchList.length) dispatch(incrementSelectedIdx())
+        if (selectedIdx < playerSearchList.length - 1) {
+          dispatch(incrementSelectedIdx())
+          smoothScroll()
+        }
         break
 
       case 'ArrowRight':
@@ -61,7 +76,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   }
 
   return (
-    <>
+    <div className={styles.layout}>
       <div className={styles.searchCard}>
         <QueueTitle />
         <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
@@ -70,7 +85,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
         <PlayerSearch side={side} handleKeyDown={handleKeyDown} />
         <PlayerList onChoose={onChoose} side={side} playerSearchList={playerSearchList} />
       </div>
-    </>
+    </div>
   )
 }
 

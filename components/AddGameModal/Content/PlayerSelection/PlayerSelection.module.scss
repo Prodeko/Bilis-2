@@ -1,19 +1,55 @@
 @use 'styles' as *;
 
 %card-column {
-  @include grid-rows(1);
+  @include flex-y($gap: null);
 
-  min-height: 0;
+  justify-content: center;
   max-height: 100%;
-  row-gap: $spacing-16;
+  min-height: 0;
+  row-gap: $spacing-48;
+  width: 100%;
+}
+
+%title {
+  @extend %text-style-display-lg-bold;
+
+  // @extend %flex-center;
+  
+  height: 10%;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 .cardColumn {
   @extend %card-column;
-  @include grid-rows(2);
-
+  
+  
   &__selected {
     @extend %card-column;
-    @include grid-rows(1);
   }
+}
+
+.title {
+  &__winner {
+    @extend %title;
+
+    color: $color-success-500;
+  }
+  
+  &__loser {
+    @extend %title;
+
+    color: $color-error-500;
+  }
+}
+
+.selectedlayout {
+  @include grid-rows(1);
+}
+
+.chooselayout {
+  @include grid-rows(2);
+
+  max-height: 100%;
+  row-gap: $spacing-24;
 }

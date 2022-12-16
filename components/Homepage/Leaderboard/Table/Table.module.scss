@@ -1,18 +1,18 @@
 @use 'styles' as *;
 
 %row {
+  @extend %text-style-text-xl-semibold;
   @include padding-y($padding: $spacing-8);
   @include padding-x($padding: $spacing-16);
   @include grid-cols(12);
 
-  display: grid;
   width: 100%;
 }
 
 .table {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
   gap: $spacing-16;
+  grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
 }
 
@@ -29,7 +29,6 @@
 .row {
   &__header {
     @extend %row;
-    @extend %text-style-text-xl-semibold;
     
     border-bottom: $border-primary-600-px;
     color: $color-gray-400;
@@ -39,7 +38,6 @@
   
   &__player {
     @extend %row;
-    @extend %text-style-text-xl-semibold;
     @include gradient-animation-on-hover(
       $before-left: $color-gray-800,
       $before-right: $color-gray-800,

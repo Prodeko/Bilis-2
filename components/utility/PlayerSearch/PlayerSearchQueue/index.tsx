@@ -1,7 +1,7 @@
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
-import { ChangeEventHandler, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
 import { Player } from '@common/types'
@@ -15,7 +15,7 @@ import styles from './PlayerSearchQueue.module.scss'
 const PlayerSearchQueue = () => {
   const [{ queue }, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
-  const { players, setQuery } = usePlayers(400)
+  const { players, setQuery } = usePlayers(200)
   const filteredPlayers = players.filter(
     player => !queue.some(queuePlayer => queuePlayer.id === player.id)
   )
@@ -24,6 +24,15 @@ const PlayerSearchQueue = () => {
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
 
+  const clearInputField = (focusField: boolean) => {
+    return () => {
+      setQuery('') // Reset query
+      const input = document?.getElementById?.('queue') as HTMLInputElement
+      input.value = '' // Clear input field
+      focusField && input.focus()
+    }
+  }
+
   // Disable animations while dropdown closes
   const handleBlur = () => {
     closeDropdown()
@@ -31,14 +40,19 @@ const PlayerSearchQueue = () => {
     setTimeout(() => enableAnimations(true), 500)
   }
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
-    openDropdown()
     setSelectedIdx(0)
+  }
+
+  const preventInputBlur = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
   }
 
   const handleSelect = (player: Player) => {
     dispatch(addToQueue(player))
+    clearInputField(false)()
+    closeDropdown()
   }
 
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
@@ -50,7 +64,7 @@ const PlayerSearchQueue = () => {
           className={styles.input}
           id="queue"
           placeholder={'Add player to queue'}
-          onClick={openDropdown}
+          onFocus={openDropdown}
           onBlur={handleBlur}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
@@ -58,7 +72,8 @@ const PlayerSearchQueue = () => {
         />
         <button
           className={visible ? styles.button__visible : styles.button}
-          onClick={closeDropdown}
+          onMouseDown={preventInputBlur}
+          onClick={clearInputField(true)}
         >
           <FiX />
         </button>

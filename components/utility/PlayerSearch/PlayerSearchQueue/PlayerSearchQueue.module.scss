@@ -4,9 +4,9 @@
   @include scrollbar(false);
   @include flex-y(null);
 
-  overflow-x: hidden;
   background: $color-base-white;
   border-radius: $border-radius-small;
+  overflow-x: hidden;
   transition: all 0.5s;
 }
 
@@ -14,8 +14,8 @@
   @include size($spacing-24);
   @extend %flex-center;
 
-  border: none;
   background-color: transparent;
+  border: none;
   cursor: pointer;
   transition: all 0.4s;
 }
@@ -54,12 +54,12 @@
 
 .input {
   border: none;
-  width: 100%;
   cursor: pointer;
+  width: 100%;
 
   &:focus {
-    outline: none;
     cursor: auto;
+    outline: none;
   }
 }
 
@@ -82,7 +82,7 @@
 .results {
   @extend %results;
   
-  max-height: 0rem;
+  max-height: 0;
   
   &__visible {
     @extend %results;
@@ -115,8 +115,8 @@
   @extend %flex-center;
   @extend %text-style-display-sm-semibold;
 
-  text-align: center;
   height: $spacing-256;
+  text-align: center;
 }
 
 .player:hover, .selected {

@@ -194,6 +194,17 @@ const removeLatestGame = async () => {
 
   if (!latest) throw Error('No games in database')
 
+  // Delete the game and remove update player players' elos
+  await Promise.all([
+    Game.destroy({
+      where: {
+        id: latest.id,
+      },
+    }),
+    updatePlayerById(latest.winnerId, { elo: latest.winnerEloBefore }),
+    updatePlayerById(latest.loserId, { elo: latest.loserEloBefore }),
+  ])
+
   return latest
 }
 

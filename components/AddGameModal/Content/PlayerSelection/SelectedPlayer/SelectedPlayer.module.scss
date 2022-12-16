@@ -1,17 +1,19 @@
 @use 'styles' as *;
 
 %number {
-  color: $color-gray-50;
   bottom: 4rem;
+  color: $color-gray-50;
   position: absolute;
 }
 
 .chosenPlayer {
   @include flex-y($gap: $spacing-40);
-  @include size(100%);
 
   min-width: 0;
-  justify-content: center;
+}
+
+.layout {
+  max-height: 50%;
 }
 
 .head {
@@ -46,6 +48,7 @@
 
 .body {
   @include flex-y($gap: $spacing-12);
+
   width: 100%;
 
   td {
