@@ -62,8 +62,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   }
 
   return (
-    <>
-      <h2 className={side === 'winner' ? styles.title__winner : styles.title__loser}>{side}</h2>
+    <div className={styles.layout}>
       <div className={styles.searchCard}>
         <QueueTitle />
         <QueuePlayers onChoose={onChoose} side={side} players={queuePlayers} />
@@ -72,7 +71,7 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
         <PlayerSearch side={side} handleKeyDown={handleKeyDown} />
         <PlayerList onChoose={onChoose} side={side} playerSearchList={playerSearchList} />
       </div>
-    </>
+    </div>
   )
 }
 

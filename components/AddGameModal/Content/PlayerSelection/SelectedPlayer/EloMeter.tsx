@@ -16,7 +16,7 @@ const EloMeter = ({ player }: { player: Player }) => {
   return (
     <div className={styles.gauge}>
       <GaugeChart
-        animateDuration={2000}
+        animateDuration={1000}
         animDelay={100}
         colors={['#CC0000', '#00BB00']} // Flip red and green colors
         cornerRadius={1}

@@ -2,15 +2,22 @@ import Image from 'next/image'
 
 import type { PlayerWithStats } from '@common/types'
 import PencilImage from '@public/images/edit-pencil.svg'
+import { Side, setFocus, setPlayerId, useModalState } from '@state/Modal'
 
 import styles from './SelectedPlayer.module.scss'
 
 interface Props {
   player: PlayerWithStats
-  onClear: () => void
+  side: Side
 }
 
-const TableHead = ({ onClear, player }: Props) => {
+const TableHead = ({ player, side }: Props) => {
+  const [_, dispatch] = useModalState()
+
+  const onClear = async () => {
+    await dispatch(setPlayerId(side, undefined))
+    dispatch(setFocus(side))
+  }
   return (
     <thead className={styles.head}>
       <tr>

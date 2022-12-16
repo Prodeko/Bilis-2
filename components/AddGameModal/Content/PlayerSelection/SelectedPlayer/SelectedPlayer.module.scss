@@ -8,10 +8,12 @@
 
 .chosenPlayer {
   @include flex-y($gap: $spacing-40);
-  @include size(100%);
 
-  justify-content: center;
   min-width: 0;
+}
+
+.layout {
+  max-height: 40%;
 }
 
 .head {
