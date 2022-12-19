@@ -18,6 +18,7 @@ const BaseLayout = ({ children }: LayoutProps): JSX.Element => {
       <main ref={parent} className={styles.layout}>
         {children}
       </main>
+      <p className={styles.versioning}>Version 1.1.0 - Raikku 🐔</p>
     </div>
   )
 }
