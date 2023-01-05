@@ -6,17 +6,17 @@
 	"service": "next",
 	"workspaceFolder": "/usr/src/app",
 	// Configure tool-specific properties.
-	"customizations": {
-		// Configure properties specific to VS Code.
-		"vscode": {
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"dbaeumer.vscode-eslint"
-			]
-		}
+	"extensions": [
+		"mrmlnc.vscode-scss",
+		"stylelint.vscode-stylelint",
+		"humao.rest-client",
+		"eamodio.gitlens",
+		"esbenp.prettier-vscode"
+	],
+	"hostRequirements": {
+		"memory": "3gb"
 	},
-	"extensions": ["esbenp.prettier-vscode", "mrmlnc.vscode-scss",  "humao.rest-client"],
-
+	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
