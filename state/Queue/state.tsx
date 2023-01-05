@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useMemo, useReducer } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+
+import { Player } from '@common/types'
 
 import { Action, LOCAL_QUEUE_NAME, State } from './reducer'
 
@@ -17,10 +19,17 @@ type QueueProviderProps = {
 }
 
 export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
-  const localStorageQueue =
-    typeof window !== 'undefined' ? localStorage.getItem(LOCAL_QUEUE_NAME) : undefined
-  const queue = localStorageQueue ? JSON.parse(localStorageQueue) : []
+  const [queue, setQueue] = useState<Player[]>([])
+  useEffect(() => {
+    const localStorageQueue = localStorage.getItem(LOCAL_QUEUE_NAME)
+    const parsedQueue: Player[] = localStorageQueue ? JSON.parse(localStorageQueue) : []
+    setQueue(parsedQueue)
+  }, [])
+  // const localStorageQueue =
+  //   typeof window !== 'undefined' ? localStorage.getItem(LOCAL_QUEUE_NAME) : undefined
+  // const queue = localStorageQueue ? JSON.parse(localStorageQueue) as Player[] : []
   const [state, dispatch] = useReducer(reducer, { queue })
+
   return (
     <QueueContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}
