@@ -12,14 +12,12 @@ interface Props {
 
 const PlayerRow = ({ player, position }: Props) => {
   return (
-    <Link href={`/player/${player.id}`}>
-      <a className={styles['row__player']}>
-        <span className={styles.position}>{position}.</span>
-        <span className={styles.player}>
-          {player.emoji} {player.fullName}
-        </span>
-        <span className={styles.elo}>{round(player.elo)}</span>
-      </a>
+    <Link className={styles['row__player']} href={`/player/${player.id}`}>
+      <span className={styles.position}>{position}.</span>
+      <span className={styles.player}>
+        {player.emoji} {player.fullName}
+      </span>
+      <span className={styles.elo}>{round(player.elo)}</span>
     </Link>
   )
 }
