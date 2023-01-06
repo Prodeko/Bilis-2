@@ -11,21 +11,21 @@ interface Props {
   setGames: Dispatch<SetStateAction<RecentGame[]>>
 }
 const Games = ({ games, setGames }: Props) => {
-  const [visible, setVisible] = useState<boolean>(false)
+  const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-  const closeModal = () => setVisible(false)
-  const showModal = () => setVisible(true)
+  const closeModal = () => setModalVisible(false)
+  const showModal = () => setModalVisible(true)
 
   return (
     <Card colspan="2 / 4" rowspan="2 / 3">
       <TitleRow
         games={games}
         setGames={setGames}
-        visible={visible}
+        visible={modalVisible}
         showModal={showModal}
         closeModal={closeModal}
       />
-      <Table games={games} setGames={setGames} visible={visible} />
+      <Table games={games} setGames={setGames} visible={modalVisible} />
     </Card>
   )
 }
