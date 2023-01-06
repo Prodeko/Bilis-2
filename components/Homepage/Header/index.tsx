@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { Player } from '@common/types'
 import MottoCard from '@components/utility/MottoCard'
+import useHydrated from '@hooks/useHydrated'
 import billiardPic from '@public/images/billiard.jpg'
 
 import styles from './Header.module.scss'
@@ -13,9 +14,9 @@ interface Props {
 }
 
 const Header = ({ randomPlayer }: Props) => {
+  const isHydrated = useHydrated()
   const [currentPlayer, setCurrentPlayer] = useState<Player>(randomPlayer)
   const [upcomingPlayer, setUpcomingPlayer] = useState<Player | undefined>(undefined)
-  const [renderCount, setRenderCount] = useState<number>(0) // Used to prevent mottoswitch on first render
   const [switching, setSwitching] = useState<boolean>(false)
 
   const setRandomPlayer = async () => {
@@ -27,7 +28,6 @@ const Header = ({ randomPlayer }: Props) => {
   // Fetch a new random player on set interval, default every 60 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setRenderCount(prevCount => prevCount + 1)
       setRandomPlayer()
     }, 60 * 1000)
     return () => clearInterval(timer)
@@ -41,8 +41,8 @@ const Header = ({ randomPlayer }: Props) => {
       if (upcomingPlayer) setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)
     }
 
-    if (Boolean(renderCount)) switchMotto() // Prevent switch on first render
-  }, [upcomingPlayer, renderCount])
+    if (isHydrated) switchMotto() // Run after hydration (first render)
+  }, [upcomingPlayer])
 
   const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
   return (
