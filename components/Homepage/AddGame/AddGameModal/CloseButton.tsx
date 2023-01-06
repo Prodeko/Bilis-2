@@ -6,7 +6,14 @@ interface Props {
 
 const CloseButton = ({ onClose }: Props) => {
   return (
-    <button className={styles.closeButton} type="button" onClick={onClose}>
+    <button
+      className={styles.closeButton}
+      type="button"
+      onClick={() => {
+        console.log('button clicked')
+        onClose()
+      }}
+    >
       <img src="/images/close-cross.svg" alt="close icon" />
     </button>
   )

@@ -51,14 +51,14 @@
 
   width: 100%;
 
-  td {
+  span {
     @extend %text-style-display-xs-semibold;
 
     color: $color-gray-25;
     text-align: center;
   }
 
-  tr {
+  .row {
     @include flex-x(null);
 
     justify-content: space-between;
