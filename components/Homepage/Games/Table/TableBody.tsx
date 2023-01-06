@@ -56,7 +56,7 @@ const TableBody = ({ games, setGames, visible }: Props) => {
       {games.map((game, idx) => (
         <GamesRow key={game.id} game={game} pulsing={isPulsing(idx)} />
       ))}
-      <tr ref={loader} />
+      <div ref={loader} />
     </div>
   )
 }
