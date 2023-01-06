@@ -25,9 +25,6 @@ export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
     const parsedQueue: Player[] = localStorageQueue ? JSON.parse(localStorageQueue) : []
     setQueue(parsedQueue)
   }, [])
-  // const localStorageQueue =
-  //   typeof window !== 'undefined' ? localStorage.getItem(LOCAL_QUEUE_NAME) : undefined
-  // const queue = localStorageQueue ? JSON.parse(localStorageQueue) as Player[] : []
   const [state, dispatch] = useReducer(reducer, { queue })
 
   return (
