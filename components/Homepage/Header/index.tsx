@@ -48,7 +48,13 @@ const Header = ({ randomPlayer }: Props) => {
   const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
   return (
     <header className={styles.header}>
-      <Image src={billiardPic} alt="Billiard Table" layout="fill" objectFit="cover" />
+      <Image
+        src={billiardPic}
+        alt="Billiard Table"
+        fill={true}
+        style={{ objectFit: 'cover' }}
+        priority={true}
+      />
       <Filter>
         <div className={styles.layout}>
           <h1 className={styles.title}>Biliskilke</h1>
