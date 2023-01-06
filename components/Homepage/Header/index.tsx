@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { Player } from '@common/types'
-import Filter from '@components/utility/Filter'
 import MottoCard from '@components/utility/MottoCard'
 import billiardPic from '@public/images/billiard.jpg'
 
@@ -55,12 +54,10 @@ const Header = ({ randomPlayer }: Props) => {
         style={{ objectFit: 'cover' }}
         priority={true}
       />
-      <Filter>
-        <div className={styles.layout}>
-          <h1 className={styles.title}>Biliskilke</h1>
-          <MottoCard text={currentPlayer.motto} author={author} switching={switching} />
-        </div>
-      </Filter>
+      <div className={styles.layout}>
+        <h1 className={styles.title}>Biliskilke</h1>
+        <MottoCard text={currentPlayer.motto} author={author} switching={switching} />
+      </div>
     </header>
   )
 }
