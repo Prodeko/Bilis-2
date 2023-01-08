@@ -10,7 +10,6 @@ const useKeyPress = <T extends WithId>(arr: Array<T>, enterFunction: (e: T) => v
   const [_, dispatch] = useQueueState()
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
-    console.log(event.key)
     switch (event.key) {
       case 'ArrowUp':
         setSelectedIdx(Math.max(0, selectedIdx - 1))

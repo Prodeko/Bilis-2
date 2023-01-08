@@ -17,9 +17,7 @@ const RecentsRow = ({ game, pulsing }: Props) => {
       <span className={styles.time}>{game.time}</span>
       <span className={styles.winner}>
         <Link href={`/player/${game.winnerId}`}>
-          <a>
-            <span className={styles.link}>{game.winner}</span>
-          </a>
+          <span className={styles.link}>{game.winner}</span>
         </Link>
       </span>
       <span className={styles.winnerEloChange}>
@@ -31,9 +29,7 @@ const RecentsRow = ({ game, pulsing }: Props) => {
       </span>
       <span className={styles.loser}>
         <Link href={`/player/${game.loserId}`}>
-          <a>
-            <span className={styles.link}>{game.loser}</span>
-          </a>
+          <span className={styles.link}>{game.loser}</span>
         </Link>
       </span>
       <span className={styles.loserEloChange}>

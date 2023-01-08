@@ -119,7 +119,7 @@ const ProfileForm = ({ player }: Props) => {
           onClick={submit}
         >
           {isUpdate ? 'Save changes' : 'Create player'}
-          <Image src={UserPlus} className={styles.icon} />
+          <Image src={UserPlus} className={styles.icon} alt="User+ icon" />
         </button>
       </form>
     </div>

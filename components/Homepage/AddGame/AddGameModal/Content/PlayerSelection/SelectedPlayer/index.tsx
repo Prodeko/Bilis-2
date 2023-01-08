@@ -14,11 +14,11 @@ type Props = {
 const SelectedPlayer = ({ player, side }: Props) => {
   return (
     <div className={styles.layout}>
-      <table className={styles.chosenPlayer}>
+      <div className={styles.chosenPlayer}>
         <TableHead player={player} side={side} />
         <EloMeter player={player} />
         <TableBody player={player} />
-      </table>
+      </div>
     </div>
   )
 }

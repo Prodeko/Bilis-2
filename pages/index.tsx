@@ -3,8 +3,7 @@ import type { NextPage } from 'next'
 import { KeyboardEventHandler, useState } from 'react'
 
 import type { HomeLeaderboard, Player, PlayerWithStats, RecentGame } from '@common/types'
-import AddGame from '@components/AddGameModal'
-import AddGameButton from '@components/Homepage/AddGameButton'
+import AddGameButton from '@components/Homepage/AddGame'
 import Games from '@components/Homepage/Games'
 import Header from '@components/Homepage/Header'
 import Leaderboard from '@components/Homepage/Leaderboard'
@@ -16,19 +15,13 @@ import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
   leaderboard: HomeLeaderboard
-  recentGames: RecentGame[]
   recentPlayers: PlayerWithStats[]
   randomPlayer: Player
   m: Player | undefined
 }
 
-const Home: NextPage<Props> = ({
-  leaderboard,
-  recentGames: initialGames,
-  recentPlayers,
-  randomPlayer,
-}: Props) => {
-  const [games, setGames] = useState<RecentGame[]>(initialGames)
+const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Props) => {
+  const [games, setGames] = useState<RecentGame[]>([])
   const [gameModalOpen, setGameModalOpen] = useState(false)
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
@@ -56,12 +49,15 @@ const Home: NextPage<Props> = ({
       <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
-          {gameModalOpen && (
-            <AddGame onClose={closeModal} setGames={setGames} recentPlayers={recentPlayers} />
-          )}
           <Leaderboard leaderboard={leaderboard} />
           <Queue />
-          <AddGameButton onOpen={openModal} open={gameModalOpen} />
+          <AddGameButton
+            onClose={closeModal}
+            onOpen={openModal}
+            open={gameModalOpen}
+            setGames={setGames}
+            recentPlayers={recentPlayers}
+          />
           <Games games={games} setGames={setGames} />
         </HomeGrid>
       </QueueProvider>
@@ -70,18 +66,18 @@ const Home: NextPage<Props> = ({
 }
 
 export async function getServerSideProps() {
-  const [leaderboard, recentGames, recentPlayers, randomPlayer] = (
+  const [leaderboard, recentPlayers, randomPlayer] = (
     await Promise.all([
       axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
         params: { amount: 50 },
       }),
-      axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
+      // axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
       axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
       axios.get(`${NEXT_PUBLIC_API_URL}/player/random`),
     ])
   ).map(result => result.data)
 
-  return { props: { leaderboard, recentGames, recentPlayers, randomPlayer } }
+  return { props: { leaderboard, recentPlayers, randomPlayer } }
 }
 
 export default Home

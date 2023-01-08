@@ -5,10 +5,8 @@ import styles from './BackButton.module.scss'
 
 const BackButton = ({ route }: { route: string }) => {
   return (
-    <Link href={route}>
-      <a className={styles.button}>
-        <BsArrowLeft className={styles.icon} />
-      </a>
+    <Link className={styles.button} href={route}>
+      <BsArrowLeft className={styles.icon} />
     </Link>
   )
 }

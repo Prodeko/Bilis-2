@@ -20,10 +20,8 @@ const ProfileHeader = ({ player }: Props) => {
       <div className={styles.emojiCircle}>{emoji}</div>
       <div className={styles.profileinfo}>
         <h1 className={styles['profileinfo--primary']}>{name}</h1>
-        <Link href={`/player/${id}/edit`}>
-          <a className={styles['profileinfo--secondary']}>
-            <Image className={styles.icon} src={Settings} /> Update player
-          </a>
+        <Link className={styles['profileinfo--secondary']} href={`/player/${id}/edit`}>
+          <Image className={styles.icon} src={Settings} alt="Update player button" /> Update player
         </Link>
       </div>
       <MottoCard text={motto} author={name} switching={false} />

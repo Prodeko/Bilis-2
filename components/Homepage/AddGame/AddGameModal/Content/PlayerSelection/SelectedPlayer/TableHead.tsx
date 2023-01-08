@@ -19,18 +19,16 @@ const TableHead = ({ player, side }: Props) => {
     dispatch(setFocus(side))
   }
   return (
-    <thead className={styles.head}>
-      <tr>
-        <th>
-          {player.firstName} {player.lastName}
-        </th>
-        <th>
-          <button onClick={onClear} type="button">
-            <Image src={PencilImage} width={40} alt="edit pencil" />
-          </button>
-        </th>
-      </tr>
-    </thead>
+    <div className={styles.head}>
+      <div>
+        {player.firstName} {player.lastName}
+      </div>
+      <div>
+        <button onClick={onClear} type="button">
+          <Image src={PencilImage} width={40} alt="edit pencil" />
+        </button>
+      </div>
+    </div>
   )
 }
 
