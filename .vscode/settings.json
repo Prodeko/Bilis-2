@@ -16,7 +16,6 @@
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
-  // Does not work
   "css.validate": false,
   "scss.validate": false,
   "stylelint.validate": [
