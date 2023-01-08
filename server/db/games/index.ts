@@ -74,7 +74,6 @@ const getPlayerDetailedGames = async (playerId: number) => {
   }
 
   const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
-  // console.log(playedGames)
   const gameData = [ZEROTH_GAME, ...playedGames]
 
   return gameData

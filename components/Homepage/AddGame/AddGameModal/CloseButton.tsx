@@ -10,7 +10,6 @@ const CloseButton = ({ onClose }: Props) => {
       className={styles.closeButton}
       type="button"
       onClick={() => {
-        console.log('button clicked')
         onClose()
       }}
     >
