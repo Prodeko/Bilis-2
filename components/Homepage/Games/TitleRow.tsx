@@ -1,5 +1,3 @@
-import { createPortal } from 'react-dom'
-
 import { RecentGame } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
@@ -23,11 +21,7 @@ const TitleRow = ({ games, setGames, visible, closeModal, showModal }: Props) =>
       <button className={styles.removeButton} onClick={showModal}>
         Remove latest
       </button>
-      {visible &&
-        createPortal(
-          <Modal games={games} setGames={setGames} closeModal={closeModal} />,
-          document?.getElementById('__next') as HTMLElement
-        )}
+      {visible && <Modal games={games} setGames={setGames} closeModal={closeModal} />}
     </div>
   )
 }

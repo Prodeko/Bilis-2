@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react'
-import { createPortal } from 'react-dom'
 
 import { PlayerWithStats, RecentGame } from '@common/types'
 
@@ -33,14 +32,7 @@ const AddGameButton = (props: Props) => {
       >
         <h3 className={styles.text}>Add New Game</h3>
       </div>
-      {
-        //Since the modal is out of flow of the page, we create a portal that moves it close to the root of the dom while still inheriting all the props from parent components
-        open &&
-          createPortal(
-            <AddGameModal {...modalProps} />,
-            document?.getElementById('__next') as HTMLElement
-          )
-      }
+      {open && <AddGameModal {...modalProps} />}
     </>
   )
 }
