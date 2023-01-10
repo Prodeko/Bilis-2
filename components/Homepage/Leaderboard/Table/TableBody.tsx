@@ -6,7 +6,6 @@ import styles from './Table.module.scss'
 
 const TableBody = ({ leaderboard }: { leaderboard: Player[] }) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 200 })
-
   return (
     <div ref={parent} className={styles.tablebody}>
       {leaderboard.map((player, position) => {
