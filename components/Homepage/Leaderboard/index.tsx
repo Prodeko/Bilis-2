@@ -1,10 +1,10 @@
-import type { PlayerExtended } from '@common/types'
+import type { Player } from '@common/types'
 import Card from '@components/utility/Card'
 
 import Table from './Table'
 import TitleRow from './TitleRow'
 
-const Leaderboard = ({ leaderboard }: { leaderboard: PlayerExtended[] }) => {
+const Leaderboard = ({ leaderboard }: { leaderboard: Player[] }) => {
   return (
     <Card colspan="1 / 2" rowspan="1 / 3">
       <TitleRow />

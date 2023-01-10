@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { NewPlayer, PlayerExtended } from '@common/types'
+import { NewPlayer, Player } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { clearGamesDEV, createGame } from '@server/db/games'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
@@ -98,10 +98,10 @@ const createGames = async () => {
   const allPlayers = await getPlayers()
 
   const games = _.times(GAME_COUNT, () => {
-    const winner = _.sample(allPlayers) as PlayerExtended
+    const winner = _.sample(allPlayers) as Player
     const remainingPlayers = allPlayers.filter(player => player.id !== winner.id)
 
-    const loser = _.sample(remainingPlayers) as PlayerExtended
+    const loser = _.sample(remainingPlayers) as Player
     const game = {
       winnerId: winner.id,
       loserId: loser.id,

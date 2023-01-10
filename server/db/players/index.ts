@@ -1,10 +1,10 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
 
-import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
+import { NewPlayer, Player, PlayerWithStats } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
-import { Player } from '@server/models'
+import { Player as PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
 const createPlayer = async (player: NewPlayer) => {
@@ -22,14 +22,14 @@ const createPlayer = async (player: NewPlayer) => {
     throw new Error('Malformmated id!')
   }
 
-  const createdPlayer = await Player.create(validateAndFormatPlayer(player))
+  const createdPlayer = await PlayerModel.create(validateAndFormatPlayer(player))
   return createdPlayer
 }
 
-const getPlayerById = async (id: number) => Player.findByPk(id)
+const getPlayerById = async (id: number) => PlayerModel.findByPk(id)
 
 const getRandomPlayer = async () =>
-  Player.findOne({
+  PlayerModel.findOne({
     order: dbConf.sequelize.random(),
     where: {
       motto: {
@@ -38,7 +38,7 @@ const getRandomPlayer = async () =>
     },
   })
 
-const extendPlayerWithStats = async (p: Player | PlayerType) => {
+const extendPlayerWithStats = async (p: PlayerModel | Player) => {
   const playerStats = await getPlayerStats(p.id)
   return { ...p, ...playerStats }
 }
@@ -52,36 +52,25 @@ const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
 
 // NOTE!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
-  Player.destroy({
+  PlayerModel.destroy({
     where: {},
     truncate: true,
     cascade: true,
   })
 
-const getPlayers = async (amount: number | undefined = undefined): Promise<PlayerExtended[]> => {
-  const players = await Player.findAll({
+const getPlayers = async (amount: number | undefined = undefined): Promise<Player[]> => {
+  const players = await PlayerModel.findAll({
     limit: amount,
     order: [['elo', 'DESC']],
   })
 
-  const jsonPlayers = players.map(p => p.toJSON())
-
-  // Add position
-  const extendedPlayers: PlayerExtended[] = jsonPlayers.map((player, index) => {
-    return {
-      ...player,
-      position: index + 1,
-      fullName: `${player.firstName} ${player.lastName}`,
-    }
-  })
-
-  return extendedPlayers
+  return players.map(p => p.toJSON())
 }
 
 const getLatestPlayers = async (n = 20) => {
   // Get > n games since the games likely contain duplicate players
   const latestGames = await getLatestGames(n * 5)
-  const players = latestGames.reduce((acc: PlayerType[], g) => [...acc, g.winner, g.loser], [])
+  const players = latestGames.reduce((acc: Player[], g) => [...acc, g.winner, g.loser], [])
   const uniquePlayers = _.uniqBy(players, pl => pl.id)
   const sliced = uniquePlayers.slice(0, n)
   const extended = await Promise.all(sliced.map(extendPlayerWithStats))
@@ -102,7 +91,7 @@ const searchPlayers = async (
     })
   })
 
-  const players = await Player.findAll({
+  const players = await PlayerModel.findAll({
     where: { [Op.or]: options },
     limit: limit,
   })

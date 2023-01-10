@@ -1,10 +1,10 @@
-import type { PlayerExtended } from '@common/types'
+import type { Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 import PlayerRow from './PlayerRow'
 import styles from './Table.module.scss'
 
-const TableBody = ({ leaderboard }: { leaderboard: PlayerExtended[] }) => {
+const TableBody = ({ leaderboard }: { leaderboard: Player[] }) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLDivElement>({ duration: 200 })
 
   return (
