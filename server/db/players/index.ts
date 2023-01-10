@@ -58,7 +58,7 @@ const clearPlayersDEV = () =>
     cascade: true,
   })
 
-const getPlayers = async (amount: number | undefined = undefined): Promise<Player[]> => {
+const getPlayers = async (amount?: number): Promise<Player[]> => {
   const players = await PlayerModel.findAll({
     limit: amount,
     order: [['elo', 'DESC']],
