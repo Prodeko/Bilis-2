@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { KeyboardEventHandler, useState } from 'react'
 
 import type { Player, PlayerWithStats, RecentGame } from '@common/types'
+import { NOF_LATEST_PLAYERS, NOF_LEADERBOARD_PLAYERS } from '@common/utils/constants'
 import AddGameButton from '@components/Homepage/AddGame'
 import Games from '@components/Homepage/Games'
 import Header from '@components/Homepage/Header'
@@ -11,6 +12,7 @@ import Queue from '@components/Homepage/Queue'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
 import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { getLatestPlayers, getPlayers, getRandomPlayer } from '@server/db/players'
 import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
@@ -66,16 +68,12 @@ const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Pro
 }
 
 export async function getServerSideProps() {
-  const [leaderboard, recentPlayers, randomPlayer] = (
-    await Promise.all([
-      axios.get(`${NEXT_PUBLIC_API_URL}/leaderboard`, {
-        params: { amount: 50 },
-      }),
-      // axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
-      axios.get(`${NEXT_PUBLIC_API_URL}/player/latest`),
-      axios.get(`${NEXT_PUBLIC_API_URL}/player/random`),
-    ])
-  ).map(result => result.data)
+  const [leaderboard, recentPlayers, randomPlayer] = await Promise.all([
+    getPlayers(NOF_LEADERBOARD_PLAYERS),
+    // axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
+    getLatestPlayers(NOF_LATEST_PLAYERS),
+    getRandomPlayer(),
+  ])
 
   return { props: { leaderboard, recentPlayers, randomPlayer } }
 }
