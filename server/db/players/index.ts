@@ -26,10 +26,10 @@ const createPlayer = async (player: NewPlayer) => {
   return createdPlayer
 }
 
-const getPlayerById = async (id: number) => PlayerModel.findByPk(id)
+const getPlayerById = async (id: number): Promise<PlayerModel | null> => PlayerModel.findByPk(id)
 
-const getRandomPlayer = () => {
-  const randomPlayer = PlayerModel.findOne({
+const getRandomPlayer = (): Promise<PlayerModel | null> =>
+  PlayerModel.findOne({
     order: dbConf.sequelize.random(),
     where: {
       motto: {
@@ -38,22 +38,19 @@ const getRandomPlayer = () => {
     },
   })
 
-  return randomPlayer.then(player => player?.toJSON() as Player)
-}
-
 const extendPlayerWithStats = async (p: PlayerModel | Player) => {
   const playerStats = await getPlayerStats(p.id)
   return { ...p, ...playerStats }
 }
 
-const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
+const updatePlayerById = async (id: number, data: Partial<NewPlayer>): Promise<PlayerModel> => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
   const updated = await player.update(data)
   return updated
 }
 
-// NOTE!! Only use in dev, destroys everything in database
+//WARNING!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
   PlayerModel.destroy({
     where: {},
@@ -61,19 +58,19 @@ const clearPlayersDEV = () =>
     cascade: true,
   })
 
-const getPlayers = async (amount?: number): Promise<Player[]> => {
-  const players = await PlayerModel.findAll({
+const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
+  PlayerModel.findAll({
     limit: amount,
     order: [['elo', 'DESC']],
   })
 
-  return players.map(p => p.toJSON())
-}
-
-const getLatestPlayers = async (n = 20) => {
+const getLatestPlayers = async (n = 20): Promise<PlayerWithStats[]> => {
   // Get > n games since the games likely contain duplicate players
   const latestGames = await getLatestGames(n * 5)
-  const players = latestGames.reduce((acc: Player[], g) => [...acc, g.winner, g.loser], [])
+  const players = latestGames.reduce(
+    (playerAccumulator: Player[], game) => [...playerAccumulator, game.winner, game.loser],
+    []
+  )
   const uniquePlayers = _.uniqBy(players, pl => pl.id)
   const sliced = uniquePlayers.slice(0, n)
   const extended = await Promise.all(sliced.map(extendPlayerWithStats))
