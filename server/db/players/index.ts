@@ -28,8 +28,8 @@ const createPlayer = async (player: NewPlayer) => {
 
 const getPlayerById = async (id: number) => PlayerModel.findByPk(id)
 
-const getRandomPlayer = async () =>
-  PlayerModel.findOne({
+const getRandomPlayer = () => {
+  const randomPlayer = PlayerModel.findOne({
     order: dbConf.sequelize.random(),
     where: {
       motto: {
@@ -37,6 +37,9 @@ const getRandomPlayer = async () =>
       },
     },
   })
+
+  return randomPlayer.then(player => player?.toJSON() as Player)
+}
 
 const extendPlayerWithStats = async (p: PlayerModel | Player) => {
   const playerStats = await getPlayerStats(p.id)
