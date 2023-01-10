@@ -1,3 +1,5 @@
+import { Player } from '@common/types'
+
 export const logWithBase = (x: number, base: number): number => Math.log(x) / Math.log(base)
 
 export const permutator = <T>(inputArr: T[]) => {
@@ -25,3 +27,6 @@ export const permutator = <T>(inputArr: T[]) => {
 
   return result
 }
+
+export const formatFullName = (player: Player) =>
+  `${player.firstName} "${player.firstName}" ${player.lastName}`
