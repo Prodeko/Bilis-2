@@ -29,8 +29,6 @@ interface PlayerStats {
 
 type PlayerWithStats = Player & PlayerStats
 
-type HomeLeaderboard = PlayerExtended[]
-
 // Game types
 interface Game extends WithId {
   winnerId: number
@@ -84,7 +82,6 @@ export type {
   GameWithPlayers,
   NewGame,
   RecentGame,
-  HomeLeaderboard,
   ProfileStatistic,
   PlayerStats,
   MutualGames,

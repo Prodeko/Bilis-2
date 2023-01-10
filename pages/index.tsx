@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { NextPage } from 'next'
 import { KeyboardEventHandler, useState } from 'react'
 
-import type { HomeLeaderboard, Player, PlayerWithStats, RecentGame } from '@common/types'
+import type { Player, PlayerExtended, PlayerWithStats, RecentGame } from '@common/types'
 import AddGameButton from '@components/Homepage/AddGame'
 import Games from '@components/Homepage/Games'
 import Header from '@components/Homepage/Header'
@@ -14,7 +14,7 @@ import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
-  leaderboard: HomeLeaderboard
+  leaderboard: PlayerExtended[]
   recentPlayers: PlayerWithStats[]
   randomPlayer: Player
   m: Player | undefined
