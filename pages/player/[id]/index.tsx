@@ -3,11 +3,13 @@ import type { GetServerSideProps, NextPage } from 'next'
 import ErrorPage from 'next/error'
 
 import type { Player, PlayerWithStats, TimeSeriesGame } from '@common/types'
+import { isNumber } from '@common/types/guards'
 import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileCharts from '@components/Profile/ProfileCharts'
 import ProfileHeader from '@components/Profile/ProfileHeader'
 import ProfileStats from '@components/Profile/ProfileStats/'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
+import { getPlayerDetailedGames, getPlayerStats } from '@server/db/games'
+import { getPlayerById } from '@server/db/players'
 
 type ErrorType = {
   error: string
@@ -58,25 +60,40 @@ const PlayerPage: NextPage<Props> = (props: Props) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const profileQuery = fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}`)
-  const gamesQuery = fetch(`${NEXT_PUBLIC_API_URL}/player/${context.query.id}/games`)
-
-  const [resProfileData, resGamesData] = await Promise.all([profileQuery, gamesQuery])
-  
-  const profileData = await resProfileData.json()
-  const gameData = await resGamesData.json()
-
-  if (profileData.body?.error || gameData.body?.error) {
+  // Check for valid number
+  const id = Number(context.query.id) as unknown
+  if (!isNumber(id)) {
     return {
       props: {
-        error: profileData.body.error ?? gameData.body?.error,
-        statusCode: profileData.statusCode,
+        error: 'ID must be type of number',
+        statusCode: 400,
       },
     }
   }
 
+  const [player, playerStats, playerDetailedGames] = await Promise.all([
+    getPlayerById(id),
+    getPlayerStats(id),
+    getPlayerDetailedGames(id),
+  ])
+
+  // Check that no data in undefined
+  if (!player || !playerStats || !playerDetailedGames) {
+    return {
+      props: {
+        error: `No game data found with ID ${id}`,
+        statusCode: 404,
+      },
+    }
+  }
+
+  const playerWithStats: PlayerWithStats = {
+    ...player.toJSON(),
+    ...playerStats,
+  }
+
   return {
-    props: {...profileData, gameData},
+    props: { ...playerWithStats, gameData: playerDetailedGames },
   }
 }
 
