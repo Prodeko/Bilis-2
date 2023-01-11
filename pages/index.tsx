@@ -1,4 +1,3 @@
-import axios from 'axios'
 import type { NextPage } from 'next'
 import { KeyboardEventHandler, useState } from 'react'
 
@@ -11,7 +10,6 @@ import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
-import { NEXT_PUBLIC_API_URL } from '@config/index'
 import { getLatestPlayers, getPlayers, getRandomPlayer } from '@server/db/players'
 import { QueueProvider, reducer } from '@state/Queue'
 
@@ -69,10 +67,9 @@ const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Pro
 
 export async function getServerSideProps() {
   const [leaderboard, recentPlayers, randomPlayer] = await Promise.all([
-    getPlayers(NOF_LEADERBOARD_PLAYERS),
-    // axios.get(`${NEXT_PUBLIC_API_URL}/game/recents`),
+    getPlayers(NOF_LEADERBOARD_PLAYERS).then(players => players.map(player => player.toJSON())),
     getLatestPlayers(NOF_LATEST_PLAYERS),
-    getRandomPlayer(),
+    getRandomPlayer().then(player => player?.toJSON()),
   ])
 
   return { props: { leaderboard, recentPlayers, randomPlayer } }
