@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Biliskilke 2.0</title>
+        <title>Biliskilke 2.1</title>
         <meta charSet="UTF-8" />
       </Head>
       <BaseLayout>{loading ? <LoadingSpinner /> : <AnyComponent {...pageProps} />}</BaseLayout>
