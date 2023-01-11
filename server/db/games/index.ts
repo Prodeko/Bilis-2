@@ -12,10 +12,10 @@ import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
 import { computePlayerStats } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
-import { Game, Player } from '@server/models'
+import { GameModel, PlayerModel } from '@server/models'
 
 const getGameCountForPlayer = async (playerId: number) => {
-  return Game.count({
+  return GameModel.count({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
@@ -23,7 +23,7 @@ const getGameCountForPlayer = async (playerId: number) => {
 }
 
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
-  const games = await Game.findAll({
+  const games = await GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
@@ -37,17 +37,17 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
 }
 
 const getPlayerDetailedGames = async (playerId: number) => {
-  const games = await Game.findAll({
+  const games = await GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
     include: [
       {
-        model: Player,
+        model: PlayerModel,
         as: 'winner',
       },
       {
-        model: Player,
+        model: PlayerModel,
         as: 'loser',
       },
     ],
@@ -78,13 +78,13 @@ const getMutualGamesCount = async (
   opposingPlayerId: number
 ): Promise<MutualGames> => {
   const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
-    Game.count({
+    GameModel.count({
       where: {
         winnerId: currentPlayerId,
         loserId: opposingPlayerId,
       },
     }),
-    Game.count({
+    GameModel.count({
       where: {
         winnerId: opposingPlayerId,
         loserId: currentPlayerId,
@@ -101,11 +101,11 @@ const getMutualGamesCount = async (
 }
 
 const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> => {
-  const { rows: games } = await Game.findAndCountAll({
+  const { rows: games } = await GameModel.findAndCountAll({
     order: [['createdAt', 'DESC']],
     include: [
-      { model: Player, as: 'winner' },
-      { model: Player, as: 'loser' },
+      { model: PlayerModel, as: 'winner' },
+      { model: PlayerModel, as: 'loser' },
     ],
     limit: n,
     offset: offset * n,
@@ -156,7 +156,7 @@ const createGame = async (game: CreateGameType) => {
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
   const createdGame: GameWithPlayers = (
-    await Game.create(
+    await GameModel.create(
       {
         ...game,
         winnerEloAfter,
@@ -166,8 +166,8 @@ const createGame = async (game: CreateGameType) => {
       },
       {
         include: [
-          { model: Player, as: 'winner' },
-          { model: Player, as: 'loser' },
+          { model: PlayerModel, as: 'winner' },
+          { model: PlayerModel, as: 'loser' },
         ],
       }
     )
@@ -181,7 +181,7 @@ const createGame = async (game: CreateGameType) => {
 }
 
 const removeLatestGame = async () => {
-  const latest = await Game.findOne({
+  const latest = await GameModel.findOne({
     order: [['createdAt', 'DESC']],
   })
 
@@ -189,7 +189,7 @@ const removeLatestGame = async () => {
 
   // Delete the game and remove update player players' elos
   await Promise.all([
-    Game.destroy({
+    GameModel.destroy({
       where: {
         id: latest.id,
       },
@@ -203,7 +203,7 @@ const removeLatestGame = async () => {
 
 // NOTE!! Only use in dev, destroys everything in database
 const clearGamesDEV = () =>
-  Game.destroy({
+  GameModel.destroy({
     where: {},
     truncate: true,
     cascade: true,

@@ -4,7 +4,7 @@ import { Op, Sequelize } from 'sequelize'
 import { NewPlayer, Player, PlayerWithStats } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
-import { Player as PlayerModel } from '@server/models'
+import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
 const createPlayer = async (player: NewPlayer) => {
