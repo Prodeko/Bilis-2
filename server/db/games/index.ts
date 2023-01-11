@@ -10,6 +10,7 @@ import type {
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
+import { computePlayerStats } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { Game, Player } from '@server/models'
 
@@ -29,17 +30,10 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
     order: [['createdAt', 'ASC']],
   })
 
-  const totalGames = games.length
   const wonGames = games.filter(game => game.winnerId === playerId).length
-  const lostGames = totalGames - wonGames
-  const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
+  const lostGames = games.filter(game => game.winnerId === playerId).length
 
-  return {
-    wonGames,
-    lostGames,
-    totalGames,
-    winPercentage,
-  }
+  return computePlayerStats(wonGames, lostGames)
 }
 
 const getPlayerDetailedGames = async (playerId: number) => {
