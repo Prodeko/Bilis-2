@@ -31,7 +31,7 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   })
 
   const wonGames = games.filter(game => game.winnerId === playerId).length
-  const lostGames = games.filter(game => game.winnerId === playerId).length
+  const lostGames = games.filter(game => game.loserId === playerId).length
 
   return computePlayerStats(wonGames, lostGames)
 }
