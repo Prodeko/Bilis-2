@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { KeyboardEventHandler, useState } from 'react'
 
-import type { Player, PlayerWithStats, RecentGame } from '@common/types'
+import type { Player, RecentGame } from '@common/types'
 import { NOF_LATEST_PLAYERS, NOF_LEADERBOARD_PLAYERS } from '@common/utils/constants'
 import AddGameButton from '@components/Homepage/AddGame'
 import Games from '@components/Homepage/Games'
@@ -10,6 +10,7 @@ import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
+import { getRecentGames } from '@server/db/games'
 import { getLatestPlayers, getPlayers, getRandomPlayer } from '@server/db/players'
 import { QueueProvider, reducer } from '@state/Queue'
 
@@ -17,11 +18,16 @@ interface Props {
   leaderboard: Player[]
   recentPlayers: Player[]
   randomPlayer: Player
-  m: Player | undefined
+  recentGames: RecentGame[]
 }
 
-const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Props) => {
-  const [games, setGames] = useState<RecentGame[]>([])
+const Home: NextPage<Props> = ({
+  leaderboard,
+  recentPlayers,
+  randomPlayer,
+  recentGames,
+}: Props) => {
+  const [games, setGames] = useState<RecentGame[]>(recentGames)
   const [gameModalOpen, setGameModalOpen] = useState(false)
   const closeModal = () => setGameModalOpen(false)
   const openModal = () => setGameModalOpen(true)
@@ -66,13 +72,14 @@ const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Pro
 }
 
 export async function getServerSideProps() {
-  const [leaderboard, recentPlayers, randomPlayer] = await Promise.all([
+  const [leaderboard, recentPlayers, randomPlayer, recentGames] = await Promise.all([
     getPlayers(NOF_LEADERBOARD_PLAYERS).then(players => players.map(player => player.toJSON())),
     getLatestPlayers(NOF_LATEST_PLAYERS).then(players => players.map(player => player.toJSON())),
     getRandomPlayer().then(player => player?.toJSON()),
+    getRecentGames(100),
   ])
 
-  return { props: { leaderboard, recentPlayers, randomPlayer } }
+  return { props: { leaderboard, recentPlayers, randomPlayer, recentGames } }
 }
 
 export default Home
