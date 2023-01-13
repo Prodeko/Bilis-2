@@ -4,17 +4,15 @@ import type {
   GameWithPlayers,
   MutualGames,
   NewGame,
-  PlayerStats,
   RecentGame,
   TimeSeriesGame,
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
-import { computePlayerStats } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
-const getGameCountForPlayer = async (playerId: number) => {
+const getGameCountForPlayer = async (playerId: number): Promise<number> => {
   return GameModel.count({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
@@ -22,19 +20,13 @@ const getGameCountForPlayer = async (playerId: number) => {
   })
 }
 
-const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
-  const games = await GameModel.findAll({
+const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
+  GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
     order: [['createdAt', 'ASC']],
   })
-
-  const wonGames = games.filter(game => game.winnerId === playerId).length
-  const lostGames = games.filter(game => game.loserId === playerId).length
-
-  return computePlayerStats(wonGames, lostGames)
-}
 
 const getPlayerDetailedGames = async (playerId: number) => {
   const games = await GameModel.findAll({
@@ -213,7 +205,7 @@ export {
   removeLatestGame,
   createGame,
   getGameCountForPlayer,
-  getPlayerStats,
+  getPlayerOrderedGames,
   getLatestGames,
   clearGamesDEV,
   getRecentGames,
