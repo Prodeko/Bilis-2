@@ -64,7 +64,7 @@ const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
     order: [['elo', 'DESC']],
   })
 
-const getLatestPlayers = async (n = 20): Promise<PlayerWithStats[]> => {
+const getLatestPlayers = async (n = 20): Promise<Player[]> => {
   // Get > n games since the games likely contain duplicate players
   const latestGames = await getLatestGames(n * 5)
   const players = latestGames.reduce(
@@ -73,8 +73,7 @@ const getLatestPlayers = async (n = 20): Promise<PlayerWithStats[]> => {
   )
   const uniquePlayers = _.uniqBy(players, pl => pl.id)
   const sliced = uniquePlayers.slice(0, n)
-  const extended = await Promise.all(sliced.map(extendPlayerWithStats))
-  return extended
+  return sliced
 }
 
 const searchPlayers = async (
