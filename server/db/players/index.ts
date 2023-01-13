@@ -6,7 +6,6 @@ import { permutator } from '@common/utils/helperFunctions'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
-import Player from '@server/models/rawModels/Player'
 
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   // Ghetto validation
@@ -80,7 +79,7 @@ const getLatestPlayers = async (nofPlayers: number): Promise<PlayerModel[]> => {
   })
 }
 
-const searchPlayers = async (query: string, limit?: number): Promise<Player[]> => {
+const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']
   const permutations = permutator(colOptions)
 
@@ -94,7 +93,7 @@ const searchPlayers = async (query: string, limit?: number): Promise<Player[]> =
     where: { [Op.or]: options },
     limit: limit,
   })
-  return players.map(p => p.toJSON())
+  return players
 }
 
 export {

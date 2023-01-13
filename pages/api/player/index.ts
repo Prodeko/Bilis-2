@@ -9,7 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const query = req.query.query as unknown
 
     if (isString(query)) {
-      const players = await searchPlayers(query, 20)
+      const players = await searchPlayers(query, 20).then(players =>
+        players.map(player => player.toJSON())
+      )
       res.status(200).json(players)
     } else {
       res.status(400).json({ error: 'ID must be type of string' })
