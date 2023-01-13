@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
 
-import { PlayerWithStats } from '@common/types'
+import { Player } from '@common/types'
 
 import { Action, State } from './reducer'
 
@@ -22,7 +22,7 @@ export const ModalContext = createContext<[State, React.Dispatch<Action>]>([
 ])
 
 type ModalProviderProps = {
-  recentPlayers: PlayerWithStats[]
+  recentPlayers: Player[]
   reducer: React.Reducer<State, Action>
   children: React.ReactElement
 }

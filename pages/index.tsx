@@ -15,7 +15,7 @@ import { QueueProvider, reducer } from '@state/Queue'
 
 interface Props {
   leaderboard: Player[]
-  recentPlayers: PlayerWithStats[]
+  recentPlayers: Player[]
   randomPlayer: Player
   m: Player | undefined
 }

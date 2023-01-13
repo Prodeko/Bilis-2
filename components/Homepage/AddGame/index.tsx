@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { PlayerWithStats, RecentGame } from '@common/types'
+import { Player, RecentGame } from '@common/types'
 
 import styles from './AddGameButton.module.scss'
 import AddGameModal from './AddGameModal'
@@ -10,7 +10,7 @@ type Props = {
   onClose: () => void
   setGames: Dispatch<SetStateAction<RecentGame[]>>
   open: boolean
-  recentPlayers: PlayerWithStats[]
+  recentPlayers: Player[]
 }
 
 const AddGameButton = (props: Props) => {
