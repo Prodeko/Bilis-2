@@ -6,8 +6,9 @@ import { permutator } from '@common/utils/helperFunctions'
 import { getLatestGames, getPlayerStats } from '@server/db/games'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
+import Player from '@server/models/rawModels/Player'
 
-const createPlayer = async (player: NewPlayer) => {
+const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   // Ghetto validation
   const validateAndFormatPlayer = (p: NewPlayer): NewPlayer => {
     if (
@@ -59,16 +60,24 @@ const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
     order: [['elo', 'DESC']],
   })
 
-const getLatestPlayers = async (n = 20): Promise<Player[]> => {
-  // Get > n games since the games likely contain duplicate players
-  const latestGames = await getLatestGames(n * 5)
-  const players = latestGames.reduce(
-    (playerAccumulator: Player[], game) => [...playerAccumulator, game.winner, game.loser],
-    []
-  )
-  const uniquePlayers = _.uniqBy(players, pl => pl.id)
-  const sliced = uniquePlayers.slice(0, n)
-  return sliced
+const getLatestPlayers = async (nofPlayers: number): Promise<PlayerModel[]> => {
+  return PlayerModel.findAll({
+    where: {
+      id: {
+        [Op.in]: Sequelize.literal(
+          `(
+          SELECT p1.id
+          FROM players AS p1
+          LEFT JOIN games
+          ON p1.id = games.winner_id OR p1.id = games.loser_id
+          GROUP BY p1.id
+          ORDER BY MAX(games.created_at) DESC
+          LIMIT ${nofPlayers}
+          )`
+        ),
+      },
+    },
+  })
 }
 
 const searchPlayers = async (query: string, limit?: number): Promise<Player[]> => {

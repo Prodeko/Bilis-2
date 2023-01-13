@@ -68,7 +68,7 @@ const Home: NextPage<Props> = ({ leaderboard, recentPlayers, randomPlayer }: Pro
 export async function getServerSideProps() {
   const [leaderboard, recentPlayers, randomPlayer] = await Promise.all([
     getPlayers(NOF_LEADERBOARD_PLAYERS).then(players => players.map(player => player.toJSON())),
-    getLatestPlayers(NOF_LATEST_PLAYERS),
+    getLatestPlayers(NOF_LATEST_PLAYERS).then(players => players.map(player => player.toJSON())),
     getRandomPlayer().then(player => player?.toJSON()),
   ])
 
