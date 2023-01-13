@@ -38,11 +38,6 @@ const getRandomPlayer = (): Promise<PlayerModel | null> =>
     },
   })
 
-const extendPlayerWithStats = async (p: PlayerModel | Player) => {
-  const playerStats = await getPlayerStats(p.id)
-  return { ...p, ...playerStats }
-}
-
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>): Promise<PlayerModel> => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
@@ -76,11 +71,7 @@ const getLatestPlayers = async (n = 20): Promise<Player[]> => {
   return sliced
 }
 
-const searchPlayers = async (
-  query: string,
-  stats = false,
-  limit?: number
-): Promise<Player[] | PlayerWithStats[]> => {
+const searchPlayers = async (query: string, limit?: number): Promise<Player[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']
   const permutations = permutator(colOptions)
 
@@ -94,12 +85,7 @@ const searchPlayers = async (
     where: { [Op.or]: options },
     limit: limit,
   })
-  const jsonPlayers = players.map(p => p.toJSON())
-
-  if (!stats) return jsonPlayers
-
-  const extendedPlayers = await Promise.all(jsonPlayers.map(extendPlayerWithStats))
-  return extendedPlayers
+  return players.map(p => p.toJSON())
 }
 
 export {
