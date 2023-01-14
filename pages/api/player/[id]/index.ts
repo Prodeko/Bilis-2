@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import type { Player } from '@common/types'
 import { isNumber } from '@common/types/guards'
 import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById, updatePlayerById } from '@server/db/players'

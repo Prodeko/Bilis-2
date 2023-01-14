@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 
 import { Player } from '@common/types'
 import MottoCard from '@components/utility/MottoCard'
-import useHydrated from '@hooks/useHydrated'
 import billiardPic from '@public/images/billiard.jpg'
 
 import styles from './Header.module.scss'
@@ -14,7 +13,6 @@ interface Props {
 }
 
 const Header = ({ randomPlayer }: Props) => {
-  const isHydrated = useHydrated()
   const [currentPlayer, setCurrentPlayer] = useState<Player>(randomPlayer)
   const [upcomingPlayer, setUpcomingPlayer] = useState<Player | undefined>(undefined)
   const [switching, setSwitching] = useState<boolean>(false)
@@ -41,7 +39,7 @@ const Header = ({ randomPlayer }: Props) => {
       if (upcomingPlayer) setTimeout(() => setCurrentPlayer(upcomingPlayer), 1000)
     }
 
-    if (isHydrated) switchMotto() // Run after hydration (first render)
+    if (upcomingPlayer) switchMotto() // Run after hydration (first render)
   }, [upcomingPlayer])
 
   const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
