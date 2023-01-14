@@ -4,9 +4,15 @@ export const logWithBase = (x: number, base: number): number => Math.log(x) / Ma
 
 /**
  * Takes array as input and returns an array of the different permutations.
- * @param inputArr Input array, can be arbitrary type
+ * @param inputArr - Input array, can be arbitrary type
+ * @returns Output permutations
  *
- * @return Output permutations
+ * @example
+ * ```
+ * const inputArr = [1, 2, 3]
+ * permutator(inputArr)
+ * // [ [1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1] ]
+ * ```
  */
 export const permutator = <T>(inputArr: T[]) => {
   const result: Array<T[]> = []
@@ -29,8 +35,7 @@ export const permutator = <T>(inputArr: T[]) => {
 /**
  * Formats player's full name give a player object
  *
- * @param player Player object
- *
+ * @param player - Player object
  * @returns Formatted full name
  */
 export const formatFullName = (player: Player) =>
@@ -39,10 +44,9 @@ export const formatFullName = (player: Player) =>
 /**
  * Returns player game stats
  *
- * @param wonGames Amount of games player has won
- * @param lostGames Amount of games player has lost
- *
- * @return Game stats
+ * @param wonGames - Amount of games player has won
+ * @param lostGames - Amount of games player has lost
+ * @returns Game stats
  */
 export const computePlayerStats = (wonGames: number, lostGames: number): PlayerStats => {
   const totalGames = wonGames + lostGames

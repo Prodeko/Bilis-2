@@ -1,15 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
-      // "airbnb",
-      // "airbnb-typescript",
-      // "plugin:prettier/recommended",
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
       "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
       "eslint-plugin-unused-imports",
+      "eslint-plugin-tsdoc",
       "@typescript-eslint"
   ],
   "parserOptions": {
@@ -19,7 +17,7 @@
     }
   },
   "ignorePatterns": "./**/*.js",
-  "overrides": [
+  "overrides": [ // This is here so we don't use typescript parser for js files.
     {
       "files": ["**/*.js", "**/*.jsx"],
       "parserOptions": {
@@ -29,15 +27,6 @@
   ],
   "root": true,
   "rules": {
-      /*"prettier/prettier": ["error"],
-      "react-hooks/exhaustive-deps":          "warn",
-      "react-hooks/rules-of-hooks":           "error",
-      "react/jsx-filename-extension":         [1, { "extensions": [".js", ".jsx"] }],
-      "react/jsx-indent-props":               [2, 4],
-      "react/jsx-indent":                     [2, 4],
-      "react/jsx-one-expression-per-line":    [0],
-      "react/prefer-stateless-function":      [1],
-      "react/static-property-placement":      [1, "property assignment"],*/
       "arrow-parens": ["error", "as-needed"],
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": "off",
@@ -45,6 +34,7 @@
       "import/prefer-default-export": "off",
       "react/jsx-props-no-spreading": "off",
       "no-unused-vars": "off",
+      "tsdoc/syntax": "warn", 
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
         "warn",
