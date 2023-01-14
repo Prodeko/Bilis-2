@@ -1,7 +1,5 @@
 import { Player, PlayerStats } from '@common/types'
 
-export const logWithBase = (x: number, base: number): number => Math.log(x) / Math.log(base)
-
 /**
  * Takes array as input and returns an array of the different permutations.
  * @param inputArr - Input array, can be arbitrary type
