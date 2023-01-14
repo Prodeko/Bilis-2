@@ -11,7 +11,8 @@
 		"stylelint.vscode-stylelint",
 		"humao.rest-client",
 		"eamodio.gitlens",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint"
 	],
 	"hostRequirements": {
 		"memory": "3gb"
