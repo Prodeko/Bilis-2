@@ -41,6 +41,7 @@ const PlayerSearchQueue = () => {
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    openDropdown()
     setQuery(e.target.value)
     setSelectedIdx(0)
   }
