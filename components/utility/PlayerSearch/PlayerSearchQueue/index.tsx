@@ -20,6 +20,7 @@ const PlayerSearchQueue = () => {
     player => !queue.some(queuePlayer => queuePlayer.id === player.id)
   )
   const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
+  const queueID = 'queue-id'
 
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
@@ -55,7 +56,11 @@ const PlayerSearchQueue = () => {
     closeDropdown()
   }
 
-  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(
+    filteredPlayers,
+    handleSelect,
+    queueID
+  )
 
   return (
     <div className={styles.container}>
@@ -83,6 +88,7 @@ const PlayerSearchQueue = () => {
           filteredPlayers.map((player, i) => (
             <li
               key={player.id}
+              id={selectedIdx === i ? queueID : ''}
               className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
               onClick={() => handleSelect(filteredPlayers[i])}
             >
