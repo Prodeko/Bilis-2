@@ -5,35 +5,26 @@ export const LOCAL_QUEUE_NAME = 'prodeko-biliskilke-queue'
 const setLocalQueue = (queue: Player[]) =>
   localStorage.setItem(LOCAL_QUEUE_NAME, JSON.stringify(queue))
 
-export type State = {
-  queue: Player[]
-}
+export type State = Player[]
 
 export const reducer = (state: State, action: Action): State => {
-  let newQueue: Player[] = []
   switch (action.type) {
     case 'SET_QUEUE':
       setLocalQueue(action.payload)
-      return {
-        queue: action.payload,
-      }
+      return action.payload
     case 'REMOVE_FROM_QUEUE':
-      newQueue = state.queue.filter(({ id }) => action.payload !== id)
-      setLocalQueue(newQueue)
-      return {
-        queue: newQueue,
-      }
+      const filteredQueue = state.filter(({ id }) => action.payload !== id)
+      setLocalQueue(filteredQueue)
+      return filteredQueue
     case 'ADD_TO_QUEUE':
-      if (state.queue.some(p => p.id === action.payload.id)) {
+      if (state.some(p => p.id === action.payload.id)) {
         console.warn(`${action.payload.firstName} ${action.payload.lastName} is already in queue!`)
         return state
       }
 
-      newQueue = [...state.queue, action.payload]
+      const newQueue = [...state, action.payload]
       setLocalQueue(newQueue)
-      return {
-        queue: newQueue,
-      }
+      return newQueue
     default:
       return state
   }

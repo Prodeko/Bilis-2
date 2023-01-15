@@ -4,9 +4,7 @@ import { Player } from '@common/types'
 
 import { Action, LOCAL_QUEUE_NAME, State } from './reducer'
 
-const initialState = {
-  queue: [],
-}
+const initialState: Player[] = []
 
 export const QueueContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
@@ -25,7 +23,7 @@ export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
     const parsedQueue: Player[] = localStorageQueue ? JSON.parse(localStorageQueue) : []
     setQueue(parsedQueue)
   }, [])
-  const [state, dispatch] = useReducer(reducer, { queue })
+  const [state, dispatch] = useReducer(reducer, queue)
 
   return (
     <QueueContext.Provider value={useMemo(() => [state, dispatch], [state])}>

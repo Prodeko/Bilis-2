@@ -7,7 +7,7 @@ import QueueItem from './QueueItem'
 import TitleRow from './TitleRow'
 
 const Queue = () => {
-  const [{ queue }] = useQueueState()
+  const [queue] = useQueueState()
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
 
   return (

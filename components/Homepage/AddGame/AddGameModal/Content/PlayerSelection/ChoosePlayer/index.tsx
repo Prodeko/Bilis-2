@@ -25,7 +25,7 @@ type PlayerProps = {
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
-  const [{ queue }] = useQueueState()
+  const [queue] = useQueueState()
   const smoothScroll = createSmoothScrollFn(SmoothScrollId.Addgame)
 
   const queuePlayers = queue.filter(p => p.id !== filterId)
