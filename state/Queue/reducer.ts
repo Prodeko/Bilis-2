@@ -10,8 +10,8 @@ export type State = Player[]
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_QUEUE':
-      setLocalQueue(action.payload)
-      return action.payload
+      const localStorageQueue = localStorage.getItem(LOCAL_QUEUE_NAME)
+      return localStorageQueue ? JSON.parse(localStorageQueue) : []
     case 'REMOVE_FROM_QUEUE':
       const filteredQueue = state.filter(({ id }) => action.payload !== id)
       setLocalQueue(filteredQueue)
@@ -33,7 +33,6 @@ export const reducer = (state: State, action: Action): State => {
 export type Action =
   | {
       type: 'SET_QUEUE'
-      payload: Player[]
     }
   | {
       type: 'REMOVE_FROM_QUEUE'
@@ -44,8 +43,8 @@ export type Action =
       payload: Player
     }
 
-export const setQueue = (queue: Player[]): Action => {
-  return { type: 'SET_QUEUE', payload: queue }
+export const setQueue = (): Action => {
+  return { type: 'SET_QUEUE' }
 }
 
 export const removeFromQueue = (idToRemove: Player['id']): Action => {
