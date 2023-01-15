@@ -4,7 +4,7 @@
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
-import { Player } from '@common/types'
+import { Player, SmoothScrollId } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
@@ -20,7 +20,6 @@ const PlayerSearchQueue = () => {
     player => !queue.some(queuePlayer => queuePlayer.id === player.id)
   )
   const [parent, enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
-  const queueID = 'queue-id'
 
   const openDropdown = () => setVisible(true)
   const closeDropdown = () => setVisible(false)
@@ -59,7 +58,7 @@ const PlayerSearchQueue = () => {
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(
     filteredPlayers,
     handleSelect,
-    queueID
+    SmoothScrollId.Queue
   )
 
   return (
@@ -88,7 +87,7 @@ const PlayerSearchQueue = () => {
           filteredPlayers.map((player, i) => (
             <li
               key={player.id}
-              id={selectedIdx === i ? queueID : ''}
+              id={selectedIdx === i ? SmoothScrollId.Queue : ''}
               className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
               onClick={() => handleSelect(filteredPlayers[i])}
             >

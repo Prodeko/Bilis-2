@@ -1,7 +1,6 @@
 import { round } from 'lodash'
 
-import type { Player } from '@common/types'
-import { ADD_GAME_LIST_ID } from '@common/utils/constants'
+import { Player, SmoothScrollId } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Side, setFocus, setSelectedIdx, useModalState } from '@state/Modal'
 
@@ -31,7 +30,7 @@ const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
           <li
-            id={isSelected(i) ? ADD_GAME_LIST_ID : ''}
+            id={isSelected(i) ? SmoothScrollId.Addgame : ''}
             className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
             key={p.id}
             onClick={() => onChoose(p.id)}

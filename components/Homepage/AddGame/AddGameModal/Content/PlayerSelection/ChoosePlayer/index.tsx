@@ -1,6 +1,6 @@
 import { KeyboardEventHandler } from 'react'
 
-import { ADD_GAME_LIST_ID } from '@common/utils/constants'
+import { SmoothScrollId } from '@common/types'
 import { createSmoothScrollFn } from '@common/utils/helperFunctions'
 import {
   Side,
@@ -26,7 +26,7 @@ type PlayerProps = {
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
   const [{ queue }] = useQueueState()
-  const smoothScroll = createSmoothScrollFn(ADD_GAME_LIST_ID)
+  const smoothScroll = createSmoothScrollFn(SmoothScrollId.Addgame)
 
   const queuePlayers = queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
