@@ -37,7 +37,7 @@ export const permutator = <T>(inputArr: T[]) => {
  * @returns Formatted full name
  */
 export const formatFullName = (player: Player) =>
-  `${player.firstName} "${player.firstName}" ${player.lastName}`
+  `${player.firstName} "${player.nickname}" ${player.lastName}`
 
 /**
  * Returns player game stats
