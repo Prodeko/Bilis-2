@@ -15,11 +15,6 @@ interface Player extends WithId {
 
 type NewPlayer = Omit<Player, 'id'>
 
-interface PlayerExtended extends Player {
-  position: number
-  fullName: string
-}
-
 interface PlayerStats {
   wonGames: number
   lostGames: number
@@ -28,8 +23,6 @@ interface PlayerStats {
 }
 
 type PlayerWithStats = Player & PlayerStats
-
-type HomeLeaderboard = PlayerExtended[]
 
 // Game types
 interface Game extends WithId {
@@ -78,13 +71,11 @@ interface ProfileStatistic {
 export type {
   WithId,
   Player,
-  PlayerExtended,
   NewPlayer,
   Game,
   GameWithPlayers,
   NewGame,
   RecentGame,
-  HomeLeaderboard,
   ProfileStatistic,
   PlayerStats,
   MutualGames,

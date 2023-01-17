@@ -1,13 +1,12 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
 
-import { NewPlayer, PlayerExtended, Player as PlayerType, PlayerWithStats } from '@common/types'
+import { NewPlayer } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
-import { getLatestGames, getPlayerStats } from '@server/db/games'
-import { Player } from '@server/models'
+import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
-const createPlayer = async (player: NewPlayer) => {
+const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   // Ghetto validation
   const validateAndFormatPlayer = (p: NewPlayer): NewPlayer => {
     if (
@@ -22,14 +21,14 @@ const createPlayer = async (player: NewPlayer) => {
     throw new Error('Malformmated id!')
   }
 
-  const createdPlayer = await Player.create(validateAndFormatPlayer(player))
+  const createdPlayer = await PlayerModel.create(validateAndFormatPlayer(player))
   return createdPlayer
 }
 
-const getPlayerById = async (id: number) => Player.findByPk(id)
+const getPlayerById = async (id: number): Promise<PlayerModel | null> => PlayerModel.findByPk(id)
 
-const getRandomPlayer = async () =>
-  Player.findOne({
+const getRandomPlayer = (): Promise<PlayerModel | null> =>
+  PlayerModel.findOne({
     order: dbConf.sequelize.random(),
     where: {
       motto: {
@@ -38,61 +37,48 @@ const getRandomPlayer = async () =>
     },
   })
 
-const extendPlayerWithStats = async (p: Player | PlayerType) => {
-  const playerStats = await getPlayerStats(p.id)
-  return { ...p, ...playerStats }
-}
-
-const updatePlayerById = async (id: number, data: Partial<NewPlayer>) => {
+const updatePlayerById = async (id: number, data: Partial<NewPlayer>): Promise<PlayerModel> => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
   const updated = await player.update(data)
   return updated
 }
 
-// NOTE!! Only use in dev, destroys everything in database
+//WARNING!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
-  Player.destroy({
+  PlayerModel.destroy({
     where: {},
     truncate: true,
     cascade: true,
   })
 
-const getPlayers = async (amount: number | undefined = undefined): Promise<PlayerExtended[]> => {
-  const players = await Player.findAll({
+const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
+  PlayerModel.findAll({
     limit: amount,
     order: [['elo', 'DESC']],
   })
 
-  const jsonPlayers = players.map(p => p.toJSON())
-
-  // Add position
-  const extendedPlayers: PlayerExtended[] = jsonPlayers.map((player, index) => {
-    return {
-      ...player,
-      position: index + 1,
-      fullName: `${player.firstName} ${player.lastName}`,
-    }
+const getLatestPlayers = async (nofPlayers: number): Promise<PlayerModel[]> => {
+  return PlayerModel.findAll({
+    where: {
+      id: {
+        [Op.in]: Sequelize.literal(
+          `(
+          SELECT p1.id
+          FROM players AS p1
+          LEFT JOIN games
+          ON p1.id = games.winner_id OR p1.id = games.loser_id
+          GROUP BY p1.id
+          ORDER BY MAX(games.created_at) DESC
+          LIMIT ${nofPlayers}
+          )`
+        ),
+      },
+    },
   })
-
-  return extendedPlayers
 }
 
-const getLatestPlayers = async (n = 20) => {
-  // Get > n games since the games likely contain duplicate players
-  const latestGames = await getLatestGames(n * 5)
-  const players = latestGames.reduce((acc: PlayerType[], g) => [...acc, g.winner, g.loser], [])
-  const uniquePlayers = _.uniqBy(players, pl => pl.id)
-  const sliced = uniquePlayers.slice(0, n)
-  const extended = await Promise.all(sliced.map(extendPlayerWithStats))
-  return extended
-}
-
-const searchPlayers = async (
-  query: string,
-  stats = false,
-  limit?: number
-): Promise<Player[] | PlayerWithStats[]> => {
+const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel[]> => {
   const colOptions = ['first_name', 'last_name', 'nickname', 'id']
   const permutations = permutator(colOptions)
 
@@ -102,16 +88,11 @@ const searchPlayers = async (
     })
   })
 
-  const players = await Player.findAll({
+  const players = await PlayerModel.findAll({
     where: { [Op.or]: options },
     limit: limit,
   })
-  const jsonPlayers = players.map(p => p.toJSON())
-
-  if (!stats) return jsonPlayers
-
-  const extendedPlayers = await Promise.all(jsonPlayers.map(extendPlayerWithStats))
-  return extendedPlayers
+  return players
 }
 
 export {

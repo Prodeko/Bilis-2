@@ -4,11 +4,11 @@ import { KeyboardEventHandler, useEffect } from 'react'
 
 import SearchIcon from '@public/images/search-icon.svg'
 import {
+  Side,
   resetPlayers,
   setFocus,
   setPlayers,
   setSelectedIdx,
-  Side,
   useModalState,
 } from '@state/Modal'
 import useDebounce from 'hooks/useDebounce'
@@ -29,7 +29,7 @@ const PlayerSearch = ({ side, handleKeyDown }: Props) => {
   useEffect(() => {
     const search = async (q: string) => {
       const res = await axios.get(`/api/player`, {
-        params: { query: q, stats: true },
+        params: { query: q },
       })
       dispatch(setPlayers(side, res.data))
     }

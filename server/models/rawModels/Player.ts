@@ -58,7 +58,7 @@ Player.init(
     modelName: 'player',
     defaultScope: {
       attributes: {
-        exclude: ['createdAt'],
+        exclude: ['createdAt', 'updatedAt'],
       },
     },
     hooks: {

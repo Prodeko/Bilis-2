@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import type { HomeLeaderboard } from '@common/types'
+import type { Player } from '@common/types'
 import { isNumber, isString } from '@common/types/guards'
 import { getPlayers } from '@server/db/players'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<HomeLeaderboard | { message: string }>
+  res: NextApiResponse<Player[] | { message: string }>
 ) {
   const query = req.query.amount
   if (!query || !isString(query)) {

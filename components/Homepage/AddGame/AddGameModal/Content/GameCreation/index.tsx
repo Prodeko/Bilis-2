@@ -1,8 +1,9 @@
+import axios from 'axios'
+import { Dispatch, SetStateAction } from 'react'
+
 import { RecentGame } from '@common/types'
 import { setUndertable, useModalState } from '@state/Modal'
 import { removeFromQueue, useQueueState } from '@state/Queue'
-import axios from 'axios'
-import { Dispatch, SetStateAction } from 'react'
 
 import styles from './GameCreation.module.scss'
 import SubmitButton from './SubmitButton'
@@ -15,7 +16,7 @@ interface Props {
 
 const GameCreation = ({ setGames, onClose }: Props) => {
   const [{ game }, dispatchModal] = useModalState()
-  const [_,  dispatchQueue] = useQueueState()
+  const [_, dispatchQueue] = useQueueState()
 
   const isActive = Boolean(game.winnerId && game.loserId)
   // TODO validate that all fields are present
@@ -27,10 +28,9 @@ const GameCreation = ({ setGames, onClose }: Props) => {
     }
 
     const res = await axios.post(`/api/game`, game)
-    if(game.winnerId) dispatchQueue(removeFromQueue(game.winnerId))
-    if(game.loserId) dispatchQueue(removeFromQueue(game.loserId))
+    if (game.winnerId) dispatchQueue(removeFromQueue(game.winnerId))
+    if (game.loserId) dispatchQueue(removeFromQueue(game.loserId))
     setGames((prev: RecentGame[]) => [res.data as RecentGame, ...prev])
-    console.log(res.data)
     onClose()
     document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
     // TODO show success msg

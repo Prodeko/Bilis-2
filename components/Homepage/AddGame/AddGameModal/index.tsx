@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import type { PlayerWithStats, RecentGame } from '@common/types'
+import type { Player, RecentGame } from '@common/types'
 import ModalBlur from '@components/utility/ModalBlur'
 import { ModalProvider, reducer } from '@state/Modal'
 
@@ -9,7 +9,7 @@ import CloseButton from './CloseButton'
 import Content from './Content'
 
 type PlayerProps = {
-  recentPlayers: PlayerWithStats[]
+  recentPlayers: Player[]
   onClose: () => void
   setGames: Dispatch<SetStateAction<RecentGame[]>>
 }

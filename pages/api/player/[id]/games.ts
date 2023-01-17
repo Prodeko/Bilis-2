@@ -13,7 +13,6 @@ const handleFetch = async (res: NextApiResponse, id: number) => {
   return res.status(200).json(gameData)
 }
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = Number(req.query.id) as unknown
   if (!isNumber(id)) {

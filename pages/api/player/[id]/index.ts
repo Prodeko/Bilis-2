@@ -1,24 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import type { Player } from '@common/types'
 import { isNumber } from '@common/types/guards'
-import { getPlayerStats } from '@server/db/games'
+import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 
 const handleFetch = async (res: NextApiResponse, id: number) => {
-  const [player, playerStats] = await Promise.all([
-    getPlayerById(id),
-    getPlayerStats(id),
-  ])
+  const [player, playerStats] = await Promise.all([getPlayerById(id), getPlayerStats(id)])
 
   if (!player) {
     return res.status(404).json({ error: `No player found with ID ${id}` })
   }
 
-  const jsonPlayer = player.toJSON() as Player
   return res.status(200).json({
-    ...jsonPlayer,
-    ...playerStats
+    ...player.toJSON(),
+    ...playerStats,
   })
 }
 

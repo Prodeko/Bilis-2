@@ -1,4 +1,10 @@
-import { logWithBase } from './helperFunctions'
+/**
+ * Helper function used to calculate robustGameScore for fargo ratings
+ * @param x - Nonimator input for natural logarithm
+ * @param base - Denonimator input for natural logarithm
+ * @returns Floating point number
+ */
+export const logWithBase = (x: number, base: number): number => Math.log(x) / Math.log(base)
 
 const robustGameScore = (gameCount: number) => {
   return gameCount + 1 > 20 ? logWithBase(gameCount + 1, 1.14163) - 2.61648 : 20
@@ -24,4 +30,4 @@ const getScoreChange = (
   return [winnerChange, loserChange]
 }
 
-export { getScoreChange }
+export { robustGameScore, getScoreChange }

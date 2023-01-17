@@ -11,7 +11,7 @@ class Game extends _Game {
   declare loserId: number
 }
 
-// Define winnerId foreign key Game -> Player
+// Define winnerId foreign key GameModel -> Player
 Player.hasMany(Game, {
   as: 'wonGames',
   foreignKey: 'winnerId',
@@ -34,4 +34,4 @@ Game.belongsTo(Player, {
   as: 'loser',
 })
 
-export { Player, Game }
+export { Player as PlayerModel, Game as GameModel }
