@@ -1,5 +1,7 @@
 import { KeyboardEventHandler } from 'react'
 
+import { SmoothScrollId } from '@common/types'
+import { createSmoothScrollFn } from '@common/utils/helperFunctions'
 import {
   Side,
   decrementSelectedIdx,
@@ -23,7 +25,8 @@ type PlayerProps = {
 
 const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState()
-  const [{ queue }] = useQueueState()
+  const [queue] = useQueueState()
+  const smoothScroll = createSmoothScrollFn(SmoothScrollId.Addgame)
 
   const queuePlayers = queue.filter(p => p.id !== filterId)
   const playerSearchList = playerSearchLists[side].filter(p => p.id !== filterId)
@@ -33,14 +36,6 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const onChoose = () => {
     dispatch(setFocus(side === 'winner' ? 'loser' : 'winner'))
     dispatch(setPlayerId(side, selectedPlayer?.id))
-  }
-
-  // Keep selected item scrolled in view
-  const smoothScroll = () => {
-    document.getElementById('add-game-list')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    })
   }
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {

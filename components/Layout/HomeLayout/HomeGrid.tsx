@@ -1,6 +1,7 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { setQueue, useQueueState } from '@state/Queue'
 
 import styles from './HomeLayout.module.scss'
 

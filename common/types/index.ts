@@ -67,6 +67,16 @@ interface ProfileStatistic {
   value: string
 }
 
+// Random types
+
+/**
+ * Add these to the smooth scroll functions and to the list items you want to smooth scroll into
+ */
+enum SmoothScrollId {
+  Queue = 'queue-list-item',
+  Addgame = 'add-game-list-item',
+}
+
 // Export types
 export type {
   WithId,
@@ -82,3 +92,5 @@ export type {
   PlayerWithStats,
   TimeSeriesGame,
 }
+
+export { SmoothScrollId }

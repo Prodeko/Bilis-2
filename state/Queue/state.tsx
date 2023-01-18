@@ -1,14 +1,12 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
 
 import { Player } from '@common/types'
 
-import { Action, LOCAL_QUEUE_NAME, State } from './reducer'
+import { Action, State, setQueue } from './reducer'
 
-const initialState = {
-  queue: [],
-}
+const initialState: Player[] = []
 
-export const QueueContext = createContext<[State, React.Dispatch<Action>]>([
+const QueueContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState,
 ])
@@ -18,19 +16,18 @@ type QueueProviderProps = {
   children: React.ReactElement
 }
 
+/**
+ * Provides queue to the children of this provider.
+ *
+ * @param object - Object of Queue-reducer and react children
+ * @returns Global state provider for queue
+ */
 export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
-  const [queue, setQueue] = useState<Player[]>([])
+  const [state, dispatch] = useReducer(reducer, initialState)
   useEffect(() => {
-    const localStorageQueue = localStorage.getItem(LOCAL_QUEUE_NAME)
-    const parsedQueue: Player[] = localStorageQueue ? JSON.parse(localStorageQueue) : []
-    setQueue(parsedQueue)
+    dispatch(setQueue())
   }, [])
-  const [state, dispatch] = useReducer(reducer, { queue })
 
-  return (
-    <QueueContext.Provider value={useMemo(() => [state, dispatch], [state])}>
-      {children}
-    </QueueContext.Provider>
-  )
+  return <QueueContext.Provider value={[state, dispatch]}>{children}</QueueContext.Provider>
 }
 export const useQueueState = () => useContext(QueueContext)

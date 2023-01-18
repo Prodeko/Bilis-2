@@ -4,7 +4,7 @@
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
-import { Player } from '@common/types'
+import { Player, SmoothScrollId } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
@@ -13,7 +13,7 @@ import { addToQueue, useQueueState } from '@state/Queue'
 import styles from './PlayerSearchQueue.module.scss'
 
 const PlayerSearchQueue = () => {
-  const [{ queue }, dispatch] = useQueueState()
+  const [queue, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
   const { players, setQuery } = usePlayers(200)
   const filteredPlayers = players.filter(
@@ -41,6 +41,7 @@ const PlayerSearchQueue = () => {
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    openDropdown()
     setQuery(e.target.value)
     setSelectedIdx(0)
   }
@@ -55,7 +56,11 @@ const PlayerSearchQueue = () => {
     closeDropdown()
   }
 
-  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(filteredPlayers, handleSelect)
+  const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(
+    filteredPlayers,
+    handleSelect,
+    SmoothScrollId.Queue
+  )
 
   return (
     <div className={styles.container}>
@@ -83,6 +88,7 @@ const PlayerSearchQueue = () => {
           filteredPlayers.map((player, i) => (
             <li
               key={player.id}
+              id={selectedIdx === i ? SmoothScrollId.Queue : ''}
               className={`${styles.player} ${selectedIdx === i ? styles.selected : ''}`}
               onClick={() => handleSelect(filteredPlayers[i])}
             >

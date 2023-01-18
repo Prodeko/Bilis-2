@@ -56,3 +56,19 @@ export const computePlayerStats = (wonGames: number, lostGames: number): PlayerS
     winPercentage,
   }
 }
+/**
+ * Scrolls the list element smoothly and keeps the selected element in the center
+ *
+ * @remarks Dom element id (NOTE! dont use a class name)
+ *
+ * @param domElementId - DOM element id
+ * @returns Function that can be called to smoothly center the list
+ */
+export const createSmoothScrollFn = (domElementId: string) => {
+  return () => {
+    document.getElementById(domElementId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }
+}
