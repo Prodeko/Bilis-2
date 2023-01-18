@@ -36,7 +36,7 @@ const Home: NextPage<Props> = ({
     if (e.code === 'Space' && e.ctrlKey) openModal()
     if (e.code === 'Escape') {
       closeModal()
-      document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
+      document?.getElementById('home-layout')?.focus() // focus on the root element so pressing ctrl + space adds a new game
     }
     if (e.code === 'KeyQ') setTimeout(() => document?.getElementById('queue')?.focus(), 1)
   }
