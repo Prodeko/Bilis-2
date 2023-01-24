@@ -12,11 +12,13 @@ Varmista, että seuraavat asiat on tehtynä:
 
 ---
 1. Kloonaa repositorio `git clone git@github.com:Prodeko/Bilis-2.git`. 
-2. (Käynnistä Docker ja varmista, että docker-compose on myös asennettuna)
-3. Luo .env file kopioimalla /app kansion .env.template tiedosto ja päivittämällä muuttujien arvot
+2. (Käynnistä Docker ja varmista, että docker-compose on myös asennettuna).
+3. Luo .env file kopioimalla /app kansion .env.template tiedosto ja päivittämällä muuttujien arvot.
 4. Avaa VS Code dev container app/-hakemistossa (F1 ja Open folder in container). Samalla asentuvat yarn paketit.
 5. Käynnistä kehitysympäristö käskyllä `yarn dev` devikontissa.
-5. Testit (jest ja cypress) ajetaan käskyllä `yarn test`
+6. Testit (jest ja cypress) ajetaan käskyllä `yarn test`.
+7. Käskyllä `yarn build` voi buildata projektin tuotantoversion.
+8. Käskyillä `yarn start` ja `yarn dev:start` voi käynnistää tuotantoversion NODE_ENV:in vastaavilla arvoilla _production_ ja _development_.
 
 Rebuildaus onnistuu painamalla F1 ja valitsemalla Rebuild container.
 
