@@ -21,7 +21,7 @@ const ProfileHeader = ({ player }: Props) => {
       <div className={styles.profileinfo}>
         <h1 className={styles['profileinfo--primary']}>{name}</h1>
         <Link className={styles['profileinfo--secondary']} href={`/player/${id}/edit`}>
-          <Image className={styles.icon} src={Settings} alt="Update player button" /> Update player
+          <Image className={styles.icon} src={Settings} alt="Edit player" /> Edit player
         </Link>
       </div>
       <MottoCard text={motto} author={name} switching={false} />
