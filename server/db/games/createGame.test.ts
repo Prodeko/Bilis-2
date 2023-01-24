@@ -2,7 +2,7 @@
 import { Player as PlayerType } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { createGame } from '@server/db/games'
-import { Game } from '@server/models'
+import { GameModel } from '@server/models'
 
 const mockWinner: PlayerType = {
   id: 1,
@@ -42,8 +42,9 @@ jest.mock('@common/db/players', () => ({
 }))
 
 const mockGameCount = jest.fn()
+
 jest.mock('@server/models', () => ({
-  Game: {
+  GameModel: {
     create: jest.fn(),
     count: () => mockGameCount(),
   },
@@ -54,7 +55,7 @@ beforeEach(async () => {
 })
 
 describe('create game', () => {
-  test('calls Game.create with correct data', async () => {
+  test('calls GameModel.create with correct data', async () => {
     const newGame = {
       winnerId: mockWinner.id,
       loserId: mockLoser.id,
