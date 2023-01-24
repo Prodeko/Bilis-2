@@ -34,7 +34,7 @@ const loserGames = 50
 
 const mockUpdatePlayerById = jest.fn()
 
-jest.mock('@common/db/players', () => ({
+jest.mock('@server/db/players', () => ({
   getPlayerById: jest.fn(id => {
     return players[id]
   }),
