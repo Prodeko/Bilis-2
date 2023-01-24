@@ -4,26 +4,20 @@
   @extend %text-style-text-xl-semibold;
   @include padding-y($padding: $spacing-8);
   @include padding-x($padding: $spacing-16);
-  @include grid-cols(12);
+  @include grid-cols(13);
 
   color: $color-gray-50;
   width: 100%;
 }
 
 %elo-change {
-  @include grid-cols(3);
+  @include flex-x(null);
 
   align-items: center;
   height: 100%;
+  justify-content: space-between;
   width: 60%;
 
-  & :nth-child(2) {
-    text-align: center;
-  }
-
-  & :nth-child(3) {
-    text-align: right;
-  }
 }
 
 .table {
@@ -95,6 +89,12 @@
   &__header {
     grid-column: 11 / 13;
   }
+}
+
+.poop {
+  @extend %flex-center;
+
+  grid-column: 13;
 }
 
 .chevron {

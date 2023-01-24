@@ -39,6 +39,7 @@ const RecentsRow = ({ game, pulsing }: Props) => {
         </span>
         <span>{round(game.loserEloAfter)}</span>
       </span>
+      <span className={styles.poop}>{game.underTable && '💩'}</span>
     </div>
   )
 }
