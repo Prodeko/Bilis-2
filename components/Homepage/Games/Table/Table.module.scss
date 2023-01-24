@@ -65,7 +65,12 @@
 }
 
 .time {
+  @include flex-x(null);
+
   grid-column: 1 / 3;
+  justify-content: space-between;
+  padding-right: $spacing-56;
+  
 }
 
 .winner {
