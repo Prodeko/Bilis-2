@@ -41,10 +41,11 @@ jest.mock('@server/db/players', () => ({
 }))
 
 const mockGameCount = jest.fn()
+const mockCreate = jest.fn()
 
 jest.mock('@server/models', () => ({
   GameModel: {
-    create: jest.fn(),
+    create: jest.fn((data, _options) => mockCreate(data)),
     count: () => mockGameCount(),
   },
 }))
@@ -72,8 +73,8 @@ describe('create game', () => {
       .mockImplementationOnce(async () => loserGames)
 
     await createGame(newGame)
-    expect(Game.create).toHaveBeenCalledTimes(1)
-    expect(Game.create).toHaveBeenCalledWith({
+    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockCreate).toHaveBeenCalledWith({
       ...newGame,
       winnerEloAfter: mockWinner.elo + winnerEloChange,
       loserEloAfter: mockLoser.elo + loserEloChange,
