@@ -2,7 +2,7 @@
   "name": "db-transfer",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "webbi-team"
+  "author": "webbi-team",
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
