@@ -147,29 +147,29 @@ const createGame = async (game: CreateGameType) => {
   )
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
-  const createdGame: GameWithPlayers = (
-    await GameModel.create(
-      {
-        ...game,
-        winnerEloAfter,
-        loserEloAfter,
-        winnerEloBefore: winner.elo,
-        loserEloBefore: loser.elo,
-      },
-      {
-        include: [
-          { model: PlayerModel, as: 'winner' },
-          { model: PlayerModel, as: 'loser' },
-        ],
-      }
-    )
-  ).toJSON() as GameWithPlayers
+
+  const createdGame = await GameModel.create(
+    {
+      ...game,
+      winnerEloAfter,
+      loserEloAfter,
+      winnerEloBefore: winner.elo,
+      loserEloBefore: loser.elo,
+    },
+    {
+      include: [
+        { model: PlayerModel, as: 'winner' },
+        { model: PlayerModel, as: 'loser' },
+      ],
+    }
+  )
 
   await Promise.all([
     updatePlayerById(winner.id, { elo: winnerEloAfter }),
     updatePlayerById(loser.id, { elo: loserEloAfter }),
   ])
-  return formatRecentGame(createdGame)
+
+  return createdGame
 }
 
 const removeLatestGame = async () => {
@@ -211,4 +211,5 @@ export {
   getRecentGames,
   getMutualGamesCount,
   getPlayerDetailedGames,
+  formatRecentGame,
 }

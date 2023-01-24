@@ -2,7 +2,6 @@
 import { Player as PlayerType } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { createGame } from '@server/db/games'
-import { Game } from '@server/models'
 
 const mockWinner: PlayerType = {
   id: 1,
@@ -34,7 +33,7 @@ const loserGames = 50
 
 const mockUpdatePlayerById = jest.fn()
 
-jest.mock('@common/db/players', () => ({
+jest.mock('@server/db/players', () => ({
   getPlayerById: jest.fn(id => {
     return players[id]
   }),
@@ -42,9 +41,11 @@ jest.mock('@common/db/players', () => ({
 }))
 
 const mockGameCount = jest.fn()
+const mockCreate = jest.fn()
+
 jest.mock('@server/models', () => ({
-  Game: {
-    create: jest.fn(),
+  GameModel: {
+    create: jest.fn((data, _options) => mockCreate(data)),
     count: () => mockGameCount(),
   },
 }))
@@ -54,7 +55,7 @@ beforeEach(async () => {
 })
 
 describe('create game', () => {
-  test('calls Game.create with correct data', async () => {
+  test('calls GameModel.create with correct data', async () => {
     const newGame = {
       winnerId: mockWinner.id,
       loserId: mockLoser.id,
@@ -72,8 +73,8 @@ describe('create game', () => {
       .mockImplementationOnce(async () => loserGames)
 
     await createGame(newGame)
-    expect(Game.create).toHaveBeenCalledTimes(1)
-    expect(Game.create).toHaveBeenCalledWith({
+    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockCreate).toHaveBeenCalledWith({
       ...newGame,
       winnerEloAfter: mockWinner.elo + winnerEloChange,
       loserEloAfter: mockLoser.elo + loserEloChange,
