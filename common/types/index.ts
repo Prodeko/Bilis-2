@@ -54,6 +54,8 @@ interface GameWithPlayers extends Game {
 
 type NewGame = Omit<Game, 'id'>
 
+type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
+
 interface TimeSeriesGame {
   currentElo: number
   opponent: string | null
@@ -90,6 +92,7 @@ export type {
   MutualGames,
   PlayerWithStats,
   TimeSeriesGame,
+  CreateGameType,
 }
 
 export { SmoothScrollId }

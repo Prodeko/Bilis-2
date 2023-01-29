@@ -1,7 +1,20 @@
-import { getPlayerOrderedGames } from '.'
+import { getLatestGames, getPlayerOrderedGames } from '.'
+import { Op } from 'sequelize'
 
-import { PlayerStats } from '@common/types'
-import { computePlayerStats } from '@common/utils/helperFunctions'
+import {
+  GameWithPlayers,
+  MutualGames,
+  PlayerStats,
+  RecentGame,
+  TimeSeriesGame,
+} from '@common/types'
+import { ZEROTH_GAME } from '@common/utils/constants'
+import {
+  computePlayerStats,
+  formatFullName,
+  formatIsoStringToDate,
+} from '@common/utils/helperFunctions'
+import { GameModel, PlayerModel } from '@server/models'
 
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await getPlayerOrderedGames(playerId)
@@ -12,4 +25,118 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   return computePlayerStats(wonGames, lostGames)
 }
 
-export { getPlayerStats }
+const getGameCountForPlayer = async (playerId: number): Promise<number> =>
+  GameModel.count({
+    where: {
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+  })
+
+const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[]> => {
+  const games = await GameModel.findAll({
+    where: {
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+    include: [
+      {
+        model: PlayerModel,
+        as: 'winner',
+      },
+      {
+        model: PlayerModel,
+        as: 'loser',
+      },
+    ],
+    order: [['createdAt', 'ASC']],
+  })
+  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
+
+  const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
+    const isWinner = game.winnerId === playerId
+    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
+    const eloDiff = isWinner
+      ? game.winnerEloAfter - game.winnerEloBefore
+      : game.loserEloAfter - game.loserEloBefore
+    const opponent = isWinner
+      ? game.loser.firstName + ' ' + game.loser.lastName
+      : game.winner.firstName + ' ' + game.winner.lastName
+    return { currentElo, opponent, eloDiff }
+  }
+
+  const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
+  const gameData = [ZEROTH_GAME, ...playedGames]
+
+  return gameData
+}
+
+const getMutualGamesCount = async (
+  currentPlayerId: number,
+  opposingPlayerId: number
+): Promise<MutualGames> => {
+  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
+    GameModel.count({
+      where: {
+        winnerId: currentPlayerId,
+        loserId: opposingPlayerId,
+      },
+    }),
+    GameModel.count({
+      where: {
+        winnerId: opposingPlayerId,
+        loserId: currentPlayerId,
+      },
+    }),
+  ])
+  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
+
+  return {
+    currentPlayerGamesWon,
+    opposingPlayerGamesWon,
+    totalGames,
+  }
+}
+
+const getRecentGames = async (n = 20, offset = 0): Promise<RecentGame[]> => {
+  const recentGames = await getLatestGames(n, offset)
+
+  return recentGames.map(formatRecentGame)
+}
+
+const formatRecentGame = (game: GameModel): RecentGame => {
+  if (!game.winner) {
+    throw new Error('Error in formatting recent game: winner missing!')
+  } else if (!game.loser) {
+    throw new Error('Error in formatting recent game: loser missing!')
+  }
+  return {
+    id: game.id,
+    winnerId: game.winnerId,
+    loserId: game.loserId,
+    winnerEloBefore: game.winnerEloBefore,
+    winnerEloAfter: game.winnerEloAfter,
+    loserEloBefore: game.loserEloBefore,
+    loserEloAfter: game.loserEloAfter,
+    underTable: game.underTable,
+    formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
+    winner: `${game.winner.emoji} ${formatFullName(game.winner)}`,
+    loser: `${game.loser.emoji} ${formatFullName(game.loser)}`,
+  }
+}
+
+// NOTE!! Only use in dev, destroys everything in database
+const clearGamesDEV = (): Promise<number> =>
+  GameModel.destroy({
+    where: {},
+    truncate: true,
+    cascade: true,
+  })
+
+export {
+  getPlayerStats,
+  getGameCountForPlayer,
+  getPlayerDetailedGames,
+  getMutualGamesCount,
+  getRecentGames,
+  formatRecentGame,
+  clearGamesDEV,
+}

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { isNumber } from '@common/types/guards'
-import { getPlayerDetailedGames } from '@server/db/games'
+import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 
 const handleFetch = async (res: NextApiResponse, id: number) => {
   const gameData = await getPlayerDetailedGames(id)
