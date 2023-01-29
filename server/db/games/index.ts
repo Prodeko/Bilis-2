@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 
-import type { NewGame } from '@common/types'
+import type { CreateGameType } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
@@ -25,8 +25,6 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
     limit: n,
     offset: offset * n,
   })
-
-type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
   const [winner, loser, winnerGames, loserGames] = await Promise.all([
