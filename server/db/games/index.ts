@@ -1,13 +1,6 @@
 import { Op } from 'sequelize'
 
-import type {
-  GameWithPlayers,
-  MutualGames,
-  NewGame,
-  RecentGame,
-  TimeSeriesGame,
-} from '@common/types'
-import { ZEROTH_GAME } from '@common/utils/constants'
+import type { MutualGames, NewGame, RecentGame } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { formatFullName, formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
@@ -22,43 +15,6 @@ const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
     },
     order: [['createdAt', 'ASC']],
   })
-
-const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[]> => {
-  const games = await GameModel.findAll({
-    where: {
-      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
-    },
-    include: [
-      {
-        model: PlayerModel,
-        as: 'winner',
-      },
-      {
-        model: PlayerModel,
-        as: 'loser',
-      },
-    ],
-    order: [['createdAt', 'ASC']],
-  })
-  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
-
-  const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
-    const isWinner = game.winnerId === playerId
-    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
-    const eloDiff = isWinner
-      ? game.winnerEloAfter - game.winnerEloBefore
-      : game.loserEloAfter - game.loserEloBefore
-    const opponent = isWinner
-      ? game.loser.firstName + ' ' + game.loser.lastName
-      : game.winner.firstName + ' ' + game.winner.lastName
-    return { currentElo, opponent, eloDiff }
-  }
-
-  const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
-  const gameData = [ZEROTH_GAME, ...playedGames]
-
-  return gameData
-}
 
 const getMutualGamesCount = async (
   currentPlayerId: number,
@@ -207,6 +163,5 @@ export {
   clearGamesDEV,
   getRecentGames,
   getMutualGamesCount,
-  getPlayerDetailedGames,
   formatRecentGame,
 }

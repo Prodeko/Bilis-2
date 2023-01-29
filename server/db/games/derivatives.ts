@@ -1,9 +1,10 @@
 import { getPlayerOrderedGames } from '.'
 import { Op } from 'sequelize'
 
-import { PlayerStats } from '@common/types'
+import { GameWithPlayers, PlayerStats, TimeSeriesGame } from '@common/types'
+import { ZEROTH_GAME } from '@common/utils/constants'
 import { computePlayerStats } from '@common/utils/helperFunctions'
-import { GameModel } from '@server/models'
+import { GameModel, PlayerModel } from '@server/models'
 
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await getPlayerOrderedGames(playerId)
@@ -21,4 +22,41 @@ const getGameCountForPlayer = async (playerId: number): Promise<number> =>
     },
   })
 
-export { getPlayerStats, getGameCountForPlayer }
+const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[]> => {
+  const games = await GameModel.findAll({
+    where: {
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+    include: [
+      {
+        model: PlayerModel,
+        as: 'winner',
+      },
+      {
+        model: PlayerModel,
+        as: 'loser',
+      },
+    ],
+    order: [['createdAt', 'ASC']],
+  })
+  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
+
+  const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
+    const isWinner = game.winnerId === playerId
+    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
+    const eloDiff = isWinner
+      ? game.winnerEloAfter - game.winnerEloBefore
+      : game.loserEloAfter - game.loserEloBefore
+    const opponent = isWinner
+      ? game.loser.firstName + ' ' + game.loser.lastName
+      : game.winner.firstName + ' ' + game.winner.lastName
+    return { currentElo, opponent, eloDiff }
+  }
+
+  const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
+  const gameData = [ZEROTH_GAME, ...playedGames]
+
+  return gameData
+}
+
+export { getPlayerStats, getGameCountForPlayer, getPlayerDetailedGames }

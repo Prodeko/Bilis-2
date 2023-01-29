@@ -8,7 +8,7 @@ import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileCharts from '@components/Profile/ProfileCharts'
 import ProfileHeader from '@components/Profile/ProfileHeader'
 import ProfileStats from '@components/Profile/ProfileStats/'
-import { getPlayerDetailedGames } from '@server/db/games'
+import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
 
