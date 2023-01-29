@@ -59,7 +59,8 @@ Game.init(
       },
     },
     scopes: {
-      recentGame: {
+      // Adds timestamps to the scope
+      withTime: {
         attributes: {
           exclude: ['updatedAt'],
         },

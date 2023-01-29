@@ -94,7 +94,7 @@ const getMutualGamesCount = async (
 }
 
 const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
-  GameModel.scope('recentGame').findAll({
+  GameModel.scope('withTime').findAll({
     order: [['createdAt', 'DESC']],
     include: [
       { model: PlayerModel, as: 'winner' },
