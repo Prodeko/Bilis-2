@@ -5,6 +5,6 @@ import { createGame, formatRecentGame } from '@server/db/games'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RecentGame>) {
   const game = await createGame(req.body)
-  const jsonGame = formatRecentGame(game.toJSON())
+  const jsonGame = formatRecentGame(game)
   res.status(200).json(jsonGame)
 }

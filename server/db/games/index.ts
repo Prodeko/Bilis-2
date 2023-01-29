@@ -152,7 +152,7 @@ const createGame = async (game: CreateGameType) => {
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
 
-  const createdGame = await GameModel.create(
+  const createdGame = await GameModel.scope('withTime').create(
     {
       ...game,
       winnerEloAfter,
