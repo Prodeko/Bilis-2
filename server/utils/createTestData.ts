@@ -2,7 +2,8 @@ import _ from 'lodash'
 
 import { NewPlayer, Player } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
-import { clearGamesDEV, createGame } from '@server/db/games'
+import { createGame } from '@server/db/games'
+import { clearGamesDEV } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
 
 const randomFirstNames: string[] = [

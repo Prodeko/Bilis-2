@@ -123,6 +123,14 @@ const formatRecentGame = (game: GameModel): RecentGame => {
   }
 }
 
+// NOTE!! Only use in dev, destroys everything in database
+const clearGamesDEV = (): Promise<number> =>
+  GameModel.destroy({
+    where: {},
+    truncate: true,
+    cascade: true,
+  })
+
 export {
   getPlayerStats,
   getGameCountForPlayer,
@@ -130,4 +138,5 @@ export {
   getMutualGamesCount,
   getRecentGames,
   formatRecentGame,
+  clearGamesDEV,
 }

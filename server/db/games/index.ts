@@ -90,12 +90,4 @@ const removeLatestGame = async (): Promise<GameModel> => {
   return latest
 }
 
-// NOTE!! Only use in dev, destroys everything in database
-const clearGamesDEV = (): Promise<number> =>
-  GameModel.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-  })
-
-export { removeLatestGame, createGame, getPlayerOrderedGames, getLatestGames, clearGamesDEV }
+export { removeLatestGame, createGame, getPlayerOrderedGames, getLatestGames }
