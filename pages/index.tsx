@@ -10,7 +10,7 @@ import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
-import { getRecentGames } from '@server/db/games'
+import { getRecentGames } from '@server/db/games/derivatives'
 import { getLatestPlayers, getPlayers, getRandomPlayer } from '@server/db/players'
 import { QueueProvider, reducer } from '@state/Queue'
 

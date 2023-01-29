@@ -1,9 +1,19 @@
-import { getPlayerOrderedGames } from '.'
+import { getLatestGames, getPlayerOrderedGames } from '.'
 import { Op } from 'sequelize'
 
-import { GameWithPlayers, MutualGames, PlayerStats, TimeSeriesGame } from '@common/types'
+import {
+  GameWithPlayers,
+  MutualGames,
+  PlayerStats,
+  RecentGame,
+  TimeSeriesGame,
+} from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
-import { computePlayerStats } from '@common/utils/helperFunctions'
+import {
+  computePlayerStats,
+  formatFullName,
+  formatIsoStringToDate,
+} from '@common/utils/helperFunctions'
 import { GameModel, PlayerModel } from '@server/models'
 
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
@@ -86,4 +96,38 @@ const getMutualGamesCount = async (
   }
 }
 
-export { getPlayerStats, getGameCountForPlayer, getPlayerDetailedGames, getMutualGamesCount }
+const getRecentGames = async (n = 20, offset = 0): Promise<RecentGame[]> => {
+  const recentGames = await getLatestGames(n, offset)
+
+  return recentGames.map(formatRecentGame)
+}
+
+const formatRecentGame = (game: GameModel): RecentGame => {
+  if (!game.winner) {
+    throw new Error('Error in formatting recent game: winner missing!')
+  } else if (!game.loser) {
+    throw new Error('Error in formatting recent game: loser missing!')
+  }
+  return {
+    id: game.id,
+    winnerId: game.winnerId,
+    loserId: game.loserId,
+    winnerEloBefore: game.winnerEloBefore,
+    winnerEloAfter: game.winnerEloAfter,
+    loserEloBefore: game.loserEloBefore,
+    loserEloAfter: game.loserEloAfter,
+    underTable: game.underTable,
+    formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
+    winner: `${game.winner.emoji} ${formatFullName(game.winner)}`,
+    loser: `${game.loser.emoji} ${formatFullName(game.loser)}`,
+  }
+}
+
+export {
+  getPlayerStats,
+  getGameCountForPlayer,
+  getPlayerDetailedGames,
+  getMutualGamesCount,
+  getRecentGames,
+  formatRecentGame,
+}
