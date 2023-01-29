@@ -1,7 +1,9 @@
 import { getPlayerOrderedGames } from '.'
+import { Op } from 'sequelize'
 
 import { PlayerStats } from '@common/types'
 import { computePlayerStats } from '@common/utils/helperFunctions'
+import { GameModel } from '@server/models'
 
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await getPlayerOrderedGames(playerId)
@@ -12,4 +14,11 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   return computePlayerStats(wonGames, lostGames)
 }
 
-export { getPlayerStats }
+const getGameCountForPlayer = async (playerId: number): Promise<number> =>
+  GameModel.count({
+    where: {
+      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
+    },
+  })
+
+export { getPlayerStats, getGameCountForPlayer }

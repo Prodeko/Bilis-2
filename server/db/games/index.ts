@@ -13,13 +13,7 @@ import { formatFullName, formatIsoStringToDate } from '@common/utils/helperFunct
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
-const getGameCountForPlayer = async (playerId: number): Promise<number> => {
-  return GameModel.count({
-    where: {
-      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
-    },
-  })
-}
+import { getGameCountForPlayer } from './derivatives'
 
 const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
   GameModel.findAll({
@@ -29,7 +23,7 @@ const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
     order: [['createdAt', 'ASC']],
   })
 
-const getPlayerDetailedGames = async (playerId: number) => {
+const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[]> => {
   const games = await GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
@@ -104,7 +98,7 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
     offset: offset * n,
   })
 
-const getRecentGames = async (n = 20, offset = 0) => {
+const getRecentGames = async (n = 20, offset = 0): Promise<RecentGame[]> => {
   const recentGames = await getLatestGames(n, offset)
 
   return recentGames.map(formatRecentGame)
@@ -133,7 +127,7 @@ const formatRecentGame = (game: GameModel): RecentGame => {
 
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
 
-const createGame = async (game: CreateGameType) => {
+const createGame = async (game: CreateGameType): Promise<GameModel> => {
   const [winner, loser, winnerGames, loserGames] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
@@ -176,7 +170,7 @@ const createGame = async (game: CreateGameType) => {
   return createdGame
 }
 
-const removeLatestGame = async () => {
+const removeLatestGame = async (): Promise<GameModel> => {
   const latest = await GameModel.findOne({
     order: [['createdAt', 'DESC']],
   })
@@ -198,7 +192,7 @@ const removeLatestGame = async () => {
 }
 
 // NOTE!! Only use in dev, destroys everything in database
-const clearGamesDEV = () =>
+const clearGamesDEV = (): Promise<number> =>
   GameModel.destroy({
     where: {},
     truncate: true,
@@ -208,7 +202,6 @@ const clearGamesDEV = () =>
 export {
   removeLatestGame,
   createGame,
-  getGameCountForPlayer,
   getPlayerOrderedGames,
   getLatestGames,
   clearGamesDEV,
