@@ -58,6 +58,14 @@ Game.init(
         exclude: ['createdAt', 'updatedAt'],
       },
     },
+    scopes: {
+      // Adds timestamps to the scope
+      withTime: {
+        attributes: {
+          exclude: ['updatedAt'],
+        },
+      },
+    },
     hooks: {
       async afterCreate(attrs) {
         await attrs.reload()

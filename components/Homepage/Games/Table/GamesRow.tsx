@@ -14,7 +14,7 @@ interface Props {
 const RecentsRow = ({ game, pulsing }: Props) => {
   return (
     <div className={pulsing ? styles.row__last : styles.row__game}>
-      <span className={styles.time}>{game.time}</span>
+      <span className={styles.time}>{game.formattedTimeString}</span>
       <span className={styles.winner}>
         <Link href={`/player/${game.winnerId}`}>
           <span className={styles.link}>{game.winner}</span>

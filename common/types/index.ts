@@ -33,11 +33,10 @@ interface Game extends WithId {
   winnerEloAfter: number
   loserEloAfter: number
   underTable: boolean
-  createdAt: Date
 }
 
 interface RecentGame extends Game {
-  time: string
+  formattedTimeString: string
   winner: string
   loser: string
 }

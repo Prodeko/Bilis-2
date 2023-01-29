@@ -72,3 +72,17 @@ export const createSmoothScrollFn = (domElementId: string) => {
     })
   }
 }
+
+/**
+ * Return a string formatted date in DD.MM.YYYY HH.MM format
+ *
+ * @param isoStringDate - Date in isoString format
+ * @returns Localized, formatted date string
+ */
+export const formatIsoStringToDate = (isoStringDate: string) => {
+  const date = new Date(isoStringDate)
+  return Intl.DateTimeFormat('fi-FI', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(date)
+}

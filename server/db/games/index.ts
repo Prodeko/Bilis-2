@@ -9,6 +9,7 @@ import type {
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { getScoreChange } from '@common/utils/gameStats'
+import { formatFullName, formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
@@ -92,8 +93,8 @@ const getMutualGamesCount = async (
   }
 }
 
-const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> => {
-  const { rows: games } = await GameModel.findAndCountAll({
+const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
+  GameModel.scope('withTime').findAll({
     order: [['createdAt', 'DESC']],
     include: [
       { model: PlayerModel, as: 'winner' },
@@ -103,29 +104,32 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> =>
     offset: offset * n,
   })
 
-  const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
-  return jsonGames
-}
-
 const getRecentGames = async (n = 20, offset = 0) => {
   const recentGames = await getLatestGames(n, offset)
 
   return recentGames.map(formatRecentGame)
 }
 
-const formatRecentGame = (game: GameWithPlayers): RecentGame => ({
-  ...game,
-  winnerEloAfter: game.winnerEloAfter,
-  winnerEloBefore: game.winnerEloBefore,
-  loserEloAfter: game.loserEloAfter,
-  loserEloBefore: game.loserEloBefore,
-  time: new Date(game.createdAt).toLocaleString('fi-FI', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  }),
-  winner: `${game.winner.emoji} ${game.winner.firstName} "${game.winner.nickname}" ${game.winner.lastName}`,
-  loser: `${game.loser.emoji} ${game.loser.firstName} "${game.loser.nickname}" ${game.loser.lastName}`,
-})
+const formatRecentGame = (game: GameModel): RecentGame => {
+  if (!game.winner) {
+    throw new Error('Error in formatting recent game: winner missing!')
+  } else if (!game.loser) {
+    throw new Error('Error in formatting recent game: loser missing!')
+  }
+  return {
+    id: game.id,
+    winnerId: game.winnerId,
+    loserId: game.loserId,
+    winnerEloBefore: game.winnerEloBefore,
+    winnerEloAfter: game.winnerEloAfter,
+    loserEloBefore: game.loserEloBefore,
+    loserEloAfter: game.loserEloAfter,
+    underTable: game.underTable,
+    formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
+    winner: `${game.winner.emoji} ${formatFullName(game.winner)}`,
+    loser: `${game.loser.emoji} ${formatFullName(game.loser)}`,
+  }
+}
 
 type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
 
