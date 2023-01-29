@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 
-import type { MutualGames, NewGame, RecentGame } from '@common/types'
+import type { NewGame, RecentGame } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { formatFullName, formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
@@ -15,33 +15,6 @@ const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
     },
     order: [['createdAt', 'ASC']],
   })
-
-const getMutualGamesCount = async (
-  currentPlayerId: number,
-  opposingPlayerId: number
-): Promise<MutualGames> => {
-  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
-    GameModel.count({
-      where: {
-        winnerId: currentPlayerId,
-        loserId: opposingPlayerId,
-      },
-    }),
-    GameModel.count({
-      where: {
-        winnerId: opposingPlayerId,
-        loserId: currentPlayerId,
-      },
-    }),
-  ])
-  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
-
-  return {
-    currentPlayerGamesWon,
-    opposingPlayerGamesWon,
-    totalGames,
-  }
-}
 
 const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
   GameModel.scope('withTime').findAll({
@@ -162,6 +135,5 @@ export {
   getLatestGames,
   clearGamesDEV,
   getRecentGames,
-  getMutualGamesCount,
   formatRecentGame,
 }

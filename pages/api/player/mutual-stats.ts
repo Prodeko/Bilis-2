@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { isNumber } from '@common/types/guards'
-import { getMutualGamesCount } from '@server/db/games'
+import { getMutualGamesCount } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

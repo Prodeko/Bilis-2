@@ -1,7 +1,7 @@
 import { getPlayerOrderedGames } from '.'
 import { Op } from 'sequelize'
 
-import { GameWithPlayers, PlayerStats, TimeSeriesGame } from '@common/types'
+import { GameWithPlayers, MutualGames, PlayerStats, TimeSeriesGame } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import { computePlayerStats } from '@common/utils/helperFunctions'
 import { GameModel, PlayerModel } from '@server/models'
@@ -59,4 +59,31 @@ const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[
   return gameData
 }
 
-export { getPlayerStats, getGameCountForPlayer, getPlayerDetailedGames }
+const getMutualGamesCount = async (
+  currentPlayerId: number,
+  opposingPlayerId: number
+): Promise<MutualGames> => {
+  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
+    GameModel.count({
+      where: {
+        winnerId: currentPlayerId,
+        loserId: opposingPlayerId,
+      },
+    }),
+    GameModel.count({
+      where: {
+        winnerId: opposingPlayerId,
+        loserId: currentPlayerId,
+      },
+    }),
+  ])
+  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
+
+  return {
+    currentPlayerGamesWon,
+    opposingPlayerGamesWon,
+    totalGames,
+  }
+}
+
+export { getPlayerStats, getGameCountForPlayer, getPlayerDetailedGames, getMutualGamesCount }
