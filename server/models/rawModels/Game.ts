@@ -58,6 +58,13 @@ Game.init(
         exclude: ['createdAt', 'updatedAt'],
       },
     },
+    scopes: {
+      recentGame: {
+        attributes: {
+          exclude: ['updatedAt'],
+        },
+      },
+    },
     hooks: {
       async afterCreate(attrs) {
         await attrs.reload()
