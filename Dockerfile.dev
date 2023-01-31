@@ -1,0 +1,8 @@
+FROM node:16
+WORKDIR /usr/src/app
+
+# We can add software here that should be available in the container
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends nano git
+
+CMD ["sleep", "infinity"]

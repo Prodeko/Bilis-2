@@ -2,10 +2,10 @@ version: "3.8"
 
 services:
   next:
-    image: node:16
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: next-app-dev
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    working_dir: /usr/src/app
     env_file: .env
     depends_on:
       - db
