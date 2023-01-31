@@ -40,6 +40,7 @@ const getRandomPlayer = (): Promise<PlayerModel | null> =>
 const updatePlayerById = async (id: number, data: Partial<NewPlayer>): Promise<PlayerModel> => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
+  if ('id' in data) throw Error('Updating player id is not allowed')
   const updated = await player.update(data)
   return updated
 }
