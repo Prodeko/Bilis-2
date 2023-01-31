@@ -45,7 +45,9 @@ const mockCreate = jest.fn()
 
 jest.mock('@server/models', () => ({
   GameModel: {
-    create: jest.fn((data, _options) => mockCreate(data)),
+    scope: jest.fn(_scope => ({
+      create: jest.fn((data, _options) => mockCreate(data)),
+    })),
     count: () => mockGameCount(),
   },
 }))
