@@ -33,53 +33,38 @@ describe('create player', () => {
 
   describe('throws with bad data', () => {
     test('throws with missing firstName', async () => {
-      const f = () =>
-        createPlayer({
-          lastName: 'lname',
-          nickname: 'nname',
-          emoji: '🥵',
-          motto: 'Pessimisti ei pety',
-        } as any)
+      const f = () => {
+        const { firstName: _, ...mockData } = mockDataForPlayer
+        return createPlayer(mockData as any)
+      }
       await expect(f).rejects.toThrow()
     })
     test('throws with missing lastName', async () => {
-      const f = () =>
-        createPlayer({
-          firstName: 'fname',
-          nickname: 'nname',
-          emoji: '🥵',
-          motto: 'Pessimisti ei pety',
-        } as any)
+      const f = () => {
+        const { lastName: _, ...mockData } = mockDataForPlayer
+        return createPlayer(mockData as any)
+      }
       await expect(f).rejects.toThrow()
     })
-    test('throws with missing nickName', async () => {
-      const f = () =>
-        createPlayer({
-          firstName: 'fname',
-          lastName: 'lname',
-          emoji: '🥵',
-          motto: 'Pessimisti ei pety',
-        } as any)
+    test('throws with missing nickname', async () => {
+      const f = () => {
+        const { nickname: _, ...mockData } = mockDataForPlayer
+        return createPlayer(mockData as any)
+      }
       await expect(f).rejects.toThrow()
     })
     test('throws with missing emoji', async () => {
-      const f = () =>
-        createPlayer({
-          firstName: 'fname',
-          lastName: 'lname',
-          nickname: 'nname',
-          motto: 'Pessimisti ei pety',
-        } as any)
+      const f = () => {
+        const { emoji: _, ...mockData } = mockDataForPlayer
+        return createPlayer(mockData as any)
+      }
       await expect(f).rejects.toThrow()
     })
     test('throws with missing motto', async () => {
-      const f = () =>
-        createPlayer({
-          firstName: 'fname',
-          lastName: 'lname',
-          nickname: 'nname',
-          emoji: '🥵',
-        } as any)
+      const f = () => {
+        const { motto: _, ...mockData } = mockDataForPlayer
+        return createPlayer(mockData as any)
+      }
       await expect(f).rejects.toThrow()
     })
   })
