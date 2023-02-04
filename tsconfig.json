@@ -3,26 +3,30 @@
     "baseUrl": ".",
     "paths": {
       "@common/*": [
-        "common/*"
+        "./common/*"
       ],
       "@server/*": [
-        "server/*"
+        "./server/*"
       ],
       "@components/*": [
-        "components/*"
+        "./components/*"
       ],
       "@state/*": [
-        "state/*"
+        "./state/*"
       ],
       "@config/*": [
-        "config/*"
+        "./config/*"
       ],
       "@hooks/*": [
-        "hooks/*"
+        "./hooks/*"
       ],
       "@public/*": [
-        "public/*"
+        "./public/*"
+      ],
+      "@ui/*": [
+        "./components/ui/*"
       ]
+
     },
     "target": "es6",
     "lib": [
