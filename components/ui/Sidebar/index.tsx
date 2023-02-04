@@ -7,15 +7,9 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.linkContainer}>
-        <SidebarLink path="/">
-          <FiHome className={styles.sidebarIcon} />
-        </SidebarLink>
-        <SidebarLink path="/stats">
-          <FiBarChart2 className={styles.sidebarIcon} />
-        </SidebarLink>
-        <SidebarLink path="/player">
-          <FiUser className={styles.sidebarIcon} />
-        </SidebarLink>
+        <SidebarLink path="/" Icon={FiHome} />
+        <SidebarLink path="/stats" Icon={FiBarChart2} />
+        <SidebarLink path="/player" Icon={FiUser} />
       </nav>
     </aside>
   )
