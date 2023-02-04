@@ -34,10 +34,15 @@ export const permutator = <T>(inputArr: T[]) => {
  * Formats player's full name give a player object
  *
  * @param player - Player object
+ * @param includeEmoji - Defines if emoji is included
+ * @param includeNickname - Defines if nickname is included
  * @returns Formatted full name
  */
-export const formatFullName = (player: Player) =>
-  `${player.firstName} "${player.nickname}" ${player.lastName}`
+export const formatFullName = (player: Player, includeEmoji = false, includeNickname = false) => {
+  const emoji = includeEmoji ? `${player.emoji} ` : ''
+  const nickName = includeNickname ? `"${player.nickname}" ` : ''
+  return `${emoji}${player.firstName} ${nickName}${player.lastName}`
+}
 
 /**
  * Returns player game stats

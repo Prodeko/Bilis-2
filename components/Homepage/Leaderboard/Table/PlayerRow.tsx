@@ -15,9 +15,7 @@ const PlayerRow = ({ player, position }: Props) => {
   return (
     <Link className={styles['row__player']} href={`/player/${player.id}`}>
       <span className={styles.position}>{position}.</span>
-      <span className={styles.player}>
-        {player.emoji} {formatFullName(player)}
-      </span>
+      <span className={styles.player}>{formatFullName(player, true, true)}</span>
       <span className={styles.elo}>{round(player.elo)}</span>
     </Link>
   )
