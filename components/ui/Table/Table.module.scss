@@ -1,0 +1,62 @@
+@use 'styles' as *;
+
+%base-row {
+  @include padding-x($spacing-24);
+  @include padding-y($spacing-8);
+  @include grid-cols(12);
+
+  align-items: center;
+  column-gap: $spacing-8;
+  justify-items: start;
+}
+
+.table {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.head {
+  height: 100%;
+}
+
+.body {
+  @include flex-y(null);
+  @include scrollbar(true);
+
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.header {
+  @extend %base-row;
+  @extend %text-style-text-lg-semibold;
+  
+  border-bottom: $border-primary-600-px;
+  color: $color-primary-300;
+  text-transform: uppercase;
+}
+
+
+.row {
+  @extend %base-row;
+  @extend %text-style-text-md-medium;
+  
+  color: $color-primary-50;
+  transition: all .2s;
+  
+  &:hover {
+    background-color: $color-gray-700;
+    cursor: pointer;
+  }
+
+  &:hover > * {
+    opacity: 1;
+  }
+}
+
+.cell {
+  align-items: center;
+  display: flex;
+  min-height: 100%;
+}
