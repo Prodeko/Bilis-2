@@ -1,0 +1,22 @@
+@use 'styles' as *;
+
+.container {
+  @include flex-x($spacing-16);
+
+  background-color: $color-base-white;
+  border-radius: $border-radius-small;
+  justify-content: space-between;
+  padding: $spacing-12;
+  width: 100%;
+}
+
+.input {
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+  &:focus {
+    cursor: auto;
+    outline: none;
+  }
+}
