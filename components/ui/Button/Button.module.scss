@@ -1,0 +1,30 @@
+@use 'styles' as *;
+
+%base-button {
+  border-radius: $border-radius-small;
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.destructive {
+  @extend %base-button;
+  @extend %text-style-text-md-semibold;
+  @extend %flex-center;
+  @include flex-x($spacing-8);
+  @include size(100%);
+
+  background-color: $color-error-600;
+  border: none;
+  color: $color-base-white;
+
+  & span {
+    @extend %flex-center;
+  }
+
+  &:hover {
+    background-color: $color-error-700;
+  }
+}
