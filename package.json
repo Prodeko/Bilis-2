@@ -16,11 +16,12 @@
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "test": "yarn jest",
-    "cypress": "cypress run",
     "build-and-test": "yarn build && yarn start-server-and-test start 3000 'cypress'",
     "stylify": "stylelint **/*.scss",
     "prettify": "prettier --write './**/*.{ts,tsx,js,jsx}'",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cy:headless": "docker-compose -f ./docker-compose.dev.yml run --user 1000:1000 cypress run --project /e2e",
+    "cy:interactive": "docker-compose -f ./docker-compose.dev.yml run --user 1000:1000 cypress open --project /e2e"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.5",
