@@ -28,6 +28,18 @@ services:
     ports:
       - "5432:5432"
 
+  cypress:
+    image: cypress/included:12.3.0
+    working_dir: /
+    network_mode: host
+    volumes:
+      - ./:/e2e
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    entrypoint: cypress
+    environment:
+      - DISPLAY
+
 volumes:
   db-data:
   node_modules:
+  e2e:
