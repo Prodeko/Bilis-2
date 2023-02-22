@@ -38,8 +38,8 @@ services:
       - ./:/e2e
 #     - /tmp/.X11-unix:/tmp/.X11-unix
     entrypoint: cypress
-    environment:
-      - DISPLAY
+#   environment:
+#     - DISPLAY
 
 volumes:
   db-data:
