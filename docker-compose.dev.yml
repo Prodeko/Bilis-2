@@ -30,11 +30,13 @@ services:
 
   cypress:
     image: cypress/included:12.3.0
+    container_name: bilis-2-cypress
+    user: 1000:1000
     working_dir: /
     network_mode: host
     volumes:
       - ./:/e2e
-      - /tmp/.X11-unix:/tmp/.X11-unix
+#     - /tmp/.X11-unix:/tmp/.X11-unix
     entrypoint: cypress
     environment:
       - DISPLAY
