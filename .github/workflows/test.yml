@@ -3,9 +3,11 @@ name: CI tests
 on:
   pull_request:
     branches: '*'
+  commit:
+    branches: 'cypress'
 
 jobs:
-  test:
+  test-unit:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +20,17 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run tests
         run: yarn test
+  test-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '19.x'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+        run: yarn cypress install
+      - name: Start dev-server
+        run: yarn ci:cypress
