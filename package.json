@@ -23,7 +23,7 @@
     "cy:install": "cypress install",
     "cy:interactive": "cypress open",
     "cy:headless": "cypress run",
-    "start-server": "dev",
+    "start-server": "yarn dev",
     "ci:cypress": "start-server-and-test 'yarn start-server' http://localhost:3000 'yarn cy:headless'"
   },
   "dependencies": {
