@@ -27,6 +27,26 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
   })
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
+  const playerInfo = await getPlayerInfoForNewGameOrThrow(game)
+
+  const effects = calculateNewGameEffects(game, playerInfo)
+
+  const createdGame = await GameModel.scope('withTime').create(effects.createdGameObject, {
+    include: [
+      { model: PlayerModel, as: 'winner' },
+      { model: PlayerModel, as: 'loser' },
+    ],
+  })
+
+  await Promise.all([
+    updatePlayerById(effects.winnerUpdateInfo.id, { elo: effects.winnerUpdateInfo.elo }),
+    updatePlayerById(effects.loserUpdateInfo.id, { elo: effects.loserUpdateInfo.elo }),
+  ])
+
+  return createdGame
+}
+
+const getPlayerInfoForNewGameOrThrow = async (game: CreateGameType) => {
   const [winner, loser, winnerGames, loserGames] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
@@ -36,37 +56,51 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
 
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+
+  return { winner, loser, winnerGames, loserGames }
+}
+
+const calculateNewGameEffects = (
+  gameInfo: CreateGameType,
+  playerInfo: { winner: PlayerModel; loser: PlayerModel; winnerGames: number; loserGames: number }
+) => {
+  const [winner, loser, winnerGames, loserGames] = [
+    playerInfo.winner,
+    playerInfo.loser,
+    playerInfo.winnerGames,
+    playerInfo.loserGames,
+  ]
+
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
     winnerGames,
     loser.elo,
     loserGames
   )
+
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
 
-  const createdGame = await GameModel.scope('withTime').create(
-    {
-      ...game,
-      winnerEloAfter,
-      loserEloAfter,
-      winnerEloBefore: winner.elo,
-      loserEloBefore: loser.elo,
-    },
-    {
-      include: [
-        { model: PlayerModel, as: 'winner' },
-        { model: PlayerModel, as: 'loser' },
-      ],
-    }
-  )
+  const createdGameObject = {
+    winnerId: gameInfo.winnerId,
+    winnerEloBefore: winner.elo,
+    winnerEloAfter,
 
-  await Promise.all([
-    updatePlayerById(winner.id, { elo: winnerEloAfter }),
-    updatePlayerById(loser.id, { elo: loserEloAfter }),
-  ])
+    loserId: gameInfo.loserId,
+    loserEloBefore: loser.elo,
+    loserEloAfter,
 
-  return createdGame
+    underTable: gameInfo.underTable,
+  }
+  const winnerUpdateInfo = {
+    id: winner.id,
+    elo: winnerEloAfter,
+  }
+  const loserUpdateInfo = {
+    id: loser.id,
+    elo: loserEloAfter,
+  }
+  return { createdGameObject, winnerUpdateInfo, loserUpdateInfo }
 }
 
 const removeLatestGame = async (): Promise<GameModel> => {
