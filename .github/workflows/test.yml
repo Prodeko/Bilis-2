@@ -3,7 +3,7 @@ name: CI tests
 on:
   pull_request:
     branches: '*'
-  commit:
+  push:
     branches: 'cypress'
 
 jobs:
