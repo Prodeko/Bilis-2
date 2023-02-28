@@ -20,9 +20,9 @@ jobs:
 #        run: yarn --frozen-lockfile
 #      - name: Run tests
 #        run: yarn test
-#  test-integration:
-#    runs-on: ubuntu-latest
 
+  test-integration:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -31,6 +31,12 @@ jobs:
           node-version: '19.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
+      - name: migrations
+        run: yarn dev:migrate:up
+      - name: set NODE_ENV to development
+        run: export NODE_ENV="development"
+      - name: create test data
+        run: yarn dev:create-test-data
       - name: Install cypress
         run: yarn cypress install
       - name: Start dev-server
