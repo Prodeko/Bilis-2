@@ -1,12 +1,13 @@
 import _ from 'lodash'
 
-import { NewPlayer, NewSeason, Player } from '@common/types'
+import { NewPlayer, NewSeason } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { createGame } from '@server/db/games'
 import { clearGamesDEV } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
 import { createSeason } from '@server/db/seasons'
 import { clearSeasonsDEV } from '@server/db/seasons/derivatives'
+import Player from '@server/models/rawModels/Player'
 
 const randomFirstNames: string[] = [
   'Aada',
@@ -116,7 +117,8 @@ const generateSeason = (n: number): NewSeason => {
 const createPlayers = async () => {
   const PLAYER_COUNT = 200
   const players = _.times(PLAYER_COUNT, generatePlayer)
-  await Promise.all(players.map(createPlayer))
+  //await Promise.all(players.map(createPlayer))
+  await Player.bulkCreate(players)
 }
 
 const createSeasons = async () => {
@@ -127,7 +129,7 @@ const createSeasons = async () => {
 }
 
 const createGames = async () => {
-  const GAME_COUNT = 20000
+  const GAME_COUNT = 2000
   const allPlayers = await getPlayers()
 
   const games = _.times(GAME_COUNT, () => {
