@@ -20,8 +20,9 @@
     "stylify": "stylelint **/*.scss",
     "prettify": "prettier --write './**/*.{ts,tsx,js,jsx}'",
     "lint": "eslint .",
-    "cy:headless": "docker-compose -f ./docker-compose.dev.yml run --rm cypress run --project /e2e",
-    "cy:interactive": "docker-compose -f ./docker-compose.dev.yml run --rm --env DISPLAY cypress open --project /e2e"
+    "cy:install": "cypress install",
+    "cy:interactive": "cypress open",
+    "cy:headless": "cypress run"
   },
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.5",
