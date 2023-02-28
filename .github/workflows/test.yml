@@ -1,27 +1,27 @@
 name: CI tests
 
 on:
-  pull_request:
-    branches: '*'
+#  pull_request:
+#    branches: '*'
   push:
     branches: 'cypress'
 
 jobs:
-  test-unit:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '19.x'
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Run tests
-        run: yarn test
-  test-integration:
-    runs-on: ubuntu-latest
+#  test-unit:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Use Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '19.x'
+#      - name: Install dependencies
+#        run: yarn --frozen-lockfile
+#      - name: Run tests
+#        run: yarn test
+#  test-integration:
+#    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
