@@ -33,8 +33,8 @@ jobs:
         run: yarn --frozen-lockfile
       - name: set NODE_ENV to development
         run: export NODE_ENV="development"
-      - name: migrations
-        run: yarn dev:migrate:up
+      #- name: migrations
+      #  run: yarn dev:migrate:up
       - name: create test data
         run: yarn dev:create-test-data
       - name: Install cypress
