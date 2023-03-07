@@ -31,10 +31,10 @@ jobs:
           node-version: '19.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: migrations
-        run: yarn dev:migrate:up
       - name: set NODE_ENV to development
         run: export NODE_ENV="development"
+      - name: migrations
+        run: yarn dev:migrate:up
       - name: create test data
         run: yarn dev:create-test-data
       - name: Install cypress
