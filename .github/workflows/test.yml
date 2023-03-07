@@ -24,27 +24,19 @@ jobs:
   test-integration:
     runs-on: ubuntu-latest
     env:
-      NODE_ENV="development"
-    env: 
-      POSTGRES_USER="prodeko"
-    env: 
-      POSTGRES_DB="bilis"
-    env: 
-      POSTGRES_PASSWORD="ci"
-    env: 
-      POSTGRES_HOST="db"
-    env: 
-      POSTGRES_PORT=5432
-    env: 
-      NEXT_PUBLIC_API_URL="http://localhost:3000/api"
+        NODE_ENV:development
+        POSTGRES_USER:prodeko
+        POSTGRES_DB:bilis
+        POSTGRES_PASSWORD:ci
+        POSTGRES_HOST:db
+        POSTGRES_PORT:5432
+        NEXT_PUBLIC_API_URL:http://localhost:3000/api
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '19.x'
-      - name: Printenv
-        run: printenv
       - name: Install dependencies
         run: yarn --frozen-lockfile
       #- name: migrations
