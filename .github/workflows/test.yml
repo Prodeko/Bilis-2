@@ -38,7 +38,7 @@ jobs:
       - name: set POSTGRES_DB to bilis
         run: export POSTGRES_DB="bilis"
       - name: set POSTGRES_PASSWORD to ci
-        run: export POSTGRES_PASSWORD ="ci"
+        run: export POSTGRES_PASSWORD="ci"
       - name: set POSTGRES_HOST to db
         run: export POSTGRES_HOST="db"
       - name: set POSTGRES_PORT to 5432
