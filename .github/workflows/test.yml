@@ -37,6 +37,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '19.x'
+      - name: printenv
+        run: printenv
       - name: Install dependencies
         run: yarn --frozen-lockfile
       #- name: migrations
