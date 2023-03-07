@@ -24,13 +24,13 @@ jobs:
   test-integration:
     runs-on: ubuntu-latest
     env:
-        NODE_ENV:development
-        POSTGRES_USER:prodeko
-        POSTGRES_DB:bilis
-        POSTGRES_PASSWORD:ci
-        POSTGRES_HOST:db
-        POSTGRES_PORT:5432
-        NEXT_PUBLIC_API_URL:http://localhost:3000/api
+        NODE_ENV: development
+        POSTGRES_USER: prodeko
+        POSTGRES_DB: bilis
+        POSTGRES_PASSWORD: ci
+        POSTGRES_HOST: db
+        POSTGRES_PORT: 5432
+        NEXT_PUBLIC_API_URL: http://localhost:3000/api
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
