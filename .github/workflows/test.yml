@@ -23,6 +23,14 @@ jobs:
 
   test-integration:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV="development"
+      POSTGRES_USER="prodeko"
+      POSTGRES_DB="bilis"
+      POSTGRES_PASSWORD="ci"
+      POSTGRES_HOST="db"
+      POSTGRES_PORT=5432
+      NEXT_PUBLIC_API_URL="http://localhost:3000/api"
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -31,21 +39,6 @@ jobs:
           node-version: '19.x'
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: set NODE_ENV to development
-        run: export NODE_ENV="development"
-      - name: set POSTGRES_USER to prodeko
-        run: export POSTGRES_USER="prodeko"
-      - name: set POSTGRES_DB to bilis
-        run: export POSTGRES_DB="bilis"
-      - name: set POSTGRES_PASSWORD to ci
-        run: export POSTGRES_PASSWORD="ci"
-      - name: set POSTGRES_HOST to db
-        run: export POSTGRES_HOST="db"
-      - name: set POSTGRES_PORT to 5432
-        run: export POSTGRES_PORT=5432
-      - name: set NEXT_PUBLIC_API_URL
-        run: export NEXT_PUBLIC_API_URL="http://localhost:3000/api"
-
       #- name: migrations
       #  run: yarn dev:migrate:up
       - name: create test data
