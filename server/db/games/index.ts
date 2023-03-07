@@ -124,4 +124,10 @@ const removeLatestGame = async (): Promise<GameModel> => {
   return latest
 }
 
-export { removeLatestGame, createGame, getPlayerOrderedGames, getLatestGames }
+export {
+  removeLatestGame,
+  createGame,
+  getPlayerOrderedGames,
+  getLatestGames,
+  calculateNewGameEffects,
+}
