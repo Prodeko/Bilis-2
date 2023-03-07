@@ -47,6 +47,10 @@ jobs:
         run: printenv
       - name: cat .env
         run: cat .env
+      - name: ls
+        run: ls
+      - name: pwd
+        run: pwd
       - name: Install dependencies
         run: yarn --frozen-lockfile
       #- name: migrations
