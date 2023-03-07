@@ -1,10 +1,11 @@
 import _ from 'lodash'
 
-import { NewPlayer } from '@common/types'
+import { CreateGameType, NewPlayer } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
-import { createGame } from '@server/db/games'
+import { calculateNewGameEffects, createGame } from '@server/db/games'
 import { clearGamesDEV } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
+import { PlayerModel } from '@server/models'
 import Game from '@server/models/rawModels/Game'
 import Player from '@server/models/rawModels/Player'
 
@@ -93,35 +94,84 @@ const generatePlayer = (): NewPlayer => {
 const createPlayers = async () => {
   const PLAYER_COUNT = 200
   const players = _.times(PLAYER_COUNT, generatePlayer)
-  //await Promise.all(players.map(createPlayer))
-  await Player.bulkCreate(players)
+  await Promise.all(players.map(createPlayer))
 }
 
 const createGames = async () => {
-  const GAME_COUNT = 2000
-  const allPlayers = await getPlayers()
+  // unix time one year ago
+  const unix = Date.now() - 31536000000
+  let i = 0
+  const GAME_COUNT = 5000
+  const allPlayers: Player[] = await getPlayers()
+  const allPlayerData: { model: Player; gameCount: number }[] = allPlayers.map(p => {
+    return { model: p, gameCount: 0 }
+  })
 
   const games = _.times(GAME_COUNT, () => {
-    const winner = _.sample(allPlayers) as Player
-    const remainingPlayers = allPlayers.filter(player => player.id !== winner.id)
+    const [winnerData, loserData] = _.sampleSize(allPlayerData, 2)
 
-    const loser = _.sample(remainingPlayers) as Player
     const game = {
-      winnerId: winner.id,
-      loserId: loser.id,
+      winnerData,
+      loserData,
       underTable: Math.random() < 0.1,
     }
     return game
   })
 
-  for await (const game of games) {
-    await createGame(game)
-  }
+  const gamesToDB: { winnerId: number; loserId: number; underTable: boolean; createdAt: Date }[] =
+    []
+  //const gamesToDB: CreateGameType[] = []
+  games.forEach(game => {
+    const { winnerData, loserData, underTable } = game
+    const effects = calculateNewGameEffects(
+      { winnerId: winnerData.model.id, loserId: loserData.model.id, underTable },
+      {
+        winner: winnerData.model,
+        loser: loserData.model,
+        winnerGames: winnerData.gameCount,
+        loserGames: loserData.gameCount,
+      }
+    )
+    const { createdGameObject, winnerUpdateInfo, loserUpdateInfo } = effects
+
+    winnerData.model.elo = winnerUpdateInfo.elo
+    loserData.model.elo = loserUpdateInfo.elo
+
+    winnerData.gameCount += 1
+    loserData.gameCount += 1
+
+    gamesToDB.push({ ...createdGameObject, createdAt: new Date(unix + i * 60000) })
+    i += 1
+  })
+
+  const updatedPlayersToDB = allPlayerData.map(pd => {
+    const model = pd.model
+    return {
+      id: model.id,
+      firstName: model.firstName,
+      lastName: model.lastName,
+      nickname: model.nickname,
+      emoji: model.emoji,
+      motto: model.motto,
+      elo: model.elo,
+    }
+  })
+  console.log(updatedPlayersToDB)
+  await clearPlayersDEV()
+  //await Player.bulkCreate(updatedPlayersToDB)
+  await Player.bulkCreate(updatedPlayersToDB, { updateOnDuplicate: ['elo'] })
+  await Game.bulkCreate(gamesToDB, {
+    include: [
+      { model: PlayerModel, as: 'winner' },
+      { model: PlayerModel, as: 'loser' },
+    ],
+  })
 }
 
 const main = async () => {
   await clearGamesDEV()
   await clearPlayersDEV()
+
   await createPlayers()
   await createGames()
 }
