@@ -43,15 +43,18 @@
   @extend %text-style-text-md-medium;
   
   color: $color-primary-50;
+}
+
+.hoverableRow {
+  @extend %base-row;
+  @extend %text-style-text-md-medium;
+  
+  color: $color-primary-50;
+  cursor: pointer;
   transition: all .2s;
   
   &:hover {
     background-color: $color-gray-700;
-    cursor: pointer;
-  }
-
-  &:hover > * {
-    opacity: 1;
   }
 }
 

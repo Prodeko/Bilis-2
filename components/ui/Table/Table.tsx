@@ -20,9 +20,16 @@ interface Props {
   columns: ColumnDef<T, number>[]
   columnStartIndices: number[]
   rowOnClick?: (id: number) => (e: MouseEvent<HTMLElement>) => void
+  disableRowHoverEffects?: boolean
 }
 
-export const Table = ({ dataRows, columns, columnStartIndices, rowOnClick }: Props) => {
+export const Table = ({
+  dataRows,
+  columns,
+  columnStartIndices,
+  rowOnClick,
+  disableRowHoverEffects,
+}: Props) => {
   // const [data, setData] = useState<T[]>(dataRows)
   const [parent] = useAutoAnimate<HTMLTableSectionElement>({ duration: 250 })
   const table = useReactTable({
@@ -48,7 +55,11 @@ export const Table = ({ dataRows, columns, columnStartIndices, rowOnClick }: Pro
       </thead>
       <tbody ref={parent} className={styles.body}>
         {table.getRowModel().rows.map(row => (
-          <tr onClick={rowOnClick?.(row.original.id)} key={row.id} className={styles.row}>
+          <tr
+            onClick={rowOnClick?.(row.original.id)}
+            key={row.id}
+            className={disableRowHoverEffects ? styles.row : styles.hoverableRow}
+          >
             {row.getVisibleCells().map((cell, idx) => (
               <td
                 key={cell.id}

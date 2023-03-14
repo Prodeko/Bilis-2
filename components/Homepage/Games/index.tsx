@@ -44,6 +44,7 @@ const Games = ({ games, setGames, gridPosition }: Props) => {
           dataRows={prepareGamesData(games)}
           columns={gameColumns}
           columnStartIndices={[1, 3, 6, 8, 11]}
+          disableRowHoverEffects
         />
       </CardGrid>
     </Card>
