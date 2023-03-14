@@ -16,7 +16,11 @@ export const Button = ({ text, variation, Icon, ...props }: Props) => {
   return (
     <button {...props} className={styles[variation]}>
       {text && <span>{text}</span>}
-      {Icon && <span>{<Icon className={styles.icon} />}</span>}
+      {Icon && (
+        <span>
+          <Icon className={styles.icon} />
+        </span>
+      )}
     </button>
   )
 }
