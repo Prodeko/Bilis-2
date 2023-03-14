@@ -23,7 +23,6 @@ interface Props {
 }
 
 export const Table = ({ dataRows, columns, columnStartIndices, rowOnClick }: Props) => {
-  console.log('datarows', dataRows)
   // const [data, setData] = useState<T[]>(dataRows)
   const [parent] = useAutoAnimate<HTMLTableSectionElement>({ duration: 250 })
   const table = useReactTable({
