@@ -10,6 +10,11 @@ export interface LeaderboardPlayer extends WithId {
   fargo: number
 }
 
+/**
+ *
+ * @param data - Leaderboard players from the database
+ * @returns Formatted leaderboard players
+ */
 export const prepareLeaderboardData = (data: Player[]): LeaderboardPlayer[] => {
   return data.map((row, index) => ({
     id: row.id,
