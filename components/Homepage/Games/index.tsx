@@ -4,13 +4,10 @@ import { FiTrash2 } from 'react-icons/fi'
 import { GridPosition, RecentGame } from '@common/types'
 import { Button } from '@ui/Button'
 import { Card, CardGrid } from '@ui/Card'
-// import Table from './Table'
 import { Table, gameColumns, prepareGamesData } from '@ui/Table'
 import { Title, TitleRow } from '@ui/TitleRow'
 
 import Modal from './Modal'
-
-// import TitleRow from './TitleRow'
 
 interface Props {
   games: RecentGame[]
