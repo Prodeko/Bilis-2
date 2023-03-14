@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react'
+import { ComponentProps } from 'react'
 import { IconType } from 'react-icons'
 
 import styles from './ButtonIcon.module.scss'
@@ -12,10 +12,10 @@ interface Props extends ButtonProps {
   variation: Variation
 }
 
-export const ButtonIcon = ({ Icon, variation, ...props }: Props): React.FC<Props> => {
+export const ButtonIcon = ({ Icon, variation, ...props }: Props) => {
   return (
     <button className={styles[variation]} {...props}>
-      {<Icon className={styles.icon} />}
+      <Icon className={styles.icon} />
     </button>
   )
 }
