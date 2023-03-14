@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import Sidebar from '@ui/Sidebar'
 
 import styles from './BaseLayout.module.scss'
-import Sidebar from './Sidebar'
 
 interface LayoutProps {
   children: ReactNode

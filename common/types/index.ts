@@ -78,6 +78,21 @@ enum SmoothScrollId {
   Addgame = 'add-game-list-item',
 }
 
+interface GridPositionColumn {
+  gridColumnStart: string
+  gridColumnEnd: string
+}
+
+interface GridPositionRow {
+  gridRowStart: string
+  gridRowEnd: string
+}
+
+/**
+ * Define where in the grid the component is and how many rows/columns it spans
+ */
+type GridPosition = GridPositionColumn | GridPositionRow
+
 // Export types
 export type {
   WithId,
@@ -93,6 +108,8 @@ export type {
   PlayerWithStats,
   TimeSeriesGame,
   CreateGameType,
+  GridPosition,
+  GridPositionColumn,
 }
 
 export { SmoothScrollId }

@@ -118,8 +118,8 @@ const formatRecentGame = (game: GameModel): RecentGame => {
     loserEloAfter: game.loserEloAfter,
     underTable: game.underTable,
     formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
-    winner: `${game.winner.emoji} ${formatFullName(game.winner)}`,
-    loser: `${game.loser.emoji} ${formatFullName(game.loser)}`,
+    winner: `${formatFullName(game.winner, true, true)}`,
+    loser: `${formatFullName(game.loser, true, true)}`,
   }
 }
 

@@ -1,0 +1,33 @@
+@use 'styles' as *;
+
+%base-button {
+  @extend %flex-center;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.destructive {
+  @extend %base-button;
+
+  color: $color-error-600; 
+
+  &:hover {
+    color: $color-error-500;
+  }
+}
+
+.close {
+  @extend %base-button;
+
+}
+
+.icon {
+  @include size($spacing-20);
+}

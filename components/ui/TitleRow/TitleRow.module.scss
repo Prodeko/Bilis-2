@@ -1,0 +1,16 @@
+@use 'styles' as *;
+
+.titlerow {
+  @extend %text-style-display-sm-semibold;
+  @include padding-x($spacing-24);
+  @include grid-cols(12);
+
+  align-items: center;
+  color: $color-gray-50;
+  max-height: 100%;
+  min-height: 0;
+}
+
+.title {
+  @extend %text-style-display-md-semibold;
+}

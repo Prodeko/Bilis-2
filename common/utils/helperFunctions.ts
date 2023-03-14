@@ -34,10 +34,15 @@ export const permutator = <T>(inputArr: T[]) => {
  * Formats player's full name give a player object
  *
  * @param player - Player object
+ * @param includeEmoji - Defines if emoji is included
+ * @param includeNickname - Defines if nickname is included
  * @returns Formatted full name
  */
-export const formatFullName = (player: Player) =>
-  `${player.firstName} "${player.nickname}" ${player.lastName}`
+export const formatFullName = (player: Player, includeEmoji = false, includeNickname = false) => {
+  const emoji = includeEmoji ? `${player.emoji} ` : ''
+  const nickName = includeNickname ? `"${player.nickname}" ` : ''
+  return `${emoji}${player.firstName} ${nickName}${player.lastName}`
+}
 
 /**
  * Returns player game stats
@@ -85,4 +90,18 @@ export const formatIsoStringToDate = (isoStringDate: string) => {
     dateStyle: 'short',
     timeStyle: 'short',
   }).format(date)
+}
+
+/**
+ * Create routing onClick eventhandler
+ *
+ * @param id - id of the path route
+ * @returns Event handler function that routes the user to a page ending to /id
+ */
+export const createClickRouter = (id: number) => {
+  return (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    const href = `/player/${id}`
+    router.push(href)
+  }
 }

@@ -46,8 +46,23 @@ const Home: NextPage<Props> = ({
       <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
-          <Leaderboard leaderboard={leaderboard} />
-          <Queue />
+          <Leaderboard
+            leaderboard={leaderboard}
+            gridPosition={{
+              gridColumnStart: '1',
+              gridColumnEnd: '2',
+              gridRowStart: '1',
+              gridRowEnd: '3',
+            }}
+          />
+          <Queue
+            gridPosition={{
+              gridColumnStart: '2',
+              gridColumnEnd: '3',
+              gridRowStart: '1',
+              gridRowEnd: '2',
+            }}
+          />
           <AddGameButton
             onClose={closeModal}
             onOpen={openModal}
@@ -55,7 +70,16 @@ const Home: NextPage<Props> = ({
             setGames={setGames}
             recentPlayers={recentPlayers}
           />
-          <Games games={games} setGames={setGames} />
+          <Games
+            games={games}
+            setGames={setGames}
+            gridPosition={{
+              gridColumnStart: '2',
+              gridColumnEnd: '-1',
+              gridRowStart: '2',
+              gridRowEnd: '-1',
+            }}
+          />
         </HomeGrid>
       </QueueProvider>
     </HomeLayout>
