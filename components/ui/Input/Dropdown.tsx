@@ -20,8 +20,10 @@ export interface DropdownProps extends ListItemProps {
  *
  * @param arr - Array of players
  * @param emptyArrayText - Displayed text when array is empty
- * @param animationDuration - Duration for the animation for the dropdown elements
  * @param showDropdown - Boolean value that defines if dropdown is open or closed
+ * @param selextedIdx - Selected list element index
+ * @param smoothScrollId - Id of the target element for smooth scroll -  TODO!
+ * @param rowOnClick - onClick eventhandler for PlayerListItem
  * @returns Dropdown component
  */
 export const Dropdown = ({
