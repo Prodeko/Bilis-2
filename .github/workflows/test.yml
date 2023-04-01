@@ -1,20 +1,63 @@
 name: CI tests
 
 on:
-  pull_request:
-    branches: '*'
+#  pull_request:
+#    branches: '*'
+  push:
+    branches: 'cypress'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+#  test-unit:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Use Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '19.x'
+#      - name: Install dependencies
+#        run: yarn --frozen-lockfile
+#      - name: Run tests
+#        run: yarn test
 
+  test-integration:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '19.x'
+      - name: .env
+        run: echo 'NEXT_PUBLIC_API_URL = http://localhost:3000/api' >> .env
+      - name: .env
+        run: echo 'SSH_KEY_PATH=~/.ssh/id_rsa' >> .env
+      - name: .env
+        run: echo 'POSTGRES_USER=prodeko' >> .env
+      - name: .env
+        run: echo 'POSTGRES_DB=bilis' >> .env
+      - name: .env
+        run: echo 'POSTGRES_PASSWORD=ci' >> .env
+      - name: .env
+        run: echo 'POSTGRES_HOST=db' >> .env
+      - name: .env
+        run: echo 'POSTGRES_PORT=5432' >> .env
+      - name: printenv
+        run: printenv
+      - name: cat .env
+        run: cat .env
+      - name: ls
+        run: ls
+      - name: pwd
+        run: pwd
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: Run tests
-        run: yarn test
+      #- name: migrations
+      #  run: yarn dev:migrate:up
+      - name: create test data
+        run: yarn dev:create-test-data
+      - name: Install cypress
+        run: yarn cypress install
+      - name: Start dev-server
+        run: yarn ci:cypress

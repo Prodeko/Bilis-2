@@ -58,6 +58,34 @@ Lisää breakpointeja ja tarkastele senhetkistä muuttujakontekstia sivuja ladat
 
 ## Projektin erityisyyksiä
 
+### Cypressin setupista
+Cypress toimii erillisessä cypress kontissa, joka on määritelty tiedostossa
+docker-compose.dev.yml (16.2.2023). Hyvä puoli tässä kuviossa on se, että testit
+ovat täysin erillisiä testattavasta sovelluksesta. Cypress-kontti vaatii ainoastaan,
+että palvelin toimii osoitteessa localhost:3000 
+
+Cypress setup toimii pääpiirteittäin blogin 
+https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/ mukaisesti.
+Voi olla, että X11 display serveri ei toimi ilman lisäkonfiguraatiota Macilla tai Windowsilla.
+Minulla (Linux 5.15.91-1-MANJARO) erillistä X11-konfiguraatiota ei vaadittu.
+Mahdollinen vaadittava konfiguraatio on kuvattu em. blogissa.
+
+#### Testien ajaminen:
+Koska testaus tapahtuu .devcontainerin ulkopuolisessa kontissa, 
+on testit ajettavat host-tietokoneen terminaalista. Testin ajaminen
+devkontissa tuottaa todennäköisesti virheen 
+  
+> /bin/sh: 1: docker-compose: not found 
+error Command failed with exit code 127.
+
+Testien ajamista varten package.jsoniin on luotu skriptit
+
+```cy:interactive```
+
+```cy:headless```
+
+Kumpikin skripti vaatii palvelimen olevan käynnissä osoittessa localhost:3000.
+
 ### Tärkeimmät kansiot
 #### Common
 **common**-kansion alla on yleishyödyllisiä funktiota, muuttujia ja tärkeimpänä **tyypit**. NextJS takia meillä on käytössä monorepo, eli backend ja frontend on samassa repossa, ja siksi voimme määrittää kerran tyypit yhteen kansioon ja käyttää niitä sekä frontissa että backissa.
