@@ -10,6 +10,8 @@ const PlayerPage = () => {
       <Header
         TitleComponent={<HeaderTitle title="Player" />}
         RightComponent={<AddPlayerButton path="/player/new" text="create a new player" />}
+        leftColumnSpan={4}
+        rightColumnSpan={4}
       />
       <SearchContainer />
     </PlayerLandingLayout>

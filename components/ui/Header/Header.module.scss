@@ -1,8 +1,6 @@
 @use 'styles' as *;
 
 .header {
-  @include grid-cols(12);
-
   height: $header-height;
   position: relative;
 }
@@ -15,14 +13,14 @@
 }
 
 .layout {
-  @include flex-x($gap: $spacing-32);
+  @include grid-cols(12);
   @extend %background-filter;
+  @include padding-x($spacing-48);
 
   align-items: center;
   grid-column: 1 / -1;
   height: 100%;
   justify-content: space-between;
-  padding-left: $spacing-48;
   position: relative;
   width: 100%;
 }

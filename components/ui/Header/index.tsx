@@ -7,10 +7,12 @@ import styles from './Header.module.scss'
 
 interface Props {
   TitleComponent: ReactNode
-  RightComponent?: ReactNode
+  RightComponent: ReactNode
+  leftColumnSpan: number
+  rightColumnSpan: number
 }
 
-const Header = ({ TitleComponent, RightComponent }: Props) => {
+const Header = ({ TitleComponent, RightComponent, leftColumnSpan, rightColumnSpan }: Props) => {
   return (
     <header className={styles.header}>
       <Image
@@ -21,8 +23,20 @@ const Header = ({ TitleComponent, RightComponent }: Props) => {
         priority={true}
       />
       <div className={styles.layout}>
-        {TitleComponent}
-        {RightComponent}
+        <div
+          style={{
+            gridColumn: `1 / ${leftColumnSpan + 1}`,
+          }}
+        >
+          {TitleComponent}
+        </div>
+        <div
+          style={{
+            gridColumn: `${-1 - rightColumnSpan} / -1`,
+          }}
+        >
+          {RightComponent}
+        </div>
       </div>
     </header>
   )

@@ -48,6 +48,8 @@ const Home: NextPage<Props> = ({
       <Header
         TitleComponent={<HeaderTitle title="Biliskilke" />}
         RightComponent={<RandomPlayer randomPlayer={randomPlayer} />}
+        leftColumnSpan={4}
+        rightColumnSpan={4}
       />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
