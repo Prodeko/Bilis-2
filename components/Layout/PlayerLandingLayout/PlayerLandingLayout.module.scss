@@ -1,14 +1,7 @@
 @use 'styles' as *;
 
 .container {
-  @include flex-y(null);
-  @extend %flex-center;
-
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
-  width: 100%;
-}
-
-.searchContainer {
-  text-align: left;
-  width: 50%;
 }

@@ -22,9 +22,11 @@ const SearchContainer = () => {
   }
 
   return (
-    <div className={extended ? styles.searchContainer__extended : styles.searchContainer}>
-      <Header />
-      <PlayerSearchLink visible={visible} onClick={onClick} onBlur={onBlur} />
+    <div className={styles.wrapper}>
+      <div className={extended ? styles.searchContainer__extended : styles.searchContainer}>
+        <Header />
+        <PlayerSearchLink visible={visible} onClick={onClick} onBlur={onBlur} />
+      </div>
     </div>
   )
 }
