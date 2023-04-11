@@ -42,7 +42,7 @@ const Header = ({ randomPlayer }: Props) => {
     if (upcomingPlayer) switchMotto() // Run after hydration (first render)
   }, [upcomingPlayer])
 
-  const author = `${currentPlayer.firstName} "${currentPlayer.nickname}" ${currentPlayer.lastName}`
+  const author = `${currentPlayer?.firstName} "${currentPlayer?.nickname}" ${currentPlayer?.lastName}`
   return (
     <header className={styles.header}>
       <Image
@@ -54,7 +54,7 @@ const Header = ({ randomPlayer }: Props) => {
       />
       <div className={styles.layout}>
         <h1 className={styles.title}>Biliskilke</h1>
-        <MottoCard text={currentPlayer.motto} author={author} switching={switching} />
+        <MottoCard text={currentPlayer?.motto} author={author} switching={switching} />
       </div>
     </header>
   )
