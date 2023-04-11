@@ -11,18 +11,18 @@
   @extend %text-style-display-2-xl-bold;
   @include gradient-text($color: $color-gradient-white-200-25);
 
-  margin-left: 5%;
+  padding-left: $spacing-24;
 }
 
 .layout {
   @include flex-x($gap: $spacing-32);
   @extend %background-filter;
-  @include padding-x($spacing-48);
 
   align-items: center;
   grid-column: 1 / -1;
   height: 100%;
   justify-content: space-between;
+  padding-left: $spacing-48;
   position: relative;
   width: 100%;
 }
