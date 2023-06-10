@@ -6,11 +6,11 @@ import type { Player, PlayerWithStats, TimeSeriesGame } from '@common/types'
 import { isNumber } from '@common/types/guards'
 import ProfileLayout from '@components/Layout/ProfileLayout'
 import ProfileCharts from '@components/Profile/ProfileCharts'
-import ProfileHeader from '@components/Profile/ProfileHeader'
 import ProfileStats from '@components/Profile/ProfileStats/'
 import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
+import { ProfileHeader } from '@ui/Header/Profile'
 
 type ErrorType = {
   error: string
