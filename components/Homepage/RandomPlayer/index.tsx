@@ -40,7 +40,14 @@ const RandomPlayer = ({ randomPlayer }: Props) => {
 
   const author = `${currentPlayer?.firstName} "${currentPlayer?.nickname}" ${currentPlayer?.lastName}`
 
-  return <MottoCard text={currentPlayer?.motto} author={author} switching={switching} />
+  return (
+    <MottoCard
+      style={{ gridColumn: '2 / -1' }}
+      text={currentPlayer?.motto}
+      author={author}
+      switching={switching}
+    />
+  )
 }
 
 export default RandomPlayer

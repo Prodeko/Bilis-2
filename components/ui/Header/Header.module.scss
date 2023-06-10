@@ -13,11 +13,12 @@
 }
 
 .layout {
-  @include grid-cols(12);
+  @include grid-cols(3);
   @extend %background-filter;
   @include padding-x($spacing-48);
 
   align-items: center;
+  gap: $spacing-24;
   grid-column: 1 / -1;
   height: 100%;
   justify-content: space-between;

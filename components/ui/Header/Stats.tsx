@@ -12,7 +12,12 @@ interface Props {
   rightColumnSpan: number
 }
 
-const Header = ({ TitleComponent, RightComponent, leftColumnSpan, rightColumnSpan }: Props) => {
+export const Header = ({
+  TitleComponent,
+  RightComponent,
+  leftColumnSpan,
+  rightColumnSpan,
+}: Props) => {
   return (
     <header className={styles.header}>
       <Image
@@ -41,5 +46,3 @@ const Header = ({ TitleComponent, RightComponent, leftColumnSpan, rightColumnSpa
     </header>
   )
 }
-
-export default Header

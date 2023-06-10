@@ -7,14 +7,12 @@ import AddGameButton from '@components/Homepage/AddGame'
 import Games from '@components/Homepage/Games'
 import Leaderboard from '@components/Homepage/Leaderboard'
 import Queue from '@components/Homepage/Queue'
-import RandomPlayer from '@components/Homepage/RandomPlayer'
 import HomeGrid from '@components/Layout/HomeLayout/HomeGrid'
 import HomeLayout from '@components/Layout/HomeLayout/HomeLayout'
-import HeaderTitle from '@components/ui/Header/HeaderTitle'
 import { getRecentGames } from '@server/db/games/derivatives'
 import { getLatestPlayers, getPlayers, getRandomPlayer } from '@server/db/players'
 import { QueueProvider, reducer } from '@state/Queue'
-import Header from '@ui/Header'
+import Header from '@ui/Header/Main'
 
 interface Props {
   leaderboard: Player[]
@@ -45,12 +43,7 @@ const Home: NextPage<Props> = ({
 
   return (
     <HomeLayout onKeyDown={handleKeyDown}>
-      <Header
-        TitleComponent={<HeaderTitle title="Biliskilke" />}
-        RightComponent={<RandomPlayer randomPlayer={randomPlayer} />}
-        leftColumnSpan={4}
-        rightColumnSpan={4}
-      />
+      <Header randomPlayer={randomPlayer} />
       <QueueProvider reducer={reducer}>
         <HomeGrid>
           <Leaderboard
