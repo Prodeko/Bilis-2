@@ -3,9 +3,11 @@ import ErrorPage from 'next/error'
 
 import { Player } from '@common/types'
 import { isNumber } from '@common/types/guards'
-import NewProfileLayout from '@components/Layout/NewProfileLayout'
+import { NewProfileLayoutInner } from '@components/Layout/NewProfileLayout/Inner'
+import { NewProfileLayoutOuter } from '@components/Layout/NewProfileLayout/Outer'
 import BackButton from '@components/NewProfile/BackButton'
 import ProfileForm from '@components/NewProfile/ProfileForm'
+import Header from '@components/ui/Header/Player'
 import { getPlayerById } from '@server/db/players'
 
 type ErrorType = {
@@ -21,10 +23,13 @@ const editPlayer = (props: Props) => {
   }
 
   return (
-    <NewProfileLayout>
-      <BackButton route={`/player/${props.id}`} />
-      <ProfileForm player={props} />
-    </NewProfileLayout>
+    <NewProfileLayoutOuter>
+      <Header />
+      <NewProfileLayoutInner>
+        <BackButton route={`/player/${props.id}`} />
+        <ProfileForm player={props} />
+      </NewProfileLayoutInner>
+    </NewProfileLayoutOuter>
   )
 }
 
@@ -49,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   }
 
-  return { props: { player: player.toJSON() } }
+  return { props: { ...player.toJSON() } }
 }
 
 export default editPlayer
