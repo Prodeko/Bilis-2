@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Player } from '@common/types'
 import RandomPlayer from '@components/Homepage/RandomPlayer'
-import billiardPic from '@public/images/billiard.jpg'
+import billiardPic from '@public/images/billiard-balls.jpg'
 
 import styles from './Header.module.scss'
 import HeaderTitle from './HeaderTitle'
