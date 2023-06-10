@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { ComponentProps } from 'react'
 
 import billiardPic from '@public/images/billiard–closeup.jpg'
 
@@ -6,9 +7,15 @@ import AddPlayerButton from '../AddPlayerButton'
 import styles from './Header.module.scss'
 import HeaderTitle from './HeaderTitle'
 
-const Header = () => {
+type HeaderProps = ComponentProps<'header'>
+
+interface Props extends HeaderProps {
+  includeAddPlayerButton?: boolean
+}
+
+const Header = ({ includeAddPlayerButton, ...props }: Props) => {
   return (
-    <header className={styles.header}>
+    <header {...props} className={styles.header}>
       <Image
         src={billiardPic}
         alt="Billiard Table"
@@ -18,11 +25,13 @@ const Header = () => {
       />
       <div className={styles.layout}>
         <HeaderTitle title="Player" style={{ gridColumn: '1 / 2' }} />
-        <AddPlayerButton
-          path="/player/new"
-          text="create a new player"
-          style={{ gridColumn: '3 / -1' }}
-        />
+        {includeAddPlayerButton && (
+          <AddPlayerButton
+            path="/player/new"
+            text="create a new player"
+            style={{ gridColumn: '3 / -1' }}
+          />
+        )}
       </div>
     </header>
   )

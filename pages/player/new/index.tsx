@@ -1,13 +1,18 @@
-import NewProfileLayout from '@components/Layout/NewProfileLayout'
+import { NewProfileLayoutInner } from '@components/Layout/NewProfileLayout/Inner'
+import { NewProfileLayoutOuter } from '@components/Layout/NewProfileLayout/Outer'
 import BackButton from '@components/NewProfile/BackButton'
 import ProfileForm from '@components/NewProfile/ProfileForm'
+import Header from '@components/ui/Header/Player'
 
 const newPlayer = () => {
   return (
-    <NewProfileLayout>
-      <BackButton route={`/player`} />
-      <ProfileForm />
-    </NewProfileLayout>
+    <NewProfileLayoutOuter>
+      <Header />
+      <NewProfileLayoutInner>
+        <BackButton route={`/player`} />
+        <ProfileForm />
+      </NewProfileLayoutInner>
+    </NewProfileLayoutOuter>
   )
 }
 

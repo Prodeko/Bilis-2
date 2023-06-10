@@ -1,6 +1,13 @@
 @use 'styles' as *;
 
-.newProfileContainer {
+.newProfileContainerOuter {
+  color: $color-gray-100;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.newProfileContainerInner {
   @extend %flex-center;
 
   color: $color-gray-100;
