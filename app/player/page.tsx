@@ -1,10 +1,11 @@
+"use client"
+
 import PlayerSearchLink from 'app/components/utility/PlayerSearch/PlayerSearchLink'
 import { useState } from 'react'
 
-import Header from './Header'
-import styles from './SearchContainer.module.scss'
+import styles from './PlayerLanding.module.scss'
 
-const SearchContainer = () => {
+const PlayerPage = () => {
   const [extended, setExtended] = useState<boolean>(false)
   const [visible, setVisible] = useState<boolean>(false)
 
@@ -23,11 +24,11 @@ const SearchContainer = () => {
   return (
     <div className={styles.wrapper}>
       <div className={extended ? styles.searchContainer__extended : styles.searchContainer}>
-        <Header />
+        <h1 className={styles.header}>Player Search</h1>
         <PlayerSearchLink visible={visible} onClick={onClick} onBlur={onBlur} />
       </div>
     </div>
   )
 }
 
-export default SearchContainer
+export default PlayerPage
