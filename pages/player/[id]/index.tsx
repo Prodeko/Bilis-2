@@ -1,16 +1,16 @@
+import ProfileLayout from 'app/components/Layout/ProfileLayout'
+import ProfileCharts from 'app/components/Profile/ProfileCharts'
+import ProfileStats from 'app/components/Profile/ProfileStats'
+import { ProfileHeader } from 'app/components/ui/Header/Profile'
 import { round } from 'lodash'
 import type { GetServerSideProps, NextPage } from 'next'
 import ErrorPage from 'next/error'
 
 import type { Player, PlayerWithStats, TimeSeriesGame } from '@common/types'
 import { isNumber } from '@common/types/guards'
-import ProfileLayout from '@components/Layout/ProfileLayout'
-import ProfileCharts from '@components/Profile/ProfileCharts'
-import ProfileStats from '@components/Profile/ProfileStats/'
 import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
-import { ProfileHeader } from '@ui/Header/Profile'
 
 type ErrorType = {
   error: string

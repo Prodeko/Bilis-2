@@ -1,4 +1,4 @@
-import ComingSoon from '@components/ComingSoon'
+import ComingSoon from 'app/components/ComingSoon'
 
 const Stats = () => {
   return <ComingSoon />

@@ -1,13 +1,13 @@
+import { NewProfileLayoutInner } from 'app/components/Layout/NewProfileLayout/Inner'
+import { NewProfileLayoutOuter } from 'app/components/Layout/NewProfileLayout/Outer'
+import BackButton from 'app/components/NewProfile/BackButton'
+import ProfileForm from 'app/components/NewProfile/ProfileForm'
+import Header from 'app/components/ui/Header/Player'
 import { GetServerSideProps } from 'next'
 import ErrorPage from 'next/error'
 
 import { Player } from '@common/types'
 import { isNumber } from '@common/types/guards'
-import { NewProfileLayoutInner } from '@components/Layout/NewProfileLayout/Inner'
-import { NewProfileLayoutOuter } from '@components/Layout/NewProfileLayout/Outer'
-import BackButton from '@components/NewProfile/BackButton'
-import ProfileForm from '@components/NewProfile/ProfileForm'
-import Header from '@components/ui/Header/Player'
 import { getPlayerById } from '@server/db/players'
 
 type ErrorType = {
