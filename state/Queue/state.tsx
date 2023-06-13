@@ -1,3 +1,5 @@
+"use client"
+
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 
 import { Player } from '@common/types'

@@ -2,9 +2,8 @@
 
 import AddGameButton from 'app/components/Homepage/AddGame'
 import Games from 'app/components/Homepage/Games'
-import Leaderboard from 'app/components/Homepage/Leaderboard'
-import Queue from 'app/components/Homepage/Queue'
-import Header from 'app/components/ui/Header/Main'
+import {Leaderboard} from 'app/components/Homepage/Leaderboard'
+import {Queue} from 'app/components/Homepage/Queue'
 import { ComponentProps, KeyboardEventHandler, useState } from 'react'
 
 import { Player, RecentGame } from '@common/types'
@@ -36,19 +35,11 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
     }
     if (e.code === 'KeyQ') setTimeout(() => document?.getElementById('queue')?.focus(), 1)
   }
+
   return (
-    // add id so that we can set the focus on this after a new game is added
-    <div
-      {...props}
-      ref={parent}
-      id="home-layout"
-      tabIndex={-1}
-      onKeyDown={handleKeyDown}
-      className={styles['grid__layout']}
-    >
-      <Header />
+    <div id="home-layout" ref={parent} {...props} className={styles['grid__content']} onKeyDown={handleKeyDown}>
       <QueueProvider reducer={reducer}>
-        <div {...props} className={styles['grid__content']}>
+        <>
           <Leaderboard
             leaderboard={leaderboard}
             gridPosition={{
@@ -57,7 +48,7 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '1',
               gridRowEnd: '3',
             }}
-          />
+            />
           <Queue
             gridPosition={{
               gridColumnStart: '2',
@@ -65,14 +56,14 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '1',
               gridRowEnd: '2',
             }}
-          />
+            />
           <AddGameButton
             onClose={closeModal}
             onOpen={openModal}
             open={gameModalOpen}
             setGames={setGames}
             recentPlayers={recentPlayers}
-          />
+            />
           <Games
             games={games}
             setGames={setGames}
@@ -82,8 +73,8 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '2',
               gridRowEnd: '-1',
             }}
-          />
-        </div>
+            />
+        </>
       </QueueProvider>
     </div>
   )

@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardGrid } from 'app/components/ui/Card'
 import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/Input'
 import { Table, prepareQueueData, queueColumns } from 'app/components/ui/Table'
@@ -15,7 +17,7 @@ interface Props {
   gridPosition: GridPosition
 }
 
-const Queue = ({ gridPosition }: Props) => {
+export const Queue = ({ gridPosition }: Props) => {
   const router = useRouter()
   const [queue, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
@@ -114,5 +116,3 @@ const Queue = ({ gridPosition }: Props) => {
     </Card>
   )
 }
-
-export default Queue

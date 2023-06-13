@@ -11,7 +11,7 @@ interface Props {
   gridPosition: GridPosition
 }
 
-const Leaderboard = async ({ leaderboard, gridPosition }: Props) => {
+export const Leaderboard = ({ leaderboard, gridPosition }: Props) => {
   const variation: Variation = 'Leaderboard'
   const router = useRouter()
 
@@ -39,5 +39,3 @@ const Leaderboard = async ({ leaderboard, gridPosition }: Props) => {
     </Card>
   )
 }
-
-export default Leaderboard
