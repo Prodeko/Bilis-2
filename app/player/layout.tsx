@@ -5,7 +5,7 @@ import styles from './PlayerLanding.module.scss'
 
 const PlayerLandingLayout = ({ children }: { children: ReactNode }) => {
   return <div className={styles.container}>
-    <Header includeAddPlayerButton />
+    <Header />
     {children}
   </div>
 }

@@ -1,7 +1,9 @@
+"use client"
+
 import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 import { NewPlayer, Player } from '@common/types'
