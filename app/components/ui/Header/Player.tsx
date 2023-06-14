@@ -16,7 +16,7 @@ type Props = HeaderProps
 
 const Header = ({ ...props }: Props) => {
   const pathName = usePathname()
-  const isLandingPage = !pathName?.toLowerCase()?.endsWith("new")
+  const isLandingPage = pathName?.toLowerCase()?.endsWith("/player")
 
   return (
     <header {...props} className={styles.header}>

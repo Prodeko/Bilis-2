@@ -4,9 +4,9 @@ import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import { MouseEvent, useState } from 'react'
 
-import { NewPlayer, Player } from '@common/types'
+import { Player } from '@common/types'
 import UserPlus from '@public/images/user-plus-01.svg'
 
 import Field from './Field'
@@ -16,17 +16,17 @@ type Props = {
   player?: Player
 }
 
-type SubmitPlayerData = Omit<NewPlayer, 'elo'>
+type SubmitPlayerData = Omit<Player, 'elo' | "id">
 
 const ProfileForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
   const [playerData, setPlayerData] = useState<SubmitPlayerData>({
-    firstName: '',
-    lastName: '',
-    nickname: '',
-    motto: '',
-    emoji: '',
+    firstName: player ? player.firstName : "",
+    lastName: player ? player.lastName : "",
+    nickname: player ? player.nickname : "",
+    motto: player ? player.motto : "",
+    emoji: player ? player.emoji : "",
   })
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
 
@@ -35,12 +35,6 @@ const ProfileForm = ({ player }: Props) => {
   const setPlayerKey = (key: keyof SubmitPlayerData) => (val: unknown) => {
     setPlayerData(p => ({ ...p, [key]: val }))
   }
-
-  useEffect(() => {
-    if (isUpdate) {
-      setPlayerData(player)
-    }
-  }, [player, isUpdate])
 
   const updatePlayer = (id: number) => async (data: SubmitPlayerData) => {
     const res = await axios.put(`/api/player/${id}`, data)
@@ -52,7 +46,7 @@ const ProfileForm = ({ player }: Props) => {
     router.push(`/player/${res.data.id}`)
   }
 
-  const submit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submit = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     const updateFunc = isUpdate ? updatePlayer(player.id) : submitNewPlayer
     updateFunc(playerData)
@@ -126,10 +120,6 @@ const ProfileForm = ({ player }: Props) => {
       </form>
     </div>
   )
-}
-
-ProfileForm.defaultProps = {
-  player: undefined,
 }
 
 export default ProfileForm

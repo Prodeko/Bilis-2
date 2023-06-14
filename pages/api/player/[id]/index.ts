@@ -19,7 +19,9 @@ const handleFetch = async (res: NextApiResponse, id: number) => {
 
 const handlePut = async (req: NextApiRequest, res: NextApiResponse, id: number) => {
   try {
+    console.log("PLAYER", req.body)
     const player = await updatePlayerById(id, req.body)
+    console.log("ID", id)
     return res.status(200).json(player.toJSON())
   } catch (e) {
     return res.status(404).json({ error: `No player found with ID ${id}` })
