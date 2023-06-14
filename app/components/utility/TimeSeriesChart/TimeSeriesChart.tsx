@@ -1,13 +1,13 @@
+"use client"
+
 import { ApexOptions } from 'apexcharts'
-import dynamic from 'next/dynamic'
-import { renderToString } from 'react-dom/server'
 
 import type { TimeSeriesGame } from '@common/types'
 
 import styles from './TimeSeriesChart.module.scss'
 import Tooltip from './ToolTip'
 
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
+import ApexCharts from 'react-apexcharts'
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307
@@ -126,7 +126,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     // Rendering custom tooltips: https://github.com/apexcharts/react-apexcharts/issues/65
     tooltip: {
       custom: function ({ dataPointIndex }) {
-        return renderToString(<Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />)
+        return <Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />
       },
     },
 

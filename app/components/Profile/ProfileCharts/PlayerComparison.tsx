@@ -1,3 +1,5 @@
+"use client"
+
 import PieChart from 'app/components/utility/PieChart'
 import PlayerSearchSelect from 'app/components/utility/PlayerSearch/PlayerSearchSelect'
 import { useState } from 'react'
