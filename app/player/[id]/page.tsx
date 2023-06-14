@@ -23,11 +23,7 @@ const PlayerPage = async () => {
     getPlayerStats(id),
     getPlayerDetailedGames(id),
   ])
-  console.log("headersList", headersList)
-  console.log("id_string", id_string)
-  console.log("id", id)
-  console.log("player", player)
-
+  
   return (
     <ProfileLayout>
       <ProfileHeader player={player} />
