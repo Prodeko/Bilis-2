@@ -1,4 +1,4 @@
-import HomeLayout from 'app/components/Layout/HomeLayout/HomeLayout'
+import HomeLayout from './HomeLayout'
 
 import type { Player, RecentGame } from '@common/types'
 import { NOF_LATEST_PLAYERS, NOF_LEADERBOARD_PLAYERS } from '@common/utils/constants'
@@ -6,7 +6,7 @@ import { getRecentGames } from '@server/db/games/derivatives'
 import { getLatestPlayers, getPlayers } from '@server/db/players'
 import { Header } from '@components/ui/Header/Main'
 
-import styles from '../app/components/Layout/HomeLayout/HomeLayout.module.scss'
+import styles from './HomeLayout.module.scss'
 
 type HomeData = [Player[], Player[], RecentGame[]]
 
