@@ -1,6 +1,5 @@
 @use 'styles' as *;
 
-
 .grid {
   &__layout {
     display: grid;
@@ -16,4 +15,22 @@
     max-height: 100%;
     padding: $spacing-48;
   }
+}
+
+.baseGrid {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.layout {
+  background-image: $color-gradient-mixed-900-400;
+  height: 100vh;
+}
+
+.versioning {
+  bottom: 10px;
+  color: azure;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }

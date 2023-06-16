@@ -6,7 +6,7 @@ import { getRecentGames } from '@server/db/games/derivatives'
 import { getLatestPlayers, getPlayers } from '@server/db/players'
 import { Header } from '@components/ui/Header/Main'
 
-import styles from './HomeLayout.module.scss'
+import styles from './Home.module.scss'
 
 type HomeData = [Player[], Player[], RecentGame[]]
 
@@ -27,7 +27,7 @@ export default async function Home() {
   return (
     <div
       tabIndex={-1}
-      className={styles['grid__layout']}
+      className={styles.grid__layout}
     >
       <Header />
       <HomeLayout leaderboard={leaderboard} recentPlayers={recentPlayers} recentGames={recentGames} />

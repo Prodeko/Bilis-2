@@ -10,7 +10,7 @@ import { Player, RecentGame } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { QueueProvider, reducer } from '@state/Queue'
 
-import styles from './HomeLayout.module.scss'
+import styles from './Home.module.scss'
 
 type DivProps = ComponentProps<'div'>
 
