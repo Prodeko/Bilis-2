@@ -1,13 +1,19 @@
 import { ReactNode } from 'react'
 import Header from '@ui/Header/Player'
 
-import styles from './PlayerLanding.module.scss'
+import { NewProfileLayoutOuter } from '@components/Layout/NewProfileLayout/Outer'
 
-const PlayerLandingLayout = ({ children }: { children: ReactNode }) => {
-  return <div className={styles.container}>
-    <Header />
-    {children}
-  </div>
+interface Props {
+  children: ReactNode
+}
+
+const PlayerLandingLayout = ({ children }: Props) => {
+  return (
+    <NewProfileLayoutOuter>
+      <Header />
+      {children}
+    </NewProfileLayoutOuter>
+  )
 }
 
 export default PlayerLandingLayout

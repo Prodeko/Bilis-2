@@ -1,8 +1,6 @@
 import { NewProfileLayoutInner } from 'app/components/Layout/NewProfileLayout/Inner'
-import { NewProfileLayoutOuter } from 'app/components/Layout/NewProfileLayout/Outer'
 import BackButton from 'app/components/NewProfile/BackButton'
 import ProfileForm from 'app/components/NewProfile/ProfileForm'
-import Header from 'app/components/ui/Header/Player'
 
 import { Player } from '@common/types'
 import { getPlayerById } from '@server/db/players'
@@ -17,13 +15,10 @@ const editPlayer = async () => {
   const player = await getPlayerById(id) as Player
 
   return (
-    <NewProfileLayoutOuter>
-      <Header />
-      <NewProfileLayoutInner>
-        <BackButton route={`/player/${player.id}`} />
-        <ProfileForm player={player} />
-      </NewProfileLayoutInner>
-    </NewProfileLayoutOuter>
+    <NewProfileLayoutInner>
+      <BackButton route={`/player/${player.id}`} />
+      <ProfileForm player={player} />
+    </NewProfileLayoutInner>
   )
 }
 
