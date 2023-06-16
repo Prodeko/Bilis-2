@@ -40,7 +40,8 @@
     "react-icons": "^4.3.1",
     "sass": "^1.54.0",
     "sequelize": "^6.15.0",
-    "umzug": "^3.0.0"
+    "umzug": "^3.0.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
