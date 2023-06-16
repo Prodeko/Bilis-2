@@ -1,22 +1,19 @@
-"use client"
-
 import RandomPlayer from 'app/components/Homepage/RandomPlayer'
 import Image from 'next/image'
 import { ComponentProps } from 'react'
 
-import { Player } from '@common/types'
 import billiardPic from '@public/images/billiard-balls.jpg'
 
 import styles from '../Header.module.scss'
 import HeaderTitle from '../HeaderTitle'
+import { getRandomPlayer } from '@server/db/players'
 
 type HeaderProps = ComponentProps<'header'>
 
-interface Props extends HeaderProps {
-  randomPlayer: Player
-}
+type Props = HeaderProps
 
-export const Header = ({ randomPlayer, ...props }: Props) => {
+export const Header = async ({  ...props }: Props) => {
+  const randomPlayer = await getRandomPlayer().then(player => player?.toJSON())
   return (
     <header {...props} className={styles.header}>
       <Image
