@@ -1,13 +1,13 @@
-import { NewProfileLayoutInner } from '@components/Player/PlayerLayout/Inner'
+import { PlayerLayoutInner } from '@components/Player/PlayerLayout/Inner'
 import BackButton from '@components/Player/BackButton'
-import ProfileForm from 'app/components/NewProfile/ProfileForm'
+import PlayerForm from 'app/components/Player/PlayerForm'
 
 const NewPlayerPage = async () => {
   return (
-      <NewProfileLayoutInner>
+      <PlayerLayoutInner>
         <BackButton route={`/player`} />
-        <ProfileForm />
-      </NewProfileLayoutInner>
+        <PlayerForm />
+      </PlayerLayoutInner>
   )
 }
 

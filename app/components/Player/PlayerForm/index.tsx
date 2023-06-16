@@ -10,7 +10,7 @@ import { Player } from '@common/types'
 import UserPlus from '@public/images/user-plus-01.svg'
 
 import Field from './Field'
-import styles from './ProfileForm.module.scss'
+import styles from './PlayerForm.module.scss'
 
 type Props = {
   player?: Player
@@ -18,7 +18,7 @@ type Props = {
 
 type SubmitPlayerData = Omit<Player, 'elo' | "id">
 
-const ProfileForm = ({ player }: Props) => {
+const PlayerForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
   const [playerData, setPlayerData] = useState<SubmitPlayerData>({
@@ -122,4 +122,4 @@ const ProfileForm = ({ player }: Props) => {
   )
 }
 
-export default ProfileForm
+export default PlayerForm

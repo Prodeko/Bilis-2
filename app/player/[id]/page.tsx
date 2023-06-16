@@ -1,6 +1,6 @@
-import ProfileCharts from 'app/components/Profile/ProfileCharts'
-import ProfileStats from 'app/components/Profile/ProfileStats'
-import { ProfileHeader } from 'app/components/ui/Header/Profile'
+import ProfileCharts from '@components/Profile/ProfileCharts'
+import ProfileStats from '@components/Profile/ProfileStats'
+import { ProfileHeader } from '@components/ui/Header/Profile'
 import { round } from 'lodash'
 import { headers } from 'next/headers';
 
@@ -8,7 +8,7 @@ import type { Player } from '@common/types'
 import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import { getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
-import ProfileLayout from '@components/Layout/ProfileLayout';
+import ProfileLayout from '@components/Profile/ProfileLayout/';
 
 
 const PlayerPage = async () => {

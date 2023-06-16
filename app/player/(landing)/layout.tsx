@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import Header from '@ui/Header/Player'
 
-import { NewProfileLayoutOuter } from '@components/Player/NewProfileLayout/Outer'
+import { PlayerLayoutOuter } from '@components/Player/PlayerLayout/Outer'
 
 interface Props {
   children: ReactNode
@@ -9,10 +9,10 @@ interface Props {
 
 const PlayerLandingLayout = ({ children }: Props) => {
   return (
-    <NewProfileLayoutOuter>
+    <PlayerLayoutOuter>
       <Header />
       {children}
-    </NewProfileLayoutOuter>
+    </PlayerLayoutOuter>
   )
 }
 

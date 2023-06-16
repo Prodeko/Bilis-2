@@ -1,4 +1,4 @@
-import { NewProfileLayoutOuter } from "@components/Player/NewProfileLayout/Outer"
+import { PlayerLayoutOuter } from "@components/Player/PlayerLayout/Outer"
 import Header from "@components/ui/Header/Player"
 import { ReactNode } from "react"
 
@@ -8,10 +8,10 @@ interface Props {
 
 const EditLayout = ({ children }: Props) => {
   return (
-    <NewProfileLayoutOuter>
+    <PlayerLayoutOuter>
       <Header />
       {children}
-    </NewProfileLayoutOuter>
+    </PlayerLayoutOuter>
   ) 
 }
 

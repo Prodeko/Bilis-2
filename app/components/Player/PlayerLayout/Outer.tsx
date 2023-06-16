@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
-import styles from './NewProfileLayout.module.scss'
+import styles from './PlayerLayout.module.scss'
 
 interface Props {
   children: ReactNode
 }
 
-export const NewProfileLayoutOuter = ({ children }: Props) => {
-  return <div className={styles.newProfileContainerOuter}>{children}</div>
+export const PlayerLayoutOuter = ({ children }: Props) => {
+  return <div className={styles.playerContainerOuter}>{children}</div>
 }
