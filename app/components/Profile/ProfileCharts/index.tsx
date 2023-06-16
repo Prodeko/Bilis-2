@@ -1,4 +1,4 @@
-import TimeSeriesChart from 'app/components/utility/TimeSeriesChart/TimeSeriesChart'
+import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
 
 import { TimeSeriesGame } from '@common/types'
 

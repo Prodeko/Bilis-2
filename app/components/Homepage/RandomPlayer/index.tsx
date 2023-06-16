@@ -1,6 +1,6 @@
 'use client'
 
-import MottoCard from 'app/components/utility/MottoCard'
+import MottoCard from '@ui/MottoCard'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 

@@ -1,4 +1,4 @@
-import ModalBlur from 'app/components/utility/ModalBlur'
+import ModalBlur from '@ui/ModalBlur'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { Player, RecentGame } from '@common/types'

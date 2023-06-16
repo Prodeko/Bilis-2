@@ -1,7 +1,7 @@
 "use client"
 
-import PieChart from 'app/components/utility/PieChart'
-import PlayerSearchSelect from 'app/components/utility/PlayerSearch/PlayerSearchSelect'
+import PieChart from '@ui/PieChart'
+import PlayerSearchSelect from '@ui/PlayerSearch/PlayerSearchSelect'
 import { useState } from 'react'
 
 import type { MutualGames, Player } from '@common/types'

@@ -1,4 +1,4 @@
-import MottoCard from 'app/components/utility/MottoCard'
+import MottoCard from '@ui/MottoCard'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ComponentProps } from 'react'

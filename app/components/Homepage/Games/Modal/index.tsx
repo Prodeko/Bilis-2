@@ -1,4 +1,4 @@
-import ModalBlur from 'app/components/utility/ModalBlur'
+import ModalBlur from '@ui/ModalBlur'
 import axios from 'axios'
 
 import { RecentGame } from '@common/types'

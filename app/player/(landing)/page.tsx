@@ -1,6 +1,6 @@
 "use client"
 
-import PlayerSearchLink from 'app/components/utility/PlayerSearch/PlayerSearchLink'
+import PlayerSearchLink from '@ui/PlayerSearch/PlayerSearchLink'
 import { useState } from 'react'
 
 import styles from './PlayerLanding.module.scss'
