@@ -1,8 +1,10 @@
+"use client"
+
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
 import Link from 'next/link'
-import Router from 'next/router'
+import {useRouter} from 'next/navigation'
 import { ChangeEventHandler } from 'react'
 
 import { Player } from '@common/types'
@@ -20,7 +22,8 @@ interface Props {
 
 const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
   const getRoute = (id: number) => `player/${id}`
-  const handleSelect = ({ id }: Player) => Router.push(getRoute(id))
+  const router = useRouter()
+  const handleSelect = ({ id }: Player) => router.push(getRoute(id))
 
   const { players, setQuery } = usePlayers(300)
   const { handleKeyPress, selectedIdx, setSelectedIdx } = useKeyPress(players, handleSelect)
