@@ -1,4 +1,4 @@
-import { NewProfileLayoutOuter } from "@components/Layout/NewProfileLayout/Outer"
+import { NewProfileLayoutOuter } from "@components/Player/NewProfileLayout/Outer"
 import Header from "@components/ui/Header/Player"
 import { ReactNode } from "react"
 

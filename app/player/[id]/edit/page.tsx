@@ -1,5 +1,5 @@
-import { NewProfileLayoutInner } from 'app/components/Layout/NewProfileLayout/Inner'
-import BackButton from 'app/components/NewProfile/BackButton'
+import { NewProfileLayoutInner } from '@components/Player/PlayerLayout/Inner'
+import BackButton from '@components/Player/BackButton'
 import ProfileForm from 'app/components/NewProfile/ProfileForm'
 
 import { Player } from '@common/types'
