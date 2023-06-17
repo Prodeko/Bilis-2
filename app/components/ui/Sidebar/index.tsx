@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { FiBarChart2, FiHome, FiUser } from 'react-icons/fi'
 
