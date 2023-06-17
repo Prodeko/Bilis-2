@@ -46,19 +46,11 @@
 
 .player {
   @extend %text-style-text-lg-normal;
+  @include grid-cols(12);
 
   cursor: pointer;
   padding: $spacing-8;
   pointer-events: fill;
-}
-
-.player:hover,
-.selected {
-  background: $color-gray-300;
-}
-
-.playerInfo {
-  @include grid-cols(12);
 
   & > span:first-child {
     grid-column: 1 / 3;
@@ -71,6 +63,11 @@
   & > span:last-child {
     grid-column: 12;
   }
+}
+
+.player:hover,
+.selected {
+  background: $color-gray-300;
 }
 
 .noplayers {
