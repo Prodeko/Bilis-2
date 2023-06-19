@@ -1,7 +1,7 @@
 'use client'
 
 import MottoCard from '@ui/MottoCard'
-import axios from 'axios'
+import { player } from '@common/types'
 import { useEffect, useState } from 'react'
 
 import { Player } from '@common/types'
@@ -16,9 +16,15 @@ const RandomPlayer = ({ randomPlayer }: Props) => {
   const [switching, setSwitching] = useState<boolean>(false)
 
   const setRandomPlayer = async () => {
-    const result = await axios.get(`api/player/random`)
-    const player = result.data as Player
-    setUpcomingPlayer(player)
+    const res = await fetch(`api/player/random`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    const json = await res.json()
+    const randomPlayer = player.parse(json)
+    setUpcomingPlayer(randomPlayer)
   }
 
   // Fetch a new random player on set interval, default every 60 seconds
