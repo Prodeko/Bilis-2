@@ -72,7 +72,11 @@ type GameWithPlayers = z.infer<typeof gameWithPlayers>
 const newGame = game.omit({id: true})
 type NewGame = z.infer<typeof newGame>
 
-const createGameType = newGame.pick({"winnerId": true, "loserId":  true, "underTable": true})
+const createGameType = z.object({
+  winnerId: id,
+  loserId: id,
+  underTable: z.boolean().optional()
+})
 type CreateGameType = z.infer<typeof createGameType>
 
 const timeSeriesGame = z.object({
