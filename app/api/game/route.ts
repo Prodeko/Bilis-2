@@ -1,7 +1,7 @@
 import {  NextResponse } from 'next/server'
 
 import { createGameType } from '@common/types'
-import { createGame } from '@server/db/games'
+import { createGame, removeLatestGame } from '@server/db/games'
 import { formatRecentGame } from '@server/db/games/derivatives'
  
 export async function POST(req: Request) {
@@ -11,4 +11,9 @@ export async function POST(req: Request) {
   const jsonGame = formatRecentGame(game)
  
   return NextResponse.json(jsonGame)
+}
+
+export async function DELETE() {
+  const removedLatestGame = await removeLatestGame()
+  return NextResponse.json(removedLatestGame)
 }

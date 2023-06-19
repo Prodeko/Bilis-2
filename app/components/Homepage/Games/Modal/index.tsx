@@ -1,5 +1,4 @@
 import ModalBlur from '@ui/ModalBlur'
-import axios from 'axios'
 
 import { RecentGame } from '@common/types'
 
@@ -13,7 +12,11 @@ interface Props {
 
 const Modal = ({ games, setGames, closeModal }: Props) => {
   const handleRemove = async () => {
-    const { data } = await axios.delete(`/api/game/latest`)
+    const res = await fetch(`/api/game`, {
+      method: "DELETE"
+    })
+    const data = await res.json()
+    console.log(data)
 
     if (typeof data == 'string') return console.error(data)
 
