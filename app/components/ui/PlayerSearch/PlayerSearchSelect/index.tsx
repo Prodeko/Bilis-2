@@ -1,9 +1,7 @@
-import type { PieChartProps } from 'app/components/Profile/ProfileCharts/PlayerComparison'
-import axios from 'axios'
 import { ChangeEventHandler, Dispatch, SetStateAction, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
-import type { Player } from '@common/types'
+import { pieChartProps, type PieChartProps, type Player } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
@@ -30,12 +28,20 @@ const PlayerSearchSelect = ({ currentPlayerId, setPieChartProps }: Props) => {
   const handleSelect = async (opposingPlayer: Player) => {
     if (opposingPlayer.id) {
       try {
-        const response = await axios.get(`/api/player/mutual-stats`, {
-          params: { id1: currentPlayerId, id2: opposingPlayer.id },
+        const searchParams = new URLSearchParams({ 
+          currentPlayerId: currentPlayerId.toString(), 
+          opposingPlayerId: opposingPlayer.id.toString() 
         })
-        const data = response.data as PieChartProps
+        const res = await fetch(`/api/player/mutual-stats?${searchParams}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        const data = await res.json() as PieChartProps
+        const pieProps = pieChartProps.parse(data)
         setPlaceholder(`${opposingPlayer.firstName} ${opposingPlayer.lastName}`)
-        setPieChartProps(data)
+        setPieChartProps(pieProps)
       } catch (e) {
         console.error(e)
       }

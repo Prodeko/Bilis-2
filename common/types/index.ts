@@ -94,6 +94,14 @@ const profileStatistic = z.object({
 })
 type ProfileStatistic = z.infer<typeof profileStatistic>
 
+
+const pieChartProps = z.object({
+  currentPlayer: player,
+  opposingPlayer: player,
+  mutualGames
+})
+type PieChartProps = z.infer<typeof pieChartProps>
+
 // Random types
 
 /**
@@ -136,9 +144,11 @@ export type {
   CreateGameType,
   GridPosition,
   GridPositionColumn,
+  PieChartProps
 }
 
 export {
+  id,
   withId,
   player,
   newPlayer,
@@ -151,7 +161,8 @@ export {
   newGame,
   createGameType,
   timeSeriesGame,
-  profileStatistic
+  profileStatistic,
+  pieChartProps
 }
 
 export { SmoothScrollId }
