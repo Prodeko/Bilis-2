@@ -15,7 +15,6 @@ const Modal = ({ games, setGames, closeModal }: Props) => {
       method: 'DELETE',
     })
     const data = await res.json()
-    console.log(data)
 
     if (typeof data == 'string') return console.error(data)
 
