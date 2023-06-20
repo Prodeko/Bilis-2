@@ -1,7 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-import type { PlayerWithStats } from '@common/types'
+import { PlayerWithStats, playerWithStats } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Side } from '@state/Modal'
 
@@ -20,9 +19,18 @@ const PlayerSelection = ({ playerId, otherPlayerId, side }: Props) => {
   const [player, setPlayer] = useState<PlayerWithStats | null>(null)
 
   useEffect(() => {
-    axios.get(`/api/player/${playerId}`).then(res => {
-      setPlayer(res.data as PlayerWithStats)
-    })
+    const fetchAndSetPlayer = async () => {
+      const res = await fetch(`api/player/${playerId}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const player = await res.json()
+      const parsedPlayerWithStats = playerWithStats.parse(player)
+      setPlayer(parsedPlayerWithStats)
+    }
+    fetchAndSetPlayer()
   }, [playerId])
 
   return (

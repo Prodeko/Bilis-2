@@ -1,6 +1,5 @@
 "use client"
 
-import axios from 'axios'
 import EmojiPicker from 'emoji-picker-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -35,9 +34,17 @@ const PlayerForm = ({ player }: Props) => {
     setPlayerData(p => ({ ...p, [key]: val }))
   }
 
-  const updatePlayer = (id: number) => async (data: NewPlayer) => {
-    const res = await axios.put(`/api/player/${id}`, data)
-    router.push(`/player/${res.data.id}`)
+  const updatePlayer = (id: number) => async (oldPlayer: NewPlayer) => {
+    const res = await fetch(`/api/player/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(oldPlayer)
+    })
+    const data = await res.json()
+    const updatedPlayer = playerParser.parse(data)
+    router.push(`/player/${updatedPlayer.id}`)
   }
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
