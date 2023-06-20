@@ -1,13 +1,12 @@
-"use client"
+'use client'
 
 import { ApexOptions } from 'apexcharts'
+import ApexCharts from 'react-apexcharts'
 
 import type { TimeSeriesGame } from '@common/types'
 
 import styles from './TimeSeriesChart.module.scss'
 import Tooltip from './ToolTip'
-
-import ApexCharts from 'react-apexcharts'
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307

@@ -1,8 +1,8 @@
-import ModalBlur from '@ui/ModalBlur'
 import { Dispatch, SetStateAction } from 'react'
 
 import type { Player, RecentGame } from '@common/types'
 import { ModalProvider, reducer } from '@state/Modal'
+import ModalBlur from '@ui/ModalBlur'
 
 import styles from './AddGameModal.module.scss'
 import CloseButton from './CloseButton'

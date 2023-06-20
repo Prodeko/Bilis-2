@@ -2,8 +2,8 @@
 
 import AddGameButton from 'app/components/Homepage/AddGame'
 import Games from 'app/components/Homepage/Games'
-import {Leaderboard} from 'app/components/Homepage/Leaderboard'
-import {Queue} from 'app/components/Homepage/Queue'
+import { Leaderboard } from 'app/components/Homepage/Leaderboard'
+import { Queue } from 'app/components/Homepage/Queue'
 import { ComponentProps, KeyboardEventHandler, useState } from 'react'
 
 import { Player, RecentGame } from '@common/types'
@@ -37,7 +37,13 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
   }
 
   return (
-    <div id="home-layout" ref={parent} {...props} className={styles['grid__content']} onKeyDown={handleKeyDown}>
+    <div
+      id="home-layout"
+      ref={parent}
+      {...props}
+      className={styles['grid__content']}
+      onKeyDown={handleKeyDown}
+    >
       <QueueProvider reducer={reducer}>
         <>
           <Leaderboard
@@ -48,7 +54,7 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '1',
               gridRowEnd: '3',
             }}
-            />
+          />
           <Queue
             gridPosition={{
               gridColumnStart: '2',
@@ -56,14 +62,14 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '1',
               gridRowEnd: '2',
             }}
-            />
+          />
           <AddGameButton
             onClose={closeModal}
             onOpen={openModal}
             open={gameModalOpen}
             setGames={setGames}
             recentPlayers={recentPlayers}
-            />
+          />
           <Games
             games={games}
             setGames={setGames}
@@ -73,7 +79,7 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
               gridRowStart: '2',
               gridRowEnd: '-1',
             }}
-            />
+          />
         </>
       </QueueProvider>
     </div>

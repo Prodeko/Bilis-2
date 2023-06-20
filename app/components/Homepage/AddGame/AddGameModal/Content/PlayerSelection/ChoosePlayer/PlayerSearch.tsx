@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { KeyboardEventHandler, useEffect } from 'react'
 
+import { player } from '@common/types'
 import SearchIcon from '@public/images/search-icon.svg'
 import {
   Side,
@@ -13,7 +14,6 @@ import {
 import useDebounce from 'hooks/useDebounce'
 
 import styles from './ChoosePlayer.module.scss'
-import { player } from '@common/types'
 
 interface Props {
   side: Side
@@ -29,13 +29,13 @@ const PlayerSearch = ({ side, handleKeyDown }: Props) => {
   useEffect(() => {
     const search = async (q: string) => {
       const searchParams = new URLSearchParams({
-        query: q
+        query: q,
       })
       const res = await fetch(`/api/player?${searchParams}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       })
       const data = await res.json()
       const players = player.array().parse(data)

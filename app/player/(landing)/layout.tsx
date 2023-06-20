@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import Header from '@ui/Header/Player'
 
 import { PlayerLayoutOuter } from '@components/Player/PlayerLayout/Outer'
+import Header from '@ui/Header/Player'
 
 interface Props {
   children: ReactNode

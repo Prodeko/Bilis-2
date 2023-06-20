@@ -1,10 +1,10 @@
 'use client'
 
-import MottoCard from '@ui/MottoCard'
-import { player } from '@common/types'
 import { useEffect, useState } from 'react'
 
+import { player } from '@common/types'
 import { Player } from '@common/types'
+import MottoCard from '@ui/MottoCard'
 
 interface Props {
   randomPlayer: Player
@@ -17,10 +17,10 @@ const RandomPlayer = ({ randomPlayer }: Props) => {
 
   const setRandomPlayer = async () => {
     const res = await fetch(`api/player/random`, {
-      method: "GET",
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
     const json = await res.json()
     const randomPlayer = player.parse(json)

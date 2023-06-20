@@ -1,6 +1,5 @@
-import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
-
 import { TimeSeriesGame } from '@common/types'
+import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
 
 import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'

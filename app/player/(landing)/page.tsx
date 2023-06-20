@@ -1,7 +1,8 @@
-"use client"
+'use client'
+
+import { useState } from 'react'
 
 import PlayerSearchLink from '@ui/PlayerSearch/PlayerSearchLink'
-import { useState } from 'react'
 
 import styles from './PlayerLanding.module.scss'
 

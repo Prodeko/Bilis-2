@@ -1,4 +1,3 @@
-import MottoCard from '@ui/MottoCard'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ComponentProps } from 'react'
@@ -6,6 +5,7 @@ import { ComponentProps } from 'react'
 import type { Player } from '@common/types'
 import billiardPic from '@public/images/billiard–closeup.jpg'
 import Settings from '@public/images/settings-01.svg'
+import MottoCard from '@ui/MottoCard'
 
 import styles from './Header.module.scss'
 

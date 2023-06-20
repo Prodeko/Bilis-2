@@ -21,7 +21,7 @@ const Content = ({ onClose, setGames }: Props) => {
       <Title title="New Game" />
       <div className={styles.card}>
         <PlayerSelection playerId={game.winnerId} otherPlayerId={game.loserId} side={'winner'} />
-        <GameCreation setGames={setGames} onClose={onClose}/>
+        <GameCreation setGames={setGames} onClose={onClose} />
         <PlayerSelection playerId={game.loserId} otherPlayerId={game.winnerId} side={'loser'} />
       </div>
     </div>

@@ -9,7 +9,8 @@ import dbConf from '@server/utils/dbConf'
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   const parsedPlayer = newPlayer.parse(player)
   const newPlayerWithElo = {
-    ...parsedPlayer, elo: 400
+    ...parsedPlayer,
+    elo: 400,
   }
   const createdPlayer = await PlayerModel.create(newPlayerWithElo)
   return createdPlayer

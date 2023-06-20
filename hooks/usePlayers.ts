@@ -10,12 +10,12 @@ const usePlayers = (delayMs: number) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const searchParams = new URLSearchParams({query})
+        const searchParams = new URLSearchParams({ query })
         const res = await fetch(`/api/player?${searchParams}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
         })
         const data = await res.json()
         const players = player.array().parse(data)

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { ComponentProps } from 'react'
-import {usePathname } from 'next/navigation'
 
 import billiardPic from '@public/images/billiard–closeup.jpg'
 
@@ -16,7 +16,7 @@ type Props = HeaderProps
 
 const Header = ({ ...props }: Props) => {
   const pathName = usePathname()
-  const isLandingPage = pathName?.toLowerCase()?.endsWith("/player")
+  const isLandingPage = pathName?.toLowerCase()?.endsWith('/player')
 
   return (
     <header {...props} className={styles.header}>

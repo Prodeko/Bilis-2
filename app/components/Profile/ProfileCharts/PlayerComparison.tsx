@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import PieChart from '@ui/PieChart'
-import PlayerSearchSelect from '@ui/PlayerSearch/PlayerSearchSelect'
 import { useState } from 'react'
 
 import type { PieChartProps } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import PieChart from '@ui/PieChart'
+import PlayerSearchSelect from '@ui/PlayerSearch/PlayerSearchSelect'
 
 import styles from './ProfileCharts.module.scss'
 

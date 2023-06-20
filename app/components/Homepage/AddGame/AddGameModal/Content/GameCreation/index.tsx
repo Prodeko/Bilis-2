@@ -25,12 +25,11 @@ const GameCreation = ({ setGames, onClose }: Props) => {
     }
 
     const res = await fetch(`/api/game`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(game)
+      body: JSON.stringify(game),
     })
     const data = await res.json()
     if (game.winnerId) dispatchQueue(removeFromQueue(game.winnerId))

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import EmojiPicker from 'emoji-picker-react'
 import Image from 'next/image'
@@ -15,16 +15,15 @@ type Props = {
   player?: Player
 }
 
-
 const PlayerForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
   const [playerData, setPlayerData] = useState<NewPlayer>({
-    firstName: player ? player.firstName : "",
-    lastName: player ? player.lastName : "",
-    nickname: player ? player.nickname : "",
-    motto: player ? player.motto : "",
-    emoji: player ? player.emoji : "",
+    firstName: player ? player.firstName : '',
+    lastName: player ? player.lastName : '',
+    nickname: player ? player.nickname : '',
+    motto: player ? player.motto : '',
+    emoji: player ? player.emoji : '',
   })
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false)
 
@@ -36,11 +35,11 @@ const PlayerForm = ({ player }: Props) => {
 
   const updatePlayer = (id: number) => async (oldPlayer: NewPlayer) => {
     const res = await fetch(`/api/player/${id}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(oldPlayer)
+      body: JSON.stringify(oldPlayer),
     })
     const data = await res.json()
     const updatedPlayer = playerParser.parse(data)
@@ -49,11 +48,11 @@ const PlayerForm = ({ player }: Props) => {
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
     const res = await fetch(`/api/player/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newPlayer)
+      body: JSON.stringify(newPlayer),
     })
     const data = await res.json()
     const parsedPlayer = playerParser.parse(data)

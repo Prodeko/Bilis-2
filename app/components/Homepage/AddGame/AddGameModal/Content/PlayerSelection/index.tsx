@@ -21,10 +21,10 @@ const PlayerSelection = ({ playerId, otherPlayerId, side }: Props) => {
   useEffect(() => {
     const fetchAndSetPlayer = async () => {
       const res = await fetch(`api/player/${playerId}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       })
       const player = await res.json()
       const parsedPlayerWithStats = playerWithStats.parse(player)

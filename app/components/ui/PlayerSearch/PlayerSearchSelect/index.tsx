@@ -1,7 +1,7 @@
 import { ChangeEventHandler, Dispatch, SetStateAction, useState } from 'react'
 import { FiX } from 'react-icons/fi'
 
-import { pieChartProps, type PieChartProps, type Player } from '@common/types'
+import { type PieChartProps, type Player, pieChartProps } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
@@ -28,17 +28,17 @@ const PlayerSearchSelect = ({ currentPlayerId, setPieChartProps }: Props) => {
   const handleSelect = async (opposingPlayer: Player) => {
     if (opposingPlayer.id) {
       try {
-        const searchParams = new URLSearchParams({ 
-          currentPlayerId: currentPlayerId.toString(), 
-          opposingPlayerId: opposingPlayer.id.toString() 
+        const searchParams = new URLSearchParams({
+          currentPlayerId: currentPlayerId.toString(),
+          opposingPlayerId: opposingPlayer.id.toString(),
         })
         const res = await fetch(`/api/player/mutual-stats?${searchParams}`, {
-          method: "GET",
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
         })
-        const data = await res.json() as PieChartProps
+        const data = (await res.json()) as PieChartProps
         const pieProps = pieChartProps.parse(data)
         setPlaceholder(`${opposingPlayer.firstName} ${opposingPlayer.lastName}`)
         setPieChartProps(pieProps)

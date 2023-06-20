@@ -1,12 +1,11 @@
-import { z } from "zod"
-
+import { z } from 'zod'
 
 const id = z.number().int().nonnegative()
 const elo = z.number().positive()
 
 // Base types}
 const withId = z.object({
-  id
+  id,
 })
 type WithId = z.infer<typeof withId>
 
@@ -17,11 +16,11 @@ const player = withId.extend({
   nickname: z.string().nonempty(),
   emoji: z.string().emoji().nonempty(),
   motto: z.string().nonempty(),
-  elo
+  elo,
 })
 type Player = z.infer<typeof player>
 
-const newPlayer = player.omit({id: true, elo: true})
+const newPlayer = player.omit({ id: true, elo: true })
 type NewPlayer = z.infer<typeof newPlayer>
 
 const playerStats = z.object({
@@ -43,45 +42,44 @@ const game = withId.extend({
   loserEloBefore: elo,
   winnerEloAfter: elo,
   loserEloAfter: elo,
-  underTable: z.boolean()
+  underTable: z.boolean(),
 })
 type Game = z.infer<typeof game>
-
 
 const recentGame = game.extend({
   formattedTimeString: z.string().datetime(),
   winner: z.string(),
-  loser: z.string()
+  loser: z.string(),
 })
 type RecentGame = z.infer<typeof recentGame>
 
 const mutualGames = z.object({
   currentPlayerGamesWon: z.number().int().nonnegative(),
   opposingPlayerGamesWon: z.number().int().nonnegative(),
-  totalGames: z.number().int().nonnegative()
+  totalGames: z.number().int().nonnegative(),
 })
 type MutualGames = z.infer<typeof mutualGames>
 
 const gameWithPlayers = game.extend({
   winner: player,
-  loser: player
+  loser: player,
 })
 type GameWithPlayers = z.infer<typeof gameWithPlayers>
 
-const newGame = game.omit({id: true})
+const newGame = game.omit({ id: true })
 type NewGame = z.infer<typeof newGame>
 
 const createGameType = z.object({
   winnerId: id,
   loserId: id,
-  underTable: z.boolean().optional()
+  underTable: z.boolean().optional(),
 })
 type CreateGameType = z.infer<typeof createGameType>
 
 const timeSeriesGame = z.object({
   currentElo: elo,
   opponent: z.string().optional(),
-  eloDiff: z.number()
+  eloDiff: z.number(),
 })
 type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
@@ -89,15 +87,14 @@ type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
 const profileStatistic = z.object({
   label: z.string(),
-  value: z.string()
+  value: z.string(),
 })
 type ProfileStatistic = z.infer<typeof profileStatistic>
-
 
 const pieChartProps = z.object({
   currentPlayer: player,
   opposingPlayer: player,
-  mutualGames
+  mutualGames,
 })
 type PieChartProps = z.infer<typeof pieChartProps>
 
@@ -143,7 +140,7 @@ export type {
   CreateGameType,
   GridPosition,
   GridPositionColumn,
-  PieChartProps
+  PieChartProps,
 }
 
 export {
@@ -161,7 +158,7 @@ export {
   createGameType,
   timeSeriesGame,
   profileStatistic,
-  pieChartProps
+  pieChartProps,
 }
 
 export { SmoothScrollId }

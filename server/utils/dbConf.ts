@@ -1,7 +1,7 @@
 import path from 'path'
+import pg from 'pg'
 import { Sequelize } from 'sequelize'
 import { SequelizeStorage, Umzug } from 'umzug'
-import pg from 'pg'
 
 const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, NODE_ENV } =
   process.env
@@ -10,7 +10,7 @@ const sslMode = NODE_ENV === 'development' ? '' : '?sslmode=require'
 
 const sequelize = new Sequelize(
   `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}${sslMode}`,
-  {dialectModule: pg}
+  { dialectModule: pg }
 )
 
 const umzug = new Umzug({

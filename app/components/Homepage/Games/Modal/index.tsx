@@ -1,6 +1,5 @@
-import ModalBlur from '@ui/ModalBlur'
-
 import { RecentGame } from '@common/types'
+import ModalBlur from '@ui/ModalBlur'
 
 import styles from './Modal.module.scss'
 
@@ -13,7 +12,7 @@ interface Props {
 const Modal = ({ games, setGames, closeModal }: Props) => {
   const handleRemove = async () => {
     const res = await fetch(`/api/game`, {
-      method: "DELETE"
+      method: 'DELETE',
     })
     const data = await res.json()
     console.log(data)

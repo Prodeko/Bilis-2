@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
 // disable annoying esling warnings
 
 /* eslint-disable react/require-default-props */
 import Link from 'next/link'
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { ChangeEventHandler } from 'react'
 
 import { Player } from '@common/types'

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { Card, CardGrid } from 'app/components/ui/Card'
 import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/Input'

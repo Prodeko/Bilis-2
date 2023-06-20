@@ -1,25 +1,20 @@
-import {  NextRequest, NextResponse } from 'next/server'
-import { player as playerParser, newPlayer, id as idParser } from '@common/types'
-import { getPlayerById, updatePlayerById } from '@server/db/players'
+import { NextRequest, NextResponse } from 'next/server'
+
+import { id as idParser, newPlayer, player as playerParser } from '@common/types'
 import { getPlayerStats } from '@server/db/games/derivatives'
- 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+import { getPlayerById, updatePlayerById } from '@server/db/players'
+
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const id = idParser.parse(Number(params.id))
   const [player, playerStats] = await Promise.all([getPlayerById(id), getPlayerStats(id)])
   const parsedPlayer = playerParser.parse(player?.toJSON())
   return NextResponse.json({
     ...parsedPlayer,
-    ...playerStats
+    ...playerStats,
   })
-} 
+}
 
-export async function PUT(
-  req: NextRequest, 
-  { params }: { params: { id: number } }
-) {
+export async function PUT(req: NextRequest, { params }: { params: { id: number } }) {
   const id = idParser.parse(Number(params.id))
 
   const playerData = await req.json()
@@ -29,4 +24,3 @@ export async function PUT(
   const parsedUpdatedPlayer = playerParser.parse(updatedPlayer)
   return NextResponse.json(parsedUpdatedPlayer)
 }
-
