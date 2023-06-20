@@ -30,7 +30,7 @@ const PlayerSelection = ({ playerId, otherPlayerId, side }: Props) => {
       const parsedPlayerWithStats = playerWithStats.parse(player)
       setPlayer(parsedPlayerWithStats)
     }
-    fetchAndSetPlayer()
+    if (playerId) fetchAndSetPlayer()
   }, [playerId])
 
   return (
