@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Image from 'next/image'
 import { KeyboardEventHandler, useEffect } from 'react'
 
@@ -14,6 +13,7 @@ import {
 import useDebounce from 'hooks/useDebounce'
 
 import styles from './ChoosePlayer.module.scss'
+import { player } from '@common/types'
 
 interface Props {
   side: Side
@@ -28,10 +28,18 @@ const PlayerSearch = ({ side, handleKeyDown }: Props) => {
 
   useEffect(() => {
     const search = async (q: string) => {
-      const res = await axios.get(`/api/player`, {
-        params: { query: q },
+      const searchParams = new URLSearchParams({
+        query: q
       })
-      dispatch(setPlayers(side, res.data))
+      const res = await fetch(`/api/player?${searchParams}`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = await res.json()
+      const players = player.array().parse(data)
+      dispatch(setPlayers(side, players))
     }
     const isEmpty = query.length === 0
     if (!isEmpty) {

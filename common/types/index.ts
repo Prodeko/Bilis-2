@@ -12,16 +12,16 @@ type WithId = z.infer<typeof withId>
 
 // Player types
 const player = withId.extend({
-  firstName: z.string(),
-  lastName: z.string(),
-  nickname: z.string(),
-  emoji: z.string().emoji(),
-  motto: z.string(),
+  firstName: z.string().nonempty(),
+  lastName: z.string().nonempty(),
+  nickname: z.string().nonempty(),
+  emoji: z.string().emoji().nonempty(),
+  motto: z.string().nonempty(),
   elo
 })
 type Player = z.infer<typeof player>
 
-const newPlayer = player.omit({id: true})
+const newPlayer = player.omit({id: true, elo: true})
 type NewPlayer = z.infer<typeof newPlayer>
 
 const playerStats = z.object({
@@ -61,7 +61,6 @@ const mutualGames = z.object({
   totalGames: z.number().int().nonnegative()
 })
 type MutualGames = z.infer<typeof mutualGames>
-
 
 const gameWithPlayers = game.extend({
   winner: player,

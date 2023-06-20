@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { MouseEvent, useState } from 'react'
 
-import { Player } from '@common/types'
+import { NewPlayer, Player, player as playerParser } from '@common/types'
 import UserPlus from '@public/images/user-plus-01.svg'
 
 import Field from './Field'
@@ -16,12 +16,11 @@ type Props = {
   player?: Player
 }
 
-type SubmitPlayerData = Omit<Player, 'elo' | "id">
 
 const PlayerForm = ({ player }: Props) => {
   const isUpdate = player !== undefined
 
-  const [playerData, setPlayerData] = useState<SubmitPlayerData>({
+  const [playerData, setPlayerData] = useState<NewPlayer>({
     firstName: player ? player.firstName : "",
     lastName: player ? player.lastName : "",
     nickname: player ? player.nickname : "",
@@ -32,18 +31,26 @@ const PlayerForm = ({ player }: Props) => {
 
   const router = useRouter()
 
-  const setPlayerKey = (key: keyof SubmitPlayerData) => (val: unknown) => {
+  const setPlayerKey = (key: keyof NewPlayer) => (val: unknown) => {
     setPlayerData(p => ({ ...p, [key]: val }))
   }
 
-  const updatePlayer = (id: number) => async (data: SubmitPlayerData) => {
+  const updatePlayer = (id: number) => async (data: NewPlayer) => {
     const res = await axios.put(`/api/player/${id}`, data)
     router.push(`/player/${res.data.id}`)
   }
 
-  const submitNewPlayer = async (data: SubmitPlayerData) => {
-    const res = await axios.post(`/api/player`, data)
-    router.push(`/player/${res.data.id}`)
+  const submitNewPlayer = async (newPlayer: NewPlayer) => {
+    const res = await fetch(`/api/player/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newPlayer)
+    })
+    const data = await res.json()
+    const parsedPlayer = playerParser.parse(data)
+    router.push(`/player/${parsedPlayer.id}`)
   }
 
   const submit = (event: MouseEvent<HTMLButtonElement>) => {

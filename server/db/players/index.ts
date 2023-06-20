@@ -1,27 +1,17 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
 
-import { NewPlayer } from '@common/types'
+import { NewPlayer, newPlayer } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
-  // Ghetto validation
-  const validateAndFormatPlayer = (p: NewPlayer): NewPlayer => {
-    if (
-      p.firstName.length > 0 &&
-      p.lastName.length > 0 &&
-      p.nickname.length > 0 &&
-      p.emoji.length > 0 &&
-      p.motto.length > 0
-    ) {
-      return { ...p, elo: 400 }
-    }
-    throw new Error('Malformmated id!')
+  const parsedPlayer = newPlayer.parse(player)
+  const newPlayerWithElo = {
+    ...parsedPlayer, elo: 400
   }
-
-  const createdPlayer = await PlayerModel.create(validateAndFormatPlayer(player))
+  const createdPlayer = await PlayerModel.create(newPlayerWithElo)
   return createdPlayer
 }
 
