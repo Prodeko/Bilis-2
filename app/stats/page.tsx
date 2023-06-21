@@ -1,7 +1,13 @@
-import ComingSoon from 'app/components/ComingSoon'
+import { Header } from '@ui/Header/Stats'
+
+import styles from './Layout.module.scss'
 
 const Stats = () => {
-  return <ComingSoon />
+  return (
+    <div className={styles.layout}>
+      <Header />
+    </div>
+  )
 }
 
 export default Stats
