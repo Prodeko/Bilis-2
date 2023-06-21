@@ -1,13 +1,16 @@
 import { ProfileStatistic } from '@common/types'
+import { Card } from '@components/ui/Card'
 
 import styles from './ProfileStats.module.scss'
 
 const ProfileStat = ({ label, value }: ProfileStatistic) => {
   return (
-    <div className={styles.profilestat}>
-      <p className={styles['profilestat--value']}>{value}</p>
-      <h2 className={styles['profilestat--label']}>{label}</h2>
-    </div>
+    <Card>
+      <div className={styles['profilestat']}>
+        <h2 className={styles['profilestat--label']}>{label}</h2>
+        <p className={styles['profilestat--value']}>{value}</p>
+      </div>
+    </Card>
   )
 }
 

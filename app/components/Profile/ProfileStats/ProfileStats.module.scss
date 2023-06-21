@@ -9,18 +9,17 @@
 }
 
 .profilestat {
-  @extend %flex-center;
+  @include flex-y($spacing-16);
 
-  flex-direction: column;
-  gap: $spacing-16;
+  padding: $spacing-32;
 
-  &--value {
+  &--label {
     @extend %text-style-display-md-bold;
 
     color: $color-gray-300;
   }
 
-  &--label {
+  &--value {
     @extend %text-style-display-xs-medium;
 
     color: $color-gray-400;
