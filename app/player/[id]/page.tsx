@@ -28,10 +28,26 @@ const PlayerPage = async () => {
       <ProfileHeader player={player} />
       <ProfileStats
         stats={[
-          { label: 'Fargo', value: round(player.elo, 2).toFixed(2) },
-          { label: 'Total Games', value: playerStats.totalGames.toString() },
-          { label: 'Wins / Losses', value: `${playerStats.wonGames} / ${playerStats.lostGames}` },
-          { label: 'Win Percentage', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
+          {
+            label: 'Fargo',
+            subStatistics: [{ label: 'All time', value: round(player.elo, 2).toFixed(2) }],
+          },
+          {
+            label: 'Total Games',
+            subStatistics: [{ label: 'All time', value: playerStats.totalGames.toString() }],
+          },
+          {
+            label: 'Wins / Losses',
+            subStatistics: [
+              { label: 'All time', value: `${playerStats.wonGames} / ${playerStats.lostGames}` },
+            ],
+          },
+          {
+            label: 'Win Percentage',
+            subStatistics: [
+              { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
+            ],
+          },
         ]}
       />
       <ProfileCharts gameData={gameData} currentPlayerId={id} />

@@ -114,9 +114,15 @@ type NewSeason = z.infer<typeof newSeason>
 
 // Profile types
 
-const profileStatistic = z.object({
+const subStatistic = z.object({
   label: z.string(),
   value: z.string(),
+})
+type SubStatistic = z.infer<typeof subStatistic>
+
+const profileStatistic = z.object({
+  label: z.string(),
+  subStatistics: z.array(subStatistic),
 })
 type ProfileStatistic = z.infer<typeof profileStatistic>
 
@@ -146,6 +152,7 @@ export type {
   GameWithPlayers,
   NewGame,
   RecentGame,
+  SubStatistic,
   ProfileStatistic,
   PlayerStats,
   MutualGames,
@@ -173,6 +180,7 @@ export {
   newGame,
   createGameType,
   timeSeriesGame,
+  subStatistic,
   season,
   newSeason,
   profileStatistic,
