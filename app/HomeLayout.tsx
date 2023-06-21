@@ -50,20 +50,16 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
             leaderboard={leaderboard}
             cardProps={{
               style: {
-                gridColumnStart: '1',
-                gridColumnEnd: '2',
-                gridRowStart: '1',
-                gridRowEnd: '-1',
+                gridColumn: '1 / 2',
+                gridRow: '1 / -1',
               },
             }}
           />
           <Queue
             cardProps={{
               style: {
-                gridColumnStart: '2',
-                gridColumnEnd: '3',
-                gridRowStart: '1',
-                gridRowEnd: '2',
+                gridColumn: '2 / 3',
+                gridRow: '1 / 2',
               },
             }}
           />
@@ -79,10 +75,8 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
             setGames={setGames}
             cardProps={{
               style: {
-                gridColumnStart: '2',
-                gridColumnEnd: '-1',
-                gridRowStart: '2',
-                gridRowEnd: '-1',
+                gridColumn: '2 / -1',
+                gridRow: '2 / -1',
               },
             }}
           />
