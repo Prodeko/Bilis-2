@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Op, Sequelize } from 'sequelize'
 
-import { NewPlayer, newPlayer } from '@common/types'
+import { NewPlayer, Player, newPlayer } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
@@ -28,7 +28,7 @@ const getRandomPlayer = (): Promise<PlayerModel | null> =>
     },
   })
 
-const updatePlayerById = async (id: number, data: Partial<NewPlayer>): Promise<PlayerModel> => {
+const updatePlayerById = async (id: number, data: Partial<Player>): Promise<PlayerModel> => {
   const player = await getPlayerById(id)
   if (!player) throw Error(`Player with id ${id} not found`)
   if ('id' in data) throw Error('Updating player id is not allowed')
