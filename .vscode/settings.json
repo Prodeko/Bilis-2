@@ -22,6 +22,7 @@
     "css",
     "scss"
   ],
+  "prettier.prettierPath": "./node_modules/prettier",
   "stylelint.configBasedir": "./",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true

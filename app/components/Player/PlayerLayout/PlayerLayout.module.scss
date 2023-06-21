@@ -1,0 +1,16 @@
+@use 'styles' as *;
+
+.playerContainerOuter {
+  color: $color-gray-100;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.playerContainerInner {
+  @extend %flex-center;
+
+  color: $color-gray-100;
+  height: 100%;
+  position: relative;
+}

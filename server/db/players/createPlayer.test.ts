@@ -8,7 +8,6 @@ const mockDataForPlayer: NewPlayer = {
   nickname: 'nname',
   emoji: '🥵',
   motto: 'Pessimisti ei pety',
-  elo: 9001,
 }
 
 const mockCreatePlayer = jest.fn()

@@ -73,7 +73,9 @@ const generateNickname = (firstName: string, lastName: string) => {
   ).toLowerCase()
 }
 
-const generatePlayer = (): NewPlayer => {
+const generatePlayer = (): NewPlayer & {
+  elo: 400
+} => {
   const { firstName, lastName } = {
     firstName: _.sample(randomFirstNames) as string,
     lastName: _.sample(randomLastNames) as string,

@@ -91,17 +91,3 @@ export const formatIsoStringToDate = (isoStringDate: string) => {
     timeStyle: 'short',
   }).format(date)
 }
-
-/**
- * Create routing onClick eventhandler
- *
- * @param id - id of the path route
- * @returns Event handler function that routes the user to a page ending to /id
- */
-export const createClickRouter = (id: number) => {
-  return (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault()
-    const href = `/player/${id}`
-    router.push(href)
-  }
-}

@@ -5,6 +5,10 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
+  // This enables server components to work with sequelize ORM
+  experimental: {
+    serverComponentsExternalPackages: ['sequelize'],
+  },
   output: 'standalone',
 }
 

@@ -1,7 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-import { Player } from '@common/types'
+import { Player, player } from '@common/types'
 import useDebounce from '@hooks/useDebounce'
 
 const usePlayers = (delayMs: number) => {
@@ -9,19 +8,25 @@ const usePlayers = (delayMs: number) => {
   const [query, setQuery] = useDebounce<string>('', delayMs)
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       try {
-        const result = await axios.get(`/api/player`, {
-          params: { query },
+        const searchParams = new URLSearchParams({ query })
+        const res = await fetch(`/api/player?${searchParams}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         })
-        setPlayers(result.data as Player[])
+        const data = await res.json()
+        const players = player.array().parse(data)
+        setPlayers(players)
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)
       }
     }
 
-    fetch()
+    fetchData()
   }, [query])
 
   return { players, query, setQuery }

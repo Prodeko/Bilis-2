@@ -9,7 +9,7 @@
         "./server/*"
       ],
       "@components/*": [
-        "./components/*"
+        "./app/components/*"
       ],
       "@state/*": [
         "./state/*"
@@ -24,7 +24,7 @@
         "./public/*"
       ],
       "@ui/*": [
-        "./components/ui/*"
+        "./app/components/ui/*"
       ]
 
     },

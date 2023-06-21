@@ -1,72 +1,102 @@
-// Base types
-interface WithId {
-  id: number
-}
+import { z } from 'zod'
+
+const id = z.number().int().nonnegative()
+const elo = z.number().positive()
+
+// Base types}
+const withId = z.object({
+  id,
+})
+type WithId = z.infer<typeof withId>
 
 // Player types
-interface Player extends WithId {
-  firstName: string
-  lastName: string
-  nickname: string
-  emoji: string
-  motto: string
-  elo: number
-}
+const player = withId.extend({
+  firstName: z.string().nonempty(),
+  lastName: z.string().nonempty(),
+  nickname: z.string().nonempty(),
+  emoji: z.string().emoji().nonempty(),
+  motto: z.string().nonempty(),
+  elo,
+})
+type Player = z.infer<typeof player>
 
-type NewPlayer = Omit<Player, 'id'>
+const newPlayer = player.omit({ id: true, elo: true })
+type NewPlayer = z.infer<typeof newPlayer>
 
-interface PlayerStats {
-  wonGames: number
-  lostGames: number
-  totalGames: number
-  winPercentage: number
-}
+const playerStats = z.object({
+  wonGames: z.number().int().nonnegative(),
+  lostGames: z.number().int().nonnegative(),
+  totalGames: z.number().int().nonnegative(),
+  winPercentage: z.number().nonnegative(),
+})
+type PlayerStats = z.infer<typeof playerStats>
 
-type PlayerWithStats = Player & PlayerStats
+const playerWithStats = player.merge(playerStats)
+type PlayerWithStats = z.infer<typeof playerWithStats>
 
 // Game types
-interface Game extends WithId {
-  winnerId: number
-  loserId: number
-  winnerEloBefore: number
-  loserEloBefore: number
-  winnerEloAfter: number
-  loserEloAfter: number
-  underTable: boolean
-}
+const game = withId.extend({
+  winnerId: id,
+  loserId: id,
+  winnerEloBefore: elo,
+  loserEloBefore: elo,
+  winnerEloAfter: elo,
+  loserEloAfter: elo,
+  underTable: z.boolean(),
+})
+type Game = z.infer<typeof game>
 
-interface RecentGame extends Game {
-  formattedTimeString: string
-  winner: string
-  loser: string
-}
+const recentGame = game.extend({
+  formattedTimeString: z.string().datetime(),
+  winner: z.string(),
+  loser: z.string(),
+})
+type RecentGame = z.infer<typeof recentGame>
 
-interface MutualGames {
-  currentPlayerGamesWon: number
-  opposingPlayerGamesWon: number
-  totalGames: number
-}
+const mutualGames = z.object({
+  currentPlayerGamesWon: z.number().int().nonnegative(),
+  opposingPlayerGamesWon: z.number().int().nonnegative(),
+  totalGames: z.number().int().nonnegative(),
+})
+type MutualGames = z.infer<typeof mutualGames>
 
-interface GameWithPlayers extends Game {
-  winner: Player
-  loser: Player
-}
+const gameWithPlayers = game.extend({
+  winner: player,
+  loser: player,
+})
+type GameWithPlayers = z.infer<typeof gameWithPlayers>
 
-type NewGame = Omit<Game, 'id'>
+const newGame = game.omit({ id: true })
+type NewGame = z.infer<typeof newGame>
 
-type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
+const createGameType = z.object({
+  winnerId: id,
+  loserId: id,
+  underTable: z.boolean().optional(),
+})
+type CreateGameType = z.infer<typeof createGameType>
 
-interface TimeSeriesGame {
-  currentElo: number
-  opponent: string | null
-  eloDiff: number
-}
+const timeSeriesGame = z.object({
+  currentElo: elo,
+  opponent: z.string().optional(),
+  eloDiff: z.number(),
+})
+type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
 // Profile types
-interface ProfileStatistic {
-  label: string
-  value: string
-}
+
+const profileStatistic = z.object({
+  label: z.string(),
+  value: z.string(),
+})
+type ProfileStatistic = z.infer<typeof profileStatistic>
+
+const pieChartProps = z.object({
+  currentPlayer: player,
+  opposingPlayer: player,
+  mutualGames,
+})
+type PieChartProps = z.infer<typeof pieChartProps>
 
 // Random types
 
@@ -110,6 +140,25 @@ export type {
   CreateGameType,
   GridPosition,
   GridPositionColumn,
+  PieChartProps,
+}
+
+export {
+  id,
+  withId,
+  player,
+  newPlayer,
+  playerStats,
+  playerWithStats,
+  game,
+  recentGame,
+  mutualGames,
+  gameWithPlayers,
+  newGame,
+  createGameType,
+  timeSeriesGame,
+  profileStatistic,
+  pieChartProps,
 }
 
 export { SmoothScrollId }
