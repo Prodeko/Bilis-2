@@ -1,4 +1,3 @@
-import { round } from 'lodash'
 import { headers } from 'next/headers'
 
 import type { Player } from '@common/types'
@@ -26,30 +25,7 @@ const PlayerPage = async () => {
   return (
     <ProfileLayout>
       <ProfileHeader player={player} />
-      <ProfileStats
-        stats={[
-          {
-            label: 'Fargo',
-            subStatistics: [{ label: 'All time', value: round(player.elo, 2).toFixed(2) }],
-          },
-          {
-            label: 'Total Games',
-            subStatistics: [{ label: 'All time', value: playerStats.totalGames.toString() }],
-          },
-          {
-            label: 'Wins / Losses',
-            subStatistics: [
-              { label: 'All time', value: `${playerStats.wonGames} / ${playerStats.lostGames}` },
-            ],
-          },
-          {
-            label: 'Win Percentage',
-            subStatistics: [
-              { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
-            ],
-          },
-        ]}
-      />
+      <ProfileStats player={player} playerStats={playerStats} />
       <ProfileCharts gameData={gameData} currentPlayerId={id} />
     </ProfileLayout>
   )

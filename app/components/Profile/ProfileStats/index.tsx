@@ -1,14 +1,23 @@
-import { ProfileStatistic } from '@common/types'
+import { Player, PlayerStats } from '@common/types'
 
-import ProfileStat from './ProfileStat'
+import FargoStatistics from './FargoStatistics'
 import styles from './ProfileStats.module.scss'
+import TotalGamesStatistics from './TotalGamesStatistics'
+import WinLossStatistics from './WinLossStatistics'
+import WinPercentageStatistics from './WinPercentageStatistics'
 
-const ProfileStats = ({ stats }: { stats: ProfileStatistic[] }) => {
+type Props = {
+  player: Player
+  playerStats: PlayerStats
+}
+
+const ProfileStats = ({ player, playerStats }: Props) => {
   return (
     <div className={styles.profilestats}>
-      {stats.map((stat: ProfileStatistic) => (
-        <ProfileStat key={stat.label} {...stat} />
-      ))}
+      <FargoStatistics {...player} />
+      <TotalGamesStatistics {...playerStats} />
+      <WinLossStatistics {...playerStats} />
+      <WinPercentageStatistics {...playerStats} />
     </div>
   )
 }
