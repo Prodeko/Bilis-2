@@ -34,6 +34,11 @@ type PlayerStats = z.infer<typeof playerStats>
 const playerWithStats = player.merge(playerStats)
 type PlayerWithStats = z.infer<typeof playerWithStats>
 
+const playerWithMaxElo = player.extend({
+  maxElo: elo,
+})
+type PlayerWithMaxElo = z.infer<typeof playerWithMaxElo>
+
 // Game types
 const game = withId.extend({
   winnerId: id,
@@ -128,6 +133,7 @@ export type {
   WithId,
   Player,
   NewPlayer,
+  PlayerWithMaxElo,
   Game,
   GameWithPlayers,
   NewGame,
