@@ -5,3 +5,85 @@
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
 }
+
+.grid {
+  @include grid-cols(2);
+  @include grid-rows(3);
+
+  gap: $spacing-32;
+  padding: $spacing-64;
+}
+
+.hofLayout {
+  display: grid;
+  gap: $spacing-16;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  justify-items: center;
+  padding: $spacing-48;
+}
+
+.hofTitle {
+  @extend %text-style-display-lg-bold;
+
+  color: $color-primary-100;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.hofStatContainer {
+  @include flex-y(null);
+  
+  overflow-y: scroll;
+  width: 100%;
+
+
+}
+
+.hofStatContainer > * + * {
+  border-bottom-width: 0;
+  border-top: 1px solid rgba($color-primary-300, 0.6);
+}
+
+.statContainer {
+  @include padding-y($spacing-16);
+
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftContainer {
+  @include flex-x($spacing-20);
+
+  align-items: center;
+}
+
+.icon {
+  color: $color-primary-100;
+}
+
+.statTexts {
+  @include flex-y(null);
+
+  
+}
+
+.titleHolder {
+  @extend %text-style-display-md-semibold;
+
+  color: $color-primary-200;
+}
+
+.titleName {
+  @extend %text-style-display-xs-normal;
+
+  color: $color-gray-400;
+}
+
+.statNumber {
+  @extend %text-style-display-md-semibold;
+
+  color: $color-primary-100;
+}
