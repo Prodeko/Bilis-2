@@ -1,10 +1,6 @@
 import { QueryTypes } from 'sequelize'
 
-import {
-  PlayerWithMaxElo,
-  PlayerWithMaxStreak,
-  PlayerWithStats
-} from '@common/types'
+import { PlayerWithMaxElo, PlayerWithMaxStreak, PlayerWithStats } from '@common/types'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
@@ -67,38 +63,73 @@ const getHighestWinPercentage = async (): Promise<PlayerWithStats> => {
 }
 
 const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
-  const [response] = (await dbConf.sequelize.query(
+  // Another implementation where streak is considered as games won concurrently without any other games in between.
+  // So in other words how many games have you been on the table
+  /*   
+  const response = (await dbConf.sequelize.query(
     `--sql
+      WITH is_new_group AS (
+        SELECT id, winner_id,
+          CASE
+            WHEN LAG(winner_id) OVER (ORDER BY id) = winner_id THEN 0
+            ELSE 1
+          END is_new_group
+        FROM games
+        ORDER BY id
+      ), group_no AS (
+        SELECT
+          id,
+          winner_id,
+          SUM(is_new_group) OVER(ORDER BY id) as group_no
+        FROM is_new_group
+      )
+
       SELECT winner_id, COUNT(*) as "maxStreak"
-      FROM (
-        SELECT id, winner_id, SUM(is_new_group) OVER(ORDER BY id) as group_no 
-        FROM (
-          SELECT id, winner_id, 
-            CASE
-              WHEN LAG(winner_id) OVER (ORDER BY id) = winner_id THEN 0 
-              ELSE 1 
-            END  as is_new_group
-          FROM games
-          ORDER BY id
-        ) as a
-      ) as b
+      FROM group_no
       GROUP BY group_no, winner_id
       ORDER BY "maxStreak" DESC
-      LIMIT 1
+      LIMIT 10
+  `, 
+  */
+
+  // Implementation where streak is considered as number of consecutive games where you have not lost
+  // Other players may have played games in between
+  const response = (await dbConf.sequelize.query(
+    `--sql
+      WITH plain_data AS (
+        SELECT id, winner_id as player_id, 0 AS winner
+        FROM games
+        UNION
+        SELECT id, loser_id as player_id, 1 AS winner
+        FROM games
+      ), group_no AS (
+        SELECT 
+          player_id, 
+          SUM(winner) OVER (PARTITION BY player_id ORDER BY id) group_no
+        FROM plain_data
+        ORDER BY id
+      )
+
+      SELECT player_id, COUNT(*) as "maxStreak"
+      FROM group_no
+      GROUP BY group_no, player_id
+      ORDER BY "maxStreak" DESC
+      LIMIT 10
   `,
     { type: QueryTypes.SELECT }
-  )) as [{ winner_id: number; maxStreak: number }]
+  )) as [{ player_id: number; maxStreak: number }]
+
+  if (!response) throw new Error('No games in database')
 
   const player = await PlayerModel.findOne({
     where: {
-      id: response.winner_id,
+      id: response[0].player_id,
     },
   })
 
   if (!player) throw new Error('No player found!')
 
-  return { ...player.toJSON(), maxStreak: response.maxStreak }
+  return { ...player.toJSON(), maxStreak: response[0].maxStreak }
 }
 
 export { getHighestEloAllTimePlayer, getHighestStreak, getHighestWinPercentage }
-
