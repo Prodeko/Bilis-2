@@ -12,7 +12,8 @@
 		"humao.rest-client",
 		"eamodio.gitlens",
 		"esbenp.prettier-vscode",
-		"dbaeumer.vscode-eslint"
+		"dbaeumer.vscode-eslint",
+		"qufiwefefwoyn.inline-sql-syntax"
 	],
 	"hostRequirements": {
 		"memory": "3gb"
