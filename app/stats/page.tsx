@@ -1,6 +1,7 @@
 import { Card } from '@components/ui/Card'
 
 import styles from './Layout.module.scss'
+import { GameCountTracker } from './localComponents/GameCountTracker/GameCountTracker'
 import { HallOfFame } from './localComponents/HallOfFame/HallOfFame'
 
 const StatsPage = async () => {
@@ -24,7 +25,9 @@ const StatsPage = async () => {
           gridRow: '3 / -1',
           gridColumn: '2 / -1',
         }}
-      ></Card>
+      >
+        <GameCountTracker />
+      </Card>
     </div>
   )
 }
