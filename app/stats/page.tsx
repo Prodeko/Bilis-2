@@ -1,7 +1,7 @@
 import { Card } from '@components/ui/Card'
 
 import styles from './Layout.module.scss'
-import { HallOfFame } from './localComponents/HallOfFame'
+import { HallOfFame } from './localComponents/HallOfFame/HallOfFame'
 
 const StatsPage = async () => {
   return (

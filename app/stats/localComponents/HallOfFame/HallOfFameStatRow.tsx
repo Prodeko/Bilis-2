@@ -2,7 +2,7 @@ import { IconType } from 'react-icons'
 
 import { Player } from '@common/types'
 
-import styles from '../Layout.module.scss'
+import styles from './HallOfFame.module.scss'
 
 interface Props {
   statNumber: number

@@ -3,7 +3,7 @@ import { HiArchiveBox } from 'react-icons/hi2'
 
 import { getRandomPlayer } from '@server/db/players'
 
-import styles from '../Layout.module.scss'
+import styles from './HallOfFame.module.scss'
 import { HallOfFameStatRow } from './HallOfFameStatRow'
 
 type DivProps = ComponentProps<'div'>
