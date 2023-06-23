@@ -9,22 +9,11 @@
   padding: $spacing-48;
 }
 
-.hofTitle {
-  @extend %text-style-display-lg-bold;
-
-  color: $color-primary-100;
-  text-align: center;
-  text-transform: uppercase;
-  width: 100%;
-}
-
 .hofStatContainer {
   @include flex-y(null);
   
   overflow-y: scroll;
   width: 100%;
-
-
 }
 
 .hofStatContainer > * + * {
@@ -59,7 +48,7 @@
 .titleHolder {
   @extend %text-style-display-md-semibold;
 
-  color: $color-primary-200;
+  color: $color-gray-50;
 }
 
 .titleName {

@@ -3,6 +3,7 @@ import { HiArchiveBox } from 'react-icons/hi2'
 
 import { getRandomPlayer } from '@server/db/players'
 
+import { StatsTitle } from '../StatsTitle/StatsTitle'
 import styles from './HallOfFame.module.scss'
 import { HallOfFameStatRow } from './HallOfFameStatRow'
 
@@ -23,7 +24,12 @@ export const HallOfFame = async ({ ...props }: Props) => {
   )
   return (
     <div {...props} className={styles.hofLayout}>
-      <h1 className={styles.hofTitle}>Hall of Fame</h1>
+      <StatsTitle
+        style={{
+          textTransform: 'uppercase',
+        }}
+        title="Hall of Fame"
+      />
       <div className={styles.hofStatContainer}>
         {stats.map(stat => {
           return (
