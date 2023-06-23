@@ -110,7 +110,7 @@ const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
           player_id,
           -- Assign a streak_id to each game based on the number of losses before it for the same player
           -- This identifies all the games within the same streak with the same streak_id
-          SUM(is_loser) OVER (PARTITION BY player_id ORDER BY id) as streak_id
+          SUM(is_loser) OVER (PARTITION BY player_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as streak_id
         FROM transformed_data
         ORDER BY id
       )
