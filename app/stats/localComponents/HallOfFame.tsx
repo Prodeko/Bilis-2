@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react'
 import { HiArchiveBox } from 'react-icons/hi2'
 
 import { getRandomPlayer } from '@server/db/players'
@@ -5,7 +6,11 @@ import { getRandomPlayer } from '@server/db/players'
 import styles from '../Layout.module.scss'
 import { HallOfFameStatRow } from './HallOfFameStatRow'
 
-export const HallOfFame = async () => {
+type DivProps = ComponentProps<'div'>
+
+type Props = DivProps
+
+export const HallOfFame = async ({ ...props }: Props) => {
   const stats = await Promise.all(
     [400, 11, 222, 11111, 111].map(async stat => {
       const randomPlayer = await getRandomPlayer()
@@ -17,7 +22,7 @@ export const HallOfFame = async () => {
     })
   )
   return (
-    <div className={styles.hofLayout}>
+    <div {...props} className={styles.hofLayout}>
       <h1 className={styles.hofTitle}>Hall of Fame</h1>
       <div className={styles.hofStatContainer}>
         {stats.map(stat => {
