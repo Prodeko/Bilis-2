@@ -94,27 +94,33 @@ const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
 
   // Implementation where streak is considered as number of consecutive games where you have not lost
   // Other players may have played games in between
+  // NOTE: The following query is pretty advanced and uses some tricks to get the result needed.
   const response = (await dbConf.sequelize.query(
     `--sql
-      WITH plain_data AS (
-        SELECT id, winner_id as player_id, 0 AS winner
+      WITH transformed_data AS (
+        -- Create a temporary table to transform the data from the 'games' table
+        -- is_loser stored as an int so that the amount of losses can be calculated later on
+        SELECT id, winner_id as player_id, 0 AS is_loser
         FROM games
         UNION
-        SELECT id, loser_id as player_id, 1 AS winner
+        SELECT id, loser_id as player_id, 1 AS is_loser
         FROM games
-      ), group_no AS (
+      ), streak_id AS (
         SELECT 
-          player_id, 
-          SUM(winner) OVER (PARTITION BY player_id ORDER BY id) group_no
-        FROM plain_data
+          player_id,
+          -- Assign a streak_id to each game based on the number of losses before it for the same player
+          -- This identifies all the games within the same streak with the same streak_id
+          SUM(is_loser) OVER (PARTITION BY player_id ORDER BY id) as streak_id
+        FROM transformed_data
         ORDER BY id
       )
 
       SELECT player_id, COUNT(*) as "maxStreak"
-      FROM group_no
-      GROUP BY group_no, player_id
+      FROM streak_id
+      -- group the games with the streak_id to get count of games within that streak
+      GROUP BY streak_id, player_id
       ORDER BY "maxStreak" DESC
-      LIMIT 10
+      LIMIT 1
   `,
     { type: QueryTypes.SELECT }
   )) as [{ player_id: number; maxStreak: number }]
