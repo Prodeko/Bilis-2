@@ -39,6 +39,11 @@ const playerWithMaxElo = player.extend({
 })
 type PlayerWithMaxElo = z.infer<typeof playerWithMaxElo>
 
+const playerWithMaxStreak = player.extend({
+  maxStreak: z.number().int().nonnegative(),
+})
+type PlayerWithMaxStreak = z.infer<typeof playerWithMaxStreak>
+
 // Game types
 const game = withId.extend({
   winnerId: id,
@@ -134,6 +139,7 @@ export type {
   Player,
   NewPlayer,
   PlayerWithMaxElo,
+  PlayerWithMaxStreak,
   Game,
   GameWithPlayers,
   NewGame,
@@ -156,6 +162,8 @@ export {
   newPlayer,
   playerStats,
   playerWithStats,
+  playerWithMaxElo,
+  playerWithMaxStreak,
   game,
   recentGame,
   mutualGames,

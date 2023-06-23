@@ -1,6 +1,10 @@
-import { QueryTypes, Sequelize } from 'sequelize'
+import { QueryTypes } from 'sequelize'
 
-import { PlayerWithMaxElo, PlayerWithWinPercentage } from '@common/types'
+import {
+  PlayerWithMaxElo,
+  PlayerWithMaxStreak,
+  PlayerWithStats
+} from '@common/types'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
@@ -23,23 +27,78 @@ const getHighestEloAllTimePlayer = async (): Promise<PlayerWithMaxElo> => {
   return { ...topPlayer.toJSON(), maxElo: topPlayerGame.winnerEloAfter }
 }
 
-const getHighestWinPercentage = async () => {
-  const game = await dbConf.sequelize.query(
+const getHighestWinPercentage = async (): Promise<PlayerWithStats> => {
+  const [response] = (await dbConf.sequelize.query(
     `--sql
-    SELECT winner_id, first_name, last_name, COUNT(*) as games_won, lost_games.count as games_lost, (COUNT(*) * 100.0) / (COUNT(*) + lost_games.count) as win_percentage
+    SELECT 
+      winner_id, 
+      COUNT(*) as games_won,
+      lost_games.count as games_lost,
+      (COUNT(*) * 100.0) / (COUNT(*) + lost_games.count) as win_percentage
     FROM games JOIN (
       SELECT loser_id, COUNT(*) as count 
       FROM games GROUP BY loser_id
-    ) as lost_games ON winner_id = lost_games.loser_id JOIN 
-    players ON winner_id = players.id
-    GROUP BY winner_id, first_name, last_name, lost_games.lost
+    ) as lost_games ON winner_id = lost_games.loser_id
+    GROUP BY winner_id, lost_games.lost
     ORDER BY win_percentage DESC
     LIMIT 1
   `,
     { type: QueryTypes.SELECT }
-  )
+  )) as [
+    {
+      winner_id: number
+      games_won: number
+      games_lost: number
+      win_percentage: number
+    }
+  ]
 
-  return game
+  const player = await PlayerModel.findOne({ where: { id: response.winner_id } })
+
+  if (!player) throw new Error('No player found!')
+
+  return {
+    ...player?.toJSON(),
+    wonGames: response.games_won,
+    lostGames: response.games_lost,
+    totalGames: response.games_won + response.games_lost,
+    winPercentage: response.win_percentage,
+  }
 }
 
-export { getHighestEloAllTimePlayer, getHighestWinPercentage }
+const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
+  const [response] = (await dbConf.sequelize.query(
+    `--sql
+      SELECT winner_id, COUNT(*) as "maxStreak"
+      FROM (
+        SELECT id, winner_id, SUM(is_new_group) OVER(ORDER BY id) as group_no 
+        FROM (
+          SELECT id, winner_id, 
+            CASE
+              WHEN LAG(winner_id) OVER (ORDER BY id) = winner_id THEN 0 
+              ELSE 1 
+            END  as is_new_group
+          FROM games
+          ORDER BY id
+        ) as a
+      ) as b
+      GROUP BY group_no, winner_id
+      ORDER BY "maxStreak" DESC
+      LIMIT 1
+  `,
+    { type: QueryTypes.SELECT }
+  )) as [{ winner_id: number; maxStreak: number }]
+
+  const player = await PlayerModel.findOne({
+    where: {
+      id: response.winner_id,
+    },
+  })
+
+  if (!player) throw new Error('No player found!')
+
+  return { ...player.toJSON(), maxStreak: response.maxStreak }
+}
+
+export { getHighestEloAllTimePlayer, getHighestStreak, getHighestWinPercentage }
+
