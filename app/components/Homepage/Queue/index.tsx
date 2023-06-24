@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardGrid, CardProps } from 'app/components/ui/Card'
-import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/Input'
+import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/InputDropdown'
 import { Table, prepareQueueData, queueColumns } from 'app/components/ui/Table'
 import { Title, TitleRow } from 'app/components/ui/TitleRow'
 import { useRouter } from 'next/navigation'
