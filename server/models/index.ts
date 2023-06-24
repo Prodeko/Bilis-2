@@ -44,6 +44,12 @@ Game.belongsTo(Player, {
   as: 'loser',
 })
 
+// Define loserId foreign key Game -> Player
+Player.belongsTo(Season, {
+  foreignKey: 'latestSeasonId',
+  as: 'Season',
+})
+
 // Define seasonId foreign key Game -> Player
 Game.belongsTo(Season, {
   foreignKey: 'seasonId',

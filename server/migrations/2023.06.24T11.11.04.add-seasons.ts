@@ -26,8 +26,20 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
     defaultValue: null,
   })
 
+  await queryInterface.addColumn('games', 'season_id', {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+    defaultValue: null,
+  })
+
   await queryInterface.addColumn('players', 'season_elo', {
     type: Sequelize.DOUBLE,
+    allowNull: true,
+    defaultValue: null,
+  })
+
+  await queryInterface.addColumn('players', 'latest_season_id', {
+    type: Sequelize.INTEGER,
     allowNull: true,
     defaultValue: null,
   })
@@ -64,8 +76,10 @@ export const down: MigrationFn<Sequelize.QueryInterface> = async ({ context: que
   await queryInterface.removeColumn('games', 'winner_season_elo_before')
   await queryInterface.removeColumn('games', 'loser_season_elo_after')
   await queryInterface.removeColumn('games', 'loser_season_elo_before')
+  await queryInterface.removeColumn('games', 'season_id')
 
   await queryInterface.removeColumn('players', 'season_elo')
+  await queryInterface.removeColumn('players', 'latest_season_id')
 
   await queryInterface.dropTable('seasons')
 }
