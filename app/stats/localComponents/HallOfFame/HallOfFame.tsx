@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react'
-import { HiArchiveBox } from 'react-icons/hi2'
+import { AiOutlineLineChart, AiOutlinePercentage, AiOutlineTrophy } from 'react-icons/ai'
 
 import {
   getHighestEloAllTimePlayer,
@@ -20,14 +20,17 @@ export const HallOfFame = async ({ ...props }: Props) => {
     {
       hofPlayer: await getHighestEloAllTimePlayer(),
       statName: 'Highest Peak Elo',
+      Icon: AiOutlineTrophy,
     },
     {
       hofPlayer: await getHighestStreak(),
       statName: 'Highest Win Streak',
+      Icon: AiOutlineLineChart,
     },
     {
       hofPlayer: await getHighestWinPercentage(),
       statName: 'Current Highest Win Percentage',
+      Icon: AiOutlinePercentage,
     },
   ])
 
@@ -46,7 +49,7 @@ export const HallOfFame = async ({ ...props }: Props) => {
               key={player.statName}
               hofPlayer={player.hofPlayer}
               statName={player.statName}
-              Icon={HiArchiveBox}
+              Icon={player.Icon}
             />
           )
         })}
