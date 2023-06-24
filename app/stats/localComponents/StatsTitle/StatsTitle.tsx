@@ -1,18 +1,17 @@
-import type { Variation } from '.'
 import { ComponentProps } from 'react'
 
-import styles from './TitleRow.module.scss'
+import styles from './StatsTitle.module.scss'
 
 type HeadingProps = ComponentProps<'h2'>
 
 interface Props extends HeadingProps {
-  variation: Variation
+  title: string
 }
 
-export const Title = ({ variation, ...props }: Props) => {
+export const StatsTitle = ({ title, ...props }: Props) => {
   return (
     <h2 {...props} className={styles.title}>
-      {variation}
+      {title}
     </h2>
   )
 }

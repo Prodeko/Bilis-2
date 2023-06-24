@@ -1,23 +1,23 @@
 'use client'
 
-import { Card, CardGrid } from 'app/components/ui/Card'
-import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/Input'
+import { Card, CardGrid, CardProps } from 'app/components/ui/Card'
+import { Dropdown, Input, InputDropdownWrapper } from 'app/components/ui/InputDropdown'
 import { Table, prepareQueueData, queueColumns } from 'app/components/ui/Table'
 import { Title, TitleRow } from 'app/components/ui/TitleRow'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { FiSearch, FiX } from 'react-icons/fi'
 
-import { GridPosition, Player, SmoothScrollId } from '@common/types'
+import { Player, SmoothScrollId } from '@common/types'
 import useKeyPress from '@hooks/useKeyPress'
 import usePlayers from '@hooks/usePlayers'
 import { addToQueue, useQueueState } from '@state/Queue'
 
 interface Props {
-  gridPosition: GridPosition
+  cardProps: CardProps
 }
 
-export const Queue = ({ gridPosition }: Props) => {
+export const Queue = ({ cardProps }: Props) => {
   const router = useRouter()
   const [queue, dispatch] = useQueueState()
   const [visible, setVisible] = useState<boolean>(false)
@@ -68,7 +68,7 @@ export const Queue = ({ gridPosition }: Props) => {
   }
 
   return (
-    <Card gridPosition={gridPosition}>
+    <Card {...cardProps}>
       <CardGrid>
         <TitleRow>
           <Title variation="Queue" />

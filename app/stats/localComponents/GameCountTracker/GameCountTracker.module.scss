@@ -1,0 +1,35 @@
+@use 'styles' as *;
+
+.layout {
+  @include padding-y($spacing-24);
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  padding: $spacing-48;
+  row-gap: $spacing-12;
+}
+
+.trackerContainer {
+  @extend %flex-center;
+
+  justify-content: space-between;
+}
+
+.statContainer {
+  @include flex-y($spacing-4);
+
+  align-items: center;
+}
+
+.number {
+  @extend %text-style-display-md-semibold;
+
+  color: $color-primary-50;
+}
+
+.timeframe {
+  @extend %text-style-text-lg-medium;
+
+  color: $color-gray-400;
+}

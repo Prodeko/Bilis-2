@@ -1,17 +1,16 @@
-import { ReactNode } from 'react'
-
-import type { GridPosition } from '@common/types'
+import { ComponentProps, ReactNode } from 'react'
 
 import styles from './Card.module.scss'
 
-interface Props {
+export type CardProps = ComponentProps<'div'>
+
+interface Props extends CardProps {
   children: ReactNode
-  gridPosition?: GridPosition
 }
 
-export const Card = ({ children, gridPosition }: Props) => {
+export const Card = ({ children, ...props }: Props) => {
   return (
-    <div className={styles.card} style={gridPosition}>
+    <div {...props} className={styles.card}>
       {children}
     </div>
   )

@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 
 import styles from './TitleRow.module.scss'
 
-interface Props {
+type DivProps = ComponentProps<'div'>
+
+interface Props extends DivProps {
   children: ReactNode
 }
 
-export const TitleRow = ({ children }: Props) => {
+export const TitleRow = ({ children, ...props }: Props) => {
   return (
-    <div className={styles.titlerow}>
+    <div {...props} className={styles.titlerow}>
       {children}
-      {/* {variation === 'Queue' && <PlayerSearchQueue />}
-      )} */}
     </div>
   )
 }

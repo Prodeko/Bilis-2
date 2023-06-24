@@ -1,17 +1,17 @@
-import { Card, CardGrid } from 'app/components/ui/Card'
+import { Card, CardGrid, CardProps } from 'app/components/ui/Card'
 import { Table, leaderboardColumns, prepareLeaderboardData } from 'app/components/ui/Table'
 import { Title, TitleRow, Variation } from 'app/components/ui/TitleRow'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
-import type { GridPosition, Player } from '@common/types'
+import type { Player } from '@common/types'
 
 interface Props {
   leaderboard: Player[]
-  gridPosition: GridPosition
+  cardProps: CardProps
 }
 
-export const Leaderboard = ({ leaderboard, gridPosition }: Props) => {
+export const Leaderboard = ({ leaderboard, cardProps }: Props) => {
   const variation: Variation = 'Leaderboard'
   const router = useRouter()
 
@@ -24,7 +24,7 @@ export const Leaderboard = ({ leaderboard, gridPosition }: Props) => {
   }
 
   return (
-    <Card gridPosition={gridPosition}>
+    <Card {...cardProps}>
       <CardGrid>
         <TitleRow>
           <Title variation={variation} />

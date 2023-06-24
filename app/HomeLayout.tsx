@@ -1,12 +1,12 @@
 'use client'
 
-import AddGameButton from 'app/components/Homepage/AddGame'
-import Games from 'app/components/Homepage/Games'
-import { Leaderboard } from 'app/components/Homepage/Leaderboard'
-import { Queue } from 'app/components/Homepage/Queue'
 import { ComponentProps, KeyboardEventHandler, useState } from 'react'
 
 import { Player, RecentGame } from '@common/types'
+import AddGameButton from '@components/Homepage/AddGame'
+import Games from '@components/Homepage/Games'
+import { Leaderboard } from '@components/Homepage/Leaderboard'
+import { Queue } from '@components/Homepage/Queue'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { QueueProvider, reducer } from '@state/Queue'
 
@@ -48,19 +48,19 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
         <>
           <Leaderboard
             leaderboard={leaderboard}
-            gridPosition={{
-              gridColumnStart: '1',
-              gridColumnEnd: '2',
-              gridRowStart: '1',
-              gridRowEnd: '3',
+            cardProps={{
+              style: {
+                gridColumn: '1 / 2',
+                gridRow: '1 / -1',
+              },
             }}
           />
           <Queue
-            gridPosition={{
-              gridColumnStart: '2',
-              gridColumnEnd: '3',
-              gridRowStart: '1',
-              gridRowEnd: '2',
+            cardProps={{
+              style: {
+                gridColumn: '2 / 3',
+                gridRow: '1 / 2',
+              },
             }}
           />
           <AddGameButton
@@ -73,11 +73,11 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
           <Games
             games={games}
             setGames={setGames}
-            gridPosition={{
-              gridColumnStart: '2',
-              gridColumnEnd: '-1',
-              gridRowStart: '2',
-              gridRowEnd: '-1',
+            cardProps={{
+              style: {
+                gridColumn: '2 / -1',
+                gridRow: '2 / -1',
+              },
             }}
           />
         </>

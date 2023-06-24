@@ -1,27 +1,27 @@
 import { Button } from 'app/components/ui/Button'
-import { Card, CardGrid } from 'app/components/ui/Card'
+import { Card, CardGrid, CardProps } from 'app/components/ui/Card'
 import { Table, gameColumns, prepareGamesData } from 'app/components/ui/Table'
 import { Title, TitleRow } from 'app/components/ui/TitleRow'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { FiTrash2 } from 'react-icons/fi'
 
-import { GridPosition, RecentGame } from '@common/types'
+import { RecentGame } from '@common/types'
 
 import Modal from './Modal'
 
 interface Props {
   games: RecentGame[]
   setGames: Dispatch<SetStateAction<RecentGame[]>>
-  gridPosition: GridPosition
+  cardProps: CardProps
 }
-const Games = ({ games, setGames, gridPosition }: Props) => {
+const Games = ({ games, setGames, cardProps }: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
   const closeModal = () => setModalVisible(false)
   const showModal = () => setModalVisible(true)
 
   return (
-    <Card gridPosition={gridPosition}>
+    <Card {...cardProps}>
       <CardGrid>
         <TitleRow>
           <Title variation="Games" />

@@ -1,0 +1,10 @@
+@use 'styles' as *;
+
+.title {
+  @extend %text-style-display-lg-bold;
+
+  color: $color-primary-100;
+  text-align: center;
+  text-transform: capitalize;
+  width: 100%;
+}
