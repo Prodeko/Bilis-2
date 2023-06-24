@@ -5,6 +5,7 @@ import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
+import { getCurrentSeason } from '../season'
 import { getGameCountForPlayer } from './derivatives'
 
 const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
@@ -27,15 +28,17 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
   })
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
-  const [winner, loser, winnerGames, loserGames] = await Promise.all([
+  const [winner, loser, winnerGames, loserGames, currentSeason] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
     getGameCountForPlayer(game.winnerId),
     getGameCountForPlayer(game.loserId),
+    getCurrentSeason(),
   ])
 
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
     winnerGames,
@@ -52,6 +55,7 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
       loserEloAfter,
       winnerEloBefore: winner.elo,
       loserEloBefore: loser.elo,
+      seasonId: currentSeason?.id ?? null,
     },
     {
       include: [

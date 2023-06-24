@@ -7,4 +7,19 @@ const createSeason = async (season: NewSeason): Promise<SeasonModel> => {
   return createdSeason
 }
 
-export { createSeason }
+const getCurrentSeason = async (): Promise<SeasonModel | null> => {
+  const currentSeason = await SeasonModel.findOne({
+    where: {
+      start: {
+        gt: new Date(),
+      },
+      end: {
+        lt: new Date(),
+      },
+    },
+  })
+
+  return currentSeason
+}
+
+export { createSeason, getCurrentSeason }
