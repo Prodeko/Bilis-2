@@ -1,22 +1,24 @@
+import { getGamesFromTimeframe } from '@server/db/players/gameTracker'
+
 import styles from './GameCountTracker.module.scss'
 import { TrackerStat } from './TrackerStat'
 
-export const TrackerContainer = () => {
+export const TrackerContainer = async () => {
   const stats = [
     {
-      number: 15,
+      number: await getGamesFromTimeframe('day'),
       timeFrame: 'Today',
     },
     {
-      number: 150,
+      number: await getGamesFromTimeframe('week'),
       timeFrame: 'This week',
     },
     {
-      number: 1500,
+      number: await getGamesFromTimeframe('month'),
       timeFrame: 'This month',
     },
     {
-      number: 15000,
+      number: await getGamesFromTimeframe('year'),
       timeFrame: 'This year',
     },
   ]
