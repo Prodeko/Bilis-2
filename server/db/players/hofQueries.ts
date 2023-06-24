@@ -4,6 +4,12 @@ import { HofPlayer, hofPlayer } from '@common/types'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
+/**
+This file includes queries used to compute hall of fame statistics. Functions in this file should return 
+objects that have fields from player type and also a field called "hofStat" that is in formatted form.
+We format the stat already in the backend because this simplifies the frontend code greatly.
+ */
+
 const getHighestEloAllTimePlayer = async (): Promise<HofPlayer> => {
   const topPlayerGame = await GameModel.findOne({
     attributes: {

@@ -5,7 +5,7 @@ import {
   getHighestEloAllTimePlayer,
   getHighestStreak,
   getHighestWinPercentage,
-} from '@server/db/players/derivatives'
+} from '@server/db/players/hofQueries'
 
 import { StatsTitle } from '../StatsTitle/StatsTitle'
 import styles from './HallOfFame.module.scss'
