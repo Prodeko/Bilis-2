@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { IconType } from 'react-icons'
 
 import { HofPlayer } from '@common/types'
@@ -17,7 +18,9 @@ export const HallOfFameStatRow = ({ statName, hofPlayer, Icon }: Props) => {
       <div className={styles.leftContainer}>
         <Icon className={styles.icon} size={40} />
         <div className={styles.statTexts}>
-          <span className={styles.titleHolder}>{formatFullName(hofPlayer, false, false)}</span>
+          <Link href={`/player/${hofPlayer.id}`} className={styles.titleHolder}>
+            {formatFullName(hofPlayer, false, false)}
+          </Link>
           <span className={styles.titleName}>{statName}</span>
         </div>
       </div>
