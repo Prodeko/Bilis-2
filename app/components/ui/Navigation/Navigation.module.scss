@@ -23,7 +23,8 @@
   &__active {
     @extend %link;
     @extend %text-style-display-md-semibold;
-    
-    color: $color-primary-25;
+
+    border-bottom: 2px solid $color-primary-25;
+    color: $color-primary-25;;
   }
 }
