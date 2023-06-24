@@ -1,10 +1,10 @@
 import { QueryTypes } from 'sequelize'
 
-import { PlayerWithMaxElo, PlayerWithMaxStreak, PlayerWithStats } from '@common/types'
+import { HofPlayer, hofPlayer } from '@common/types'
 import { GameModel, PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
-const getHighestEloAllTimePlayer = async (): Promise<PlayerWithMaxElo> => {
+const getHighestEloAllTimePlayer = async (): Promise<HofPlayer> => {
   const topPlayerGame = await GameModel.findOne({
     attributes: {
       include: ['winnerId', 'winnerEloAfter'],
@@ -20,22 +20,32 @@ const getHighestEloAllTimePlayer = async (): Promise<PlayerWithMaxElo> => {
 
   if (!topPlayerGame || !topPlayer) throw new Error('No top player or top player game found!')
 
-  return { ...topPlayer.toJSON(), maxElo: topPlayerGame.winnerEloAfter }
+  const hallOfFamePlayer = { ...topPlayer.toJSON(), hofStat: topPlayerGame.winnerEloAfter }
+  return hofPlayer.parse(hallOfFamePlayer)
 }
 
-const getHighestWinPercentage = async (): Promise<PlayerWithStats> => {
+const getHighestWinPercentage = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
+    WITH lost_games AS (
+      SELECT loser_id, COUNT(*) as lost_games_count 
+      FROM games 
+      GROUP BY loser_id
+    ),
+
+    won_games AS (
+      SELECT winner_id, COUNT(*) as won_games_count
+      FROM games 
+      GROUP BY winner_id
+    )
+
     SELECT 
       winner_id, 
-      COUNT(*) as games_won,
-      lost_games.count as games_lost,
-      (COUNT(*) * 100.0) / (COUNT(*) + lost_games.count) as win_percentage
-    FROM games JOIN (
-      SELECT loser_id, COUNT(*) as count 
-      FROM games GROUP BY loser_id
-    ) as lost_games ON winner_id = lost_games.loser_id
-    GROUP BY winner_id, lost_games.lost
+      (won_games_count * 100.0) / (won_games_count + lost_games_count) as win_percentage
+    FROM won_games
+    JOIN lost_games
+    ON winner_id = loser_id
+    GROUP BY winner_id, won_games_count, lost_games_count
     ORDER BY win_percentage DESC
     LIMIT 1
   `,
@@ -43,8 +53,6 @@ const getHighestWinPercentage = async (): Promise<PlayerWithStats> => {
   )) as [
     {
       winner_id: number
-      games_won: number
-      games_lost: number
       win_percentage: number
     }
   ]
@@ -53,16 +61,14 @@ const getHighestWinPercentage = async (): Promise<PlayerWithStats> => {
 
   if (!player) throw new Error('No player found!')
 
-  return {
-    ...player?.toJSON(),
-    wonGames: response.games_won,
-    lostGames: response.games_lost,
-    totalGames: response.games_won + response.games_lost,
-    winPercentage: response.win_percentage,
+  const hallOfFamePlayer = {
+    ...player.toJSON(),
+    hofStat: response.win_percentage,
   }
+  return hofPlayer.parse(hallOfFamePlayer)
 }
 
-const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
+const getHighestStreak = async (): Promise<HofPlayer> => {
   // Another implementation where streak is considered as games won concurrently without any other games in between.
   // So in other words how many games have you been on the table
   /*   
@@ -135,7 +141,8 @@ const getHighestStreak = async (): Promise<PlayerWithMaxStreak> => {
 
   if (!player) throw new Error('No player found!')
 
-  return { ...player.toJSON(), maxStreak: response[0].maxStreak }
+  const hallOfFamePlayer = { ...player.toJSON(), hofStat: response[0].maxStreak }
+  return hofPlayer.parse(hallOfFamePlayer)
 }
 
 export { getHighestEloAllTimePlayer, getHighestStreak, getHighestWinPercentage }
