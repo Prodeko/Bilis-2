@@ -19,12 +19,12 @@ export const HallOfFame = async ({ ...props }: Props) => {
   const hofPlayers = await Promise.all([
     {
       hofPlayer: await getHighestEloAllTimePlayer(),
-      statName: 'Highest Peak Elo',
+      statName: 'Highest Peak Fargo',
       Icon: AiOutlineTrophy,
     },
     {
       hofPlayer: await getHighestStreak(),
-      statName: 'Highest Win Streak',
+      statName: 'Longest Win Streak',
       Icon: AiOutlineLineChart,
     },
     {
