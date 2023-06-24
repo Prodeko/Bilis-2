@@ -20,7 +20,10 @@ const getHighestEloAllTimePlayer = async (): Promise<HofPlayer> => {
 
   if (!topPlayerGame || !topPlayer) throw new Error('No top player or top player game found!')
 
-  const hallOfFamePlayer = { ...topPlayer.toJSON(), hofStat: topPlayerGame.winnerEloAfter }
+  const hallOfFamePlayer = {
+    ...topPlayer.toJSON(),
+    hofStat: topPlayerGame.winnerEloAfter.toFixed(2),
+  }
   return hofPlayer.parse(hallOfFamePlayer)
 }
 
@@ -41,7 +44,7 @@ const getHighestWinPercentage = async (): Promise<HofPlayer> => {
 
     SELECT 
       winner_id, 
-      (won_games_count * 100.0) / (won_games_count + lost_games_count) as win_percentage
+      CAST((won_games_count * 100.0) / (won_games_count + lost_games_count) AS REAL) as win_percentage
     FROM won_games
     JOIN lost_games
     ON winner_id = loser_id
@@ -63,7 +66,7 @@ const getHighestWinPercentage = async (): Promise<HofPlayer> => {
 
   const hallOfFamePlayer = {
     ...player.toJSON(),
-    hofStat: response.win_percentage,
+    hofStat: `${response.win_percentage.toFixed(1)}%`,
   }
   return hofPlayer.parse(hallOfFamePlayer)
 }

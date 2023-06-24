@@ -1,7 +1,11 @@
 import { ComponentProps } from 'react'
 import { HiArchiveBox } from 'react-icons/hi2'
 
-import { getRandomPlayer } from '@server/db/players'
+import {
+  getHighestEloAllTimePlayer,
+  getHighestStreak,
+  getHighestWinPercentage,
+} from '@server/db/players/derivatives'
 
 import { StatsTitle } from '../StatsTitle/StatsTitle'
 import styles from './HallOfFame.module.scss'
@@ -12,16 +16,21 @@ type DivProps = ComponentProps<'div'>
 type Props = DivProps
 
 export const HallOfFame = async ({ ...props }: Props) => {
-  const stats = await Promise.all(
-    [400, 11, 222, 11111, 111].map(async stat => {
-      const randomPlayer = await getRandomPlayer()
-      return {
-        statNumber: stat,
-        statName: 'Longest winning streak',
-        player: randomPlayer,
-      }
-    })
-  )
+  const hofPlayers = await Promise.all([
+    {
+      hofPlayer: await getHighestEloAllTimePlayer(),
+      statName: 'Highest Peak Elo',
+    },
+    {
+      hofPlayer: await getHighestStreak(),
+      statName: 'Highest Win Streak',
+    },
+    {
+      hofPlayer: await getHighestWinPercentage(),
+      statName: 'Current Highest Win Percentage',
+    },
+  ])
+
   return (
     <div {...props} className={styles.hofLayout}>
       <StatsTitle
@@ -31,12 +40,12 @@ export const HallOfFame = async ({ ...props }: Props) => {
         title="Hall of Fame"
       />
       <div className={styles.hofStatContainer}>
-        {stats.map(stat => {
+        {hofPlayers.map(player => {
           return (
             <HallOfFameStatRow
-              key={`${stat.player?.id} ${stat}`}
-              statNumber={stat.statNumber}
-              statName={stat.statName}
+              key={player.statName}
+              hofPlayer={player.hofPlayer}
+              statName={player.statName}
               Icon={HiArchiveBox}
             />
           )
