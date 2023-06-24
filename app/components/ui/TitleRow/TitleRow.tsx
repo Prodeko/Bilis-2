@@ -12,8 +12,6 @@ export const TitleRow = ({ children, ...props }: Props) => {
   return (
     <div {...props} className={styles.titlerow}>
       {children}
-      {/* {variation === 'Queue' && <PlayerSearchQueue />}
-      )} */}
     </div>
   )
 }
