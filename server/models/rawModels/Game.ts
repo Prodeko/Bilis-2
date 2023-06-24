@@ -42,6 +42,27 @@ Game.init(
       type: DataTypes.NUMBER,
       allowNull: false,
     },
+    winnerSeasonEloBefore: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+    },
+    loserSeasonEloBefore: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+    },
+    winnerSeasonEloAfter: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+    },
+    loserSeasonEloAfter: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+    },
+    seasonId: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
     underTable: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

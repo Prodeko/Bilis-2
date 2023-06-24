@@ -2,23 +2,19 @@ import { DataTypes, Model } from 'sequelize'
 
 import dbConf from '@server/utils/dbConf'
 
-class Player extends Model {
+class Season extends Model {
   declare id: number
 
-  declare firstName: string
+  declare start: Date
 
-  declare lastName: string
+  declare end: Date
 
-  declare nickname: string
+  declare name: string
 
-  declare emoji: string
-
-  declare motto: string
-
-  declare elo: number
+  declare createdAt: Date
 }
 
-Player.init(
+Season.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -26,31 +22,15 @@ Player.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    firstName: {
-      type: DataTypes.TEXT,
+    start: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    lastName: {
-      type: DataTypes.TEXT,
+    end: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    nickname: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    elo: {
-      type: DataTypes.DOUBLE,
-      allowNull: false,
-    },
-    seasonElo: {
-      type: DataTypes.DOUBLE,
-      allowNull: false,
-    },
-    emoji: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    motto: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -59,10 +39,19 @@ Player.init(
     sequelize: dbConf.sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'player',
+    updatedAt: false,
+    modelName: 'season',
     defaultScope: {
       attributes: {
         exclude: ['createdAt', 'updatedAt'],
+      },
+    },
+    scopes: {
+      // Adds timestamps to the scope
+      withTime: {
+        attributes: {
+          exclude: ['updatedAt'],
+        },
       },
     },
     hooks: {
@@ -73,4 +62,4 @@ Player.init(
   }
 )
 
-export default Player
+export default Season
