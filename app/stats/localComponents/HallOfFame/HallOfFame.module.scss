@@ -33,16 +33,25 @@
   @include flex-x($spacing-20);
 
   align-items: center;
+  min-width: 0;
 }
 
 .icon {
   color: $color-primary-100;
+  flex-shrink: 0;
 }
 
 .statTexts {
   @include flex-y(null);
 
-  
+  flex: 1;
+  min-width: 0;
+
+  & > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .titleHolder {
