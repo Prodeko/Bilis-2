@@ -35,10 +35,7 @@ const getGameCountForPlayer = async (playerId: number): Promise<number> =>
 const getSeasonGameCountForPlayer = async (playerId: number, seasonId: number): Promise<number> =>
   GameModel.count({
     where: {
-      [Op.and]: [
-        { [Op.or]: [{ winnerId: playerId }, { loserId: playerId }] },
-        { latestSeasonId: seasonId },
-      ],
+      [Op.and]: [{ [Op.or]: [{ winnerId: playerId }, { loserId: playerId }] }, { seasonId }],
     },
   })
 
