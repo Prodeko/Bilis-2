@@ -1,0 +1,97 @@
+@use 'styles' as *;
+
+%row {
+  height: $spacing-56;  
+}
+
+%cell {
+  padding: $spacing-12;
+}
+
+%input {
+  @extend %text-style-text-lg-normal;
+
+  background-color: $color-gray-600;
+  border: 1px solid $color-gray-700;
+  color: $color-gray-300;
+  padding: $spacing-12;
+
+  &::placeholder {
+    color: $color-gray-800;
+  }
+}
+
+.table {
+  border: none;
+}
+
+.headerContainer {
+  @include flex-y($spacing-8);
+}
+
+.filterContainer {
+  @include flex-x(null);
+
+  justify-content: space-between;
+  overflow: hidden;
+  width: 100%;
+
+  & > * + * {
+    border-left: 1px solid $color-gray-700;
+    border-right-width: 0;
+  }
+}
+
+.numberInput {
+  @extend %input;
+  
+  width: $spacing-64;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.textInput {
+  @extend %input;
+
+  width: 100%;
+}
+
+.headerRow {
+  @extend %row;
+  @extend %text-style-text-xl-semibold;
+
+  background-color: $color-gray-900;
+  color: $color-gray-400;
+  text-transform: uppercase;
+}
+
+.dataRow {
+  @extend %row;
+  @extend %text-style-text-xl-medium;
+
+  color: $color-gray-50;
+
+  &:nth-child(odd) {
+    background-color: $color-gray-600;
+  }
+
+  &:nth-child(even) {
+    background-color: $color-gray-700;
+  }
+}
+
+.headerCell {
+  @extend %cell;
+}
+
+.dataCell {
+  @extend %cell;
+}
+
+.body {
+ 
+}
