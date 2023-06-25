@@ -5,7 +5,7 @@ import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
-import { getCurrentSeason } from '../season'
+import { getCurrentSeason } from '../seasons'
 import { getGameCountForPlayer, getSeasonGameCountForPlayer } from './derivatives'
 
 const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>

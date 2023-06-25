@@ -10,6 +10,8 @@ const mockWinner: PlayerType = {
   nickname: 'asd',
   emoji: '🥵',
   elo: 400,
+  seasonElo: null,
+  latestSeasonId: null,
   motto: 'jouh',
 }
 
@@ -20,6 +22,8 @@ const mockLoser: PlayerType = {
   nickname: 'asd',
   emoji: '🥵',
   elo: 420,
+  seasonElo: null,
+  latestSeasonId: null,
   motto: 'nice',
 }
 
@@ -38,6 +42,10 @@ jest.mock('@server/db/players', () => ({
     return players[id]
   }),
   updatePlayerById: (...a: any) => mockUpdatePlayerById(...a),
+}))
+
+jest.mock('@server/db/seasons', () => ({
+  getCurrentSeason: jest.fn(() => null),
 }))
 
 const mockGameCount = jest.fn()
@@ -82,6 +90,11 @@ describe('create game', () => {
       loserEloAfter: mockLoser.elo + loserEloChange,
       winnerEloBefore: mockWinner.elo,
       loserEloBefore: mockLoser.elo,
+      winnerSeasonEloAfter: null,
+      loserSeasonEloAfter: null,
+      winnerSeasonEloBefore: null,
+      loserSeasonEloBefore: null,
+      seasonId: null,
     })
   })
 
