@@ -5,6 +5,7 @@
 }
 
 %cell {
+  border: none;
   padding: $spacing-12;
 }
 
@@ -27,7 +28,13 @@
 }
 
 .table {
-  border: none;
+  border-collapse: collapse;
+}
+
+.tableHead {
+}
+
+.tableBody {
 }
 
 .headerContainer {
@@ -135,8 +142,4 @@
     color: $color-gray-50;
     scale: 1.05;
   }
-}
-
-.body {
- 
 }

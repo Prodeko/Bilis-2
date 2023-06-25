@@ -71,7 +71,7 @@ interface Props {
 const Table = ({ table }: Props) => {
   return (
     <table className={styles.table}>
-      <thead>
+      <thead className={styles.tableHead}>
         {table.getHeaderGroups().map(headerGroup => (
           <tr className={styles.headerRow} key={headerGroup.id}>
             {headerGroup.headers.map(header => {
