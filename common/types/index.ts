@@ -17,8 +17,8 @@ const player = withId.extend({
   emoji: z.string().emoji().nonempty(),
   motto: z.string().nonempty(),
   elo,
-  seasonElo: elo,
-  latestSeasonId: id,
+  seasonElo: elo.optional().nullable(),
+  latestSeasonId: id.optional().nullable(),
 })
 type Player = z.infer<typeof player>
 

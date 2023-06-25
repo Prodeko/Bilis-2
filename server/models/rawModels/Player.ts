@@ -49,10 +49,12 @@ Player.init(
     seasonElo: {
       type: DataTypes.DOUBLE,
       allowNull: true,
+      defaultValue: null,
     },
     latestSeasonId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: null,
     },
     emoji: {
       type: DataTypes.STRING,
