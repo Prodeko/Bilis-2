@@ -3,25 +3,25 @@ import { MigrationFn } from 'umzug'
 
 export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
   await queryInterface.addColumn('games', 'winner_season_elo_after', {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     allowNull: true,
     defaultValue: null,
   })
 
   await queryInterface.addColumn('games', 'winner_season_elo_before', {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     allowNull: true,
     defaultValue: null,
   })
 
   await queryInterface.addColumn('games', 'loser_season_elo_after', {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     allowNull: true,
     defaultValue: null,
   })
 
   await queryInterface.addColumn('games', 'loser_season_elo_before', {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     allowNull: true,
     defaultValue: null,
   })

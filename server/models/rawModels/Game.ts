@@ -45,18 +45,22 @@ Game.init(
     winnerSeasonEloBefore: {
       type: DataTypes.NUMBER,
       allowNull: true,
+      defaultValue: null,
     },
     loserSeasonEloBefore: {
       type: DataTypes.NUMBER,
       allowNull: true,
+      defaultValue: null,
     },
     winnerSeasonEloAfter: {
       type: DataTypes.NUMBER,
       allowNull: true,
+      defaultValue: null,
     },
     loserSeasonEloAfter: {
       type: DataTypes.NUMBER,
       allowNull: true,
+      defaultValue: null,
     },
     seasonId: {
       type: DataTypes.NUMBER,

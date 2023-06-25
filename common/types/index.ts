@@ -49,6 +49,10 @@ const game = withId.extend({
   loserEloBefore: elo,
   winnerEloAfter: elo,
   loserEloAfter: elo,
+  winnerSeasonalEloBefore: elo.nullable().optional(),
+  loserSeasonalEloBefore: elo.nullable().optional(),
+  winnerSeasonalEloAfter: elo.nullable().optional(),
+  loserSeasonalEloAfter: elo.nullable().optional(),
   underTable: z.boolean(),
   seasonId: id.optional(),
 })

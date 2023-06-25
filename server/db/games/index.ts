@@ -51,12 +51,14 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
   let winnerSeasonEloAfter = null
   let loserSeasonEloAfter = null
 
-  if (currentSeason) {
-    const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, currentSeason.id)
-    const loserSeasonGames = await getSeasonGameCountForPlayer(game.loserId, currentSeason.id)
+  const seasonId = currentSeason?.id ?? null
 
-    const winnerSeasonElo = winner.latestSeasonId === currentSeason.id ? winner.seasonElo : 400
-    const loserSeasonElo = loser.latestSeasonId === currentSeason.id ? loser.seasonElo : 400
+  if (seasonId) {
+    const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, seasonId)
+    const loserSeasonGames = await getSeasonGameCountForPlayer(game.loserId, seasonId)
+
+    const winnerSeasonElo = winner.latestSeasonId === seasonId ? winner.seasonElo : 400
+    const loserSeasonElo = loser.latestSeasonId === seasonId ? loser.seasonElo : 400
 
     const [winnerEloChange, loserEloChange] = getScoreChange(
       winnerSeasonElo,
@@ -80,7 +82,7 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
       loserSeasonEloAfter,
       winnerSeasonEloBefore: winner.seasonElo,
       loserSeasonEloBefore: loser.seasonElo,
-      seasonId: currentSeason?.id ?? null,
+      seasonId,
     },
     {
       include: [
@@ -90,9 +92,19 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
     }
   )
 
+  // Set the season stuff as undefined if they don't exist eg. there is no season at the moment
+  // This ensures that the season data reflects the latest season stats
   await Promise.all([
-    updatePlayerById(winner.id, { elo: winnerEloAfter }),
-    updatePlayerById(loser.id, { elo: loserEloAfter }),
+    updatePlayerById(winner.id, {
+      elo: winnerEloAfter,
+      seasonElo: winnerSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
+    updatePlayerById(loser.id, {
+      elo: loserEloAfter,
+      seasonElo: loserSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
   ])
 
   return createdGame

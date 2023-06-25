@@ -26,10 +26,16 @@ Player.hasMany(Game, {
   foreignKey: 'loserId',
 })
 
-// Define seasonid foreign key Game -> Player
+// Define seasonid foreign key Season -> Games
 Season.hasMany(Game, {
   as: 'games',
   foreignKey: 'seasonId',
+})
+
+// Define seasonid foreign key Season -> Player
+Season.hasMany(Player, {
+  as: 'players',
+  foreignKey: 'latestSeasonId',
 })
 
 // Define winnerId foreign key Game -> Player
@@ -44,7 +50,7 @@ Game.belongsTo(Player, {
   as: 'loser',
 })
 
-// Define loserId foreign key Game -> Player
+// Define loserId foreign key Season -> Player
 Player.belongsTo(Season, {
   foreignKey: 'latestSeasonId',
   as: 'Season',
