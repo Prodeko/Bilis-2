@@ -1,6 +1,10 @@
 'use client'
 
-import { PlayerTableSchema, Table, getColumnSchema } from '@components/ui/MultifunctionTable'
+import {
+  PlayerTableSchema,
+  TableWithPagination,
+  getColumnSchema,
+} from '@components/ui/MultifunctionTable'
 
 interface Props {
   data: PlayerTableSchema[]
@@ -9,7 +13,7 @@ interface Props {
 export const TableProvider = ({ data }: Props) => {
   const columns = getColumnSchema()
   return (
-    <Table
+    <TableWithPagination
       {...{
         data,
         columns,

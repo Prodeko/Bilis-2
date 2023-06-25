@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { ComponentProps } from 'react'
+import { IconType } from 'react-icons'
+import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
 
 import {
   Column,
@@ -62,7 +64,112 @@ const Filter = ({ column, table }: { column: Column<any, any>; table: ReactTable
   )
 }
 
-export const Table = ({
+interface Props {
+  table: ReactTable<PlayerTableSchema>
+}
+
+const Table = ({ table }: Props) => {
+  return (
+    <table className={styles.table}>
+      <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+          <tr className={styles.headerRow} key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <th className={styles.headerCell} key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder ? null : (
+                    <div className={styles.headerContainer}>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.column.getCanFilter() ? (
+                        <Filter column={header.column} table={table} />
+                      ) : null}
+                    </div>
+                  )}
+                </th>
+              )
+            })}
+          </tr>
+        ))}
+      </thead>
+      <tbody className={styles.body}>
+        {table.getRowModel().rows.map(row => {
+          return (
+            <tr className={styles.dataRow} key={row.id}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <td className={styles.dataCell} key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                )
+              })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+type ButtonProps = ComponentProps<'button'>
+type InputProps = ComponentProps<'input'>
+
+interface PaginationButtonProps extends ButtonProps {
+  Icon: IconType
+}
+
+const PaginationButton = ({ Icon, ...props }: PaginationButtonProps) => {
+  return (
+    <button {...props} className={styles.paginationButton}>
+      <Icon size={24} />
+    </button>
+  )
+}
+
+type PaginationInputProps = InputProps
+
+const PaginationInput = ({ ...props }: InputProps) => {
+  return <input {...props} type="number" className={styles.paginationInput} />
+}
+
+const Pagination = ({ table }: Props) => {
+  return (
+    <div className={styles.paginationContainer}>
+      <PaginationButton
+        Icon={FiChevronsLeft}
+        onClick={() => table.setPageIndex(0)}
+        disabled={!table.getCanPreviousPage()}
+      />
+      <PaginationButton
+        Icon={FiChevronLeft}
+        onClick={() => table.previousPage()}
+        disabled={!table.getCanPreviousPage()}
+      />
+      <PaginationInput
+        onChange={e => {
+          const page = e.target.value ? Number(e.target.value) - 1 : 0
+          table.setPageIndex(page)
+        }}
+        onBlur={e => {
+          const page = e.target.value ? Number(e.target.value) - 1 : 0
+          table.setPageIndex(page)
+        }}
+        defaultValue={table.getState().pagination.pageIndex + 1}
+      />
+      <PaginationButton
+        Icon={FiChevronRight}
+        onClick={() => table.nextPage()}
+        disabled={!table.getCanNextPage()}
+      />
+      <PaginationButton
+        Icon={FiChevronsRight}
+        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+        disabled={!table.getCanNextPage()}
+      />
+    </div>
+  )
+}
+
+export const TableWithPagination = ({
   data,
   columns,
 }: {
@@ -82,91 +189,10 @@ export const Table = ({
 
   return (
     <div className="p-2">
-      <div className="h-2" />
-      <table className={styles.table}>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr className={styles.headerRow} key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <th className={styles.headerCell} key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder ? null : (
-                      <div className={styles.headerContainer}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {header.column.getCanFilter() ? (
-                          <Filter column={header.column} table={table} />
-                        ) : null}
-                      </div>
-                    )}
-                  </th>
-                )
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody className={styles.body}>
-          {table.getRowModel().rows.map(row => {
-            return (
-              <tr className={styles.dataRow} key={row.id}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <td className={styles.dataCell} key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-      <div className="flex items-center gap-2">
-        <button
-          className="border rounded p-1"
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<<'}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          {'>>'}
-        </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-          </strong>
-        </span>
-        <span className="flex items-center gap-1">
-          | Go to page:
-          <input
-            type="number"
-            defaultValue={table.getState().pagination.pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              table.setPageIndex(page)
-            }}
-            className="border p-1 rounded w-16"
-          />
-        </span>
+      <Table table={table} />
+      <Pagination table={table} />
+      <div>
+        {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         <select
           value={table.getState().pagination.pageSize}
           onChange={e => {
@@ -180,8 +206,6 @@ export const Table = ({
           ))}
         </select>
       </div>
-      <div>{table.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
     </div>
   )
 }
