@@ -208,7 +208,7 @@ export const TableWithPagination = ({
   })
 
   return (
-    <div className="p-2">
+    <div className={styles.layout}>
       <Table table={table} />
       <Pagination table={table} />
     </div>

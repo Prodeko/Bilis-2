@@ -21,6 +21,11 @@
   }
 }
 
+.layout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
 .table {
   border: none;
 }
@@ -112,6 +117,7 @@
 .paginationContainer {
   @extend %flex-center;
 
+  background-color: $color-gray-800;
   gap: $spacing-16;
   padding: $spacing-16;
 }
