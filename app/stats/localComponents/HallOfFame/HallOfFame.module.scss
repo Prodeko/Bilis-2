@@ -44,8 +44,8 @@
 .statTexts {
   @include flex-y(null);
 
+  align-items: flex-start;
   flex: 1;
-  min-width: 0;
 
   & > * {
     overflow: hidden;
@@ -57,7 +57,14 @@
 .titleHolder {
   @extend %text-style-display-md-semibold;
 
+  border-bottom: 1px solid transparent;
   color: $color-gray-50;
+  transition: all 0.2s;
+
+  &:hover {
+    border-bottom: 1px solid $color-gray-50;
+  }
+
 }
 
 .titleName {

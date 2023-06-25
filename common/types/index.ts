@@ -34,15 +34,10 @@ type PlayerStats = z.infer<typeof playerStats>
 const playerWithStats = player.merge(playerStats)
 type PlayerWithStats = z.infer<typeof playerWithStats>
 
-const playerWithMaxElo = player.extend({
-  maxElo: elo,
+const hofPlayer = player.extend({
+  hofStat: z.union([z.string(), z.number()]),
 })
-type PlayerWithMaxElo = z.infer<typeof playerWithMaxElo>
-
-const playerWithMaxStreak = player.extend({
-  maxStreak: z.number().int().nonnegative(),
-})
-type PlayerWithMaxStreak = z.infer<typeof playerWithMaxStreak>
+type HofPlayer = z.infer<typeof hofPlayer>
 
 // Game types
 const game = withId.extend({
@@ -123,8 +118,6 @@ export type {
   WithId,
   Player,
   NewPlayer,
-  PlayerWithMaxElo,
-  PlayerWithMaxStreak,
   Game,
   GameWithPlayers,
   NewGame,
@@ -136,6 +129,7 @@ export type {
   TimeSeriesGame,
   CreateGameType,
   PieChartProps,
+  HofPlayer,
 }
 
 export {
@@ -145,8 +139,6 @@ export {
   newPlayer,
   playerStats,
   playerWithStats,
-  playerWithMaxElo,
-  playerWithMaxStreak,
   game,
   recentGame,
   mutualGames,
@@ -156,6 +148,7 @@ export {
   timeSeriesGame,
   profileStatistic,
   pieChartProps,
+  hofPlayer,
 }
 
 export { SmoothScrollId }
