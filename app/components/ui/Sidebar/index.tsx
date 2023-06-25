@@ -13,6 +13,7 @@ const Sidebar = () => {
         <SidebarLink path="/stats" Icon={FiBarChart2} />
         <SidebarLink path="/player" Icon={FiUser} />
       </nav>
+      <p className={styles.versioning}>Version 1.2.0 - Isac 💸</p>
     </aside>
   )
 }

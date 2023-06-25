@@ -14,7 +14,6 @@ export default function RootLayout({ children }: Props) {
       <body className={styles.baseGrid}>
         <Sidebar />
         <main className={styles.layout}>{children}</main>
-        <p className={styles.versioning}>Version 1.1.0 - Raikku 🐔</p>
       </body>
     </html>
   )
