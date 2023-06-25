@@ -5,7 +5,7 @@ import { DEFAULT_ELO } from '@common/utils/constants'
 import { createGame } from '@server/db/games'
 import { clearGamesDEV } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
-import { createSeason } from '@server/db/season'
+import { createSeason } from '@server/db/seasons'
 import { clearSeasonsDEV } from '@server/db/seasons/derivatives'
 
 const randomFirstNames: string[] = [
