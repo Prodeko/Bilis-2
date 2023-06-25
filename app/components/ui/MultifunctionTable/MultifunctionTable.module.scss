@@ -41,8 +41,8 @@
 }
 
 .filterContainer {
-  @include flex-x(null);
-
+  // @include grid-cols(2);
+  display: flex;
   justify-content: space-between;
   overflow: hidden;
   width: 100%;
@@ -55,7 +55,8 @@
 
 .numberInput {
   @extend %input;
-  
+
+  flex-grow: 1;
   width: $spacing-64;
 
   &::-webkit-outer-spin-button,

@@ -91,7 +91,7 @@ const Table = ({ table }: Props) => {
           </tr>
         ))}
       </thead>
-      <tbody className={styles.body}>
+      <tbody className={styles.tableBody}>
         {table.getRowModel().rows.map(row => {
           return (
             <tr className={styles.dataRow} key={row.id}>
