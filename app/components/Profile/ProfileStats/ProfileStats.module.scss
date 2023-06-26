@@ -1,7 +1,7 @@
 @import 'styles';
 
 .profilestats {
-  @include grid-cols($nof_cols: 4);
+  @include grid-cols($nof_cols: 3);
 
   align-items: center;
   background-color: $color-gray-700;
