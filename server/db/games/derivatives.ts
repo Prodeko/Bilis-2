@@ -10,7 +10,8 @@ import {
 } from '@common/types'
 import { ZEROTH_GAME } from '@common/utils/constants'
 import {
-  computePlayerStats,
+  calculateLongestContinuousSequence,
+  computeWinLossStats,
   formatFullName,
   formatIsoStringToDate,
 } from '@common/utils/helperFunctions'
@@ -21,8 +22,9 @@ const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
 
   const wonGames = games.filter(game => game.winnerId === playerId).length
   const lostGames = games.filter(game => game.loserId === playerId).length
+  const longestWinStreak = calculateLongestContinuousSequence(games, g => g.winnerId === playerId)
 
-  return computePlayerStats(wonGames, lostGames)
+  return { longestWinStreak, ...computeWinLossStats(wonGames, lostGames) }
 }
 
 const getGameCountForPlayer = async (playerId: number): Promise<number> =>

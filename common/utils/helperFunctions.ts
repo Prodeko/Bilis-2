@@ -1,4 +1,4 @@
-import { Player, PlayerStats } from '@common/types'
+import { Player, WinLossStats } from '@common/types'
 
 /**
  * Takes array as input and returns an array of the different permutations.
@@ -69,7 +69,7 @@ export const formatFullName = (player: Player, includeEmoji = false, includeNick
  * @param lostGames - Amount of games player has lost
  * @returns Game stats
  */
-export const computePlayerStats = (wonGames: number, lostGames: number): PlayerStats => {
+export const computeWinLossStats = (wonGames: number, lostGames: number): WinLossStats => {
   const totalGames = wonGames + lostGames
   const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
   return {

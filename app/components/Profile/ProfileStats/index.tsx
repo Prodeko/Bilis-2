@@ -4,7 +4,7 @@ import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
 
 import FargoStatistics from './FargoStatistics'
 import styles from './ProfileStats.module.scss'
-import TotalGamesStatistics from './TotalGamesStatistics'
+import GamesStatistics from './TotalGamesStatistics'
 import WinLossStatistics from './WinLossStatistics'
 import WinPercentageStatistics from './WinPercentageStatistics'
 
@@ -21,7 +21,7 @@ const ProfileStats = ({ player, playerStats, gameData }: Props) => {
   return (
     <div className={styles.profilestats}>
       <FargoStatistics rating={elo} peakRating={maxElo} />
-      <TotalGamesStatistics {...playerStats} />
+      <GamesStatistics {...playerStats} />
       <WinLossStatistics {...playerStats} />
       <WinPercentageStatistics {...playerStats} />
     </div>

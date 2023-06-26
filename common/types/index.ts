@@ -25,11 +25,16 @@ type Player = z.infer<typeof player>
 const newPlayer = player.omit({ id: true, elo: true })
 type NewPlayer = z.infer<typeof newPlayer>
 
-const playerStats = z.object({
+const winLossStats = z.object({
   wonGames: z.number().int().nonnegative(),
   lostGames: z.number().int().nonnegative(),
   totalGames: z.number().int().nonnegative(),
   winPercentage: z.number().nonnegative(),
+})
+type WinLossStats = z.infer<typeof winLossStats>
+
+const playerStats = winLossStats.extend({
+  longestWinStreak: z.number().int().nonnegative(),
 })
 type PlayerStats = z.infer<typeof playerStats>
 
@@ -154,6 +159,7 @@ export type {
   RecentGame,
   SubStatistic,
   ProfileStatistic,
+  WinLossStats,
   PlayerStats,
   MutualGames,
   PlayerWithStats,
@@ -171,6 +177,7 @@ export {
   withId,
   player,
   newPlayer,
+  winLossStats,
   playerStats,
   playerWithStats,
   game,
