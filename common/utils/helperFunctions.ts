@@ -31,6 +31,24 @@ export const permutator = <T>(inputArr: T[]) => {
 }
 
 /**
+ * Calculates the length of the longest continuous sequence of elements for whom predicate returns truthy
+ * @param inputArr - An array of elements of type T
+ * @param predicate - A function that takes a list element as an input and returns if it counts towards a sequence. Defaults to the identity function.
+ * @returns The length of the longest sequence, defaulting to 0 if inputArr is empty
+ */
+export const calculateLongestContinuousSequence = <T>(
+  inputArr: T[],
+  predicate: (item: T) => boolean = i => Boolean(i)
+): number =>
+  inputArr.reduce(
+    ([currentStreak, longestStreak], item) =>
+      predicate(item)
+        ? [currentStreak + 1, Math.max(currentStreak + 1, longestStreak)]
+        : [0, longestStreak],
+    [0, 0]
+  )[1]
+
+/**
  * Formats player's full name give a player object
  *
  * @param player - Player object
