@@ -25,7 +25,7 @@ const PlayerPage = async () => {
   return (
     <ProfileLayout>
       <ProfileHeader player={player} />
-      <ProfileStats player={player} playerStats={playerStats} />
+      <ProfileStats player={player} playerStats={playerStats} gameData={gameData} />
       <ProfileCharts gameData={gameData} currentPlayerId={id} />
     </ProfileLayout>
   )
