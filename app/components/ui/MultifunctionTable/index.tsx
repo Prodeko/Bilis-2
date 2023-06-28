@@ -29,6 +29,17 @@ export interface PlayerTableSchema {
   winPercentage: string
 }
 
+export interface GameTableSchema {
+  time: string
+  winner: string
+  winnerFargoNow: number
+  winnerFargoDifference: number
+  winner: string
+  loserFargoNow: number
+  loserFargoDifference: number
+  underTable: boolean
+}
+
 const Filter = ({ column, table }: { column: Column<any, any>; table: ReactTable<any> }) => {
   const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id)
 
@@ -64,11 +75,11 @@ const Filter = ({ column, table }: { column: Column<any, any>; table: ReactTable
   )
 }
 
-interface Props {
-  table: ReactTable<PlayerTableSchema>
+interface Props<Schema> {
+  table: ReactTable<Schema>
 }
 
-const Table = ({ table }: Props) => {
+const Table = <Schema extends object>({ table }: Props<Schema>) => {
   return (
     <table className={styles.table}>
       <thead className={styles.tableHead}>
@@ -127,11 +138,11 @@ const PaginationButton = ({ Icon, ...props }: PaginationButtonProps) => {
 
 type PaginationInputProps = InputProps
 
-const PaginationInput = ({ ...props }: InputProps) => {
+const PaginationInput = ({ ...props }: PaginationInputProps) => {
   return <input {...props} type="number" className={styles.paginationInput} />
 }
 
-const Pagination = ({ table }: Props) => {
+const Pagination = <Schema extends object>({ table }: Props<Schema>) => {
   return (
     <div className={styles.paginationContainer}>
       <PaginationButton
@@ -169,7 +180,7 @@ const Pagination = ({ table }: Props) => {
   )
 }
 
-const DisplayPageAmount = ({ table }: Props) => {
+const DisplayPageAmount = <Schema extends object>({ table }: Props<Schema>) => {
   return (
     <div>
       {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
@@ -189,12 +200,12 @@ const DisplayPageAmount = ({ table }: Props) => {
   )
 }
 
-export const TableWithPagination = ({
+export const TableWithPagination = <Schema extends object>({
   data,
   columns,
 }: {
-  data: PlayerTableSchema[]
-  columns: ColumnDef<PlayerTableSchema>[]
+  data: Schema[]
+  columns: ColumnDef<Schema>[]
 }) => {
   const table = useReactTable({
     data,
@@ -215,7 +226,37 @@ export const TableWithPagination = ({
   )
 }
 
-export const getColumnSchema = () => {
+export const getGameColumnSchema = () => {
+  const columnHelper = createColumnHelper<GameTableSchema>()
+  return [
+    columnHelper.accessor('time', {
+      header: 'time',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('winner', {
+      header: 'winner',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('winnerFargoNow', {
+      header: 'w.fargo',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('loser', {
+      header: 'loser',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('loserFargoNow', {
+      header: 'l.fargo',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('underTable', {
+      header: 'ut',
+      cell: info => info.getValue(),
+    }),
+  ]
+}
+
+export const getPlayerColumnSchema = () => {
   const columnHelper = createColumnHelper<PlayerTableSchema>()
   return [
     columnHelper.accessor('position', {
