@@ -1,7 +1,7 @@
 'use client'
 
-import { TableWithPagination } from '@components/ui/MultifunctionTable'
-import { GameTableSchema, getGameColumnSchema } from '@components/ui/MultifunctionTable/schemas'
+import { TableWithPagination } from '@ui/MultifunctionTable'
+import { GameTableSchema, getGameColumnSchema } from '@ui/MultifunctionTable/schemas'
 
 interface Props {
   data: GameTableSchema[]

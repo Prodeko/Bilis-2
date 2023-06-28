@@ -1,7 +1,7 @@
 import { elo, id } from '@common/types'
 import { formatFullName, formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getLatestGames } from '@server/db/games'
-import { GameTableSchema } from '@ui/MultifunctionTable'
+import { GameTableSchema } from '@ui/MultifunctionTable/schemas'
 
 import { TableProvider } from './TableProvider'
 

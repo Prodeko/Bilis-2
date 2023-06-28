@@ -1,6 +1,6 @@
 import { elo, id } from '@common/types'
 import { getPlayersWithStats } from '@server/db/players/tableQueries'
-import { PlayerTableSchema } from '@ui/MultifunctionTable'
+import { PlayerTableSchema } from '@ui/MultifunctionTable/schemas'
 
 import { TableProvider } from './TableProvider'
 
