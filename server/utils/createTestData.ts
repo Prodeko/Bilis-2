@@ -1,10 +1,12 @@
 import _ from 'lodash'
 
-import { NewPlayer, Player } from '@common/types'
+import { NewPlayer, NewSeason, Player } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { createGame } from '@server/db/games'
 import { clearGamesDEV } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
+import { createSeason } from '@server/db/seasons'
+import { clearSeasonsDEV } from '@server/db/seasons/derivatives'
 
 const randomFirstNames: string[] = [
   'Aada',
@@ -90,10 +92,38 @@ const generatePlayer = (): NewPlayer & {
   }
 }
 
+const randomDateAfter = (day: Date, maxDays: number) => {
+  const random = Math.floor(Math.random() * maxDays)
+  return addDays(day, random)
+}
+
+const addDays = (date: Date, days: number) => {
+  const daysSeconds = 1000 * 60 * 60 * 24
+  return new Date(date.getTime() + daysSeconds * days)
+}
+
+const generateSeason = (n: number): NewSeason => {
+  const start = addDays(new Date(), 30 * (n - 1))
+  const end = randomDateAfter(start, 30)
+  start.setHours(0, 0, 0, 0)
+  end.setHours(0, 0, 0, 0)
+  return {
+    start,
+    end,
+  }
+}
+
 const createPlayers = async () => {
   const PLAYER_COUNT = 200
   const players = _.times(PLAYER_COUNT, generatePlayer)
   await Promise.all(players.map(createPlayer))
+}
+
+const createSeasons = async () => {
+  const SEASON_COUNT = 10
+  // generateSeason takes the iteration index as parameter
+  const seasons = _.times(SEASON_COUNT, generateSeason)
+  await Promise.all(seasons.map(createSeason))
 }
 
 const createGames = async () => {
@@ -121,6 +151,8 @@ const createGames = async () => {
 const main = async () => {
   await clearGamesDEV()
   await clearPlayersDEV()
+  await clearSeasonsDEV()
+  await createSeasons()
   await createPlayers()
   await createGames()
 }

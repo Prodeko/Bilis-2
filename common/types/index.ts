@@ -17,6 +17,8 @@ const player = withId.extend({
   emoji: z.string().emoji().nonempty(),
   motto: z.string().nonempty(),
   elo,
+  seasonElo: elo.optional().nullable(),
+  latestSeasonId: id.optional().nullable(),
 })
 type Player = z.infer<typeof player>
 
@@ -47,7 +49,12 @@ const game = withId.extend({
   loserEloBefore: elo,
   winnerEloAfter: elo,
   loserEloAfter: elo,
+  winnerSeasonalEloBefore: elo.nullable().optional(),
+  loserSeasonalEloBefore: elo.nullable().optional(),
+  winnerSeasonalEloAfter: elo.nullable().optional(),
+  loserSeasonalEloAfter: elo.nullable().optional(),
   underTable: z.boolean(),
+  seasonId: id.optional(),
 })
 type Game = z.infer<typeof game>
 
@@ -88,6 +95,23 @@ const timeSeriesGame = z.object({
 })
 type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
+// Season types
+const baseSeason = withId.extend({
+  start: z.date(),
+  end: z.date(),
+  name: z.string().optional(),
+})
+
+// Method 'omit' does not exist for the return type of
+// refine method, so the baseSeason is needed
+const season = baseSeason.refine(season => {
+  season.start < season.end
+}, 'End date must be grater than start date!')
+type Season = z.infer<typeof season>
+
+const newSeason = baseSeason.omit({ id: true })
+type NewSeason = z.infer<typeof newSeason>
+
 // Profile types
 
 const profileStatistic = z.object({
@@ -127,6 +151,8 @@ export type {
   MutualGames,
   PlayerWithStats,
   TimeSeriesGame,
+  Season,
+  NewSeason,
   CreateGameType,
   PieChartProps,
   HofPlayer,
@@ -146,6 +172,8 @@ export {
   newGame,
   createGameType,
   timeSeriesGame,
+  season,
+  newSeason,
   profileStatistic,
   pieChartProps,
   hofPlayer,

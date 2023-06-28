@@ -32,6 +32,13 @@ const getGameCountForPlayer = async (playerId: number): Promise<number> =>
     },
   })
 
+const getSeasonGameCountForPlayer = async (playerId: number, seasonId: number): Promise<number> =>
+  GameModel.count({
+    where: {
+      [Op.and]: [{ [Op.or]: [{ winnerId: playerId }, { loserId: playerId }] }, { seasonId }],
+    },
+  })
+
 const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[]> => {
   const games = await GameModel.findAll({
     where: {
@@ -134,6 +141,7 @@ const clearGamesDEV = (): Promise<number> =>
 export {
   getPlayerStats,
   getGameCountForPlayer,
+  getSeasonGameCountForPlayer,
   getPlayerDetailedGames,
   getMutualGamesCount,
   getRecentGames,

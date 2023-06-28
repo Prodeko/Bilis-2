@@ -16,6 +16,10 @@ class Player extends Model {
   declare motto: string
 
   declare elo: number
+
+  declare seasonElo: number
+
+  declare latestSeasonId: number
 }
 
 Player.init(
@@ -41,6 +45,16 @@ Player.init(
     elo: {
       type: DataTypes.DOUBLE,
       allowNull: false,
+    },
+    seasonElo: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    latestSeasonId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
     },
     emoji: {
       type: DataTypes.STRING,

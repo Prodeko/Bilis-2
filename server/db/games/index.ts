@@ -5,7 +5,8 @@ import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
 
-import { getGameCountForPlayer } from './derivatives'
+import { getCurrentSeason } from '../seasons'
+import { getGameCountForPlayer, getSeasonGameCountForPlayer } from './derivatives'
 
 const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
   GameModel.findAll({
@@ -27,15 +28,17 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
   })
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
-  const [winner, loser, winnerGames, loserGames] = await Promise.all([
+  const [winner, loser, winnerGames, loserGames, currentSeason] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
     getGameCountForPlayer(game.winnerId),
     getGameCountForPlayer(game.loserId),
+    getCurrentSeason(),
   ])
 
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
     winnerGames,
@@ -45,6 +48,29 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
 
+  let winnerSeasonEloAfter = null
+  let loserSeasonEloAfter = null
+
+  const seasonId = currentSeason?.id
+
+  if (seasonId) {
+    const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, seasonId)
+    const loserSeasonGames = await getSeasonGameCountForPlayer(game.loserId, seasonId)
+
+    const winnerSeasonElo = winner.latestSeasonId === seasonId ? winner.seasonElo : 400
+    const loserSeasonElo = loser.latestSeasonId === seasonId ? loser.seasonElo : 400
+
+    const [winnerEloChange, loserEloChange] = getScoreChange(
+      winnerSeasonElo,
+      winnerSeasonGames,
+      loserSeasonElo,
+      loserSeasonGames
+    )
+
+    winnerSeasonEloAfter = winnerSeasonElo + winnerEloChange
+    loserSeasonEloAfter = loserSeasonElo + loserEloChange
+  }
+
   const createdGame = await GameModel.scope('withTime').create(
     {
       ...game,
@@ -52,6 +78,11 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
       loserEloAfter,
       winnerEloBefore: winner.elo,
       loserEloBefore: loser.elo,
+      winnerSeasonEloAfter,
+      loserSeasonEloAfter,
+      winnerSeasonEloBefore: winner.seasonElo,
+      loserSeasonEloBefore: loser.seasonElo,
+      seasonId,
     },
     {
       include: [
@@ -61,9 +92,19 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
     }
   )
 
+  // Set the season stuff as undefined if they don't exist eg. there is no season at the moment
+  // This ensures that the season data reflects the latest season stats
   await Promise.all([
-    updatePlayerById(winner.id, { elo: winnerEloAfter }),
-    updatePlayerById(loser.id, { elo: loserEloAfter }),
+    updatePlayerById(winner.id, {
+      elo: winnerEloAfter,
+      seasonElo: winnerSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
+    updatePlayerById(loser.id, {
+      elo: loserEloAfter,
+      seasonElo: loserSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
   ])
 
   return createdGame
