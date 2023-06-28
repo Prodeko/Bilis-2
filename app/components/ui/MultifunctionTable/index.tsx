@@ -1,8 +1,6 @@
 'use client'
 
 import React, { ComponentProps } from 'react'
-import { IconType } from 'react-icons'
-import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
 
 import {
   Column,
@@ -20,6 +18,7 @@ import {
 
 import { Filter } from './Filter'
 import styles from './MultifunctionTable.module.scss'
+import { Pagination } from './Pagination'
 
 export interface PlayerTableSchema {
   position: number
@@ -84,65 +83,6 @@ const Table = <Schema extends object>({ table }: Props<Schema>) => {
         })}
       </tbody>
     </table>
-  )
-}
-
-type ButtonProps = ComponentProps<'button'>
-type InputProps = ComponentProps<'input'>
-
-interface PaginationButtonProps extends ButtonProps {
-  Icon: IconType
-}
-
-const PaginationButton = ({ Icon, ...props }: PaginationButtonProps) => {
-  return (
-    <button {...props} className={styles.paginationButton}>
-      <Icon size={24} />
-    </button>
-  )
-}
-
-type PaginationInputProps = InputProps
-
-const PaginationInput = ({ ...props }: PaginationInputProps) => {
-  return <input {...props} type="number" className={styles.paginationInput} />
-}
-
-const Pagination = <Schema extends object>({ table }: Props<Schema>) => {
-  return (
-    <div className={styles.paginationContainer}>
-      <PaginationButton
-        Icon={FiChevronsLeft}
-        onClick={() => table.setPageIndex(0)}
-        disabled={!table.getCanPreviousPage()}
-      />
-      <PaginationButton
-        Icon={FiChevronLeft}
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
-      />
-      <PaginationInput
-        onChange={e => {
-          const page = e.target.value ? Number(e.target.value) - 1 : 0
-          table.setPageIndex(page)
-        }}
-        onBlur={e => {
-          const page = e.target.value ? Number(e.target.value) - 1 : 0
-          table.setPageIndex(page)
-        }}
-        defaultValue={table.getState().pagination.pageIndex + 1}
-      />
-      <PaginationButton
-        Icon={FiChevronRight}
-        onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      />
-      <PaginationButton
-        Icon={FiChevronsRight}
-        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-        disabled={!table.getCanNextPage()}
-      />
-    </div>
   )
 }
 
