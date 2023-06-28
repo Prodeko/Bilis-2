@@ -51,7 +51,7 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
   let winnerSeasonEloAfter = null
   let loserSeasonEloAfter = null
 
-  const seasonId = currentSeason?.id ?? null
+  const seasonId = currentSeason?.id
 
   if (seasonId) {
     const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, seasonId)

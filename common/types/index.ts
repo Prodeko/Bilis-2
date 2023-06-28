@@ -106,7 +106,7 @@ const baseSeason = withId.extend({
 // refine method, so the baseSeason is needed
 const season = baseSeason.refine(season => {
   season.start < season.end
-}, 'End date must be greated than start date!')
+}, 'End date must be grater than start date!')
 type Season = z.infer<typeof season>
 
 const newSeason = baseSeason.omit({ id: true })

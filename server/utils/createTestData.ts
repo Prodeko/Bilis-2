@@ -121,6 +121,7 @@ const createPlayers = async () => {
 
 const createSeasons = async () => {
   const SEASON_COUNT = 10
+  // generateSeason takes the iteration index as parameter
   const seasons = _.times(SEASON_COUNT, generateSeason)
   await Promise.all(seasons.map(createSeason))
 }
