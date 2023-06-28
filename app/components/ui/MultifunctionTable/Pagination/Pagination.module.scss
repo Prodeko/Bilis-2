@@ -15,11 +15,15 @@
   border: none;
   color: $color-gray-200;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s;
   
   &:hover {
     color: $color-gray-50;
     scale: 1.05;
+  }
+
+  &:disabled {
+    color: $color-gray-500;
   }
 }
 
