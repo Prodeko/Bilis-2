@@ -2,8 +2,6 @@
 
 import {
   ColumnDef,
-  Table as ReactTable,
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -13,26 +11,6 @@ import {
 import styles from './MultifunctionTable.module.scss'
 import { Pagination } from './Pagination'
 import { Table } from './Table'
-
-const DisplayPageAmount = <Schema extends object>({ table }: Props<Schema>) => {
-  return (
-    <div>
-      {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-      <select
-        value={table.getState().pagination.pageSize}
-        onChange={e => {
-          table.setPageSize(Number(e.target.value))
-        }}
-      >
-        {[10, 20, 30, 40, 50].map(pageSize => (
-          <option key={pageSize} value={pageSize}>
-            Show {pageSize}
-          </option>
-        ))}
-      </select>
-    </div>
-  )
-}
 
 export const TableWithPagination = <Schema extends object>({
   data,
