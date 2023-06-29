@@ -160,6 +160,7 @@ export type {
 
 export {
   id,
+  elo,
   withId,
   player,
   newPlayer,

@@ -1,7 +1,10 @@
 @use 'styles' as *;
 
 .sidebar {
+  @include flex-y($spacing-16);
+
   background: $color-gradient-mixed-900-600;
+  justify-content: space-between;
   max-height: 100vh;
   padding: $spacing-24;
   z-index: 10;
@@ -42,4 +45,10 @@
 
 .sidebarIcon {
   @include size($spacing-40);
+}
+
+.versioning {
+  color: $color-gray-25;
+  text-align: center;
+  width: 100%;
 }
