@@ -11,8 +11,12 @@ export const getPlayersWithStats = async () => {
       last_name,
       elo,
       emoji,
-      COUNT(games.id) as game_count,
-      SUM(CASE WHEN players.id = games.winner_id THEN 1 ELSE 0 END) as win_count
+      COUNT(games.id)::real as game_count,
+      SUM(CASE WHEN players.id = games.winner_id THEN 1 ELSE 0 END)::real as win_count,
+      CASE 
+        WHEN COUNT(games.id) = 0 THEN 0.0 
+        ELSE (SUM(CASE WHEN players.id = games.winner_id THEN 1 ELSE 0 END) * 100.0 / COUNT(games.id))::real
+      END as win_percentage
     FROM players
     LEFT JOIN games
     ON players.id = games.winner_id OR players.id = games.loser_id
@@ -28,6 +32,7 @@ export const getPlayersWithStats = async () => {
       emoji: string
       game_count: number
       win_count: number
+      win_percentage: number
     }
   ]
   return response

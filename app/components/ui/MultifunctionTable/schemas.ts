@@ -6,7 +6,7 @@ export interface PlayerTableSchema {
   fargo: number
   gameCount: number
   winCount: number
-  winPercentage: string
+  winPercentage: number
 }
 
 export interface GameTableSchema {
