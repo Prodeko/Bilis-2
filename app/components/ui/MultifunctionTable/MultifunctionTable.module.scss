@@ -1,11 +1,11 @@
 @use 'styles' as *;
 
 %row {
-  height: $spacing-56;  
+  height: $spacing-56;
 }
 
 %cell {
-  padding: $spacing-12;
+  padding: $spacing-12;  
 }
 
 %input {
@@ -28,12 +28,22 @@
 
 .table {
   border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .tableHead {
 }
 
 .tableBody {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.tableBodyWrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .headerContainer {
@@ -106,10 +116,25 @@
   }
 }
 
-.headerCell {
-  @extend %cell;
-}
-
 .dataCell {
   @extend %cell;
 }
+
+.numberCell {
+  @extend %cell;
+
+  width: 50%;
+}
+
+.stringCell {
+  @extend %cell;
+
+  width: 100%;
+}
+
+.booleanCell {
+  @extend %cell;
+
+  width: 33%;
+}
+
