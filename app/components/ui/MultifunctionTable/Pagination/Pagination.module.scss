@@ -24,6 +24,7 @@
 
   &:disabled {
     color: $color-gray-500;
+    cursor: not-allowed;
   }
 }
 
