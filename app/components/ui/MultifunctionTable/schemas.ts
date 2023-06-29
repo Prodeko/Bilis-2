@@ -14,7 +14,7 @@ export interface GameTableSchema {
   winner: string
   winnerFargoNow: number
   winnerFargoDifference: number
-  winner: string
+  loser: string
   loserFargoNow: number
   loserFargoDifference: number
   underTable: boolean
