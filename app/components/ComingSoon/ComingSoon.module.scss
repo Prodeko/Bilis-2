@@ -2,7 +2,7 @@
 
 .text {
   @extend %flex-center;
-  @extend %text-style-display-2-xl-semibold;
+  @extend %text-style-display-lg-semibold;
 
   color: $color-gray-300;
   font-style: italic;
