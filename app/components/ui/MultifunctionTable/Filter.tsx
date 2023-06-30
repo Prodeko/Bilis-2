@@ -1,6 +1,7 @@
-import { Table as ReactTable } from '@tanstack/react-table'
+import { Column, Table as ReactTable } from '@tanstack/react-table'
 
 import styles from './MultifunctionTable.module.scss'
+import { SelectFilter } from './SelectFilter'
 
 export const Filter = ({ column, table }: { column: Column<any, any>; table: ReactTable<any> }) => {
   const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id)
@@ -32,6 +33,8 @@ export const Filter = ({ column, table }: { column: Column<any, any>; table: Rea
         />
       </div>
     )
+  } else if (typeof firstValue === 'string' && ['💩', ' '].includes(firstValue)) {
+    return <SelectFilter column={column} />
   } else if (typeof firstValue === 'string') {
     return (
       <input
@@ -42,14 +45,5 @@ export const Filter = ({ column, table }: { column: Column<any, any>; table: Rea
         className={styles.textInput}
       />
     )
-  } else if (typeof firstValue === 'boolean') {
-    /**
-     * Implement filter where
-     * 1. Default: no filter
-     * 2. Filter - show UT: show only ut games
-     * 3. Filter - show no UT: show only non-ut games
-     *
-     */
-    // return <input type="checkbox" onChange={e => column.setFilterValue(e.target.checked)} />
   }
 }
