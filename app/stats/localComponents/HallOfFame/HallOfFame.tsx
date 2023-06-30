@@ -1,10 +1,16 @@
 import { ComponentProps } from 'react'
-import { AiOutlineLineChart, AiOutlinePercentage, AiOutlineTrophy } from 'react-icons/ai'
+import {
+  AiOutlineClockCircle,
+  AiOutlineLineChart,
+  AiOutlinePercentage,
+  AiOutlineTrophy,
+} from 'react-icons/ai'
 
 import {
   getHighestEloAllTimePlayer,
   getHighestStreak,
   getHighestWinPercentage,
+  getMostGamesPlayed,
 } from '@server/db/players/hofQueries'
 
 import { StatsTitle } from '../StatsTitle/StatsTitle'
@@ -31,6 +37,11 @@ export const HallOfFame = async ({ ...props }: Props) => {
       hofPlayer: await getHighestWinPercentage(),
       statName: 'Current Highest Win Percentage',
       Icon: AiOutlinePercentage,
+    },
+    {
+      hofPlayer: await getMostGamesPlayed(),
+      statName: 'Most Games Played Alltime',
+      Icon: AiOutlineClockCircle,
     },
   ])
 
