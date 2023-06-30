@@ -193,7 +193,7 @@ const getMostUndertableWins = async (): Promise<HofPlayer> => {
     ON players.id = games.winner_id
     WHERE games.under_table = true
     GROUP BY 1
-    ORDER BY nof_undertable_games
+    ORDER BY nof_undertable_games DESC
     LIMIT 1
   `,
     { type: QueryTypes.SELECT }
@@ -215,10 +215,44 @@ const getMostUndertableWins = async (): Promise<HofPlayer> => {
   return hofPlayer.parse(hallOfFamePlayer)
 }
 
+const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
+  const [response] = (await dbConf.sequelize.query(
+    `--sql
+    SELECT 
+      players.id, 
+      date_trunc('day', games.created_at::date) as date,
+      COUNT(games.id) as nof_games
+    FROM players
+    LEFT JOIN games
+    ON players.id = games.winner_id OR players.id = games.loser_id
+    GROUP BY 1,2
+    ORDER BY nof_games DESC
+    LIMIT 1
+  `,
+    { type: QueryTypes.SELECT }
+  )) as [
+    {
+      id: number
+      nof_games: number
+    }
+  ]
+
+  const player = await PlayerModel.findOne({ where: { id: response.id } })
+
+  if (!player) throw new Error('No player found!')
+
+  const hallOfFamePlayer = {
+    ...player.toJSON(),
+    hofStat: response.nof_games,
+  }
+  return hofPlayer.parse(hallOfFamePlayer)
+}
+
 export {
   getHighestEloAllTimePlayer,
   getHighestStreak,
   getHighestWinPercentage,
   getMostGamesPlayed,
   getMostUndertableWins,
+  getMostPlayedGamesInOneDay,
 }
