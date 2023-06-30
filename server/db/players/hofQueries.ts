@@ -184,4 +184,41 @@ const getMostGamesPlayed = async (): Promise<HofPlayer> => {
   return hofPlayer.parse(hallOfFamePlayer)
 }
 
-export { getHighestEloAllTimePlayer, getHighestStreak, getHighestWinPercentage, getMostGamesPlayed }
+const getMostUndertableWins = async (): Promise<HofPlayer> => {
+  const [response] = (await dbConf.sequelize.query(
+    `--sql
+    SELECT players.id, COUNT(games.id) as nof_undertable_games
+    FROM players
+    LEFT JOIN games
+    ON players.id = games.winner_id
+    WHERE games.under_table = true
+    GROUP BY 1
+    ORDER BY nof_undertable_games
+    LIMIT 1
+  `,
+    { type: QueryTypes.SELECT }
+  )) as [
+    {
+      id: number
+      nof_undertable_games: number
+    }
+  ]
+
+  const player = await PlayerModel.findOne({ where: { id: response.id } })
+
+  if (!player) throw new Error('No player found!')
+
+  const hallOfFamePlayer = {
+    ...player.toJSON(),
+    hofStat: response.nof_undertable_games,
+  }
+  return hofPlayer.parse(hallOfFamePlayer)
+}
+
+export {
+  getHighestEloAllTimePlayer,
+  getHighestStreak,
+  getHighestWinPercentage,
+  getMostGamesPlayed,
+  getMostUndertableWins,
+}
