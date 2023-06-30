@@ -1,4 +1,5 @@
 import { ComponentProps, useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 import { Column } from '@tanstack/react-table'
 
@@ -8,12 +9,13 @@ type DivProps = ComponentProps<'div'>
 
 interface Props extends DivProps {
   column: Column<any, any>
+  setDisplayState: Dispatch<SetStateAction<number | string>>
 }
 
 const options = ['All', '💩', 'No - 💩']
 type Options = typeof options[number]
 
-export const SelectFilter = ({ column, ...props }: Props) => {
+export const SelectFilter = ({ column, setDisplayState, ...props }: Props) => {
   const [state, setState] = useState<string>('All')
   const [visible, setVisible] = useState<boolean>(false)
 
@@ -48,6 +50,7 @@ export const SelectFilter = ({ column, ...props }: Props) => {
                 setState(option)
                 switchFilter(option)
                 setVisible(false)
+                setDisplayState(1)
               }}
             >
               {option}
