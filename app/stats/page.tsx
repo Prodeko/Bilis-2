@@ -1,3 +1,4 @@
+import ComingSoon from '@components/ComingSoon'
 import { Card } from '@components/ui/Card'
 
 import styles from './Layout.module.scss'
@@ -19,7 +20,9 @@ const StatsPage = async () => {
           gridRow: '1 / 3',
           gridColumn: '2 / -1',
         }}
-      ></Card>
+      >
+        <ComingSoon />
+      </Card>
       <Card
         style={{
           gridRow: '3 / -1',
