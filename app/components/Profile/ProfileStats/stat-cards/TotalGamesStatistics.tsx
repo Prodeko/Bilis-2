@@ -1,4 +1,5 @@
 import { round } from 'lodash'
+import { FiPlay } from 'react-icons/fi'
 
 import ProfileStat from '../ProfileStat'
 
@@ -14,6 +15,7 @@ const GamesStatistics = ({ totalGames, wonGames, longestWinStreak, winPercentage
   return (
     <ProfileStat
       label="Games"
+      Icon={FiPlay}
       subStatistics={[
         { label: 'Total', value: totalGames.toString() },
         { label: 'Wins', value: winsValue },
