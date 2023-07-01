@@ -9,8 +9,8 @@
 }
 
 .chartTitle {
-  @extend %text-style-display-lg-bold;
-  
+  @extend %text-style-text-sm-medium;
+
   color: $color-gray-100;
 }
 
@@ -19,7 +19,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   max-height: 100%;
-  row-gap: $spacing-32;
+  row-gap: $spacing-8;
 }
 
 .pieContainer {
