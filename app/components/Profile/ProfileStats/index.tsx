@@ -2,10 +2,10 @@ import _ from 'lodash'
 
 import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
 
-import FargoStatistics from './FargoStatistics'
 import styles from './ProfileStats.module.scss'
-import GamesStatistics from './TotalGamesStatistics'
-import WinPercentageStatistics from './WinPercentageStatistics'
+import FargoStatistics from './stat-cards/FargoStatistics'
+import GamesStatistics from './stat-cards/TotalGamesStatistics'
+import WinPercentageStatistics from './stat-cards/WinPercentageStatistics'
 
 type Props = {
   player: Player

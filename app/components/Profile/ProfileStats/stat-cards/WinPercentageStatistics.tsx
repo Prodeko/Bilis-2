@@ -1,6 +1,6 @@
 import { round } from 'lodash'
 
-import ProfileStat from './ProfileStat'
+import ProfileStat from '../ProfileStat'
 
 type Props = {
   winPercentage: number
