@@ -4,7 +4,6 @@
   @include grid-cols($nof_cols: 3);
 
   align-items: center;
-  background-color: $color-gray-700;
   gap: $spacing-48;
   padding: $spacing-48;
 }
