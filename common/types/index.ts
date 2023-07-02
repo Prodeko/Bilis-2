@@ -95,7 +95,9 @@ type CreateGameType = z.infer<typeof createGameType>
 
 const timeSeriesGame = z.object({
   currentElo: elo,
+  currentSeasonalElo: elo.nullable().optional(),
   opponent: z.string().optional(),
+  seasonalEloDiff: z.number().nullable().optional(),
   eloDiff: z.number(),
 })
 type TimeSeriesGame = z.infer<typeof timeSeriesGame>

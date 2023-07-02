@@ -63,13 +63,24 @@ const getPlayerDetailedGames = async (playerId: number): Promise<TimeSeriesGame[
   const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
     const isWinner = game.winnerId === playerId
     const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
+    const currentSeasonalElo = isWinner ? game.winnerSeasonalEloAfter : game.loserSeasonalEloAfter
     const eloDiff = isWinner
       ? game.winnerEloAfter - game.winnerEloBefore
       : game.loserEloAfter - game.loserEloBefore
+    let seasonalEloDiff
+    if (game.seasonId == null) {
+      seasonalEloDiff = null
+    } else {
+      seasonalEloDiff = isWinner
+        ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          game.winnerSeasonalEloAfter! - game.winnerSeasonalEloBefore!
+        : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          game.loserSeasonalEloAfter! - game.loserSeasonalEloBefore!
+    }
     const opponent = isWinner
       ? game.loser.firstName + ' ' + game.loser.lastName
       : game.winner.firstName + ' ' + game.winner.lastName
-    return { currentElo, opponent, eloDiff }
+    return { currentElo, opponent, eloDiff, currentSeasonalElo, seasonalEloDiff }
   }
 
   const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
