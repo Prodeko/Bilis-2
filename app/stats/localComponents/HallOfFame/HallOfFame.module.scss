@@ -26,6 +26,7 @@
 
   align-items: center;
   display: flex;
+  gap: $spacing-16;
   justify-content: space-between;
 }
 
@@ -45,12 +46,14 @@
   @include flex-y(null);
 
   align-items: flex-start;
-  flex: 1;
+  min-width: 0;
 
   & > * {
+    flex-shrink: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 100%
   }
 }
 

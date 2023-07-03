@@ -1,15 +1,12 @@
 @use 'styles' as *;
 
-.container {
-  @extend %flex-center;
-
-  background: $color-gradient-mixed-900-400;
-  height: 100%;
-  width: 100%;
-}
-
 .text {
-  @extend %text-style-display-2-xl-semibold;
+  @extend %flex-center;
+  @extend %text-style-display-lg-semibold;
 
-  color: $color-base-white
+  color: $color-gray-300;
+  font-style: italic;
+  height: 100%;
+  text-align: center;
+  width: 100%
 }
