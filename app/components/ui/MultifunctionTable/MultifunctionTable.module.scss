@@ -13,7 +13,7 @@
 
   background-color: $color-gray-600;
   border: 1px solid $color-gray-700;
-  color: $color-gray-300;
+  color: $color-gray-400;
   padding: $spacing-12;
 
   &::placeholder {
@@ -80,6 +80,39 @@
   @extend %input;
 
   width: 100%;
+}
+
+.dropdownInputContainer {
+  position: relative;
+}
+
+.dropdownInput {
+  @extend %input;
+
+  width: 100%;
+}
+
+.optionList {
+  position: absolute;
+  top: 6rem;
+  width: 100%;
+}
+
+.option {
+  @extend %input;
+
+  background-color: $color-primary-400;
+  color: $color-primary-50;
+  cursor: pointer;
+  height: $spacing-56;
+  list-style: none;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+
+  &:hover {
+    background-color: $color-primary-300;
+  }
 }
 
 .headerRow {

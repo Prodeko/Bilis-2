@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import {
   ColumnDef,
   getCoreRowModel,
@@ -30,10 +32,12 @@ export const TableWithPagination = <Schema extends object>({
     debugTable: true,
   })
 
+  const currentPaginationState = table.getState().pagination.pageIndex
+  const [displayState, setDisplayState] = useState<number | string>(currentPaginationState + 1)
   return (
     <div className={styles.layout}>
-      <Table table={table} />
-      <Pagination table={table} />
+      <Table table={table} setDisplayState={setDisplayState} />
+      <Pagination table={table} displayState={displayState} setDisplayState={setDisplayState} />
     </div>
   )
 }

@@ -15,7 +15,7 @@ const StatsGamesPage = async () => {
     winnerFargoDifference: game.winnerEloAfter - game.winnerEloBefore,
     loserFargoNow: elo.parse(Number(game.loserEloAfter.toFixed(2))),
     loserFargoDifference: game.loserEloAfter - game.loserEloBefore,
-    underTable: game.underTable,
+    underTable: game.underTable ? '💩' : ' ',
   }))
 
   return <TableProvider data={data} />

@@ -17,7 +17,7 @@ export interface GameTableSchema {
   loser: string
   loserFargoNow: number
   loserFargoDifference: number
-  underTable: boolean
+  underTable: string
 }
 
 export const getGameColumnSchema = () => {

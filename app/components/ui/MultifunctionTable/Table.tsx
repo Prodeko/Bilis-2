@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { Table as ReactTable, flexRender } from '@tanstack/react-table'
 
 import { Filter } from './Filter'
@@ -5,6 +7,7 @@ import styles from './MultifunctionTable.module.scss'
 
 interface Props<Schema> {
   table: ReactTable<Schema>
+  setDisplayState: Dispatch<SetStateAction<number | string>>
 }
 
 const dataTypeCellStyling = (cellValue: any) => {
@@ -20,7 +23,7 @@ const dataTypeCellStyling = (cellValue: any) => {
   }
 }
 
-export const Table = <Schema extends object>({ table }: Props<Schema>) => {
+export const Table = <Schema extends object>({ table, setDisplayState }: Props<Schema>) => {
   return (
     <table className={styles.table}>
       <thead className={styles.tableHead}>
@@ -40,7 +43,11 @@ export const Table = <Schema extends object>({ table }: Props<Schema>) => {
                     <div className={styles.headerContainer}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.getCanFilter() ? (
-                        <Filter column={header.column} table={table} />
+                        <Filter
+                          column={header.column}
+                          table={table}
+                          setDisplayState={setDisplayState}
+                        />
                       ) : null}
                     </div>
                   )}
