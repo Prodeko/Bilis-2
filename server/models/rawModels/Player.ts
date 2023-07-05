@@ -20,6 +20,10 @@ class Player extends Model {
   declare seasonElo: number
 
   declare latestSeasonId: number
+
+  declare createdAt: Date
+
+  declare updatedAt: Date
 }
 
 Player.init(
@@ -70,11 +74,6 @@ Player.init(
     underscored: true,
     timestamps: true,
     modelName: 'player',
-    defaultScope: {
-      attributes: {
-        exclude: ['createdAt', 'updatedAt'],
-      },
-    },
     hooks: {
       async afterCreate(attrs) {
         await attrs.reload()

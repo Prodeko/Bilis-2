@@ -2,7 +2,8 @@ import { max, round } from 'lodash'
 import { ComponentProps } from 'react'
 import { FiCalendar, FiFolder, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
-import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
+import { Player } from '@common/types'
+import { formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerDetailedGames, getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
 
@@ -56,7 +57,9 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
         Icon={FiFolder}
         label="History"
         subStatistics={[
-          { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
+          { label: 'ID', value: playerId.toString() },
+          { label: 'Player created', value: formatIsoStringToDate(player.createdAt) },
+          { label: 'Player updated', value: formatIsoStringToDate(player.updatedAt) },
         ]}
       />
     </div>
