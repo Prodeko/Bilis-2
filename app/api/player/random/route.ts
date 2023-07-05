@@ -8,3 +8,5 @@ export async function GET() {
   const parsedPlayer = player.parse(randomPlayer)
   return NextResponse.json(parsedPlayer)
 }
+
+export const dynamic = 'force-dynamic'
