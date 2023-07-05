@@ -1,4 +1,4 @@
-import { Player, PlayerStats } from '@common/types'
+import { Player, WinLossStats } from '@common/types'
 
 /**
  * Takes array as input and returns an array of the different permutations.
@@ -31,6 +31,24 @@ export const permutator = <T>(inputArr: T[]) => {
 }
 
 /**
+ * Calculates the length of the longest continuous sequence of elements for whom predicate returns truthy
+ * @param inputArr - An array of elements of type T
+ * @param predicate - A function that takes a list element as an input and returns if it counts towards a sequence. Defaults to the identity function.
+ * @returns The length of the longest sequence, defaulting to 0 if inputArr is empty
+ */
+export const calculateLongestContinuousSequence = <T>(
+  inputArr: T[],
+  predicate: (item: T) => boolean = i => Boolean(i)
+): number =>
+  inputArr.reduce(
+    ([currentStreak, longestStreak], item) =>
+      predicate(item)
+        ? [currentStreak + 1, Math.max(currentStreak + 1, longestStreak)]
+        : [0, longestStreak],
+    [0, 0]
+  )[1]
+
+/**
  * Formats player's full name give a player object
  *
  * @param player - Player object
@@ -51,7 +69,7 @@ export const formatFullName = (player: Player, includeEmoji = false, includeNick
  * @param lostGames - Amount of games player has lost
  * @returns Game stats
  */
-export const computePlayerStats = (wonGames: number, lostGames: number): PlayerStats => {
+export const computeWinLossStats = (wonGames: number, lostGames: number): WinLossStats => {
   const totalGames = wonGames + lostGames
   const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
   return {
@@ -84,7 +102,7 @@ export const createSmoothScrollFn = (domElementId: string) => {
  * @param isoStringDate - Date in isoString format
  * @returns Localized, formatted date string
  */
-export const formatIsoStringToDate = (isoStringDate: string) => {
+export const formatIsoStringToDate = (isoStringDate: string | Date) => {
   const date = new Date(isoStringDate)
   return Intl.DateTimeFormat('fi-FI', {
     dateStyle: 'short',

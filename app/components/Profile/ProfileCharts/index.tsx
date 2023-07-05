@@ -1,19 +1,24 @@
-import { TimeSeriesGame } from '@common/types'
+import { ComponentProps } from 'react'
+
+import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
 
+import { ChartTitle } from './ChartTitle'
 import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'
 
-interface Props {
-  gameData: TimeSeriesGame[]
-  currentPlayerId: number
+type DivProps = ComponentProps<'div'>
+
+interface Props extends DivProps {
+  playerId: number
 }
 
-const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
+const ProfileCharts = async ({ playerId, ...props }: Props) => {
+  const gameData = await getPlayerDetailedGames(playerId)
   return (
-    <div className={styles.container}>
+    <div {...props} className={styles.container}>
       <div className={styles.chartContainer}>
-        <h2 className={styles.chartTitle}>Fargo Graph</h2>
+        <ChartTitle title="Fargo Graph" />
         <TimeSeriesChart
           gameData={gameData}
           dataName="Fargo Data"
@@ -22,8 +27,8 @@ const ProfileCharts = ({ gameData, currentPlayerId }: Props) => {
         />
       </div>
       <div className={styles.chartContainer}>
-        <h2 className={styles.chartTitle}>Player Comparison</h2>
-        <PlayerComparison currentPlayerId={currentPlayerId} />
+        <ChartTitle title="Player Comparison" />
+        <PlayerComparison currentPlayerId={playerId} />
       </div>
     </div>
   )

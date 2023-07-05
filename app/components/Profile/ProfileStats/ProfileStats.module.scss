@@ -4,23 +4,28 @@
   @include grid-cols($nof_cols: 4);
 
   align-items: center;
-  background-color: $color-gray-700;
-  height: 20rem;
+  gap: $spacing-48;
+  padding: $spacing-48;
 }
 
 .profilestat {
-  @extend %flex-center;
+  @include flex-y($spacing-16);
 
-  flex-direction: column;
-  gap: $spacing-16;
+  padding: $spacing-32;
 
-  &--value {
-    @extend %text-style-display-md-bold;
-
-    color: $color-gray-300;
+  &--container {
+    @include flex-y($spacing-4);
   }
 
   &--label {
+    @extend %flex-between;
+    @extend %text-style-display-md-bold;
+
+    align-items: center;
+    color: $color-gray-300;
+  }
+
+  &--value {
     @extend %text-style-display-xs-medium;
 
     color: $color-gray-400;
