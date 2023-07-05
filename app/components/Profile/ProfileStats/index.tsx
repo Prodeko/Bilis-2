@@ -2,10 +2,10 @@ import { max, round } from 'lodash'
 import { ComponentProps } from 'react'
 import { FiCalendar, FiFolder, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
-import { Player } from '@common/types'
 import { formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerDetailedGames, getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
+import { PlayerModel } from '@server/models'
 
 import ProfileStat from './ProfileStat'
 import styles from './ProfileStats.module.scss'
@@ -18,7 +18,7 @@ interface Props extends DivProps {
 
 const ProfileStats = async ({ playerId, ...props }: Props) => {
   const [player, playerStats, gameData] = await Promise.all([
-    getPlayerById(playerId).then(player => player?.toJSON()) as Promise<Player>,
+    getPlayerById(playerId).then(player => player?.toJSON()) as Promise<PlayerModel>,
     getPlayerStats(playerId),
     getPlayerDetailedGames(playerId),
   ])
