@@ -37,6 +37,7 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
         subStatistics={[
           { label: 'Current', value: round(elo, 2).toFixed(2) },
           { label: 'All-time best', value: round(maxElo, 2).toFixed(2) },
+          { label: 'Seasonal best', value: 'Soon coming' },
         ]}
       />
       <ProfileStat
@@ -49,11 +50,6 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
         ]}
       />
       <ProfileStat
-        Icon={FiCalendar}
-        label="Seasonal"
-        subStatistics={[{ label: 'Coming Soon', value: `at least trying...` }]}
-      />
-      <ProfileStat
         Icon={FiFolder}
         label="History"
         subStatistics={[
@@ -61,6 +57,11 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
           { label: 'Player created', value: formatIsoStringToDate(player.createdAt) },
           { label: 'Player updated', value: formatIsoStringToDate(player.updatedAt) },
         ]}
+      />
+      <ProfileStat
+        Icon={FiCalendar}
+        label="Seasonal"
+        subStatistics={[{ label: 'Coming Soon', value: `at least trying...` }]}
       />
     </div>
   )
