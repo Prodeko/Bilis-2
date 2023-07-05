@@ -24,3 +24,5 @@ const StatsGamesPage = async () => {
 }
 
 export default StatsGamesPage
+
+export const dynamic = 'force-dynamic'
