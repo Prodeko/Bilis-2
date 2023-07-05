@@ -16,11 +16,13 @@ const ProfileStat = ({ label, Icon, subStatistics }: Props) => {
         <h2 className={styles['profilestat--label']}>
           {label} <Icon />
         </h2>
-        {subStatistics.map(({ label, value }) => (
-          <p key={label} className={styles['profilestat--value']}>
-            {label}: {value}
-          </p>
-        ))}
+        <div className={styles['profilestat--container']}>
+          {subStatistics.map(({ label, value }) => (
+            <p key={label} className={styles['profilestat--value']}>
+              {label}: {value}
+            </p>
+          ))}
+        </div>
       </div>
     </Card>
   )

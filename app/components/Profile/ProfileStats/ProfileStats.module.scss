@@ -13,6 +13,10 @@
 
   padding: $spacing-32;
 
+  &--container {
+    @include flex-y($spacing-4);
+  }
+
   &--label {
     @extend %flex-between;
     @extend %text-style-display-md-bold;
