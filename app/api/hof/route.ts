@@ -21,3 +21,5 @@ export async function GET() {
 
   return NextResponse.json(hofPlayers)
 }
+
+export const dynamic = 'force-dynamic'
