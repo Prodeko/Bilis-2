@@ -1,11 +1,10 @@
-import _ from 'lodash'
+import { max, round } from 'lodash'
+import { FiPercent, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
 import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
 
+import ProfileStat from './ProfileStat'
 import styles from './ProfileStats.module.scss'
-import FargoStatistics from './stat-cards/FargoStatistics'
-import GamesStatistics from './stat-cards/TotalGamesStatistics'
-import WinPercentageStatistics from './stat-cards/WinPercentageStatistics'
 
 type Props = {
   player: Player
@@ -15,13 +14,38 @@ type Props = {
 
 const ProfileStats = ({ player, playerStats, gameData }: Props) => {
   const { elo } = player
-  const maxElo = _.max(gameData.map(g => g.currentElo)) ?? elo
+  const maxElo = max(gameData.map(g => g.currentElo)) ?? elo
+  const winsValue = `${playerStats.wonGames.toString()} (${round(
+    playerStats.winPercentage,
+    2
+  ).toFixed(2)}%)`
 
   return (
     <div className={styles.profilestats}>
-      <FargoStatistics rating={elo} peakRating={maxElo} />
-      <GamesStatistics {...playerStats} />
-      <WinPercentageStatistics {...playerStats} />
+      <ProfileStat
+        label="Fargo"
+        Icon={FiTrendingUp}
+        subStatistics={[
+          { label: 'Current', value: round(elo, 2).toFixed(2) },
+          { label: 'All-time best', value: round(maxElo, 2).toFixed(2) },
+        ]}
+      />
+      <ProfileStat
+        label="Games"
+        Icon={FiPlay}
+        subStatistics={[
+          { label: 'Total', value: playerStats.totalGames.toString() },
+          { label: 'Wins', value: winsValue },
+          { label: 'Longest winning streak', value: playerStats.longestWinStreak.toString() },
+        ]}
+      />
+      <ProfileStat
+        Icon={FiPercent}
+        label="Win %"
+        subStatistics={[
+          { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
+        ]}
+      />
     </div>
   )
 }
