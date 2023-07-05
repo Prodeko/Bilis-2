@@ -6,7 +6,6 @@ import { TableProvider } from './TableProvider'
 
 const StatsPlayersPage = async () => {
   const playersWithStats = await getPlayersWithStats()
-  console.log('STATS', playersWithStats)
   const data: PlayerTableSchema[] = playersWithStats.map((player, idx) => ({
     position: id.parse(idx + 1),
     fullName: `${player.emoji} ${player.first_name} ${player.last_name}`,
@@ -20,3 +19,5 @@ const StatsPlayersPage = async () => {
 }
 
 export default StatsPlayersPage
+
+export const dynamic = 'force-dynamic'
