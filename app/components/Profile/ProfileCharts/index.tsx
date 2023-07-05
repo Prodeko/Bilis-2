@@ -3,6 +3,7 @@ import { ComponentProps } from 'react'
 import { getPlayerDetailedGames } from '@server/db/games/derivatives'
 import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
 
+import { ChartTitle } from './ChartTitle'
 import PlayerComparison from './PlayerComparison'
 import styles from './ProfileCharts.module.scss'
 
@@ -17,7 +18,7 @@ const ProfileCharts = async ({ playerId, ...props }: Props) => {
   return (
     <div {...props} className={styles.container}>
       <div className={styles.chartContainer}>
-        <h2 className={styles.chartTitle}>Fargo Graph</h2>
+        <ChartTitle title="Fargo Graph" />
         <TimeSeriesChart
           gameData={gameData}
           dataName="Fargo Data"
@@ -26,7 +27,7 @@ const ProfileCharts = async ({ playerId, ...props }: Props) => {
         />
       </div>
       <div className={styles.chartContainer}>
-        <h2 className={styles.chartTitle}>Player Comparison</h2>
+        <ChartTitle title="Player Comparison" />
         <PlayerComparison currentPlayerId={playerId} />
       </div>
     </div>
