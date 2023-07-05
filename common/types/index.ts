@@ -13,7 +13,7 @@ type WithId = z.infer<typeof withId>
 const player = withId.extend({
   firstName: z.string().nonempty(),
   lastName: z.string().nonempty(),
-  nickname: z.string().nonempty(),
+  nickname: z.string(),
   emoji: z.string().emoji().nonempty(),
   motto: z.string().nonempty(),
   elo,
