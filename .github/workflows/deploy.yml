@@ -30,7 +30,7 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/bilis/bilis
+          docker build -f Dockerfile.prod . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/bilis/bilis
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/bilis/bilis
 
       - name: Deploy from ACR
