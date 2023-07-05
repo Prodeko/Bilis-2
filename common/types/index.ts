@@ -15,7 +15,7 @@ const player = withId.extend({
   lastName: z.string().nonempty(),
   nickname: z.string(),
   emoji: z.string().emoji().nonempty(),
-  motto: z.string().nonempty(),
+  motto: z.string(),
   elo,
   seasonElo: elo.optional().nullable(),
   latestSeasonId: id.optional().nullable(),
