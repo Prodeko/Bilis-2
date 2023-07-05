@@ -26,7 +26,7 @@ interface PlayerItemProps extends ListItemProps {
 export const PlayerListItem = ({ player, ...props }: PlayerItemProps) => {
   return (
     <li className={styles.listItem} {...props}>
-      {formatFullName(player, false, true)}
+      {formatFullName(player, true, player.nickname)}
     </li>
   )
 }

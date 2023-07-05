@@ -19,7 +19,7 @@ export const prepareLeaderboardData = (data: Player[]): LeaderboardPlayer[] => {
   return data.map((row, index) => ({
     id: row.id,
     position: `${index + 1}.`,
-    fullName: formatFullName(row, true, true),
+    fullName: formatFullName(row, true, row.nickname),
     fargo: round(row.elo),
   }))
 }
