@@ -8,14 +8,7 @@ import {
   AiOutlineTrophy,
 } from 'react-icons/ai'
 
-import {
-  getHighestEloAllTimePlayer,
-  getHighestStreak,
-  getHighestWinPercentage,
-  getMostGamesPlayed,
-  getMostPlayedGamesInOneDay,
-  getMostUndertableWins,
-} from '@server/db/players/hofQueries'
+import { NEXT_PUBLIC_API_URL } from '@/config'
 
 import { StatsTitle } from '../StatsTitle/StatsTitle'
 import styles from './HallOfFame.module.scss'
@@ -26,38 +19,46 @@ type DivProps = ComponentProps<'div'>
 type Props = DivProps
 
 export const HallOfFame = async ({ ...props }: Props) => {
-  const hofPlayers = await Promise.all([
+  const hofIcons = [
     {
-      hofPlayer: await getHighestEloAllTimePlayer(),
       statName: 'Highest Peak Fargo',
       Icon: AiOutlineTrophy,
     },
     {
-      hofPlayer: await getHighestStreak(),
       statName: 'Longest Win Streak',
       Icon: AiOutlineLineChart,
     },
     {
-      hofPlayer: await getHighestWinPercentage(),
       statName: 'Current Highest Win Percentage',
       Icon: AiOutlinePercentage,
     },
     {
-      hofPlayer: await getMostGamesPlayed(),
       statName: 'Most Games Played Alltime',
       Icon: AiOutlineSketch,
     },
     {
-      hofPlayer: await getMostUndertableWins(),
       statName: 'Most Opponents Put Undertable',
       Icon: AiOutlineFire,
     },
     {
-      hofPlayer: await getMostPlayedGamesInOneDay(),
       statName: 'Most Games Played In A Single Day',
       Icon: AiOutlineHistory,
     },
-  ])
+  ]
+
+  const req = await fetch(`${NEXT_PUBLIC_API_URL}/hof`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const hofPlayersStats = await req.json()
+  const hofPlayers = hofIcons.map((icon, i) => {
+    return {
+      ...icon,
+      hofPlayer: hofPlayersStats[i],
+    }
+  })
 
   return (
     <div {...props} className={styles.hofLayout}>

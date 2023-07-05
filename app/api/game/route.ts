@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 import { createGameType } from '@common/types'
@@ -9,6 +10,7 @@ export async function POST(req: Request) {
   const parsedCreateGameType = createGameType.parse(json)
   const game = await createGame(parsedCreateGameType)
   const jsonGame = formatRecentGame(game)
+  revalidatePath('/stats')
 
   return NextResponse.json(jsonGame)
 }
