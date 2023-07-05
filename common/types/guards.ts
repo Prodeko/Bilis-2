@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NewPlayer } from '.'
 
 export const isNumber = (supposedNumber: unknown): supposedNumber is number => {
@@ -18,4 +19,23 @@ export const isNewPlayer = (supposedNewPlayer: unknown): supposedNewPlayer is Ne
       NewPlayer.emoji &&
       NewPlayer.motto
   )
+}
+
+/**
+ * Generator function that creates a type guard for a type that checks that every key of the type exist and is of correct type in the input object.
+ *
+ * @param type - Type for the generated type guard
+ * @returns Type guard function for the type
+ */
+export function createTypeGuard<T>(type: T): (obj: any) => obj is T {
+  return function (obj: any): obj is T {
+    for (const key in type) {
+      const keyExists = key in obj
+      const typeIsMatching = typeof obj[key] !== typeof type[key]
+      if (!(keyExists || typeIsMatching)) {
+        return false
+      }
+    }
+    return true
+  }
 }

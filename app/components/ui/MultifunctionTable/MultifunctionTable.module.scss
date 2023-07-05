@@ -1,0 +1,170 @@
+@use 'styles' as *;
+
+%row {
+  height: $spacing-56;
+}
+
+%cell {
+  padding: $spacing-12;  
+}
+
+%input {
+  @extend %text-style-text-lg-normal;
+
+  background-color: $color-gray-600;
+  border: 1px solid $color-gray-700;
+  color: $color-gray-400;
+  padding: $spacing-12;
+
+  &::placeholder {
+    color: $color-gray-800;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tableBody {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.tableBodyWrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.headerContainer {
+  @include flex-y($spacing-8);
+}
+
+.filterContainer {
+  // @include grid-cols(2);
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  width: 100%;
+
+  & > * + * {
+    border-left: 1px solid $color-gray-700;
+    border-right-width: 0;
+  }
+}
+
+.numberInput {
+  @extend %input;
+
+  flex-grow: 1;
+  width: $spacing-64;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.textInput {
+  @extend %input;
+
+  width: 100%;
+}
+
+.dropdownInputContainer {
+  position: relative;
+}
+
+.dropdownInput {
+  @extend %input;
+
+  width: 100%;
+}
+
+.optionList {
+  position: absolute;
+  top: 6rem;
+  width: 100%;
+}
+
+.option {
+  @extend %input;
+
+  background-color: $color-primary-400;
+  color: $color-primary-50;
+  cursor: pointer;
+  height: $spacing-56;
+  list-style: none;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+
+  &:hover {
+    background-color: $color-primary-300;
+  }
+}
+
+.headerRow {
+  @extend %row;
+  @extend %text-style-text-xl-semibold;
+
+  background-color: $color-gray-900;
+  color: $color-gray-400;
+  text-transform: uppercase;
+
+  & > * + * {
+    border-left: 2px solid rgba($color-gray-600, 0.4);
+    border-right-width: 0;
+  }
+}
+
+.dataRow {
+  @extend %row;
+  @extend %text-style-text-xl-medium;
+
+  color: $color-gray-50;
+
+  & > * + * {
+    border-left: 2px solid rgba($color-gray-800, 0.4);
+    border-right-width: 0;
+  }
+
+  &:nth-child(odd) {
+    background-color: $color-gray-600;
+  }
+
+  &:nth-child(even) {
+    background-color: $color-gray-700;
+  }
+}
+
+.dataCell {
+  @extend %cell;
+}
+
+.numberCell {
+  @extend %cell;
+
+  width: 50%;
+}
+
+.stringCell {
+  @extend %cell;
+
+  width: 100%;
+}
+
+.booleanCell {
+  @extend %cell;
+
+  width: 33%;
+}
+

@@ -16,6 +16,14 @@ class Player extends Model {
   declare motto: string
 
   declare elo: number
+
+  declare seasonElo: number
+
+  declare latestSeasonId: number
+
+  declare createdAt: Date
+
+  declare updatedAt: Date
 }
 
 Player.init(
@@ -42,6 +50,16 @@ Player.init(
       type: DataTypes.DOUBLE,
       allowNull: false,
     },
+    seasonElo: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: null,
+    },
+    latestSeasonId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+    },
     emoji: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -56,11 +74,6 @@ Player.init(
     underscored: true,
     timestamps: true,
     modelName: 'player',
-    defaultScope: {
-      attributes: {
-        exclude: ['createdAt'],
-      },
-    },
     hooks: {
       async afterCreate(attrs) {
         await attrs.reload()

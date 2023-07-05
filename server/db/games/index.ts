@@ -1,159 +1,44 @@
 import { Op } from 'sequelize'
 
-import type {
-  GameWithPlayers,
-  MutualGames,
-  NewGame,
-  PlayerStats,
-  RecentGame,
-  TimeSeriesGame,
-} from '@common/types'
-import { ZEROTH_GAME } from '@common/utils/constants'
+import type { CreateGameType } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
-import { Game, Player } from '@server/models'
+import { GameModel, PlayerModel } from '@server/models'
 
-const getGameCountForPlayer = async (playerId: number) => {
-  return Game.count({
-    where: {
-      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
-    },
-  })
-}
+import { getCurrentSeason } from '../seasons'
+import { getGameCountForPlayer, getSeasonGameCountForPlayer } from './derivatives'
 
-const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
-  const games = await Game.findAll({
+const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
+  GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
     order: [['createdAt', 'ASC']],
   })
 
-  const totalGames = games.length
-  const wonGames = games.filter(game => game.winnerId === playerId).length
-  const lostGames = totalGames - wonGames
-  const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
-
-  return {
-    wonGames,
-    lostGames,
-    totalGames,
-    winPercentage,
-  }
-}
-
-const getPlayerDetailedGames = async (playerId: number) => {
-  const games = await Game.findAll({
-    where: {
-      [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
-    },
-    include: [
-      {
-        model: Player,
-        as: 'winner',
-      },
-      {
-        model: Player,
-        as: 'loser',
-      },
-    ],
-    order: [['createdAt', 'ASC']],
-  })
-  const jsonGames = games.map(game => game.toJSON()) as GameWithPlayers[]
-
-  const createTimeSeriesGame = async (game: GameWithPlayers): Promise<TimeSeriesGame> => {
-    const isWinner = game.winnerId === playerId
-    const currentElo = isWinner ? game.winnerEloAfter : game.loserEloAfter
-    const eloDiff = isWinner
-      ? game.winnerEloAfter - game.winnerEloBefore
-      : game.loserEloAfter - game.loserEloBefore
-    const opponent = isWinner
-      ? game.loser.firstName + ' ' + game.loser.lastName
-      : game.winner.firstName + ' ' + game.winner.lastName
-    return { currentElo, opponent, eloDiff }
-  }
-
-  const playedGames = await Promise.all(jsonGames.map(createTimeSeriesGame))
-  // console.log(playedGames)
-  const gameData = [ZEROTH_GAME, ...playedGames]
-
-  return gameData
-}
-
-const getMutualGamesCount = async (
-  currentPlayerId: number,
-  opposingPlayerId: number
-): Promise<MutualGames> => {
-  const [currentPlayerGamesWon, opposingPlayerGamesWon] = await Promise.all([
-    Game.count({
-      where: {
-        winnerId: currentPlayerId,
-        loserId: opposingPlayerId,
-      },
-    }),
-    Game.count({
-      where: {
-        winnerId: opposingPlayerId,
-        loserId: currentPlayerId,
-      },
-    }),
-  ])
-  const totalGames = currentPlayerGamesWon + opposingPlayerGamesWon
-
-  return {
-    currentPlayerGamesWon,
-    opposingPlayerGamesWon,
-    totalGames,
-  }
-}
-
-const getLatestGames = async (n = 20, offset = 0): Promise<GameWithPlayers[]> => {
-  const { rows: games } = await Game.findAndCountAll({
+const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
+  GameModel.scope('withTime').findAll({
     order: [['createdAt', 'DESC']],
     include: [
-      { model: Player, as: 'winner' },
-      { model: Player, as: 'loser' },
+      { model: PlayerModel, as: 'winner' },
+      { model: PlayerModel, as: 'loser' },
     ],
     limit: n,
     offset: offset * n,
   })
 
-  const jsonGames = games.map(g => g.toJSON()) as GameWithPlayers[]
-  return jsonGames
-}
-
-const getRecentGames = async (n = 20, offset = 0) => {
-  const recentGames = await getLatestGames(n, offset)
-
-  return recentGames.map(formatRecentGame)
-}
-
-const formatRecentGame = (game: GameWithPlayers): RecentGame => ({
-  ...game,
-  winnerEloAfter: game.winnerEloAfter,
-  winnerEloBefore: game.winnerEloBefore,
-  loserEloAfter: game.loserEloAfter,
-  loserEloBefore: game.loserEloBefore,
-  time: new Date(game.createdAt).toLocaleString('fi-FI', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  }),
-  winner: `${game.winner.emoji} ${game.winner.firstName} "${game.winner.nickname}" ${game.winner.lastName}`,
-  loser: `${game.loser.emoji} ${game.loser.firstName} "${game.loser.nickname}" ${game.loser.lastName}`,
-})
-
-type CreateGameType = Pick<NewGame, 'winnerId' | 'loserId' | 'underTable'>
-
-const createGame = async (game: CreateGameType) => {
-  const [winner, loser, winnerGames, loserGames] = await Promise.all([
+const createGame = async (game: CreateGameType): Promise<GameModel> => {
+  const [winner, loser, winnerGames, loserGames, currentSeason] = await Promise.all([
     getPlayerById(game.winnerId),
     getPlayerById(game.loserId),
     getGameCountForPlayer(game.winnerId),
     getGameCountForPlayer(game.loserId),
+    getCurrentSeason(),
   ])
 
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
     winnerGames,
@@ -162,33 +47,71 @@ const createGame = async (game: CreateGameType) => {
   )
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
-  const createdGame: GameWithPlayers = (
-    await Game.create(
-      {
-        ...game,
-        winnerEloAfter,
-        loserEloAfter,
-        winnerEloBefore: winner.elo,
-        loserEloBefore: loser.elo,
-      },
-      {
-        include: [
-          { model: Player, as: 'winner' },
-          { model: Player, as: 'loser' },
-        ],
-      }
-    )
-  ).toJSON() as GameWithPlayers
 
+  let winnerSeasonEloAfter = null
+  let loserSeasonEloAfter = null
+
+  const seasonId = currentSeason?.id ?? null
+
+  if (seasonId) {
+    const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, seasonId)
+    const loserSeasonGames = await getSeasonGameCountForPlayer(game.loserId, seasonId)
+
+    const winnerSeasonElo = winner.latestSeasonId === seasonId ? winner.seasonElo : 400
+    const loserSeasonElo = loser.latestSeasonId === seasonId ? loser.seasonElo : 400
+
+    const [winnerEloChange, loserEloChange] = getScoreChange(
+      winnerSeasonElo,
+      winnerSeasonGames,
+      loserSeasonElo,
+      loserSeasonGames
+    )
+
+    winnerSeasonEloAfter = winnerSeasonElo + winnerEloChange
+    loserSeasonEloAfter = loserSeasonElo + loserEloChange
+  }
+
+  const createdGame = await GameModel.scope('withTime').create(
+    {
+      ...game,
+      winnerEloAfter,
+      loserEloAfter,
+      winnerEloBefore: winner.elo,
+      loserEloBefore: loser.elo,
+      winnerSeasonEloAfter,
+      loserSeasonEloAfter,
+      winnerSeasonEloBefore: winner.seasonElo,
+      loserSeasonEloBefore: loser.seasonElo,
+      seasonId,
+    },
+    {
+      include: [
+        { model: PlayerModel, as: 'winner' },
+        { model: PlayerModel, as: 'loser' },
+      ],
+    }
+  )
+
+  // Set the season stuff as undefined if they don't exist eg. there is no season at the moment
+  // This ensures that the season data reflects the latest season stats
   await Promise.all([
-    updatePlayerById(winner.id, { elo: winnerEloAfter }),
-    updatePlayerById(loser.id, { elo: loserEloAfter }),
+    updatePlayerById(winner.id, {
+      elo: winnerEloAfter,
+      seasonElo: winnerSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
+    updatePlayerById(loser.id, {
+      elo: loserEloAfter,
+      seasonElo: loserSeasonEloAfter ?? undefined,
+      latestSeasonId: seasonId ?? undefined,
+    }),
   ])
-  return formatRecentGame(createdGame)
+
+  return createdGame
 }
 
-const removeLatestGame = async () => {
-  const latest = await Game.findOne({
+const removeLatestGame = async (): Promise<GameModel> => {
+  const latest = await GameModel.findOne({
     order: [['createdAt', 'DESC']],
   })
 
@@ -196,7 +119,7 @@ const removeLatestGame = async () => {
 
   // Delete the game and remove update player players' elos
   await Promise.all([
-    Game.destroy({
+    GameModel.destroy({
       where: {
         id: latest.id,
       },
@@ -208,22 +131,4 @@ const removeLatestGame = async () => {
   return latest
 }
 
-// NOTE!! Only use in dev, destroys everything in database
-const clearGamesDEV = () =>
-  Game.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-  })
-
-export {
-  removeLatestGame,
-  createGame,
-  getGameCountForPlayer,
-  getPlayerStats,
-  getLatestGames,
-  clearGamesDEV,
-  getRecentGames,
-  getMutualGamesCount,
-  getPlayerDetailedGames,
-}
+export { removeLatestGame, createGame, getPlayerOrderedGames, getLatestGames }

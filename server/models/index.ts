@@ -1,10 +1,13 @@
 import _Game from './rawModels/Game'
 import Player from './rawModels/Player'
+import Season from './rawModels/Season'
 
 class Game extends _Game {
   declare winner?: Player
 
   declare loser?: Player
+
+  declare season?: Season
 
   declare winnerId: number
 
@@ -23,15 +26,40 @@ Player.hasMany(Game, {
   foreignKey: 'loserId',
 })
 
+// Define seasonid foreign key Season -> Games
+Season.hasMany(Game, {
+  as: 'games',
+  foreignKey: 'seasonId',
+})
+
+// Define seasonid foreign key Season -> Player
+Season.hasMany(Player, {
+  as: 'players',
+  foreignKey: 'latestSeasonId',
+})
+
 // Define winnerId foreign key Game -> Player
 Game.belongsTo(Player, {
   foreignKey: 'winnerId',
   as: 'winner',
 })
+
 // Define loserId foreign key Game -> Player
 Game.belongsTo(Player, {
   foreignKey: 'loserId',
   as: 'loser',
 })
 
-export { Player, Game }
+// Define loserId foreign key Season -> Player
+Player.belongsTo(Season, {
+  foreignKey: 'latestSeasonId',
+  as: 'Season',
+})
+
+// Define seasonId foreign key Game -> Player
+Game.belongsTo(Season, {
+  foreignKey: 'seasonId',
+  as: 'season',
+})
+
+export { Player as PlayerModel, Game as GameModel, Season as SeasonModel }

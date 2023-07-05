@@ -1,11 +1,11 @@
 import { RefObject } from 'react'
 
-import type { NewGame, Player, PlayerWithStats } from '@common/types'
+import type { NewGame, Player } from '@common/types'
 
 export type State = {
   playerSearchLists: {
-    winner: PlayerWithStats[]
-    loser: PlayerWithStats[]
+    winner: Player[]
+    loser: Player[]
   }
   game: Partial<NewGame>
   selectedIdx: number
@@ -15,7 +15,7 @@ export type State = {
     addGame?: RefObject<HTMLButtonElement>
   }
   focus: Side
-  recentPlayers: PlayerWithStats[]
+  recentPlayers: Player[]
 }
 
 export type Side = 'winner' | 'loser'
@@ -94,7 +94,7 @@ export type Action =
       type: 'SET_PLAYERS'
       payload: {
         side: Side
-        list: PlayerWithStats[]
+        list: Player[]
       }
     }
   | {
@@ -128,7 +128,7 @@ export const resetPlayers = (side: Side): Action => ({
   payload: side,
 })
 
-export const setPlayers = (side: Side, list: PlayerWithStats[]): Action => ({
+export const setPlayers = (side: Side, list: Player[]): Action => ({
   type: 'SET_PLAYERS',
   payload: {
     side,

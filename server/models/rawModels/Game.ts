@@ -42,6 +42,31 @@ Game.init(
       type: DataTypes.NUMBER,
       allowNull: false,
     },
+    winnerSeasonEloBefore: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
+    loserSeasonEloBefore: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
+    winnerSeasonEloAfter: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
+    loserSeasonEloAfter: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
+    seasonId: {
+      type: DataTypes.NUMBER,
+      allowNull: true,
+      defaultValue: null,
+    },
     underTable: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -53,6 +78,19 @@ Game.init(
     timestamps: true,
     updatedAt: false,
     modelName: 'game',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+    },
+    scopes: {
+      // Adds timestamps to the scope
+      withTime: {
+        attributes: {
+          exclude: ['updatedAt'],
+        },
+      },
+    },
     hooks: {
       async afterCreate(attrs) {
         await attrs.reload()
