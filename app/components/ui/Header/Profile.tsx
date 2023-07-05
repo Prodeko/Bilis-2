@@ -5,6 +5,7 @@ import { ComponentProps } from 'react'
 import type { Player } from '@common/types'
 import billiardPic from '@public/images/billiard–closeup.jpg'
 import Settings from '@public/images/settings-01.svg'
+import { getPlayerById } from '@server/db/players'
 import MottoCard from '@ui/MottoCard'
 
 import styles from './Header.module.scss'
@@ -12,10 +13,11 @@ import styles from './Header.module.scss'
 type HeaderProps = ComponentProps<'header'>
 
 interface Props extends HeaderProps {
-  player: Player
+  playerId: number
 }
 
-export const ProfileHeader = ({ player, ...props }: Props) => {
+export const ProfileHeader = async ({ playerId, ...props }: Props) => {
+  const player = (await getPlayerById(playerId).then(player => player?.toJSON())) as Player
   const { id, firstName, lastName, nickname, emoji, motto } = player
   const name = `${firstName} "${nickname}" ${lastName}`
 

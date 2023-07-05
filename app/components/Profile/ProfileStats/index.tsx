@@ -1,18 +1,26 @@
 import { max, round } from 'lodash'
-import { FiCalendar, FiPercent, FiPlay, FiTrendingUp } from 'react-icons/fi'
+import { ComponentProps } from 'react'
+import { FiCalendar, FiFolder, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
 import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
+import { getPlayerDetailedGames, getPlayerStats } from '@server/db/games/derivatives'
+import { getPlayerById } from '@server/db/players'
 
 import ProfileStat from './ProfileStat'
 import styles from './ProfileStats.module.scss'
 
-type Props = {
-  player: Player
-  playerStats: PlayerStats
-  gameData: TimeSeriesGame[]
+type DivProps = ComponentProps<'div'>
+
+interface Props extends DivProps {
+  playerId: number
 }
 
-const ProfileStats = ({ player, playerStats, gameData }: Props) => {
+const ProfileStats = async ({ playerId, ...props }: Props) => {
+  const [player, playerStats, gameData] = await Promise.all([
+    getPlayerById(playerId).then(player => player?.toJSON()) as Promise<Player>,
+    getPlayerStats(playerId),
+    getPlayerDetailedGames(playerId),
+  ])
   const { elo } = player
   const maxElo = max(gameData.map(g => g.currentElo)) ?? elo
   const winsValue = `${playerStats.wonGames.toString()} (${round(
@@ -21,7 +29,7 @@ const ProfileStats = ({ player, playerStats, gameData }: Props) => {
   ).toFixed(2)}%)`
 
   return (
-    <div className={styles.profilestats}>
+    <div {...props} className={styles.profilestats}>
       <ProfileStat
         label="Fargo"
         Icon={FiTrendingUp}
@@ -40,16 +48,16 @@ const ProfileStats = ({ player, playerStats, gameData }: Props) => {
         ]}
       />
       <ProfileStat
-        Icon={FiPercent}
-        label="Win %"
-        subStatistics={[
-          { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
-        ]}
-      />
-      <ProfileStat
         Icon={FiCalendar}
         label="Seasonal"
         subStatistics={[{ label: 'Coming Soon', value: `at least trying...` }]}
+      />
+      <ProfileStat
+        Icon={FiFolder}
+        label="History"
+        subStatistics={[
+          { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
+        ]}
       />
     </div>
   )
