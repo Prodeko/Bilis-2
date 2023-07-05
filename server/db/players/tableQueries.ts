@@ -21,6 +21,7 @@ export const getPlayersWithStats = async () => {
     LEFT JOIN games
     ON players.id = games.winner_id OR players.id = games.loser_id
     GROUP BY 1,2,3,4,5
+    ORDER BY elo DESC
   `,
     { type: QueryTypes.SELECT }
   )) as [

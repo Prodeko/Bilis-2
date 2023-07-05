@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ComponentProps } from 'react'
 
 import type { Player } from '@common/types'
+import { formatFullName } from '@common/utils/helperFunctions'
 import billiardPic from '@public/images/billiard–closeup.jpg'
 import Settings from '@public/images/settings-01.svg'
 import { getPlayerById } from '@server/db/players'
@@ -18,8 +19,8 @@ interface Props extends HeaderProps {
 
 export const ProfileHeader = async ({ playerId, ...props }: Props) => {
   const player = (await getPlayerById(playerId).then(player => player?.toJSON())) as Player
-  const { id, firstName, lastName, nickname, emoji, motto } = player
-  const name = `${firstName} "${nickname}" ${lastName}`
+  const { id, emoji, motto } = player
+  const name = formatFullName(player, false, player.nickname)
 
   return (
     <header {...props} className={styles.profileheader}>
