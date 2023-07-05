@@ -1,7 +1,7 @@
 @import 'styles';
 
 .profilestats {
-  @include grid-cols($nof_cols: 3);
+  @include grid-cols($nof_cols: 4);
 
   align-items: center;
   gap: $spacing-48;

@@ -1,5 +1,5 @@
 import { max, round } from 'lodash'
-import { FiPercent, FiPlay, FiTrendingUp } from 'react-icons/fi'
+import { FiCalendar, FiPercent, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
 import { Player, PlayerStats, TimeSeriesGame } from '@common/types'
 
@@ -45,6 +45,11 @@ const ProfileStats = ({ player, playerStats, gameData }: Props) => {
         subStatistics={[
           { label: 'All time', value: `${round(playerStats.winPercentage, 2).toFixed(2)}%` },
         ]}
+      />
+      <ProfileStat
+        Icon={FiCalendar}
+        label="Seasonal"
+        subStatistics={[{ label: 'Coming Soon', value: `at least trying...` }]}
       />
     </div>
   )
