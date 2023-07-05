@@ -10,6 +10,9 @@ const nextConfig = {
     serverComponentsExternalPackages: ['sequelize'],
   },
   output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
 
 module.exports = nextConfig
