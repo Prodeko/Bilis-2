@@ -4,7 +4,7 @@
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
       "plugin:@typescript-eslint/recommended",
-      "next"
+      "plugin:@next/next/recommended"
   ],
   "plugins": [
       "eslint-plugin-tsdoc",
