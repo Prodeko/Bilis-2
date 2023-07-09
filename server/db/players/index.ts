@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import { Op, Sequelize } from 'sequelize'
+import { Op, QueryTypes, Sequelize } from 'sequelize'
 
-import { NewPlayer, Player, newPlayer } from '@common/types'
+import { NewPlayer, Player, newPlayer, player } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
@@ -50,24 +50,50 @@ const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
     order: [['elo', 'DESC']],
   })
 
-const getLatestPlayers = async (nofPlayers: number): Promise<PlayerModel[]> => {
-  return PlayerModel.findAll({
-    where: {
-      id: {
-        [Op.in]: Sequelize.literal(
-          `(
-          SELECT p1.id
-          FROM players AS p1
-          LEFT JOIN games
-          ON p1.id = games.winner_id OR p1.id = games.loser_id
-          GROUP BY p1.id
-          ORDER BY MAX(games.created_at) DESC
-          LIMIT ${nofPlayers}
-          )`
-        ),
-      },
-    },
-  })
+const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
+  const response = (await dbConf.sequelize.query(
+    `--sql
+    WITH combined_players AS (
+      SELECT 
+        winner_id as player_id, 
+        MAX(created_at) as last_game_time
+      FROM games 
+      GROUP BY winner_id
+
+      UNION ALL
+
+      SELECT 
+        loser_id as player_id, 
+        MAX(created_at) as last_game_time
+      FROM games 
+      GROUP BY loser_id
+    ),
+
+    recent_players AS (
+      SELECT player_id, MAX(last_game_time) as last_game_played
+      FROM combined_players
+      GROUP BY player_id
+      ORDER BY last_game_played DESC 
+      LIMIT ${nofPlayers}
+    )
+
+    SELECT 
+      players.id,
+      players.first_name as "firstName", 
+      players.last_name as "lastName", 
+      players.nickname,
+      players.emoji,
+      players.motto,
+      players.elo,
+      players.season_elo as "seasonElo",
+      players.latest_season_id as "latestSeasonId"
+    FROM recent_players
+    JOIN players
+    ON players.id = recent_players.player_id
+  `,
+    { type: QueryTypes.SELECT }
+  )) as Player[]
+  return player.array().parse(response)
 }
 
 const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel[]> => {
