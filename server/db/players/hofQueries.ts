@@ -218,13 +218,21 @@ const getMostUndertableWins = async (): Promise<HofPlayer> => {
 const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
+    WITH game_participants AS (
+      SELECT winner_id AS player_id, created_at
+      FROM games
+      UNION ALL
+      SELECT loser_id AS player_id, created_at
+      FROM games
+    )
+
     SELECT 
       players.id, 
-      date_trunc('day', games.created_at::date) as date,
-      COUNT(games.id) as nof_games
+      date_trunc('day', game_participants.created_at::date) as date,
+      COUNT(game_participants.player_id) as nof_games
     FROM players
-    LEFT JOIN games
-    ON players.id = games.winner_id OR players.id = games.loser_id
+    JOIN game_participants
+    ON players.id = game_participants.player_id
     GROUP BY 1,2
     ORDER BY nof_games DESC
     LIMIT 1
@@ -236,6 +244,8 @@ const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
       nof_games: number
     }
   ]
+
+  console.log("REQ", response)
 
   const player = await PlayerModel.findOne({ where: { id: response.id } })
 
