@@ -157,10 +157,18 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
 const getMostGamesPlayed = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
-    SELECT players.id, COUNT(games.id) as nof_played_games
+    WITH game_participants AS (
+      SELECT winner_id AS player_id, created_at
+      FROM games
+      UNION ALL
+      SELECT loser_id AS player_id, created_at
+      FROM games
+    )
+
+    SELECT players.id, COUNT(game_participants.player_id) as nof_played_games
     FROM players
-    LEFT JOIN games
-    ON players.id = games.winner_id OR players.id = games.loser_id
+    JOIN game_participants
+    ON players.id = game_participants.player_id
     GROUP BY 1
     ORDER BY nof_played_games DESC
     LIMIT 1
