@@ -78,37 +78,6 @@ const getHighestWinPercentage = async (): Promise<HofPlayer> => {
 }
 
 const getHighestStreak = async (): Promise<HofPlayer> => {
-  // Another implementation where streak is considered as games won concurrently without any other games in between.
-  // So in other words how many games have you been on the table
-  /*   
-  const response = (await dbConf.sequelize.query(
-    `--sql
-      WITH is_new_group AS (
-        SELECT id, winner_id,
-          CASE
-            WHEN LAG(winner_id) OVER (ORDER BY id) = winner_id THEN 0
-            ELSE 1
-          END is_new_group
-        FROM games
-        ORDER BY id
-      ), group_no AS (
-        SELECT
-          id,
-          winner_id,
-          SUM(is_new_group) OVER(ORDER BY id) as group_no
-        FROM is_new_group
-      )
-
-      SELECT winner_id, COUNT(*) as "maxStreak"
-      FROM group_no
-      GROUP BY group_no, winner_id
-      ORDER BY "maxStreak" DESC
-      LIMIT 10
-  `, 
-  */
-
-  // Implementation where streak is considered as number of consecutive games where you have not lost
-  // Other players may have played games in between
   // NOTE: The following query is pretty advanced and uses some tricks to get the result needed.
   const response = (await dbConf.sequelize.query(
     `--sql
@@ -252,8 +221,6 @@ const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
       nof_games: number
     }
   ]
-
-  console.log("REQ", response)
 
   const player = await PlayerModel.findOne({ where: { id: response.id } })
 
