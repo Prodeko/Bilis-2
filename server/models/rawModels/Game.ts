@@ -96,6 +96,23 @@ Game.init(
         await attrs.reload()
       },
     },
+    indexes: [
+      {
+        fields: ['winnerId'],
+        using: 'BTREE',
+        name: 'games_winner_id_idx',
+      },
+      {
+        fields: ['loserId'],
+        using: 'BTREE',
+        name: 'games_loser_id_idx',
+      },
+      {
+        fields: ['createdAt'],
+        using: 'BRIN',
+        name: 'games_created_at_idx',
+      },
+    ],
   }
 )
 
