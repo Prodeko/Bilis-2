@@ -117,7 +117,7 @@ const generateSeason = (n: number): NewSeason => {
 }
 
 const createPlayers = async () => {
-  const PLAYER_COUNT = 200
+  const PLAYER_COUNT = 2000
   const players = _.times(PLAYER_COUNT, generatePlayer)
   await Player.bulkCreate(players)
 }
@@ -133,7 +133,7 @@ const createGames = async () => {
   // unix time one year ago
   const unix = Date.now() - 31536000000
   let i = 0
-  const GAME_COUNT = 5000
+  const GAME_COUNT = 200000
   const allPlayers: Player[] = await getPlayers()
   const seasons: Season[] = await getSeasons()
   const allPlayerData: { model: Player; gameCount: number }[] = allPlayers.map(p => {
