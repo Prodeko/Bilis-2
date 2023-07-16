@@ -78,37 +78,6 @@ const getHighestWinPercentage = async (): Promise<HofPlayer> => {
 }
 
 const getHighestStreak = async (): Promise<HofPlayer> => {
-  // Another implementation where streak is considered as games won concurrently without any other games in between.
-  // So in other words how many games have you been on the table
-  /*   
-  const response = (await dbConf.sequelize.query(
-    `--sql
-      WITH is_new_group AS (
-        SELECT id, winner_id,
-          CASE
-            WHEN LAG(winner_id) OVER (ORDER BY id) = winner_id THEN 0
-            ELSE 1
-          END is_new_group
-        FROM games
-        ORDER BY id
-      ), group_no AS (
-        SELECT
-          id,
-          winner_id,
-          SUM(is_new_group) OVER(ORDER BY id) as group_no
-        FROM is_new_group
-      )
-
-      SELECT winner_id, COUNT(*) as "maxStreak"
-      FROM group_no
-      GROUP BY group_no, winner_id
-      ORDER BY "maxStreak" DESC
-      LIMIT 10
-  `, 
-  */
-
-  // Implementation where streak is considered as number of consecutive games where you have not lost
-  // Other players may have played games in between
   // NOTE: The following query is pretty advanced and uses some tricks to get the result needed.
   const response = (await dbConf.sequelize.query(
     `--sql
@@ -157,10 +126,18 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
 const getMostGamesPlayed = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
-    SELECT players.id, COUNT(games.id) as nof_played_games
+    WITH game_participants AS (
+      SELECT winner_id AS player_id, created_at
+      FROM games
+      UNION ALL
+      SELECT loser_id AS player_id, created_at
+      FROM games
+    )
+
+    SELECT players.id, COUNT(game_participants.player_id) as nof_played_games
     FROM players
-    LEFT JOIN games
-    ON players.id = games.winner_id OR players.id = games.loser_id
+    JOIN game_participants
+    ON players.id = game_participants.player_id
     GROUP BY 1
     ORDER BY nof_played_games DESC
     LIMIT 1
@@ -218,13 +195,21 @@ const getMostUndertableWins = async (): Promise<HofPlayer> => {
 const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
+    WITH game_participants AS (
+      SELECT winner_id AS player_id, created_at
+      FROM games
+      UNION ALL
+      SELECT loser_id AS player_id, created_at
+      FROM games
+    )
+
     SELECT 
       players.id, 
-      date_trunc('day', games.created_at::date) as date,
-      COUNT(games.id) as nof_games
+      date_trunc('day', game_participants.created_at::date) as date,
+      COUNT(game_participants.player_id) as nof_games
     FROM players
-    LEFT JOIN games
-    ON players.id = games.winner_id OR players.id = games.loser_id
+    JOIN game_participants
+    ON players.id = game_participants.player_id
     GROUP BY 1,2
     ORDER BY nof_games DESC
     LIMIT 1

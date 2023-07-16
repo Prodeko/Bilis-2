@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 
-import type { CreateGameType } from '@common/types'
+import type { CreateGameType, Season } from '@common/types'
 import { getScoreChange } from '@common/utils/gameStats'
 import { getPlayerById, updatePlayerById } from '@server/db/players'
 import { GameModel, PlayerModel } from '@server/models'
@@ -28,16 +28,79 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
   })
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
-  const [winner, loser, winnerGames, loserGames, currentSeason] = await Promise.all([
-    getPlayerById(game.winnerId),
-    getPlayerById(game.loserId),
-    getGameCountForPlayer(game.winnerId),
-    getGameCountForPlayer(game.loserId),
-    getCurrentSeason(),
+  const playerInfo = await getPlayerInfoForNewGameOrThrow(game)
+
+  const effects = calculateNewGameEffects(game, playerInfo)
+
+  const createdGame = await GameModel.scope('withTime').create(effects.createdGameObject, {
+    include: [
+      { model: PlayerModel, as: 'winner' },
+      { model: PlayerModel, as: 'loser' },
+    ],
+  })
+
+  await Promise.all([
+    updatePlayerById(effects.winnerUpdateInfo.id, { elo: effects.winnerUpdateInfo.elo }),
+    updatePlayerById(effects.loserUpdateInfo.id, { elo: effects.loserUpdateInfo.elo }),
   ])
+
+  return createdGame
+}
+
+const getPlayerInfoForNewGameOrThrow = async (game: CreateGameType) => {
+  const { winnerId, loserId } = game
+
+  const [winner, loser, winnerGames, loserGames] = await Promise.all([
+    getPlayerById(winnerId),
+    getPlayerById(loserId),
+    getGameCountForPlayer(winnerId),
+    getGameCountForPlayer(loserId),
+  ])
+
+  const currentSeason = await getCurrentSeason()
+  const [winnerSeasonGames, loserSeasonGames] =
+    currentSeason != null
+      ? await Promise.all([
+          getSeasonGameCountForPlayer(winnerId, currentSeason.id),
+          getSeasonGameCountForPlayer(loserId, currentSeason.id),
+        ])
+      : [null, null]
 
   if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
   if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+
+  return {
+    winner,
+    loser,
+    winnerGames,
+    winnerSeasonGames,
+    loserGames,
+    loserSeasonGames,
+    currentSeason,
+  }
+}
+
+const calculateNewGameEffects = (
+  gameInfo: CreateGameType,
+  playerInfo: {
+    winner: PlayerModel
+    loser: PlayerModel
+    winnerGames: number
+    loserGames: number
+    winnerSeasonGames: number | null
+    loserSeasonGames: number | null
+    currentSeason: Season | null
+  }
+) => {
+  const {
+    winner,
+    loser,
+    winnerGames,
+    winnerSeasonGames,
+    loserGames,
+    loserSeasonGames,
+    currentSeason,
+  } = playerInfo
 
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
@@ -45,69 +108,60 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
     loser.elo,
     loserGames
   )
+
   const winnerEloAfter = winner.elo + winnerEloChange
   const loserEloAfter = loser.elo + loserEloChange
 
   let winnerSeasonEloAfter = null
   let loserSeasonEloAfter = null
 
-  const seasonId = currentSeason?.id ?? null
+  if (playerInfo.currentSeason != null) {
+    const winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
+    const loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
 
-  if (seasonId) {
-    const winnerSeasonGames = await getSeasonGameCountForPlayer(game.winnerId, seasonId)
-    const loserSeasonGames = await getSeasonGameCountForPlayer(game.loserId, seasonId)
-
-    const winnerSeasonElo = winner.latestSeasonId === seasonId ? winner.seasonElo : 400
-    const loserSeasonElo = loser.latestSeasonId === seasonId ? loser.seasonElo : 400
-
+    // TODO fix types: (winnerSeasonGames and loserSeasonGames are non-null when currentSeason is non-null)
     const [winnerEloChange, loserEloChange] = getScoreChange(
       winnerSeasonElo,
-      winnerSeasonGames,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      winnerSeasonGames!,
       loserSeasonElo,
-      loserSeasonGames
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      loserSeasonGames!
     )
 
     winnerSeasonEloAfter = winnerSeasonElo + winnerEloChange
     loserSeasonEloAfter = loserSeasonElo + loserEloChange
   }
 
-  const createdGame = await GameModel.scope('withTime').create(
-    {
-      ...game,
-      winnerEloAfter,
-      loserEloAfter,
-      winnerEloBefore: winner.elo,
-      loserEloBefore: loser.elo,
-      winnerSeasonEloAfter,
-      loserSeasonEloAfter,
-      winnerSeasonEloBefore: winner.seasonElo,
-      loserSeasonEloBefore: loser.seasonElo,
-      seasonId,
-    },
-    {
-      include: [
-        { model: PlayerModel, as: 'winner' },
-        { model: PlayerModel, as: 'loser' },
-      ],
-    }
-  )
+  // ------------------------
+  const createdGameObject = {
+    winnerId: gameInfo.winnerId,
+    winnerEloBefore: winner.elo,
+    winnerEloAfter,
+    winnerSeasonEloBefore: winner.seasonElo,
+    winnerSeasonEloAfter: winnerSeasonEloAfter,
 
-  // Set the season stuff as undefined if they don't exist eg. there is no season at the moment
-  // This ensures that the season data reflects the latest season stats
-  await Promise.all([
-    updatePlayerById(winner.id, {
-      elo: winnerEloAfter,
-      seasonElo: winnerSeasonEloAfter ?? undefined,
-      latestSeasonId: seasonId ?? undefined,
-    }),
-    updatePlayerById(loser.id, {
-      elo: loserEloAfter,
-      seasonElo: loserSeasonEloAfter ?? undefined,
-      latestSeasonId: seasonId ?? undefined,
-    }),
-  ])
+    loserId: gameInfo.loserId,
+    loserEloBefore: loser.elo,
+    loserEloAfter,
+    loserSeasonEloBefore: loser.seasonElo,
+    loserSeasonEloAfter: loserSeasonEloAfter,
 
-  return createdGame
+    underTable: gameInfo.underTable,
+    seasonId: currentSeason?.id ?? null,
+  }
+
+  const winnerUpdateInfo = {
+    id: winner.id,
+    elo: winnerEloAfter,
+    latestSeasonid: currentSeason?.id ?? null,
+  }
+  const loserUpdateInfo = {
+    id: loser.id,
+    elo: loserEloAfter,
+    latestSeasonid: currentSeason?.id ?? null,
+  }
+  return { createdGameObject, winnerUpdateInfo, loserUpdateInfo }
 }
 
 const removeLatestGame = async (): Promise<GameModel> => {
@@ -131,4 +185,10 @@ const removeLatestGame = async (): Promise<GameModel> => {
   return latest
 }
 
-export { removeLatestGame, createGame, getPlayerOrderedGames, getLatestGames }
+export {
+  removeLatestGame,
+  createGame,
+  getPlayerOrderedGames,
+  getLatestGames,
+  calculateNewGameEffects,
+}

@@ -7,18 +7,13 @@ export type TimeFrame = 'day' | 'week' | 'month' | 'year'
 export const getGamesFromTimeframe = async (timeFrame: TimeFrame) => {
   const [response] = (await dbConf.sequelize.query(
     `--sql
-    SELECT
-      date_trunc('${timeFrame}', created_at::date) as date, 
-      COUNT(*) AS nof_games
+    SELECT COUNT(*) AS nof_games
     FROM games
-    GROUP BY date_trunc('${timeFrame}', created_at::date)
-    ORDER BY date DESC
-    LIMIT 1
+    WHERE date_trunc('${timeFrame}', created_at::date) = date_trunc('${timeFrame}', CURRENT_DATE)
   `,
     { type: QueryTypes.SELECT }
   )) as [
     {
-      date: string
       nof_games: number
     }
   ]

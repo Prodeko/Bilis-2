@@ -12,9 +12,7 @@ export default async function Page() {
     getPlayers(NOF_LEADERBOARD_PLAYERS).then(players =>
       players.map(player => player.toJSON())
     ) as Promise<Player[]>,
-    getLatestPlayers(NOF_LATEST_PLAYERS).then(players =>
-      players.map(player => player.toJSON())
-    ) as Promise<Player[]>,
+    getLatestPlayers(NOF_LATEST_PLAYERS),
     getRecentGames(100),
   ])
 
