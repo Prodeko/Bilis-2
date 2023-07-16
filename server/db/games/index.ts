@@ -139,27 +139,27 @@ const calculateNewGameEffects = (
     winnerEloBefore: winner.elo,
     winnerEloAfter,
     winnerSeasonEloBefore: winner.seasonElo,
-    winnerSeasonEloAfter: winnerSeasonEloAfter ?? undefined,
+    winnerSeasonEloAfter: winnerSeasonEloAfter,
 
     loserId: gameInfo.loserId,
     loserEloBefore: loser.elo,
     loserEloAfter,
     loserSeasonEloBefore: loser.seasonElo,
-    loserSeasonEloAfter: loserSeasonEloAfter ?? undefined,
+    loserSeasonEloAfter: loserSeasonEloAfter,
 
     underTable: gameInfo.underTable,
-    seasonId: currentSeason?.id,
+    seasonId: currentSeason?.id ?? null,
   }
 
   const winnerUpdateInfo = {
     id: winner.id,
     elo: winnerEloAfter,
-    latestSeasonid: currentSeason?.id ?? undefined,
+    latestSeasonid: currentSeason?.id ?? null,
   }
   const loserUpdateInfo = {
     id: loser.id,
     elo: loserEloAfter,
-    latestSeasonid: currentSeason?.id ?? undefined,
+    latestSeasonid: currentSeason?.id ?? null,
   }
   return { createdGameObject, winnerUpdateInfo, loserUpdateInfo }
 }
