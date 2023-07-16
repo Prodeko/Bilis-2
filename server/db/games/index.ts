@@ -119,10 +119,13 @@ const calculateNewGameEffects = (
     const winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
     const loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
 
+    // TODO fix types: (winnerSeasonGames and loserSeasonGames are non-null when currentSeason is non-null)
     const [winnerEloChange, loserEloChange] = getScoreChange(
       winnerSeasonElo,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       winnerSeasonGames!,
       loserSeasonElo,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       loserSeasonGames!
     )
 
