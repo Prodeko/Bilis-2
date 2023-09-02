@@ -134,11 +134,9 @@ const getMostGamesPlayed = async (): Promise<HofPlayer> => {
       FROM games
     )
 
-    SELECT players.id, COUNT(game_participants.player_id) as nof_played_games
-    FROM players
-    JOIN game_participants
-    ON players.id = game_participants.player_id
-    GROUP BY 1
+    SELECT player_id as id, count(player_id) as nof_played_games
+    FROM game_participants
+    GROUP BY player_id
     ORDER BY nof_played_games DESC
     LIMIT 1
   `,
