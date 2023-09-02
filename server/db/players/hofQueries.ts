@@ -81,30 +81,47 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
   // NOTE: The following query is pretty advanced and uses some tricks to get the result needed.
   const response = (await dbConf.sequelize.query(
     `--sql
+      -- Based on https://stackoverflow.com/a/17839755
+
+      -- Temporary view of games table where the winning and losing sides are merged to one colum
       WITH transformed_data AS (
-        -- Create a temporary table to transform the data from the 'games' table
-        -- is_loser stored as an int so that the amount of losses can be calculated later on
-        SELECT id, winner_id as player_id, 0 AS is_loser
+        SELECT id, winner_id as player_id, true AS is_winner
         FROM games
         UNION
-        SELECT id, loser_id as player_id, 1 AS is_loser
+        SELECT id, loser_id as player_id, false AS is_winner
         FROM games
-      ), streak_id AS (
+      ),
+
+      -- "Edge detection" of streaks: boundaries where a game is won and the previous game was lost
+      new_streaks AS (
+        SELECT id, player_id, is_winner,
+          is_winner AND NOT lag(is_winner) over (PARTITION BY player_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as is_beginning_of_new_streak
+        FROM transformed_data
+      ), 
+
+      -- Add the number of "edges", aka. new streaks, to each game.
+      -- This effectively gives each streak an identifier, and associates each won game with one such identifier.
+      streak_id AS (
         SELECT 
           player_id,
-          -- Assign a streak_id to each game based on the number of losses before it for the same player
-          -- This identifies all the games within the same streak with the same streak_id
-          SUM(is_loser) OVER (PARTITION BY player_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as streak_id
-        FROM transformed_data
-        ORDER BY id
+          SUM(is_beginning_of_new_streak::int) OVER (PARTITION BY player_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as streak_id
+        FROM new_streaks
+        WHERE is_winner = true
+      ),
+      
+      -- Count the number of records per streak
+      records_per_streak as (
+        SELECT COUNT(*) as "maxStreak", player_id, streak_id
+        FROM streak_id
+        GROUP BY player_id, streak_id
       )
 
-      SELECT player_id, COUNT(*) as "maxStreak"
-      FROM streak_id
-      -- group the games with the streak_id to get count of games within that streak
-      GROUP BY streak_id, player_id
+
+      -- Select the longest streak
+      SELECT player_id, "maxStreak"
+      FROM records_per_streak
       ORDER BY "maxStreak" DESC
-      LIMIT 1
+      LIMIT 1;
   `,
     { type: QueryTypes.SELECT }
   )) as [{ player_id: number; maxStreak: number }]
