@@ -11,24 +11,32 @@ We format the stat already in the backend because this simplifies the frontend c
  */
 
 const getHighestEloAllTimePlayer = async (): Promise<HofPlayer> => {
-  const topPlayerGame = await GameModel.findOne({
-    attributes: {
-      include: ['winnerId', 'winnerEloAfter'],
-    },
-    order: [['winnerEloAfter', 'DESC']],
-  })
+  const [response] = (await dbConf.sequelize.query(
+    `--sql
+      SELECT winner_id, winner_elo_after
+      FROM games
+      ORDER BY winner_elo_after DESC
+      LIMIT 1
+    `,
+    { type: QueryTypes.SELECT }
+  )) as [
+    {
+      winner_id: number
+      winner_elo_after: number
+    }
+  ]
 
   const topPlayer = await PlayerModel.findOne({
     where: {
-      id: topPlayerGame?.winnerId,
+      id: response?.winner_id,
     },
   })
 
-  if (!topPlayerGame || !topPlayer) throw new Error('No top player or top player game found!')
+  if (!response || !topPlayer) throw new Error('No top player or top player game found!')
 
   const hallOfFamePlayer = {
     ...topPlayer.toJSON(),
-    hofStat: topPlayerGame.winnerEloAfter.toFixed(2),
+    hofStat: response.winner_elo_after.toFixed(2),
   }
   return hofPlayer.parse(hallOfFamePlayer)
 }
