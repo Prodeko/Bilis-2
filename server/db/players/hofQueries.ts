@@ -103,7 +103,7 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
       -- "Edge detection" of streaks: boundaries where a game is won and the previous game was lost
       new_streaks AS (
         SELECT id, player_id, is_winner,
-          is_winner AND NOT lag(is_winner) over (PARTITION BY player_id ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as is_beginning_of_new_streak
+          is_winner AND NOT lag(is_winner) over (PARTITION BY player_id ORDER BY id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) as is_beginning_of_new_streak
         FROM transformed_data
       ), 
 
