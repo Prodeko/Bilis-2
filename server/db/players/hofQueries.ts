@@ -119,20 +119,20 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
       
       -- Count the number of records per streak
       records_per_streak as (
-        SELECT COUNT(*) as max_streak, player_id, streak_id
+        SELECT player_id, streak_id, COUNT(*) as streak_length
         FROM streak_id
         GROUP BY player_id, streak_id
       )
 
 
       -- Select the longest streak
-      SELECT player_id, max_streak
+      SELECT player_id, streak_length
       FROM records_per_streak
-      ORDER BY max_streak DESC
+      ORDER BY streak_length DESC
       LIMIT 1;
   `,
     { type: QueryTypes.SELECT }
-  )) as [{ player_id: number; max_streak: number }]
+  )) as [{ player_id: number; streak_length: number }]
 
   if (!response) throw new Error('No games in database')
 
@@ -144,7 +144,7 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
 
   if (!player) throw new Error('No player found!')
 
-  const hallOfFamePlayer = { ...player.toJSON(), hofStat: response[0].max_streak }
+  const hallOfFamePlayer = { ...player.toJSON(), hofStat: response[0].streak_length }
   return hofPlayer.parse(hallOfFamePlayer)
 }
 
