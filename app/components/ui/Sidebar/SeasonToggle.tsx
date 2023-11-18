@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import { SeasonalModeContext } from '@state/Season/state'
+import useSeasonalMode from '@hooks/useSeasonalMode'
 
 import styles from './Sidebar.module.scss'
 
 const SeasonToggle: React.FC = () => {
-  const { seasonalMode, toggleSeasonalMode } = useContext(SeasonalModeContext)
+  const seasonalMode = useSeasonalMode()
 
   return (
     <div className={styles.seasonToggleContainer}>
@@ -13,7 +13,7 @@ const SeasonToggle: React.FC = () => {
         <input
           type="checkbox"
           checked={seasonalMode}
-          onChange={toggleSeasonalMode}
+          onChange={() => console.log('toggle')}
           className={styles.seasonToggleSwitch}
         />
         <span className={styles.seasonToggleSlider}></span>
