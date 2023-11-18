@@ -116,13 +116,13 @@ const getMutualGamesCount = async (
   }
 }
 
-const getRecentGames = async (n = 20, offset = 0): Promise<RecentGame[]> => {
-  const recentGames = await getLatestGames(n, offset)
+const getRecentGames = async (n = 20, seasonal = false, offset = 0): Promise<RecentGame[]> => {
+  const recentGames = await getLatestGames(n, offset, seasonal)
 
-  return recentGames.map(formatRecentGame)
+  return recentGames.map(recentGame => formatRecentGame(recentGame, seasonal))
 }
 
-const formatRecentGame = (game: GameModel): RecentGame => {
+const formatRecentGame = (game: GameModel, seasonal: boolean): RecentGame => {
   if (!game.winner) {
     throw new Error('Error in formatting recent game: winner missing!')
   } else if (!game.loser) {
@@ -132,10 +132,10 @@ const formatRecentGame = (game: GameModel): RecentGame => {
     id: game.id,
     winnerId: game.winnerId,
     loserId: game.loserId,
-    winnerEloBefore: game.winnerEloBefore,
-    winnerEloAfter: game.winnerEloAfter,
-    loserEloBefore: game.loserEloBefore,
-    loserEloAfter: game.loserEloAfter,
+    winnerEloBefore: seasonal ? game.winnerSeasonEloBefore ?? 400 : game.winnerEloBefore,
+    winnerEloAfter: seasonal ? game.winnerSeasonEloAfter : game.winnerEloAfter,
+    loserEloBefore: seasonal ? game.loserSeasonEloBefore ?? 400 : game.loserEloBefore,
+    loserEloAfter: seasonal ? game.loserSeasonEloAfter : game.loserEloAfter,
     underTable: game.underTable,
     formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
     winner: `${formatFullName(game.winner, true, Boolean(game.winner.nickname))}`,

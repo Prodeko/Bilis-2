@@ -16,8 +16,9 @@ const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
     order: [['createdAt', 'ASC']],
   })
 
-const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
-  GameModel.scope('withTime').findAll({
+const getLatestGames = async (n = 20, offset = 0, seasonal = false): Promise<GameModel[]> => {
+  const season = seasonal && (await getCurrentSeason())
+  return GameModel.scope('withTime').findAll({
     order: [['createdAt', 'DESC']],
     include: [
       { model: PlayerModel, as: 'winner' },
@@ -25,7 +26,13 @@ const getLatestGames = async (n = 20, offset = 0): Promise<GameModel[]> =>
     ],
     limit: n,
     offset: offset * n,
+    where: season
+      ? {
+          seasonId: season.id,
+        }
+      : undefined,
   })
+}
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
   const playerInfo = await getPlayerInfoForNewGameOrThrow(game)
@@ -40,8 +47,8 @@ const createGame = async (game: CreateGameType): Promise<GameModel> => {
   })
 
   await Promise.all([
-    updatePlayerById(effects.winnerUpdateInfo.id, { elo: effects.winnerUpdateInfo.elo }),
-    updatePlayerById(effects.loserUpdateInfo.id, { elo: effects.loserUpdateInfo.elo }),
+    updatePlayerById(effects.createdGameObject.winnerId, { ...effects.winnerUpdateInfo }),
+    updatePlayerById(effects.createdGameObject.loserId, { ...effects.loserUpdateInfo }),
   ])
 
   return createdGame
@@ -114,8 +121,7 @@ const calculateNewGameEffects = (
 
   let winnerSeasonEloAfter = null
   let loserSeasonEloAfter = null
-
-  if (playerInfo.currentSeason != null) {
+  if (currentSeason != null) {
     const winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
     const loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
 
@@ -152,14 +158,14 @@ const calculateNewGameEffects = (
   }
 
   const winnerUpdateInfo = {
-    id: winner.id,
     elo: winnerEloAfter,
-    latestSeasonid: currentSeason?.id ?? null,
+    latestSeasonId: currentSeason?.id ?? null,
+    seasonElo: winnerSeasonEloAfter,
   }
   const loserUpdateInfo = {
-    id: loser.id,
     elo: loserEloAfter,
-    latestSeasonid: currentSeason?.id ?? null,
+    latestSeasonId: currentSeason?.id ?? null,
+    seasonElo: loserSeasonEloAfter,
   }
   return { createdGameObject, winnerUpdateInfo, loserUpdateInfo }
 }

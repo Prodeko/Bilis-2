@@ -6,6 +6,8 @@ import { permutator } from '@common/utils/helperFunctions'
 import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
 
+import { getCurrentSeason } from '../seasons'
+
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   const parsedPlayer = newPlayer.parse(player)
   const newPlayerWithElo = {
@@ -44,11 +46,18 @@ const clearPlayersDEV = () =>
     cascade: true,
   })
 
-const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
-  PlayerModel.findAll({
+const getPlayers = async (amount?: number, seasonal?: boolean): Promise<PlayerModel[]> => {
+  const season = seasonal ? await getCurrentSeason() : null
+  return PlayerModel.findAll({
     limit: amount,
-    order: [['elo', 'DESC']],
+    order: [[seasonal ? 'seasonElo' : 'elo', 'DESC']],
+    where: seasonal
+      ? {
+          latestSeasonId: season?.id,
+        }
+      : undefined,
   })
+}
 
 const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
   const response = (await dbConf.sequelize.query(
