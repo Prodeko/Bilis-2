@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { Op, QueryTypes, Sequelize } from 'sequelize'
 
 import { NewPlayer, Player, newPlayer, player } from '@common/types'
@@ -59,7 +58,7 @@ const getPlayers = async (amount?: number, seasonal?: boolean): Promise<PlayerMo
   })
 }
 
-const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
+const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<Player[]> => {
   const response = (await dbConf.sequelize.query(
     `--sql
     WITH combined_players AS (
@@ -93,7 +92,7 @@ const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
       players.nickname,
       players.emoji,
       players.motto,
-      players.elo,
+      ${seasonal ? 'COALESCE(players.season_elo, 400)' : 'players.elo'} as elo,
       players.season_elo as "seasonElo",
       players.latest_season_id as "latestSeasonId"
     FROM recent_players
@@ -123,12 +122,12 @@ const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel
 }
 
 export {
-  getPlayers,
-  createPlayer,
   clearPlayersDEV,
-  getPlayerById,
-  getRandomPlayer,
-  updatePlayerById,
+  createPlayer,
   getLatestPlayers,
+  getPlayerById,
+  getPlayers,
+  getRandomPlayer,
   searchPlayers,
+  updatePlayerById,
 }
