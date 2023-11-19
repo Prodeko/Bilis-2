@@ -4,6 +4,25 @@ import { NewSeason } from '@common/types'
 import { SeasonModel } from '@server/models'
 
 const createSeason = async (season: NewSeason): Promise<SeasonModel> => {
+  const overlappingSeason = await SeasonModel.findOne({
+    where: {
+      [Op.or]: [
+        {
+          [Op.and]: [
+            Sequelize.literal(`"start" <= '${season.start.toISOString()}'`),
+            Sequelize.literal(`"end" >= '${season.start.toISOString()}'`),
+          ],
+        },
+        {
+          [Op.and]: [
+            Sequelize.literal(`"start" <= '${season.end.toISOString()}'`),
+            Sequelize.literal(`"end" >= '${season.end.toISOString()}'`),
+          ],
+        },
+      ],
+    },
+  })
+  if (overlappingSeason) throw new Error('Season overlaps with existing season')
   const createdSeason = await SeasonModel.create(season)
   return createdSeason
 }
@@ -32,7 +51,9 @@ const deleteSeason = async (id: number): Promise<number> => {
 }
 
 const getSeasons = async (): Promise<SeasonModel[]> => {
-  const seasons = await SeasonModel.findAll({})
+  const seasons = await SeasonModel.findAll({
+    order: [['start', 'ASC']],
+  })
 
   if (!seasons) throw new Error('No seasons found')
 

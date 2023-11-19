@@ -13,13 +13,21 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(
-        { error: error.errors },
+        { message: error.errors.map(e => e.message).join(', '), error },
         {
           status: 400,
         }
       )
     }
 
-    return NextResponse.error()
+    return NextResponse.json(
+      {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        message: error?.message,
+        error,
+      },
+      { status: 500 }
+    )
   }
 }

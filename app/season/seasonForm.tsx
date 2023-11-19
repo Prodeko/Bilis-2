@@ -22,10 +22,8 @@ const SeasonForm: React.FC = () => {
         setMessage('Season added successfully')
         return res.json()
       } else {
-        const errorMessages = (await res.json())?.error?.map(
-          (e: { message?: string }) => e?.message
-        )
-        setMessage(`Error adding season: ${errorMessages.join(', ')}`)
+        const error = await res.json()
+        setMessage(`Error adding season: ${error.message}`)
       }
     })
   }

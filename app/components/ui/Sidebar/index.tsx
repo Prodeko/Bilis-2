@@ -13,7 +13,6 @@ interface Props {
 }
 
 const Sidebar = ({ currentSeason }: Props) => {
-  console.log(currentSeason)
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.linkContainer}>
