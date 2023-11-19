@@ -1,0 +1,58 @@
+@use 'styles' as *;
+
+.container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.seasonsList {
+  height: 85vh;
+  list-style-type: none;
+  overflow: auto;
+  padding: 0;
+}
+
+.seasonItem {
+  @extend %text-style-display-sm-semibold;
+
+  border-radius: 5px;
+  color: $color-base-white;
+  padding: 10px;
+}
+
+.form {
+  margin-top: 20px;
+}
+
+.inputField {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  padding: 8px;
+}
+
+.submitButton {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 15px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.message {
+  @extend %text-style-display-sm-semibold;
+
+  color: $color-base-white;
+  margin-bottom: $spacing-12;
+}

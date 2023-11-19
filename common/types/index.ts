@@ -104,8 +104,8 @@ type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
 // Season types
 const baseSeason = withId.extend({
-  start: z.date(),
-  end: z.date(),
+  start: z.coerce.date(),
+  end: z.coerce.date(),
   name: z.string().optional(),
 })
 
