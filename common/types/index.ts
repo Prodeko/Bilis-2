@@ -35,6 +35,7 @@ type WinLossStats = z.infer<typeof winLossStats>
 
 const playerStats = winLossStats.extend({
   longestWinStreak: z.number().int().nonnegative(),
+  seasonal: winLossStats,
 })
 type PlayerStats = z.infer<typeof playerStats>
 

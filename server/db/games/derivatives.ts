@@ -17,14 +17,26 @@ import {
 } from '@common/utils/helperFunctions'
 import { GameModel, PlayerModel } from '@server/models'
 
+import { getCurrentSeason } from '../seasons'
+
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await getPlayerOrderedGames(playerId)
+  const currentSeason = await getCurrentSeason()
 
   const wonGames = games.filter(game => game.winnerId === playerId).length
   const lostGames = games.filter(game => game.loserId === playerId).length
   const longestWinStreak = calculateLongestContinuousSequence(games, g => g.winnerId === playerId)
 
-  return { longestWinStreak, ...computeWinLossStats(wonGames, lostGames) }
+  const wonSeasonalGames = games
+    .filter(game => game.seasonId === currentSeason?.id)
+    .filter(game => game.winnerId === playerId).length
+  const lostSeasonalGames = games
+    .filter(game => game.seasonId === currentSeason?.id)
+    .filter(game => game.winnerId === playerId).length
+
+  const seasonStats = computeWinLossStats(wonSeasonalGames, lostSeasonalGames)
+
+  return { longestWinStreak, ...computeWinLossStats(wonGames, lostGames), seasonal: seasonStats }
 }
 
 const getGameCountForPlayer = async (playerId: number): Promise<number> =>

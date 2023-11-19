@@ -61,7 +61,11 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
       <ProfileStat
         Icon={FiCalendar}
         label="Seasonal"
-        subStatistics={[{ label: 'Coming Soon', value: `TBD` }]}
+        subStatistics={[
+          { label: 'Fargo', value: player.seasonElo?.toString() ?? 400 },
+          { label: 'Games', value: playerStats.seasonal.totalGames?.toString() ?? 0 },
+          { label: 'Win %', value: playerStats.seasonal.winPercentage?.toString() ?? 'NaN' },
+        ]}
       />
     </div>
   )
