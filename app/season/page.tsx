@@ -6,7 +6,12 @@ import DeleteSeasonButton from './DeleteSeasonButton'
 import styles from './Season.module.scss'
 import SeasonForm from './seasonForm'
 
-const SeasonsPage = async () => {
+const SeasonsPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) => {
+  if (searchParams?.password !== process.env.ADMIN_PASSWORD) return null
   const seasons = await getSeasons()
 
   return (
