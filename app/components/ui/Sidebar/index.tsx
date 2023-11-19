@@ -2,11 +2,18 @@
 
 import { FiBarChart2, FiHome, FiUser } from 'react-icons/fi'
 
+import { Season } from '@common/types'
+
 import SeasonToggle from './SeasonToggle'
 import styles from './Sidebar.module.scss'
 import SidebarLink from './SidebarLink'
 
-const Sidebar = () => {
+interface Props {
+  currentSeason: Season
+}
+
+const Sidebar = ({ currentSeason }: Props) => {
+  console.log(currentSeason)
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.linkContainer}>
@@ -15,7 +22,7 @@ const Sidebar = () => {
         <SidebarLink path="/player" Icon={FiUser} />
       </nav>
       <div className={styles.bottomContainer}>
-        <SeasonToggle />
+        {currentSeason && <SeasonToggle />}
         <p className={styles.versioning}>Version 1.2.0 - Isac 💸</p>
       </div>
     </aside>
