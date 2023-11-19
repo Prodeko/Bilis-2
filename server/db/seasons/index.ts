@@ -21,6 +21,16 @@ const getCurrentSeason = async (): Promise<SeasonModel | null> => {
   return currentSeason
 }
 
+const deleteSeason = async (id: number): Promise<number> => {
+  const deletedSeason = await SeasonModel.destroy({
+    where: {
+      id,
+    },
+  })
+
+  return deletedSeason
+}
+
 const getSeasons = async (): Promise<SeasonModel[]> => {
   const seasons = await SeasonModel.findAll({})
 
@@ -29,4 +39,4 @@ const getSeasons = async (): Promise<SeasonModel[]> => {
   return seasons.map(e => e.toJSON())
 }
 
-export { createSeason, getCurrentSeason, getSeasons }
+export { createSeason, getCurrentSeason, deleteSeason, getSeasons }

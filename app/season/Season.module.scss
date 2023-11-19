@@ -20,6 +20,7 @@
 
 .seasonItem {
   @extend %text-style-display-sm-semibold;
+  @include flex-x($spacing-12);
 
   border-radius: 5px;
   color: $color-base-white;

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { getSeasons } from '@server/db/seasons'
 
+import DeleteSeasonButton from './DeleteSeasonButton'
 import styles from './Season.module.scss'
 import SeasonForm from './seasonForm'
 
@@ -17,6 +18,7 @@ const SeasonsPage = async () => {
             {season.name ? `${season.name}: ` : ''}
             {new Date(season.start).toLocaleDateString()} -{' '}
             {new Date(season.end).toLocaleDateString()}
+            <DeleteSeasonButton id={season.id} />
           </li>
         ))}
       </ul>
