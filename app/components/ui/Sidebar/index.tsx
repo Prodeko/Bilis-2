@@ -14,8 +14,10 @@ const Sidebar = () => {
         <SidebarLink path="/stats" Icon={FiBarChart2} />
         <SidebarLink path="/player" Icon={FiUser} />
       </nav>
-      <SeasonToggle />
-      <p className={styles.versioning}>Version 1.2.0 - Isac 💸</p>
+      <div className={styles.bottomContainer}>
+        <SeasonToggle />
+        <p className={styles.versioning}>Version 1.2.0 - Isac 💸</p>
+      </div>
     </aside>
   )
 }

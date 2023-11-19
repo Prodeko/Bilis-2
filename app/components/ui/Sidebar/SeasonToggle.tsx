@@ -8,19 +8,18 @@ const SeasonToggle: React.FC = () => {
   const { seasonal, toggleSeasonalMode } = useSeasonalMode()
 
   return (
-    <div className={styles.seasonToggleContainer}>
-      <label className={styles.seasonToggleLabel}>
+    <div className={styles.toggleContainer}>
+      <div className={styles.toggleSwitch}>
         <input
           type="checkbox"
+          id="toggle"
+          className={styles.toggleCheckbox}
           checked={seasonal}
           onChange={toggleSeasonalMode}
-          className={styles.seasonToggleSwitch}
         />
-        <span className={styles.seasonToggleSlider}></span>
-      </label>
-      <span className={styles.seasonToggleText}>
-        {seasonal ? 'Seasonal Mode On' : 'Seasonal Mode Off'}
-      </span>
+        <label htmlFor="toggle" className={styles.toggleLabel}></label>
+      </div>
+      <span className={styles.toggleLabelText}>Seasonal</span>
     </div>
   )
 }
