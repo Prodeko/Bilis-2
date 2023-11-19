@@ -16,8 +16,7 @@ const SeasonsPage = async () => {
         {seasons.map((season, index) => (
           <li key={index} className={styles.seasonItem}>
             {season.name ? `${season.name}: ` : ''}
-            {new Date(season.start).toLocaleDateString()} -{' '}
-            {new Date(season.end).toLocaleDateString()}
+            {season.start.toLocaleDateString('fi-FI')} - {season.end.toLocaleDateString('fi-FI')}
             <DeleteSeasonButton id={season.id} />
           </li>
         ))}

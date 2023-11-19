@@ -3,11 +3,13 @@
 .container {
   font-family: Arial, sans-serif;
   margin: 20px;
+
 }
 
 .title {
-  color: #333;
-  font-size: 24px;
+  @extend %text-style-display-lg-semibold;
+
+  color: $color-base-white;
   margin-bottom: 15px;
 }
 
