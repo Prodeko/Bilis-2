@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react'
 
-import { getCurrentSeason } from '@server/db/seasons'
+import { Season } from '@common/types'
 
 import styles from './Header.module.scss'
 
@@ -8,17 +8,16 @@ type h1Props = ComponentProps<'h1'>
 
 interface Props extends h1Props {
   title: string
-  seasonal?: boolean
+  currentSeason?: Season | null
 }
 
-const HeaderTitle = async ({ title, seasonal, ...props }: Props) => {
-  const currentSeason = await getCurrentSeason()
+const HeaderTitle = async ({ title, currentSeason, ...props }: Props) => {
   return (
     <div className={styles.titleContainer}>
       <h1 {...props} className={styles.title}>
         {title}
       </h1>
-      {currentSeason && seasonal && <h2 className={styles.seasonTitle}>{currentSeason.name}</h2>}
+      {currentSeason && <h2 className={styles.seasonTitle}>{currentSeason.name}</h2>}
     </div>
   )
 }
