@@ -50,6 +50,16 @@ const deleteSeason = async (id: number): Promise<number> => {
   return deletedSeason
 }
 
+const updateSeason = async (id: number, data: NewSeason): Promise<number> => {
+  const updatedCount = await SeasonModel.update(data, {
+    where: {
+      id,
+    },
+  })
+
+  return updatedCount[0]
+}
+
 const getSeasons = async (): Promise<SeasonModel[]> => {
   const seasons = await SeasonModel.findAll({
     order: [['start', 'ASC']],
@@ -60,4 +70,4 @@ const getSeasons = async (): Promise<SeasonModel[]> => {
   return seasons.map(e => e.toJSON())
 }
 
-export { createSeason, getCurrentSeason, deleteSeason, getSeasons }
+export { createSeason, getCurrentSeason, deleteSeason, updateSeason, getSeasons }

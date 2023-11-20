@@ -4,9 +4,35 @@ import React from 'react'
 
 import styles from './Season.module.scss'
 
-const SeasonForm: React.FC = () => {
+interface Props {
+  id?: number
+}
+
+const SeasonForm: React.FC<Props> = ({ id }) => {
   const [message, setMessage] = React.useState('')
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const seasonData = {
+      name: formData.get('name'),
+      start: formData.get('start'),
+      end: formData.get('end'),
+    }
+    fetch(`/api/season/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(seasonData),
+    }).then(async res => {
+      if (res.ok) {
+        setMessage('Season updated successfully')
+        window.location.reload()
+        return res.json()
+      } else {
+        setMessage(`Error updating season`)
+      }
+    })
+  }
+
+  const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const seasonData = {
@@ -22,15 +48,15 @@ const SeasonForm: React.FC = () => {
         setMessage('Season added successfully')
         return res.json()
       } else {
-        const error = await res.json()
+        const error = (await res.json()) as { message: string }
         setMessage(`Error adding season: ${error.message}`)
       }
     })
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <p className={styles.message}>{message}</p>
+    <form onSubmit={id ? handleUpdate : handleCreate} className={styles.form}>
+      {message && <p className={styles.message}>{message}</p>}
       <input
         type="text"
         name="name"

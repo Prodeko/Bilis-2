@@ -2,7 +2,7 @@ import React from 'react'
 
 import { getSeasons } from '@server/db/seasons'
 
-import DeleteSeasonButton from './DeleteSeasonButton'
+import EditSeason from './EditSeason'
 import styles from './Season.module.scss'
 import SeasonForm from './seasonForm'
 
@@ -22,7 +22,7 @@ const SeasonsPage = async ({
           <li key={index} className={styles.seasonItem}>
             {season.name ? `${season.name}: ` : ''}
             {season.start.toLocaleDateString('fi-FI')} - {season.end.toLocaleDateString('fi-FI')}
-            <DeleteSeasonButton id={season.id} />
+            <EditSeason id={season.id} />
           </li>
         ))}
       </ul>
