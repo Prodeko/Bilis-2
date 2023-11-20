@@ -29,7 +29,8 @@ export const prepareGamesData = (data: RecentGame[]): TableGame[] => {
     loser: game.loser,
     loserFargo: (
       <>
-        {round(game.loserEloBefore)} <FiChevronRight /> {round(game.loserEloAfter)}
+        {round(game.loserEloBefore)} <FiChevronRight /> {round(game.loserEloAfter)}&nbsp;&nbsp;
+        {game.underTable && '💩'}
       </>
     ),
   }))
