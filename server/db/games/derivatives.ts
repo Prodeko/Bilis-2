@@ -8,7 +8,7 @@ import {
   RecentGame,
   TimeSeriesGame,
 } from '@common/types'
-import { ZEROTH_GAME } from '@common/utils/constants'
+import { DEFAULT_ELO, ZEROTH_GAME } from '@common/utils/constants'
 import {
   calculateLongestContinuousSequence,
   computeWinLossStats,
@@ -17,14 +17,26 @@ import {
 } from '@common/utils/helperFunctions'
 import { GameModel, PlayerModel } from '@server/models'
 
+import { getCurrentSeason } from '../seasons'
+
 const getPlayerStats = async (playerId: number): Promise<PlayerStats> => {
   const games = await getPlayerOrderedGames(playerId)
+  const currentSeason = await getCurrentSeason()
 
   const wonGames = games.filter(game => game.winnerId === playerId).length
   const lostGames = games.filter(game => game.loserId === playerId).length
   const longestWinStreak = calculateLongestContinuousSequence(games, g => g.winnerId === playerId)
 
-  return { longestWinStreak, ...computeWinLossStats(wonGames, lostGames) }
+  const wonSeasonalGames = games
+    .filter(game => game.seasonId === currentSeason?.id)
+    .filter(game => game.winnerId === playerId).length
+  const lostSeasonalGames = games
+    .filter(game => game.seasonId === currentSeason?.id)
+    .filter(game => game.winnerId === playerId).length
+
+  const seasonStats = computeWinLossStats(wonSeasonalGames, lostSeasonalGames)
+
+  return { longestWinStreak, ...computeWinLossStats(wonGames, lostGames), seasonal: seasonStats }
 }
 
 const getGameCountForPlayer = async (playerId: number): Promise<number> =>
@@ -116,13 +128,13 @@ const getMutualGamesCount = async (
   }
 }
 
-const getRecentGames = async (n = 20, offset = 0): Promise<RecentGame[]> => {
-  const recentGames = await getLatestGames(n, offset)
+const getRecentGames = async (n = 20, seasonal = false, offset = 0): Promise<RecentGame[]> => {
+  const recentGames = await getLatestGames(n, offset, seasonal)
 
-  return recentGames.map(formatRecentGame)
+  return recentGames.map(recentGame => formatRecentGame(recentGame, seasonal))
 }
 
-const formatRecentGame = (game: GameModel): RecentGame => {
+const formatRecentGame = (game: GameModel, seasonal = false): RecentGame => {
   if (!game.winner) {
     throw new Error('Error in formatting recent game: winner missing!')
   } else if (!game.loser) {
@@ -132,10 +144,10 @@ const formatRecentGame = (game: GameModel): RecentGame => {
     id: game.id,
     winnerId: game.winnerId,
     loserId: game.loserId,
-    winnerEloBefore: game.winnerEloBefore,
-    winnerEloAfter: game.winnerEloAfter,
-    loserEloBefore: game.loserEloBefore,
-    loserEloAfter: game.loserEloAfter,
+    winnerEloBefore: seasonal ? game.winnerSeasonEloBefore ?? DEFAULT_ELO : game.winnerEloBefore,
+    winnerEloAfter: seasonal ? game.winnerSeasonEloAfter : game.winnerEloAfter,
+    loserEloBefore: seasonal ? game.loserSeasonEloBefore ?? DEFAULT_ELO : game.loserEloBefore,
+    loserEloAfter: seasonal ? game.loserSeasonEloAfter : game.loserEloAfter,
     underTable: game.underTable,
     formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
     winner: `${formatFullName(game.winner, true, Boolean(game.winner.nickname))}`,

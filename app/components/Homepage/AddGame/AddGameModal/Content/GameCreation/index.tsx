@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { RecentGame } from '@common/types'
-import { setUndertable, useModalState } from '@state/Modal'
+import Player from '@server/models/rawModels/Player'
+import { addToRecentPlayers, setPlayerId, setUndertable, useModalState } from '@state/Modal'
 import { removeFromQueue, useQueueState } from '@state/Queue'
 
 import styles from './GameCreation.module.scss'
@@ -32,9 +33,14 @@ const GameCreation = ({ setGames, onClose }: Props) => {
       body: JSON.stringify(game),
     })
     const data = await res.json()
+    dispatchModal(
+      addToRecentPlayers([data.loser as unknown as Player, data.winner as unknown as Player])
+    )
+    dispatchModal(setPlayerId('winner', undefined))
+    dispatchModal(setPlayerId('loser', undefined))
     if (game.winnerId) dispatchQueue(removeFromQueue(game.winnerId))
     if (game.loserId) dispatchQueue(removeFromQueue(game.loserId))
-    setGames((prev: RecentGame[]) => [data as RecentGame, ...prev])
+    setGames((prev: RecentGame[]) => [data.recentGame as RecentGame, ...prev])
     onClose()
     document?.getElementById('home-layout')?.focus() // focus on the root element so pressing enter adds a new game
   }

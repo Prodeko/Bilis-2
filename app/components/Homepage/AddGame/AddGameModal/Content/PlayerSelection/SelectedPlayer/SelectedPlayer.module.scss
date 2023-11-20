@@ -13,15 +13,16 @@
 }
 
 .layout {
-  max-height: 50%;
+  max-height: 100%;
 }
 
 .head {
   @extend %text-style-display-md-bold;
+  @extend %flex-between;
 
+  align-items: center;
   color: $color-gray-200;
-  display: flex;
-  justify-content: space-between;
+  gap: $spacing-4;
 
   tr {
     @extend %flex-center;
@@ -32,12 +33,12 @@
   
   button {
     @extend %flex-center;
-    @include size($spacing-64);
 
     background-color: $color-gray-300;
     border: none;
     border-radius: 50%;
     cursor: pointer;
+    padding: $spacing-12;
     transition: all 0.3s;
 
     &:hover {
@@ -55,13 +56,14 @@
     @extend %text-style-display-xs-semibold;
 
     color: $color-gray-25;
-    text-align: center;
+    text-align: left;
   }
 
   .row {
     @include flex-x(null);
 
     justify-content: space-between;
+    text-align: left;
     width: 100%;
   }
 }

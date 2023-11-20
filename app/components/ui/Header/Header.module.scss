@@ -13,6 +13,19 @@
   width: 100%;
 }
 
+.titleContainer {
+  @include flex-y(null);
+
+  padding-left: $spacing-24;
+
+}
+
+.seasonTitle {
+  @extend %text-style-display-md-normal;
+
+  color: $color-gray-400;
+}
+
 %header {
   align-items: center;
   display: grid;
@@ -39,7 +52,6 @@
   @extend %text-style-display-2-xl-bold;
   @include gradient-text($color: $color-gradient-white-200-25);
 
-  padding-left: $spacing-24;
 }
 
 .layout {

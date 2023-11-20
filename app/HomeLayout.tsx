@@ -8,6 +8,7 @@ import Games from '@components/Homepage/Games'
 import { Leaderboard } from '@components/Homepage/Leaderboard'
 import { Queue } from '@components/Homepage/Queue'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { ModalProvider, reducer as modalReducer } from '@state/Modal'
 import { QueueProvider, reducer } from '@state/Queue'
 
 import styles from './Home.module.scss'
@@ -44,44 +45,46 @@ const HomeLayout = ({ leaderboard, recentPlayers, recentGames, ...props }: Props
       className={styles['grid__content']}
       onKeyDown={handleKeyDown}
     >
-      <QueueProvider reducer={reducer}>
-        <>
-          <Leaderboard
-            leaderboard={leaderboard}
-            cardProps={{
-              style: {
-                gridColumn: '1 / 2',
-                gridRow: '1 / -1',
-              },
-            }}
-          />
-          <Queue
-            cardProps={{
-              style: {
-                gridColumn: '2 / 3',
-                gridRow: '1 / 2',
-              },
-            }}
-          />
-          <AddGameButton
-            onClose={closeModal}
-            onOpen={openModal}
-            open={gameModalOpen}
-            setGames={setGames}
-            recentPlayers={recentPlayers}
-          />
-          <Games
-            games={games}
-            setGames={setGames}
-            cardProps={{
-              style: {
-                gridColumn: '2 / -1',
-                gridRow: '2 / -1',
-              },
-            }}
-          />
-        </>
-      </QueueProvider>
+      <ModalProvider recentPlayers={recentPlayers} reducer={modalReducer}>
+        <QueueProvider reducer={reducer}>
+          <>
+            <Leaderboard
+              leaderboard={leaderboard}
+              cardProps={{
+                style: {
+                  gridColumn: '1 / 2',
+                  gridRow: '1 / -1',
+                },
+              }}
+            />
+            <Queue
+              cardProps={{
+                style: {
+                  gridColumn: '2 / 3',
+                  gridRow: '1 / 2',
+                },
+              }}
+            />
+            <AddGameButton
+              onClose={closeModal}
+              onOpen={openModal}
+              open={gameModalOpen}
+              setGames={setGames}
+              recentPlayers={recentPlayers}
+            />
+            <Games
+              games={games}
+              setGames={setGames}
+              cardProps={{
+                style: {
+                  gridColumn: '2 / -1',
+                  gridRow: '2 / -1',
+                },
+              }}
+            />
+          </>
+        </QueueProvider>
+      </ModalProvider>
     </div>
   )
 }

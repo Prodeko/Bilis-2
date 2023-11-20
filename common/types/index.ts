@@ -35,6 +35,7 @@ type WinLossStats = z.infer<typeof winLossStats>
 
 const playerStats = winLossStats.extend({
   longestWinStreak: z.number().int().nonnegative(),
+  seasonal: winLossStats,
 })
 type PlayerStats = z.infer<typeof playerStats>
 
@@ -104,8 +105,8 @@ type TimeSeriesGame = z.infer<typeof timeSeriesGame>
 
 // Season types
 const baseSeason = withId.extend({
-  start: z.date(),
-  end: z.date(),
+  start: z.coerce.date(),
+  end: z.coerce.date(),
   name: z.string().optional(),
 })
 

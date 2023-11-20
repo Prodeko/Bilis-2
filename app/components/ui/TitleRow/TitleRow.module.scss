@@ -2,8 +2,10 @@
 
 .titlerow {
   @extend %text-style-display-sm-semibold;
+  @extend %flex-between;
   @include padding-x($spacing-24);
-  @include grid-cols(12);
+  @include flex-x($spacing-12);
+  
 
   align-items: center;
   color: $color-gray-50;

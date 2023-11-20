@@ -23,11 +23,9 @@ const TableHead = ({ player, side }: Props) => {
       <div>
         {player.firstName} {player.lastName}
       </div>
-      <div>
-        <button onClick={onClear} type="button">
-          <Image src={PencilImage} width={40} alt="edit pencil" />
-        </button>
-      </div>
+      <button onClick={onClear} type="button">
+        <Image src={PencilImage} width={24} alt="edit pencil" />
+      </button>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { CreateGameType, NewPlayer, NewSeason, Season } from '@common/types'
 import { DEFAULT_ELO } from '@common/utils/constants'
 import { calculateNewGameEffects, createGame } from '@server/db/games'
-import { clearGamesDEV } from '@server/db/games/derivatives'
+import { clearGamesDEV, getSeasonGameCountForPlayer } from '@server/db/games/derivatives'
 import { clearPlayersDEV, createPlayer, getPlayers } from '@server/db/players'
 import { createSeason, getSeasons } from '@server/db/seasons'
 import { clearSeasonsDEV } from '@server/db/seasons/derivatives'
@@ -105,8 +105,8 @@ const addDays = (date: Date, days: number) => {
   return new Date(date.getTime() + daysSeconds * days)
 }
 
-const generateSeason = (n: number): NewSeason => {
-  const start = addDays(new Date(), 30 * (n - 1))
+const generateSeason = (n: number, maxN: number): NewSeason => {
+  const start = addDays(new Date(), 30 * (n - Math.floor(maxN / 2)))
   const end = randomDateAfter(start, 30)
   start.setHours(0, 0, 0, 0)
   end.setHours(0, 0, 0, 0)
@@ -123,9 +123,9 @@ const createPlayers = async () => {
 }
 
 const createSeasons = async () => {
-  const SEASON_COUNT = 10
+  const SEASON_COUNT = 20
   // generateSeason takes the iteration index as parameter
-  const seasons = _.times(SEASON_COUNT, generateSeason)
+  const seasons = _.times(SEASON_COUNT, n => generateSeason(n, SEASON_COUNT))
   await Promise.all(seasons.map(createSeason))
 }
 
@@ -140,7 +140,12 @@ const createGames = async () => {
     return { model: p, gameCount: 0 }
   })
   const seasonPlayerData: { [playerId: number]: { [seasonId: number]: number } } =
-    Object.fromEntries(allPlayers.map(p => [p, Object.fromEntries(seasons.map(s => [s.id, 0]))]))
+    Object.fromEntries(
+      allPlayers.map(p => [
+        p,
+        Object.fromEntries(seasons.map(s => [s.id, getSeasonGameCountForPlayer(p.id, s.id)])),
+      ])
+    )
 
   const games = _.times(GAME_COUNT, () => {
     const [winnerData, loserData] = _.sampleSize(allPlayerData, 2)
@@ -166,20 +171,29 @@ const createGames = async () => {
         winner: winnerData.model,
         loser: loserData.model,
         winnerGames: winnerData.gameCount,
-        winnerSeasonGames: season ? seasonPlayerData[winnerData.model.id][season.id] : null,
+        winnerSeasonGames: season ? seasonPlayerData[winnerData.model.id]?.[season.id] : null,
         loserGames: loserData.gameCount,
-        loserSeasonGames: season ? seasonPlayerData[loserData.model.id][season.id] : null,
+        loserSeasonGames: season ? seasonPlayerData[loserData.model.id]?.[season.id] : null,
         currentSeason: season ?? null,
       }
     )
     const { createdGameObject, winnerUpdateInfo, loserUpdateInfo } = effects
-
     winnerData.model.elo = winnerUpdateInfo.elo
     loserData.model.elo = loserUpdateInfo.elo
+    if (winnerUpdateInfo.seasonElo) winnerData.model.seasonElo = winnerUpdateInfo.seasonElo
+    if (winnerUpdateInfo.latestSeasonId)
+      winnerData.model.latestSeasonId = winnerUpdateInfo.latestSeasonId
+    if (loserUpdateInfo.seasonElo) loserData.model.seasonElo = loserUpdateInfo.seasonElo
+    if (loserUpdateInfo.latestSeasonId)
+      loserData.model.latestSeasonId = loserUpdateInfo.latestSeasonId
 
     winnerData.gameCount += 1
     loserData.gameCount += 1
-    if (season) {
+    if (
+      season &&
+      seasonPlayerData[winnerData.model.id] &&
+      seasonPlayerData[loserData.model.id][season.id]
+    ) {
       seasonPlayerData[winnerData.model.id][season.id] += 1
       seasonPlayerData[loserData.model.id][season.id] += 1
     }

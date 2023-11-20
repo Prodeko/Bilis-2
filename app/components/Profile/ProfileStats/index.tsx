@@ -9,6 +9,7 @@ import { PlayerModel } from '@server/models'
 
 import ProfileStat from './ProfileStat'
 import styles from './ProfileStats.module.scss'
+import { DEFAULT_ELO } from '@common/utils/constants'
 
 type DivProps = ComponentProps<'div'>
 
@@ -61,7 +62,11 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
       <ProfileStat
         Icon={FiCalendar}
         label="Seasonal"
-        subStatistics={[{ label: 'Coming Soon', value: `TBD` }]}
+        subStatistics={[
+          { label: 'Fargo', value: player.seasonElo?.toString() ?? DEFAULT_ELO },
+          { label: 'Games', value: playerStats.seasonal.totalGames?.toString() ?? 0 },
+          { label: 'Win %', value: playerStats.seasonal.winPercentage?.toString() ?? 'NaN' },
+        ]}
       />
     </div>
   )
