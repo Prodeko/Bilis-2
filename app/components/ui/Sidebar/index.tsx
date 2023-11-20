@@ -3,6 +3,7 @@
 import { FiBarChart2, FiHome, FiUser } from 'react-icons/fi'
 
 import { Season } from '@common/types'
+import useSeasonalMode from '@hooks/useSeasonalMode'
 
 import SeasonToggle from './SeasonToggle'
 import styles from './Sidebar.module.scss'
@@ -13,8 +14,9 @@ interface Props {
 }
 
 const Sidebar = ({ currentSeason }: Props) => {
+  const { seasonal } = useSeasonalMode()
   return (
-    <aside className={styles.sidebar}>
+    <aside className={seasonal ? styles['sidebar--seasonal'] : styles.sidebar}>
       <nav className={styles.linkContainer}>
         <SidebarLink path="/" Icon={FiHome} />
         <SidebarLink path="/stats" Icon={FiBarChart2} />

@@ -1,6 +1,6 @@
 @use 'styles' as *;
 
-.sidebar {
+%sidebar {
   @include flex-y($spacing-16);
 
   background: $color-gradient-mixed-900-600;
@@ -8,6 +8,16 @@
   max-height: 100vh;
   padding: $spacing-24;
   z-index: 10;
+}
+
+.sidebar {
+  @extend %sidebar;
+
+  &--seasonal {
+    @extend %sidebar;
+
+    background: $color-gradient-gray-600-500;
+  }
 }
 
 .linkContainer {
