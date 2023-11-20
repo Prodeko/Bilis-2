@@ -6,6 +6,7 @@ import useSeasonalMode from '@hooks/useSeasonalMode'
 import { Side, setFocus, setSelectedIdx, useModalState } from '@state/Modal'
 
 import styles from './ChoosePlayer.module.scss'
+import { DEFAULT_ELO } from '@common/utils/constants'
 
 type ListProps = {
   onChoose: (id: number) => void
@@ -46,7 +47,7 @@ const Queue = ({ onChoose, side, players }: ListProps) => {
           <span>
             {p.emoji} {p.firstName} {p.lastName}
           </span>
-          <span>{round(seasonal ? p.seasonElo ?? 400 : p.elo)}</span>
+          <span>{round(seasonal ? p.seasonElo ?? DEFAULT_ELO : p.elo)}</span>
         </li>
       ))}
     </ul>

@@ -8,7 +8,7 @@ import {
   RecentGame,
   TimeSeriesGame,
 } from '@common/types'
-import { ZEROTH_GAME } from '@common/utils/constants'
+import { DEFAULT_ELO, ZEROTH_GAME } from '@common/utils/constants'
 import {
   calculateLongestContinuousSequence,
   computeWinLossStats,
@@ -144,9 +144,9 @@ const formatRecentGame = (game: GameModel, seasonal: boolean): RecentGame => {
     id: game.id,
     winnerId: game.winnerId,
     loserId: game.loserId,
-    winnerEloBefore: seasonal ? game.winnerSeasonEloBefore ?? 400 : game.winnerEloBefore,
+    winnerEloBefore: seasonal ? game.winnerSeasonEloBefore ?? DEFAULT_ELO : game.winnerEloBefore,
     winnerEloAfter: seasonal ? game.winnerSeasonEloAfter : game.winnerEloAfter,
-    loserEloBefore: seasonal ? game.loserSeasonEloBefore ?? 400 : game.loserEloBefore,
+    loserEloBefore: seasonal ? game.loserSeasonEloBefore ?? DEFAULT_ELO : game.loserEloBefore,
     loserEloAfter: seasonal ? game.loserSeasonEloAfter : game.loserEloAfter,
     underTable: game.underTable,
     formattedTimeString: formatIsoStringToDate(game.createdAt.toISOString()),
