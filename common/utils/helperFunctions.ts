@@ -104,8 +104,9 @@ export const createSmoothScrollFn = (domElementId: string) => {
  */
 export const formatIsoStringToDate = (isoStringDate: string | Date) => {
   const date = new Date(isoStringDate)
-  return Intl.DateTimeFormat('fi-FI', {
+  return date.toLocaleString('fi-FI', {
     dateStyle: 'short',
     timeStyle: 'short',
-  }).format(date)
+    timeZone: 'Europe/Helsinki',
+  })
 }
