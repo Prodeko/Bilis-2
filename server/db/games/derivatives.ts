@@ -134,7 +134,7 @@ const getRecentGames = async (n = 20, seasonal = false, offset = 0): Promise<Rec
   return recentGames.map(recentGame => formatRecentGame(recentGame, seasonal))
 }
 
-const formatRecentGame = (game: GameModel, seasonal: boolean): RecentGame => {
+const formatRecentGame = (game: GameModel, seasonal = false): RecentGame => {
   if (!game.winner) {
     throw new Error('Error in formatting recent game: winner missing!')
   } else if (!game.loser) {
