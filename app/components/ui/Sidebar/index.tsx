@@ -24,7 +24,7 @@ const Sidebar = ({ currentSeason }: Props) => {
       </nav>
       <div className={styles.bottomContainer}>
         {currentSeason && <SeasonToggle />}
-        <p className={styles.versioning}>Version 1.2.0 - Isac 💸</p>
+        <p className={styles.versioning}>Version 1.3.0 - Rööki 🚬</p>
       </div>
     </aside>
   )
