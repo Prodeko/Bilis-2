@@ -15,6 +15,16 @@ class Game extends Model {
 
   declare underTable: boolean
 
+  declare winnerSeasonEloBefore: number
+
+  declare loserSeasonEloBefore: number
+
+  declare winnerSeasonEloAfter: number
+
+  declare loserSeasonEloAfter: number
+
+  declare seasonId: number
+
   declare createdAt: Date
 }
 

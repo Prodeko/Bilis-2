@@ -10,9 +10,11 @@ import HeaderTitle from '../HeaderTitle'
 
 type HeaderProps = ComponentProps<'header'>
 
-type Props = HeaderProps
+type Props = HeaderProps & {
+  seasonal: boolean
+}
 
-export const Header = async ({ ...props }: Props) => {
+export const Header = async ({ seasonal, ...props }: Props) => {
   const randomPlayer = await getRandomPlayer().then(player => player?.toJSON())
   return (
     <header {...props} className={styles.header}>
@@ -24,7 +26,7 @@ export const Header = async ({ ...props }: Props) => {
         priority={true}
       />
       <div className={styles.layout}>
-        <HeaderTitle title="Biliskilke" style={{ gridColumn: '1 / 2' }} />
+        <HeaderTitle seasonal={seasonal} title="Biliskilke" style={{ gridColumn: '1 / 2' }} />
         <RandomPlayer randomPlayer={randomPlayer} />
       </div>
     </header>

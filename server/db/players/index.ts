@@ -1,10 +1,11 @@
-import _ from 'lodash'
 import { Op, QueryTypes, Sequelize } from 'sequelize'
 
 import { NewPlayer, Player, newPlayer, player } from '@common/types'
 import { permutator } from '@common/utils/helperFunctions'
 import { PlayerModel } from '@server/models'
 import dbConf from '@server/utils/dbConf'
+
+import { getCurrentSeason } from '../seasons'
 
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
   const parsedPlayer = newPlayer.parse(player)
@@ -44,13 +45,20 @@ const clearPlayersDEV = () =>
     cascade: true,
   })
 
-const getPlayers = (amount?: number): Promise<PlayerModel[]> =>
-  PlayerModel.findAll({
+const getPlayers = async (amount?: number, seasonal?: boolean): Promise<PlayerModel[]> => {
+  const season = seasonal ? await getCurrentSeason() : null
+  return PlayerModel.findAll({
     limit: amount,
-    order: [['elo', 'DESC']],
+    order: [[seasonal ? 'seasonElo' : 'elo', 'DESC']],
+    where: seasonal
+      ? {
+          latestSeasonId: season?.id,
+        }
+      : undefined,
   })
+}
 
-const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
+const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<Player[]> => {
   const response = (await dbConf.sequelize.query(
     `--sql
     WITH combined_players AS (
@@ -84,7 +92,7 @@ const getLatestPlayers = async (nofPlayers: number): Promise<Player[]> => {
       players.nickname,
       players.emoji,
       players.motto,
-      players.elo,
+      ${seasonal ? 'COALESCE(players.season_elo, 400)' : 'players.elo'} as elo,
       players.season_elo as "seasonElo",
       players.latest_season_id as "latestSeasonId"
     FROM recent_players
@@ -114,12 +122,12 @@ const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel
 }
 
 export {
-  getPlayers,
-  createPlayer,
   clearPlayersDEV,
-  getPlayerById,
-  getRandomPlayer,
-  updatePlayerById,
+  createPlayer,
   getLatestPlayers,
+  getPlayerById,
+  getPlayers,
+  getRandomPlayer,
   searchPlayers,
+  updatePlayerById,
 }

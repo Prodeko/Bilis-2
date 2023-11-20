@@ -2,9 +2,11 @@ import { round } from 'lodash'
 
 import { Player, SmoothScrollId } from '@common/types'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import useSeasonalMode from '@hooks/useSeasonalMode'
 import { Side, setFocus, setSelectedIdx, useModalState } from '@state/Modal'
 
 import styles from './ChoosePlayer.module.scss'
+import { DEFAULT_ELO } from '@common/utils/constants'
 
 type ListProps = {
   onChoose: (id: number) => void
@@ -14,7 +16,7 @@ type ListProps = {
 
 const Queue = ({ onChoose, side, players }: ListProps) => {
   const [parent, _enableAnimations] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
-
+  const { seasonal } = useSeasonalMode()
   const [{ selectedIdx, focus }, dispatch] = useModalState()
 
   if (players.length === 0) {
@@ -45,7 +47,7 @@ const Queue = ({ onChoose, side, players }: ListProps) => {
           <span>
             {p.emoji} {p.firstName} {p.lastName}
           </span>
-          <span>{round(p.elo)}</span>
+          <span>{round(seasonal ? p.seasonElo ?? DEFAULT_ELO : p.elo)}</span>
         </li>
       ))}
     </ul>
