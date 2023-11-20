@@ -21,7 +21,7 @@ export default async function Page({
 
   return (
     <div tabIndex={-1} className={styles.grid__layout}>
-      <Header />
+      <Header seasonal />
       <HomeLayout
         leaderboard={leaderboard}
         recentPlayers={recentPlayers}

@@ -8,16 +8,17 @@ type h1Props = ComponentProps<'h1'>
 
 interface Props extends h1Props {
   title: string
+  seasonal: boolean
 }
 
-const HeaderTitle = async ({ title, ...props }: Props) => {
-  const season = await getCurrentSeason()
+const HeaderTitle = async ({ title, seasonal, ...props }: Props) => {
+  const currentSeason = await getCurrentSeason()
   return (
     <div className={styles.titleContainer}>
       <h1 {...props} className={styles.title}>
         {title}
       </h1>
-      {season && <h2 className={styles.seasonTitle}>Season: {season.name}</h2>}
+      {currentSeason && seasonal && <h2 className={styles.seasonTitle}>{currentSeason.name}</h2>}
     </div>
   )
 }
