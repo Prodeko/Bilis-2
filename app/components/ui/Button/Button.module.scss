@@ -14,11 +14,11 @@
   @extend %text-style-text-md-semibold;
   @extend %flex-center;
   @include flex-x($spacing-8);
-  @include size(100%);
 
   background-color: $color-error-600;
   border: none;
   color: $color-base-white;
+  padding: $spacing-12;
 
   & span {
     @extend %flex-center;

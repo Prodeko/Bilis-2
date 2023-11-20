@@ -38,6 +38,14 @@ export const reducer = (state: State, action: Action): State => {
           underTable: action.payload,
         },
       }
+    case 'ADD_TO_RECENT_PLAYERS':
+      return {
+        ...state,
+        recentPlayers: [
+          ...action.payload,
+          ...state.recentPlayers.filter(p => !action.payload.some(p2 => p2.id === p.id)),
+        ],
+      }
     case 'RESET_PLAYERS':
       return {
         ...state,
@@ -87,6 +95,10 @@ export type Action =
       payload: boolean
     }
   | {
+      type: 'ADD_TO_RECENT_PLAYERS'
+      payload: Player[]
+    }
+  | {
       type: 'RESET_PLAYERS'
       payload: Side
     }
@@ -121,6 +133,11 @@ export const setPlayerId = (side: Side, id: Player['id'] | undefined): Action =>
 export const setUndertable = (payload: boolean): Action => ({
   type: 'SET_UNDERTABLE',
   payload,
+})
+
+export const addToRecentPlayers = (players: Player[]): Action => ({
+  type: 'ADD_TO_RECENT_PLAYERS',
+  payload: players,
 })
 
 export const resetPlayers = (side: Side): Action => ({

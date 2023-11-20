@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const jsonGame = formatRecentGame(game)
   revalidatePath('/stats')
 
-  return NextResponse.json(jsonGame)
+  return NextResponse.json({ recentGame: jsonGame, winner: game.winner, loser: game.loser })
 }
 
 export async function DELETE() {

@@ -8,7 +8,7 @@ type h1Props = ComponentProps<'h1'>
 
 interface Props extends h1Props {
   title: string
-  seasonal: boolean
+  seasonal?: boolean
 }
 
 const HeaderTitle = async ({ title, seasonal, ...props }: Props) => {
