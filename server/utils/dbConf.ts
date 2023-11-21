@@ -10,10 +10,18 @@ const { POSTGRES_USER, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_P
 
 const sslMode = NODE_ENV !== 'production' ? '' : '?sslmode=require'
 
-const sequelize = new Sequelize(
-  `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}${sslMode}`,
-  { dialectModule: pg }
-)
+let sequelize: Sequelize
+try {
+  sequelize = new Sequelize(
+    `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}${sslMode}`,
+    { dialectModule: pg }
+  )
+} catch (err) {
+  sequelize = new Sequelize(
+    `postgres://dummy:dummy@dummy:5432/dummy${sslMode}`,
+    { dialectModule: pg }
+  )
+}
 const umzug = new Umzug({
   migrations: { glob: path.join(__dirname, '../migrations/*.ts') },
   context: sequelize.getQueryInterface(),
