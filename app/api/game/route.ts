@@ -1,7 +1,7 @@
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
-import { createGameType } from '@common/types'
+import { AddedGameResponse, createGameType } from '@common/types'
 import { createGame, removeLatestGame } from '@server/db/games'
 import { formatRecentGame } from '@server/db/games/derivatives'
 
@@ -12,7 +12,11 @@ export async function POST(req: Request) {
   const jsonGame = formatRecentGame(game)
   revalidatePath('/stats')
 
-  return NextResponse.json({ recentGame: jsonGame, winner: game.winner, loser: game.loser })
+  return NextResponse.json({
+    recentGame: jsonGame,
+    winner: game.winner,
+    loser: game.loser,
+  } as AddedGameResponse)
 }
 
 export async function DELETE() {

@@ -71,6 +71,13 @@ const recentGame = game.extend({
 })
 type RecentGame = z.infer<typeof recentGame>
 
+const addedGameResponse = z.object({
+  recentGame: recentGame,
+  winner: player,
+  loser: player,
+})
+type AddedGameResponse = z.infer<typeof addedGameResponse>
+
 const mutualGames = z.object({
   currentPlayerGamesWon: z.number().int().nonnegative(),
   opposingPlayerGamesWon: z.number().int().nonnegative(),
@@ -160,6 +167,7 @@ export type {
   GameWithPlayers,
   NewGame,
   RecentGame,
+  AddedGameResponse,
   SubStatistic,
   ProfileStatistic,
   WinLossStats,
@@ -185,6 +193,7 @@ export {
   playerWithStats,
   game,
   recentGame,
+  addedGameResponse,
   mutualGames,
   gameWithPlayers,
   newGame,

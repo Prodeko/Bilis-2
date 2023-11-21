@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { RecentGame } from '@common/types'
-import Player from '@server/models/rawModels/Player'
+import { AddedGameResponse, RecentGame } from '@common/types'
+import useSeasonalMode from '@hooks/useSeasonalMode'
 import { addToRecentPlayers, setPlayerId, setUndertable, useModalState } from '@state/Modal'
 import { removeFromQueue, useQueueState } from '@state/Queue'
 
@@ -15,6 +15,7 @@ interface Props {
 }
 
 const GameCreation = ({ setGames, onClose }: Props) => {
+  const { seasonal } = useSeasonalMode()
   const [{ game }, dispatchModal] = useModalState()
   const [_, dispatchQueue] = useQueueState()
 
@@ -32,9 +33,18 @@ const GameCreation = ({ setGames, onClose }: Props) => {
       },
       body: JSON.stringify(game),
     })
-    const data = await res.json()
+    const data = (await res.json()) as unknown as AddedGameResponse
     dispatchModal(
-      addToRecentPlayers([data.loser as unknown as Player, data.winner as unknown as Player])
+      addToRecentPlayers([
+        {
+          ...data.loser,
+          elo: seasonal ? data.loser.seasonElo ?? 400 : data.loser.elo,
+        },
+        {
+          ...data.loser,
+          elo: seasonal ? data.loser.seasonElo ?? 400 : data.loser.elo,
+        },
+      ])
     )
     dispatchModal(setPlayerId('winner', undefined))
     dispatchModal(setPlayerId('loser', undefined))
