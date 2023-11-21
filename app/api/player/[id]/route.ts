@@ -24,3 +24,5 @@ export async function PUT(req: NextRequest, { params }: { params: { id: number }
   const parsedUpdatedPlayer = playerParser.parse(updatedPlayer)
   return NextResponse.json(parsedUpdatedPlayer)
 }
+
+export const dynamic = 'force-dynamic'
