@@ -2,6 +2,7 @@ import { max, round } from 'lodash'
 import { ComponentProps } from 'react'
 import { FiCalendar, FiFolder, FiPlay, FiTrendingUp } from 'react-icons/fi'
 
+import { DEFAULT_ELO } from '@common/utils/constants'
 import { formatIsoStringToDate } from '@common/utils/helperFunctions'
 import { getPlayerDetailedGames, getPlayerStats } from '@server/db/games/derivatives'
 import { getPlayerById } from '@server/db/players'
@@ -9,7 +10,6 @@ import { PlayerModel } from '@server/models'
 
 import ProfileStat from './ProfileStat'
 import styles from './ProfileStats.module.scss'
-import { DEFAULT_ELO } from '@common/utils/constants'
 
 type DivProps = ComponentProps<'div'>
 
@@ -63,7 +63,7 @@ const ProfileStats = async ({ playerId, ...props }: Props) => {
         Icon={FiCalendar}
         label="Seasonal"
         subStatistics={[
-          { label: 'Fargo', value: player.seasonElo?.toString() ?? DEFAULT_ELO },
+          { label: 'Fargo', value: round(player.seasonElo, 2).toFixed(2) ?? DEFAULT_ELO },
           { label: 'Games', value: playerStats.seasonal.totalGames?.toString() ?? 0 },
           { label: 'Win %', value: playerStats.seasonal.winPercentage?.toString() ?? 'NaN' },
         ]}
