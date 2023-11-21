@@ -18,3 +18,5 @@ const editPlayer = async ({ params }: { params: { id: number } }) => {
 }
 
 export default editPlayer
+
+export const dynamic = 'force-dynamic'

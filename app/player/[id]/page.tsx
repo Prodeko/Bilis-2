@@ -16,3 +16,5 @@ const PlayerPage = async ({ params }: { params: { id: number } }) => {
 }
 
 export default PlayerPage
+
+export const dynamic = 'force-dynamic'

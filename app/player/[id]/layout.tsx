@@ -9,3 +9,5 @@ const ProfileLayout = ({ children }: Props) => {
 }
 
 export default ProfileLayout
+
+export const dynamic = 'force-dynamic'
