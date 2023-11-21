@@ -19,3 +19,5 @@ export async function DELETE() {
   const removedLatestGame = await removeLatestGame()
   return NextResponse.json(removedLatestGame)
 }
+
+export const dynamic = 'force-dynamic'

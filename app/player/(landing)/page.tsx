@@ -33,3 +33,5 @@ const PlayerPage = () => {
 }
 
 export default PlayerPage
+
+export const dynamic = 'force-dynamic'

@@ -24,3 +24,5 @@ export async function POST(req: NextRequest) {
   const createdPlayer = await createPlayer(parsedNewPlayer)
   return NextResponse.json(createdPlayer)
 }
+
+export const dynamic = 'force-dynamic'

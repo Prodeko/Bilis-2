@@ -23,3 +23,5 @@ export async function GET(req: NextRequest) {
     opposingPlayer: parsedOpposingPlayer,
   })
 }
+
+export const dynamic = 'force-dynamic'

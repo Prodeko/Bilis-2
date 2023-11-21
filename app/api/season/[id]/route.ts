@@ -23,3 +23,5 @@ export async function PUT(req: NextRequest, { params }: { params: { id: number }
     return NextResponse.error()
   }
 }
+
+export const dynamic = 'force-dynamic'
