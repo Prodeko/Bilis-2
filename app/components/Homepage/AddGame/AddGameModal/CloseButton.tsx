@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import styles from './AddGameModal.module.scss'
 
 interface Props {
@@ -13,7 +15,7 @@ const CloseButton = ({ onClose }: Props) => {
         onClose()
       }}
     >
-      <img src="/images/close-cross.svg" alt="close icon" />
+      <Image src="/images/close-cross.svg" alt="close icon" />
     </button>
   )
 }
