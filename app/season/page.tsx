@@ -32,3 +32,5 @@ const SeasonsPage = async ({
 }
 
 export default SeasonsPage
+
+export const dynamic = 'force-dynamic'

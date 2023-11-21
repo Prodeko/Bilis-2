@@ -13,3 +13,5 @@ const NewPlayerPage = async () => {
 }
 
 export default NewPlayerPage
+
+export const dynamic = 'force-dynamic'

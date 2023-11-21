@@ -17,3 +17,5 @@ const PlayerLandingLayout = ({ children }: Props) => {
 }
 
 export default PlayerLandingLayout
+
+export const dynamic = 'force-dynamic'
