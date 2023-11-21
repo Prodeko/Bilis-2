@@ -17,4 +17,6 @@ const StatsLayout = ({ children }: Props) => {
   )
 }
 
+export const dynamic = 'force-dynamic'
+
 export default StatsLayout

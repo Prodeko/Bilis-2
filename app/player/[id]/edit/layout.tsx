@@ -17,3 +17,5 @@ const EditLayout = ({ children }: Props) => {
 }
 
 export default EditLayout
+
+export const dynamic = 'force-dynamic'

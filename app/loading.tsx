@@ -7,3 +7,5 @@ const LoadingPage = () => {
 }
 
 export default LoadingPage
+
+export const dynamic = 'force-dynamic'
