@@ -184,8 +184,14 @@ const removeLatestGame = async (): Promise<GameModel> => {
         id: latest.id,
       },
     }),
-    updatePlayerById(latest.winnerId, { elo: latest.winnerEloBefore }),
-    updatePlayerById(latest.loserId, { elo: latest.loserEloBefore }),
+    updatePlayerById(latest.winnerId, {
+      elo: latest.winnerEloBefore,
+      seasonElo: latest.winnerSeasonEloBefore,
+    }),
+    updatePlayerById(latest.loserId, {
+      elo: latest.loserEloBefore,
+      seasonElo: latest.loserSeasonEloBefore,
+    }),
   ])
 
   return latest
