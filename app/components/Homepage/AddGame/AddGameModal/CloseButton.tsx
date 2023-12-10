@@ -15,7 +15,7 @@ const CloseButton = ({ onClose }: Props) => {
         onClose()
       }}
     >
-      <Image src="/images/close-cross.svg" alt="close icon" />
+      <img src="/images/close-cross.svg" alt="close icon" />
     </button>
   )
 }
