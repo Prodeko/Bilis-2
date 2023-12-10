@@ -2,6 +2,7 @@
 
 import { ApexOptions } from 'apexcharts'
 import ApexCharts from 'react-apexcharts'
+import { renderToString } from 'react-dom/server'
 
 import type { TimeSeriesGame } from '@common/types'
 
@@ -125,7 +126,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     // Rendering custom tooltips: https://github.com/apexcharts/react-apexcharts/issues/65
     tooltip: {
       custom: function ({ dataPointIndex }) {
-        return <Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />
+        return renderToString(<Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />)
       },
     },
 
