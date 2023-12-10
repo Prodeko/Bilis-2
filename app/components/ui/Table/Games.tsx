@@ -1,14 +1,17 @@
 import { round } from 'lodash'
+import Link from 'next/link'
 import { FiChevronRight } from 'react-icons/fi'
 
 import type { RecentGame } from '@common/types'
 import { createColumnHelper } from '@tanstack/react-table'
 
+import styles from './Table.module.scss'
+
 export interface TableGame {
   time: string
-  winner: string
+  winner: JSX.Element
   winnerFargo: JSX.Element
-  loser: string
+  loser: JSX.Element
   loserFargo: JSX.Element
 }
 
@@ -20,13 +23,21 @@ export interface TableGame {
 export const prepareGamesData = (data: RecentGame[]): TableGame[] => {
   return data.map((game, _index) => ({
     time: game.formattedTimeString,
-    winner: game.winner,
+    winner: (
+      <Link className={styles['cell--link']} href={`/player/${game.winnerId}`}>
+        {game.winner}
+      </Link>
+    ),
     winnerFargo: (
       <>
         {round(game.winnerEloBefore)} <FiChevronRight /> {round(game.winnerEloAfter)}
       </>
     ),
-    loser: game.loser,
+    loser: (
+      <Link className={styles['cell--link']} href={`/player/${game.loserId}`}>
+        {game.loser}
+      </Link>
+    ),
     loserFargo: (
       <>
         {round(game.loserEloBefore)} <FiChevronRight /> {round(game.loserEloAfter)}&nbsp;&nbsp;

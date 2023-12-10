@@ -41,7 +41,7 @@ const GameCreation = ({ setGames, onClose }: Props) => {
           elo: seasonal ? data.loser.seasonElo ?? 400 : data.loser.elo,
         },
         {
-          ...data.loser,
+          ...data.winner,
           elo: seasonal ? data.loser.seasonElo ?? 400 : data.loser.elo,
         },
       ])

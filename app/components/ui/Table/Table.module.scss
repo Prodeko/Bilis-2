@@ -58,8 +58,22 @@
   }
 }
 
-.cell {
+%cell {
   align-items: center;
   display: flex;
   min-height: 100%;
 }
+
+.cell {
+  @extend %cell;
+
+  &--link {
+    @extend %cell;
+    
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: $spacing-4;
+    }
+  }
+}
+
