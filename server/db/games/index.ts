@@ -175,6 +175,20 @@ const removeLatestGame = async (): Promise<GameModel> => {
     order: [['createdAt', 'DESC']],
   })
 
+  const winnerLatest = await GameModel.findOne({
+    where: {
+      [Op.and]: [{ winnerId: latest?.winnerId }, { seasonId: { [Op.ne]: null } }],
+    },
+    order: [['createdAt', 'DESC']],
+  })
+
+  const loserLatest = await GameModel.findOne({
+    where: {
+      [Op.and]: [{ loserId: latest?.loserId }, { seasonId: { [Op.ne]: null } }],
+    },
+    order: [['createdAt', 'DESC']],
+  })
+
   if (!latest) throw Error('No games in database')
 
   // Delete the game and remove update player players' elos
@@ -187,10 +201,12 @@ const removeLatestGame = async (): Promise<GameModel> => {
     updatePlayerById(latest.winnerId, {
       elo: latest.winnerEloBefore,
       seasonElo: latest.winnerSeasonEloBefore,
+      latestSeasonId: winnerLatest?.seasonId ?? null,
     }),
     updatePlayerById(latest.loserId, {
       elo: latest.loserEloBefore,
       seasonElo: latest.loserSeasonEloBefore,
+      latestSeasonId: loserLatest?.seasonId ?? null,
     }),
   ])
 
