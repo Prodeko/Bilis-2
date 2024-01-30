@@ -121,9 +121,11 @@ const calculateNewGameEffects = (
 
   let winnerSeasonEloAfter = null
   let loserSeasonEloAfter = null
+  let winnerSeasonElo = null
+  let loserSeasonElo = null
   if (currentSeason != null) {
-    const winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
-    const loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
+    winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
+    loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
 
     // TODO fix types: (winnerSeasonGames and loserSeasonGames are non-null when currentSeason is non-null)
     const [winnerEloChange, loserEloChange] = getScoreChange(
@@ -144,13 +146,13 @@ const calculateNewGameEffects = (
     winnerId: gameInfo.winnerId,
     winnerEloBefore: winner.elo,
     winnerEloAfter,
-    winnerSeasonEloBefore: winner.seasonElo,
+    winnerSeasonEloBefore: winnerSeasonElo,
     winnerSeasonEloAfter: winnerSeasonEloAfter,
 
     loserId: gameInfo.loserId,
     loserEloBefore: loser.elo,
     loserEloAfter,
-    loserSeasonEloBefore: loser.seasonElo,
+    loserSeasonEloBefore: loserSeasonElo,
     loserSeasonEloAfter: loserSeasonEloAfter,
 
     underTable: gameInfo.underTable,
@@ -200,7 +202,7 @@ const removeLatestGame = async (): Promise<GameModel> => {
     }),
     updatePlayerById(latest.winnerId, {
       elo: latest.winnerEloBefore,
-      seasonElo: latest.winnerSeasonEloBefore,
+      seasonElo: latest.winnerSeasonEloBefore <= 0 ? 400 : latest.winnerSeasonEloBefore,
       latestSeasonId: winnerLatest?.seasonId ?? null,
     }),
     updatePlayerById(latest.loserId, {
