@@ -92,7 +92,17 @@ const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<P
       players.nickname,
       players.emoji,
       players.motto,
-      ${seasonal ? 'COALESCE(players.season_elo, 400)' : 'players.elo'} as elo,
+      ${
+        seasonal
+          ? `
+      CASE 
+        WHEN players.season_elo IS NULL THEN 400
+        WHEN players.season_elo <= 0 THEN 400
+        ELSE players.season_elo
+      END
+      `
+          : 'players.elo'
+      } as "elo",
       players.season_elo as "seasonElo",
       players.latest_season_id as "latestSeasonId"
     FROM recent_players
