@@ -5,30 +5,28 @@ import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 
 import AddPlayerButton from "@ui/AddPlayerButton";
+import HeaderTitle from "@ui/Header/HeaderTitle";
 
 import billiardPic from "@public/images/billiard–closeup.jpg";
-
-import styles from "./Header.module.scss";
-import HeaderTitle from "./HeaderTitle";
 
 type HeaderProps = ComponentProps<"header">;
 
 type Props = HeaderProps;
 
-const Header = ({ ...props }: Props) => {
+export const PlayerHeader = ({ ...props }: Props) => {
   const pathName = usePathname();
   const isLandingPage = pathName?.toLowerCase()?.endsWith("/player");
 
   return (
-    <header {...props} className={styles.header}>
+    <header {...props} className="relative grid h-72 grid-cols-3 items-center">
       <Image
         src={billiardPic}
         alt="Billiard Table"
-        fill={true}
         style={{ objectFit: "cover" }}
-        priority={true}
+        fill
+        priority
       />
-      <div className={styles.layout}>
+      <div className="relative col-span-full grid h-72 w-full grid-cols-3 items-center justify-between gap-6 bg-gradient-to-tr from-neutral-900 to-neutral-800 px-12  opacity-80">
         <HeaderTitle title="Player" style={{ gridColumn: "1 / 2" }} />
         {isLandingPage && (
           <AddPlayerButton
@@ -41,5 +39,3 @@ const Header = ({ ...props }: Props) => {
     </header>
   );
 };
-
-export default Header;

@@ -1,22 +1,22 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import { Header } from '@ui/Header/Stats'
+import { StatsHeader } from "@ui/Header/Stats";
 
-import styles from './Layout.module.scss'
+import styles from "./Layout.module.scss";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const StatsLayout = ({ children }: Props) => {
   return (
     <div className={styles.layout}>
-      <Header />
+      <StatsHeader />
       {children}
     </div>
-  )
-}
+  );
+};
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-export default StatsLayout
+export default StatsLayout;

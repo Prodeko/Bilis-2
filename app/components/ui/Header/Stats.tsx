@@ -1,45 +1,44 @@
-import Image from 'next/image'
-import { ComponentProps } from 'react'
+import Image from "next/image";
+import type { ComponentProps } from "react";
 
-import statsPic from '@public/images/stats-header.jpg'
+import HeaderTitle from "@ui/Header/HeaderTitle";
+import { Navigation } from "@ui/Header/StatsNavigation";
 
-import { Navigation } from '../Navigation'
-import styles from './Header.module.scss'
-import HeaderTitle from './HeaderTitle'
+import statsPic from "@public/images/stats-header.jpg";
 
-type HeaderProps = ComponentProps<'header'>
+type HeaderProps = ComponentProps<"header">;
 
-type Props = HeaderProps
+type Props = HeaderProps;
 
-export const Header = ({ ...props }: Props) => {
+export const StatsHeader = ({ ...props }: Props) => {
   return (
-    <header {...props} className={styles.statsheader}>
+    <header {...props} className="relative grid h-72 grid-cols-6 items-center">
       <Image
         src={statsPic}
-        alt="Billiard Table"
-        fill={true}
-        style={{ objectFit: 'cover' }}
-        priority={true}
+        alt="Stats Charts"
+        style={{ objectFit: "cover" }}
+        fill
+        priority
       />
-      <div className={styles.statslayout}>
-        <HeaderTitle title="Stats" style={{ gridColumn: '1 / 2' }} />
+      <div className="relative col-span-full flex h-72 w-full items-center justify-between gap-6 bg-gradient-to-tr from-neutral-900 to-neutral-800 px-12 opacity-80">
+        <HeaderTitle title="Stats" style={{ gridColumn: "1 / 2" }} />
         <Navigation
           links={[
             {
-              href: '/stats',
-              linkName: 'main',
+              href: "/stats",
+              linkName: "main",
             },
             {
-              href: '/stats/players',
-              linkName: 'players',
+              href: "/stats/players",
+              linkName: "players",
             },
             {
-              href: '/stats/games',
-              linkName: 'games',
+              href: "/stats/games",
+              linkName: "games",
             },
           ]}
         />
       </div>
     </header>
-  )
-}
+  );
+};

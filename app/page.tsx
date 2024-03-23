@@ -2,7 +2,7 @@ import {
   NOF_LATEST_PLAYERS,
   NOF_LEADERBOARD_PLAYERS,
 } from "@common/utils/constants";
-import { Header } from "@components/ui/Header/Main";
+import { MainHeader } from "@components/ui/Header/Main";
 import { getRecentGames } from "@server/db/games/derivatives";
 import { getLatestPlayers } from "@server/db/players";
 import { getFormattedPlayers } from "@server/db/players/derivatives";
@@ -26,7 +26,7 @@ export default async function Page({
       tabIndex={-1}
       className="grid h-screen grid-rows-[auto_minmax(0,_1fr)]"
     >
-      <Header seasonal={seasonal} />
+      <MainHeader seasonal={seasonal} />
       <HomeLayout
         leaderboard={leaderboard}
         recentPlayers={recentPlayers}
