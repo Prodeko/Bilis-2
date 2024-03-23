@@ -1,7 +1,7 @@
 import Sidebar from 'app/components/ui/Sidebar'
-import { Metadata } from 'next'
-import { ReactNode } from 'react'
-import 'styles/globals.scss'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import 'styles/globals.css'
 
 import { getCurrentSeason } from '@server/db/seasons'
 
