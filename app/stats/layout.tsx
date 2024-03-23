@@ -2,15 +2,13 @@ import type { ReactNode } from "react";
 
 import { StatsHeader } from "@ui/Header/Stats";
 
-import styles from "./Layout.module.scss";
-
 interface Props {
   children: ReactNode;
 }
 
 const StatsLayout = ({ children }: Props) => {
   return (
-    <div className={styles.layout}>
+    <div className="grid h-full grid-rows-[auto_minmax(0,_1fr)]">
       <StatsHeader />
       {children}
     </div>
