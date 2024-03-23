@@ -1,33 +1,45 @@
-'use client'
+"use client";
 
-import { FiBarChart2, FiHome, FiUser } from 'react-icons/fi'
+import { cva } from "class-variance-authority";
+import type { ComponentPropsWithoutRef } from "react";
+import { FiBarChart2, FiHome, FiUser } from "react-icons/fi";
 
-import { Season } from '@common/types'
-import useSeasonalMode from '@hooks/useSeasonalMode'
+import type { Season } from "@common/types";
+import useSeasonalMode from "@hooks/useSeasonalMode";
 
-import SeasonToggle from './SeasonToggle'
-import styles from './Sidebar.module.scss'
-import SidebarLink from './SidebarLink'
+import SeasonToggle from "./SeasonToggle";
+import SidebarLink from "./SidebarLink";
 
-interface Props {
-  currentSeason: Season
+const styles = cva(
+  "z-10 flex max-h-screen flex-col justify-between gap-4 bg-gradient-to-tr p-8",
+  {
+    variants: {
+      seasonal: {
+        true: "from-primary-900 to-neutral-700",
+        false: "from-neutral-700 to-neutral-600",
+      },
+    },
+  },
+);
+interface Props extends ComponentPropsWithoutRef<"aside"> {
+  currentSeason: Season;
 }
 
-const Sidebar = ({ currentSeason }: Props) => {
-  const { seasonal } = useSeasonalMode()
+const Sidebar = ({ currentSeason, ...props }: Props) => {
+  const { seasonal } = useSeasonalMode();
   return (
-    <aside className={seasonal ? styles['sidebar--seasonal'] : styles.sidebar}>
-      <nav className={styles.linkContainer}>
+    <aside {...props} className={styles({ seasonal })}>
+      <nav className="flex flex-col items-center gap-6 ">
         <SidebarLink path="/" Icon={FiHome} />
         <SidebarLink path="/stats" Icon={FiBarChart2} />
         <SidebarLink path="/player" Icon={FiUser} />
       </nav>
-      <div className={styles.bottomContainer}>
+      <div className="flex flex-col items-center gap-6 ">
         {currentSeason && <SeasonToggle />}
-        <p className={styles.versioning}>Version 1.3.2 - Rööki 🚬</p>
+        <p className="text-[6px] text-neutral-50">Version 1.3.2 - Rööki 🚬</p>
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
