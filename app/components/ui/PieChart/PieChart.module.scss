@@ -1,8 +1,0 @@
-@use 'styles' as *;
-
-.nogames {
-  @extend %flex-center;
-  @extend %text-style-display-md-semibold;
-
-  color: $color-gray-50;
-}
