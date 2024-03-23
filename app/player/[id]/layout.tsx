@@ -1,13 +1,13 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const ProfileLayout = ({ children }: Props) => {
-  return <>{children}</>
-}
+  return <>{children}</>;
+};
 
-export default ProfileLayout
+export default ProfileLayout;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
