@@ -1,19 +1,15 @@
-import { ComponentProps } from 'react'
+import type { ComponentPropsWithoutRef } from "react";
 
-import styles from './GameCountTracker.module.scss'
-
-type DivProps = ComponentProps<'div'>
-
-interface Props extends DivProps {
-  number: number
-  timeFrame: string
+interface Props extends ComponentPropsWithoutRef<"div"> {
+  number: number;
+  timeFrame: string;
 }
 
 export const TrackerStat = ({ number, timeFrame }: Props) => {
   return (
-    <div className={styles.statContainer}>
-      <span className={styles.number}>{number}</span>
-      <span className={styles.timeframe}>{timeFrame}</span>
+    <div className="flex flex-col items-center gap-2">
+      <span className="text-5xl font-semibold text-neutral-100">{number}</span>
+      <span className="text-xl font-medium text-neutral-400">{timeFrame}</span>
     </div>
-  )
-}
+  );
+};

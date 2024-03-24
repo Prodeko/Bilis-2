@@ -1,54 +1,56 @@
-'use client'
+"use client";
 
-import { ApexOptions } from 'apexcharts'
+import type { ApexOptions } from "apexcharts";
 // import dynamic from 'next/dynamic'
 // const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false })
-import ApexCharts from 'react-apexcharts'
+import ApexCharts from "react-apexcharts";
 
-import type { MutualGames, Player } from '@common/types'
-
-import styles from './PieChart.module.scss'
+import type { MutualGames, Player } from "@common/types";
 
 type Props = {
-  currentPlayer: Player
-  opposingPlayer: Player
-  mutualGames: MutualGames
-}
+  currentPlayer: Player;
+  opposingPlayer: Player;
+  mutualGames: MutualGames;
+};
 
 const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
-  if (mutualGames.currentPlayerGamesWon === 0 && mutualGames.opposingPlayerGamesWon === 0) {
-    return <div className={styles.nogames}>No matches between these two players</div>
+  if (
+    mutualGames.currentPlayerGamesWon === 0 &&
+    mutualGames.opposingPlayerGamesWon === 0
+  ) {
+    return (
+      <div className="flex items-center justify-center text-4xl font-semibold text-neutral-50">
+        No matches between these two players
+      </div>
+    );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const AnyApexCharts = ApexCharts as any // TODO: Temp fix
-
   // const black = '#111'
-  const white = '#ddd'
+  const white = "#ddd";
 
-  const series: ApexOptions['series'] = [
+  const series: ApexOptions["series"] = [
     mutualGames.currentPlayerGamesWon,
     mutualGames.opposingPlayerGamesWon,
-  ]
+  ];
 
   const options: ApexOptions = {
     chart: {
-      type: 'pie',
+      type: "pie",
     },
-    colors: ['#033969', '#667085'],
+    colors: ["#033969", "#667085"],
     dataLabels: {
       style: {
-        fontSize: '2.4rem',
+        fontSize: "2.4rem",
       },
     },
     // fill: {
     //   type: 'gradient',
     // },
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
         shadeIntensity: 1,
-        gradientToColors: ['#0a4275', '#98a2b3'],
+        gradientToColors: ["#0a4275", "#98a2b3"],
         inverseColors: true,
         opacityFrom: 0.7,
         opacityTo: 1,
@@ -69,7 +71,7 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
             width: 200,
           },
           legend: {
-            position: 'bottom',
+            position: "bottom",
           },
         },
       },
@@ -80,15 +82,23 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
       },
     },
     title: {
-      text: 'Mutual Games',
+      text: "Mutual Games",
       offsetY: 20,
       style: {
         color: `${white}`,
-        fontSize: '2.4rem',
+        fontSize: "2.4rem",
       },
     },
-  }
-  return <AnyApexCharts options={options} type="pie" series={series} height="90%" width="100%" />
-}
+  };
+  return (
+    <ApexCharts
+      options={options}
+      type="pie"
+      series={series}
+      height="90%"
+      width="100%"
+    />
+  );
+};
 
-export default PieChart
+export default PieChart;

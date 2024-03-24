@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import LoadingSpinner from '@components/ui/LoadingSpinner'
+import { LoadingSpinner } from "@components/ui/LoadingSpinner";
 
 const LoadingPage = () => {
-  return <LoadingSpinner />
-}
+  return <LoadingSpinner />;
+};
 
-export default LoadingPage
+export default LoadingPage;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

@@ -1,21 +1,22 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import { PlayerLayoutOuter } from '@components/Player/PlayerLayout/Outer'
-import Header from '@ui/Header/Player'
+import { PlayerHeader } from "@ui/Header/Player";
+
+import { PlayerLayoutOuter } from "@components/Player/PlayerLayout/Outer";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const PlayerLandingLayout = ({ children }: Props) => {
   return (
     <PlayerLayoutOuter>
-      <Header />
+      <PlayerHeader />
       {children}
     </PlayerLayoutOuter>
-  )
-}
+  );
+};
 
-export default PlayerLandingLayout
+export default PlayerLandingLayout;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

@@ -1,22 +1,20 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import { Header } from '@ui/Header/Stats'
-
-import styles from './Layout.module.scss'
+import { StatsHeader } from "@ui/Header/Stats";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const StatsLayout = ({ children }: Props) => {
   return (
-    <div className={styles.layout}>
-      <Header />
+    <div className="grid h-full grid-rows-[auto_minmax(0,_1fr)]">
+      <StatsHeader />
       {children}
     </div>
-  )
-}
+  );
+};
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-export default StatsLayout
+export default StatsLayout;

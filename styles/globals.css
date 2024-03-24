@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,7 +21,6 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  font-size: 62.5%;
   overflow: hidden;
 }
 
