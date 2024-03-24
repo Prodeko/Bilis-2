@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import MottoCard from "@ui/MottoCard";
+import { MottoCard } from "@ui/MottoCard";
 
 import { type Player, player } from "@common/types";
 

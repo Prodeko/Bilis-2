@@ -41,8 +41,16 @@ export default {
         warning: colors.amber,
         danger: colors.red,
       },
-      keyframes: {},
-      animation: {},
+      keyframes: {
+        'push-in-right': {
+          '0%': { right: '0%' },
+          '50%': { right: '-100%' },
+          '100%': { right: '0%' },
+        },
+      },
+      animation: {
+        'push-in-right': 'push-in-right 2s 1',
+      },
     },
   },
   plugins: [],
