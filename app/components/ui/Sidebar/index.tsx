@@ -4,11 +4,11 @@ import { cva } from "class-variance-authority";
 import type { ComponentPropsWithoutRef } from "react";
 import { FiBarChart2, FiHome, FiUser } from "react-icons/fi";
 
+import { SidebarLink } from "@ui/Sidebar/SidebarLink";
+import { Toggle } from "@ui/Toggle";
+
 import type { Season } from "@common/types";
 import useSeasonalMode from "@hooks/useSeasonalMode";
-
-import SeasonToggle from "./SeasonToggle";
-import SidebarLink from "./SidebarLink";
 
 const styles = cva(
   "z-10 flex max-h-screen flex-col justify-between gap-4 bg-gradient-to-tr p-8",
@@ -26,7 +26,7 @@ interface Props extends ComponentPropsWithoutRef<"aside"> {
 }
 
 const Sidebar = ({ currentSeason, ...props }: Props) => {
-  const { seasonal } = useSeasonalMode();
+  const { seasonal, toggleSeasonalMode } = useSeasonalMode();
   return (
     <aside {...props} className={styles({ seasonal })}>
       <nav className="flex flex-col items-center gap-6 ">
@@ -35,7 +35,9 @@ const Sidebar = ({ currentSeason, ...props }: Props) => {
         <SidebarLink path="/player" Icon={FiUser} />
       </nav>
       <div className="flex flex-col items-center gap-6 ">
-        {currentSeason && <SeasonToggle />}
+        {currentSeason && (
+          <Toggle on={seasonal} onChange={toggleSeasonalMode} />
+        )}
         <p className="text-[6px] text-neutral-50">Version 1.3.2 - Rööki 🚬</p>
       </div>
     </aside>

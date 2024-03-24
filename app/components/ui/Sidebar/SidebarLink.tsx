@@ -22,7 +22,7 @@ interface Props {
   Icon: IconType;
 }
 
-const SidebarLink = ({ path, Icon }: Props) => {
+export const SidebarLink = ({ path, Icon }: Props) => {
   const pathName = usePathname();
   const isActive = pathName?.split("/")[1] === path.slice(1);
   return (
@@ -31,5 +31,3 @@ const SidebarLink = ({ path, Icon }: Props) => {
     </Link>
   );
 };
-
-export default SidebarLink;
