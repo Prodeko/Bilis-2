@@ -122,9 +122,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     // Rendering custom tooltips: https://github.com/apexcharts/react-apexcharts/issues/65
     tooltip: {
       custom: ({ dataPointIndex }) => {
-        return renderToString(
-          <Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />,
-        );
+        return renderToString(<Tooltip game={gameData[dataPointIndex]} />);
       },
     },
 
