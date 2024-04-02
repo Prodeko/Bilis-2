@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import type { Player, RecentGame } from "@common/types";
-import AddGameButton from "@components/Homepage/AddGame";
+import { AddGameButton } from "@components/Homepage/AddGame";
 import Games from "@components/Homepage/Games";
 import { Leaderboard } from "@components/Homepage/Leaderboard";
 import { Queue } from "@components/Homepage/Queue";

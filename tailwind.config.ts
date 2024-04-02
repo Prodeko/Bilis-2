@@ -52,6 +52,9 @@ export default {
       animation: {
         'push-in-right': 'push-in-right 2s 1',
       },
+      backgroundImage: {
+        handshake: "url('/images/handshake.png')",
+      },
       plugins: [tailwindScrollbar({preferredStrategy: "pseudoelements"})],
     },
   },
