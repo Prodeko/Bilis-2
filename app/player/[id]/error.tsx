@@ -16,7 +16,7 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-12">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-12">
       <div className="flex flex-col items-center justify-center gap-2">
         <h1 className="text-6xl font-medium text-neutral-400">
           Something went wrong!
