@@ -1,7 +1,0 @@
-@use 'styles' as *;
-
-.title {
-  @extend %text-style-display-md-semibold;
-
-  color: $color-gray-50;
-}
