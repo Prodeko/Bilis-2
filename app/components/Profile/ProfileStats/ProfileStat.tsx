@@ -1,31 +1,32 @@
-import { IconType } from 'react-icons'
+import type { IconType } from "react-icons";
 
-import { ProfileStatistic } from '@common/types'
-import { Card } from '@components/ui/Card'
-
-import styles from './ProfileStats.module.scss'
+import type { ProfileStatistic } from "@common/types";
+import { Card } from "@components/ui/Card";
 
 type Props = ProfileStatistic & {
-  Icon: IconType
-}
+  Icon: IconType;
+};
 
 const ProfileStat = ({ label, Icon, subStatistics }: Props) => {
   return (
     <Card>
-      <div className={styles['profilestat']}>
-        <h2 className={styles['profilestat--label']}>
+      <div className="flex flex-col gap-4 p-8">
+        <h2 className="flex items-center justify-between text-4xl font-bold text-neutral-300">
           {label} <Icon />
         </h2>
-        <div className={styles['profilestat--container']}>
+        <div className="flex flex-col gap-1">
           {subStatistics.map(({ label, value }) => (
-            <p key={label} className={styles['profilestat--value']}>
+            <p
+              key={label}
+              className="w-full truncate text-xl font-medium text-neutral-400"
+            >
               {label}: {value}
             </p>
           ))}
         </div>
       </div>
     </Card>
-  )
-}
+  );
+};
 
-export default ProfileStat
+export default ProfileStat;

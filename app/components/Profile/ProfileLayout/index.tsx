@@ -1,13 +1,15 @@
-import { ReactNode } from 'react'
-
-import styles from './ProfileLayout.module.scss'
+import type { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const ProfileLayout = ({ children }: Props) => {
-  return <div className={styles.container}>{children}</div>
-}
+  return (
+    <div className="grid h-full grid-rows-[auto_auto_minmax(0,_1fr)]">
+      {children}
+    </div>
+  );
+};
 
-export default ProfileLayout
+export default ProfileLayout;

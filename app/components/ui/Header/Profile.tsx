@@ -50,7 +50,9 @@ export const ProfileHeader = async ({ playerId, ...props }: Props) => {
           style={{ gridColumn: "2 / 5" }}
           className="flex flex-col items-center gap-4 text-neutral-100"
         >
-          <HeaderTitle title={name} />
+          <span className="text-center text-4xl font-semibold text-white">
+            {name}
+          </span>
         </div>
         <MottoCard
           style={{ gridColumn: "5 / -1" }}
