@@ -1,4 +1,4 @@
-import ModalBlur from "@ui/ModalBlur";
+import { ModalBlur } from "@ui/ModalBlur";
 
 import type { RecentGame } from "@common/types";
 
