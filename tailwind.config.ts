@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import tailwindScrollbar from "tailwind-scrollbar";
 
 export default {
   darkMode: ["class"],
@@ -51,7 +52,7 @@ export default {
       animation: {
         'push-in-right': 'push-in-right 2s 1',
       },
+      plugins: [tailwindScrollbar({preferredStrategy: "pseudoelements"})],
     },
   },
-  plugins: [],
 } satisfies Config;
