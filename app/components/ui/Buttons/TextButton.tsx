@@ -3,7 +3,6 @@ import type { ComponentProps } from "react";
 import type { IconType } from "react-icons";
 
 export type ButtonProps = ComponentProps<"button">;
-type Variation = "destructive";
 
 const styles = cva(
   "flex items-center justify-center gap-2 rounded-md border-none px-5 py-3 text-base font-semibold text-white transition-all hover:cursor-pointer",
@@ -17,12 +16,11 @@ const styles = cva(
 );
 
 interface Props extends ButtonProps, VariantProps<typeof styles> {
-  variation: Variation;
   text?: string;
   Icon?: IconType;
 }
 
-export const Button = ({ text, intent, Icon, ...props }: Props) => {
+export const TextButton = ({ text, intent, Icon, ...props }: Props) => {
   return (
     <button {...props} type={props.type} className={styles({ intent })}>
       {text && <span>{text}</span>}

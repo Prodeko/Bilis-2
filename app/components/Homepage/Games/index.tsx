@@ -3,7 +3,7 @@
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-import { Button } from "@ui/Button";
+import { TextButton } from "@ui/Buttons/TextButton";
 import { Card, CardGrid, type CardProps } from "@ui/Card";
 import { Table, gameColumns, prepareGamesData } from "@ui/Table";
 import { TitleRow } from "@ui/TitleRow";
@@ -27,7 +27,7 @@ const Games = ({ games, setGames, cardProps }: Props) => {
     <Card {...cardProps}>
       <CardGrid>
         <TitleRow title="Games">
-          <Button
+          <TextButton
             style={{
               gridColumnStart: "11",
               gridColumnEnd: "-1",

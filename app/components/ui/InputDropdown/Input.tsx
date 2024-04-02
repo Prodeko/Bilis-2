@@ -1,6 +1,7 @@
-import { ButtonIcon } from "app/components/ui/ButtonIcon";
 import type { ComponentProps, MouseEvent } from "react";
 import type { IconType } from "react-icons";
+
+import { IconButton } from "@ui/Buttons/IconButton";
 
 type BaseInputProps = ComponentProps<"input">;
 
@@ -49,7 +50,7 @@ export const Input = ({
         {...props}
       />
       {IconTrailingProps && (
-        <ButtonIcon
+        <IconButton
           onClick={IconTrailingProps.onClick}
           onMouseDown={IconTrailingProps.onMouseDown}
           Icon={IconTrailingProps.Icon}

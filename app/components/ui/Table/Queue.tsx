@@ -1,7 +1,7 @@
 import type { Dispatch, MouseEvent } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
-import { ButtonIcon } from "@ui/ButtonIcon";
+import { IconButton } from "@ui/Buttons/IconButton";
 
 import type { Player, WithId } from "@common/types";
 import { formatFullName } from "@common/utils/helperFunctions";
@@ -30,7 +30,7 @@ export const prepareQueueData = (
     fullName: formatFullName(player, true, false),
     icon: FiTrash2,
     removeButton: (
-      <ButtonIcon
+      <IconButton
         Icon={FiTrash2}
         intent="destructive"
         onClick={(e: MouseEvent<HTMLElement>) => {

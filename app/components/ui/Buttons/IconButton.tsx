@@ -33,7 +33,7 @@ interface Props extends ButtonProps, VariantProps<typeof iconStyles> {
   Icon: IconType;
 }
 
-export const ButtonIcon = ({ Icon, intent, sizing, ...props }: Props) => {
+export const IconButton = ({ Icon, intent, sizing, ...props }: Props) => {
   return (
     <button {...props} type={props.type} className={buttonStyles()}>
       <Icon className={iconStyles({ sizing, intent })} />

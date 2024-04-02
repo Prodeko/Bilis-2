@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FiEdit2, FiX } from "react-icons/fi";
 
-import { ButtonIcon } from "@ui/ButtonIcon";
+import { IconButton } from "@ui/Buttons/IconButton";
 
 import { CreateSeasonForm } from "./CreateSeasonForm";
 
@@ -16,7 +16,7 @@ const EditSeason: React.FC<RenameSeasonProps> = ({ id }) => {
 
   if (!formOpen)
     return (
-      <ButtonIcon
+      <IconButton
         Icon={FiEdit2}
         variation="destructive"
         onClick={() => setFormOpen(true)}
@@ -25,7 +25,7 @@ const EditSeason: React.FC<RenameSeasonProps> = ({ id }) => {
 
   return (
     <div className="flex items-center gap-2">
-      <ButtonIcon
+      <IconButton
         Icon={formOpen ? FiX : FiEdit2}
         variation="destructive"
         onClick={() => setFormOpen((prev) => !prev)}
