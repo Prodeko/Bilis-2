@@ -1,3 +1,5 @@
+"use client";
+
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
@@ -8,7 +10,7 @@ import { TitleRow } from "@ui/TitleRow";
 
 import type { RecentGame } from "@common/types";
 
-import Modal from "./Modal";
+import { GameDeletionModal } from "./GameDeletionModal";
 
 interface Props {
   games: RecentGame[];
@@ -36,7 +38,11 @@ const Games = ({ games, setGames, cardProps }: Props) => {
             onClick={showModal}
           />
           {modalVisible && (
-            <Modal games={games} setGames={setGames} closeModal={closeModal} />
+            <GameDeletionModal
+              games={games}
+              setGames={setGames}
+              closeModal={closeModal}
+            />
           )}
         </TitleRow>
         <Table
