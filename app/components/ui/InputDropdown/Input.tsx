@@ -1,21 +1,19 @@
-import { ButtonIcon } from 'app/components/ui/ButtonIcon'
-import { ComponentProps, MouseEvent } from 'react'
-import type { IconType } from 'react-icons'
+import { ButtonIcon } from "app/components/ui/ButtonIcon";
+import type { ComponentProps, MouseEvent } from "react";
+import type { IconType } from "react-icons";
 
-import styles from './Input.module.scss'
-
-type BaseInputProps = ComponentProps<'input'>
+type BaseInputProps = ComponentProps<"input">;
 
 export interface InputProps extends BaseInputProps {
   IconLeadingProps: {
-    Icon: IconType
-  }
+    Icon: IconType;
+  };
   IconTrailingProps?: {
-    Icon: IconType
-    onClick: () => void
-    onMouseDown: (e: MouseEvent<HTMLButtonElement>) => void
-  }
-  inputId: string
+    Icon: IconType;
+    onClick: () => void;
+    onMouseDown: (e: MouseEvent<HTMLButtonElement>) => void;
+  };
+  inputId: string;
 }
 
 /**
@@ -26,23 +24,39 @@ export interface InputProps extends BaseInputProps {
  * @param inputId - Id for the input field, connects label and input field together
  * @returns Input component
  */
-export const Input = ({ IconLeadingProps, IconTrailingProps, inputId, ...props }: InputProps) => {
+export const Input = ({
+  IconLeadingProps,
+  IconTrailingProps,
+  inputId,
+  ...props
+}: InputProps) => {
   return (
-    <div className={styles.container} style={props.style}>
+    <div
+      className="flex w-full items-center justify-between gap-3 rounded-lg bg-white px-4 py-2 text-neutral-800"
+      style={props.style}
+    >
       {IconLeadingProps && (
-        <label className={styles.iconLeading} htmlFor={inputId}>
-          <IconLeadingProps.Icon size={24} />
+        <label
+          className="flex cursor-pointer items-center justify-center text-primary-400"
+          htmlFor={inputId}
+        >
+          <IconLeadingProps.Icon size={20} />
         </label>
       )}
-      <input id={inputId} className={styles.input} {...props} />
+      <input
+        id={inputId}
+        className="w-full cursor-pointer border-none text-base font-normal focus:cursor-auto focus:outline-none"
+        {...props}
+      />
       {IconTrailingProps && (
         <ButtonIcon
           onClick={IconTrailingProps.onClick}
           onMouseDown={IconTrailingProps.onMouseDown}
           Icon={IconTrailingProps.Icon}
-          variation="close"
+          intent="primary"
+          sizing="lg"
         />
       )}
     </div>
-  )
-}
+  );
+};

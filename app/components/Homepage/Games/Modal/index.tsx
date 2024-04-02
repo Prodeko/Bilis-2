@@ -1,33 +1,41 @@
-import { RecentGame } from '@common/types'
-import ModalBlur from '@ui/ModalBlur'
+import ModalBlur from "@ui/ModalBlur";
 
-import styles from './Modal.module.scss'
+import type { RecentGame } from "@common/types";
+
+import styles from "./Modal.module.scss";
 
 interface Props {
-  games: RecentGame[]
-  setGames: (x: RecentGame[]) => void
-  closeModal: () => void
+  games: RecentGame[];
+  setGames: (x: RecentGame[]) => void;
+  closeModal: () => void;
 }
 
 const Modal = ({ games, setGames, closeModal }: Props) => {
   const handleRemove = async () => {
     const res = await fetch(`/api/game`, {
-      method: 'DELETE',
-    })
-    const data = await res.json()
+      method: "DELETE",
+    });
+    const data = await res.json();
 
-    if (typeof data == 'string') return console.error(data)
+    if (typeof data == "string") return console.error(data);
 
-    setGames(games.slice(1))
-    closeModal()
-  }
+    setGames(games.slice(1));
+    closeModal();
+  };
 
   return (
     <ModalBlur>
       <div className={styles.modal}>
-        <header className={styles.header}>Do you want to delete the last game?</header>
+        <header className={styles.header}>
+          Do you want to delete the last game?
+        </header>
         <div className={styles.buttons}>
-          <button className={styles.delete} type="button" autoFocus onClick={handleRemove}>
+          <button
+            className={styles.delete}
+            type="button"
+            autoFocus
+            onClick={handleRemove}
+          >
             Delete Game
           </button>
           <button className={styles.cancel} type="button" onClick={closeModal}>
@@ -36,7 +44,7 @@ const Modal = ({ games, setGames, closeModal }: Props) => {
         </div>
       </div>
     </ModalBlur>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

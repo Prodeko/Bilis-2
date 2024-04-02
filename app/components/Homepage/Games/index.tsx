@@ -30,7 +30,7 @@ const Games = ({ games, setGames, cardProps }: Props) => {
               gridColumnStart: "11",
               gridColumnEnd: "-1",
             }}
-            variation="destructive"
+            intent="destructive"
             text={"Remove Latest"}
             Icon={FiTrash2}
             onClick={showModal}

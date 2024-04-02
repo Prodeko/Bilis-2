@@ -8,7 +8,7 @@ interface Props extends DivProps {
 }
 
 export const Title = ({ title }: { title: string }) => {
-  return <h2 className="text-4xl font-semibold">{title}</h2>;
+  return <h2 className="w-fit text-4xl font-semibold">{title}</h2>;
 };
 
 export const TitleRow = ({ children, title, ...props }: Props) => {
