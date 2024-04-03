@@ -55,7 +55,9 @@ export default {
       backgroundImage: {
         handshake: "url('/images/handshake.png')",
       },
-      plugins: [tailwindScrollbar({preferredStrategy: "pseudoelements"})],
+      plugins: [
+        tailwindScrollbar({preferredStrategy: "pseudoelements", nocompatible: true})]
+      ,
     },
   },
 } satisfies Config;
