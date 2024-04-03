@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 
-import PlayerSearchSelect from "@ui/PlayerSearch/PlayerSearchSelect";
-
 import type { PieChartProps } from "@common/types";
 import PieChart from "@components/ui/PieChart";
+import { PlayerSearchSelect } from "@components/ui/PlayerSearch/PlayerSearchSelect";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
