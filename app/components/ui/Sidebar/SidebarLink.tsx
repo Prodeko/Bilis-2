@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import type { IconType } from "react-icons";
 
 const styles = cva(
-  "flex h-20 w-20 cursor-pointer items-center justify-center rounded-[50%] text-neutral-300 transition-all duration-200",
+  "flex h-20 w-20 cursor-pointer items-center justify-center rounded-[50%] text-neutral-300 transition-all duration-150",
   {
     variants: {
       active: {
