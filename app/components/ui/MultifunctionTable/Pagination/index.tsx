@@ -1,16 +1,20 @@
-import { Dispatch, SetStateAction } from 'react'
-import { FiChevronLeft, FiChevronRight, FiChevronsLeft, FiChevronsRight } from 'react-icons/fi'
+import type { Dispatch, SetStateAction } from "react";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronsLeft,
+  FiChevronsRight,
+} from "react-icons/fi";
 
-import { Table as ReactTable } from '@tanstack/react-table'
+import type { Table as ReactTable } from "@tanstack/react-table";
 
-import styles from './Pagination.module.scss'
-import { PaginationButton } from './PaginationButton'
-import { PaginationInput } from './PaginationInput'
+import { PaginationButton } from "./PaginationButton";
+import { PaginationInput } from "./PaginationInput";
 
 interface Props<Schema> {
-  table: ReactTable<Schema>
-  displayState: number | string
-  setDisplayState: Dispatch<SetStateAction<number | string>>
+  table: ReactTable<Schema>;
+  displayState: number | string;
+  setDisplayState: Dispatch<SetStateAction<number | string>>;
 }
 
 /**
@@ -24,34 +28,37 @@ export const Pagination = <Schema extends object>({
   setDisplayState,
   displayState,
 }: Props<Schema>) => {
-  const currentPaginationState = table.getState().pagination.pageIndex
+  const currentPaginationState = table.getState().pagination.pageIndex;
 
   return (
-    <div className={styles.paginationContainer}>
+    <div className="mx-auto flex w-full items-center justify-center gap-4 bg-neutral-800 p-6">
       <PaginationButton
         Icon={FiChevronsLeft}
         onClick={() => {
-          table.setPageIndex(0)
-          setDisplayState(1)
+          table.setPageIndex(0);
+          setDisplayState(1);
         }}
         disabled={!table.getCanPreviousPage()}
       />
       <PaginationButton
         Icon={FiChevronLeft}
         onClick={() => {
-          table.previousPage()
-          setDisplayState(currentPaginationState)
+          table.previousPage();
+          setDisplayState(currentPaginationState);
         }}
         disabled={!table.getCanPreviousPage()}
       />
       <PaginationInput
-        onChange={e => {
-          const value = e.target.value
-          if (!value) setDisplayState(value)
+        onChange={(e) => {
+          const value = e.target.value;
+          if (!value) setDisplayState(value);
           else {
-            const maxLimitedValue = Math.min(Number(value), table.getPageCount())
-            table.setPageIndex(maxLimitedValue - 1)
-            setDisplayState(maxLimitedValue)
+            const maxLimitedValue = Math.min(
+              Number(value),
+              table.getPageCount(),
+            );
+            table.setPageIndex(maxLimitedValue - 1);
+            setDisplayState(maxLimitedValue);
           }
         }}
         onBlur={() => setDisplayState(currentPaginationState + 1)}
@@ -60,19 +67,19 @@ export const Pagination = <Schema extends object>({
       <PaginationButton
         Icon={FiChevronRight}
         onClick={() => {
-          table.nextPage()
-          setDisplayState(currentPaginationState + 2)
+          table.nextPage();
+          setDisplayState(currentPaginationState + 2);
         }}
         disabled={!table.getCanNextPage()}
       />
       <PaginationButton
         Icon={FiChevronsRight}
         onClick={() => {
-          table.setPageIndex(table.getPageCount() - 1)
-          setDisplayState(table.getPageCount())
+          table.setPageIndex(table.getPageCount() - 1);
+          setDisplayState(table.getPageCount());
         }}
         disabled={!table.getCanNextPage()}
       />
     </div>
-  )
-}
+  );
+};

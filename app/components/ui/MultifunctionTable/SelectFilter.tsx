@@ -1,63 +1,62 @@
-import { ComponentProps, useState } from 'react'
-import { Dispatch, SetStateAction } from 'react'
+import {
+  type ComponentProps,
+  type Dispatch,
+  type SetStateAction,
+  useState,
+} from "react";
 
-import { Column } from '@tanstack/react-table'
+import type { Column } from "@tanstack/react-table";
 
-import styles from './MultifunctionTable.module.scss'
-
-type DivProps = ComponentProps<'div'>
+type DivProps = ComponentProps<"div">;
 
 interface Props extends DivProps {
-  column: Column<any, any>
-  setDisplayState: Dispatch<SetStateAction<number | string>>
+  column: Column<any, any>;
+  setDisplayState: Dispatch<SetStateAction<number | string>>;
 }
 
-const options = ['All', '💩', 'No - 💩']
-type Options = typeof options[number]
+const options = ["All", "💩", "No - 💩"];
+type Options = (typeof options)[number];
 
 export const SelectFilter = ({ column, setDisplayState, ...props }: Props) => {
-  const [state, setState] = useState<string>('All')
-  const [visible, setVisible] = useState<boolean>(false)
+  const [state, setState] = useState<string>("All");
+  const [visible, setVisible] = useState<boolean>(false);
 
   const switchFilter = (value: Options) => {
-    if (value === 'All') {
-      column.setFilterValue('')
-    } else if (value === '💩') {
-      column.setFilterValue('💩')
-    } else if (value === 'No - 💩') {
-      column.setFilterValue(' ')
+    if (value === "All") {
+      column.setFilterValue("");
+    } else if (value === "💩") {
+      column.setFilterValue("💩");
+    } else if (value === "No - 💩") {
+      column.setFilterValue(" ");
     }
-  }
+  };
 
   return (
-    <div {...props} className={styles.dropdownInputContainer}>
+    <div {...props} className="relative">
       <input
         placeholder={state}
-        className={styles.dropdownInput}
+        className="w-full border border-neutral-700 bg-neutral-600 p-3 text-lg font-normal text-neutral-200 outline-none placeholder:text-neutral-800"
         onClick={() => setVisible(true)}
-        // This delay prevents blocking of onMouseDown
-        onBlur={() => {
-          setTimeout(() => setVisible(false), 1)
-        }}
       />
       {visible && (
-        <ul className={styles.optionList}>
-          {options.map(option => (
-            <li
-              className={styles.option}
+        <div className="absolute top-16 w-full">
+          {options.map((option) => (
+            <button
+              type="button"
+              className="h-14 w-full cursor-pointer list-none border border-neutral-700 bg-primary-400 p-3 text-left text-lg font-normal text-primary-50 transition-all duration-200 placeholder:text-neutral-800 hover:bg-primary-300"
               key={option}
-              onMouseDown={() => {
-                setState(option)
-                switchFilter(option)
-                setVisible(false)
-                setDisplayState(1)
+              onClick={() => {
+                setState(option);
+                switchFilter(option);
+                setVisible(false);
+                setDisplayState(1);
               }}
             >
               {option}
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
-  )
-}
+  );
+};
