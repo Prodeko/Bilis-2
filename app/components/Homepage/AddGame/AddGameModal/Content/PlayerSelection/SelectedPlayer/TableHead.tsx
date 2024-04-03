@@ -1,33 +1,34 @@
-import Image from 'next/image'
+import { HiPencil } from "react-icons/hi";
 
-import type { PlayerWithStats } from '@common/types'
-import PencilImage from '@public/images/edit-pencil.svg'
-import { Side, setFocus, setPlayerId, useModalState } from '@state/Modal'
-
-import styles from './SelectedPlayer.module.scss'
+import type { PlayerWithStats } from "@common/types";
+import { type Side, setFocus, setPlayerId, useModalState } from "@state/Modal";
 
 interface Props {
-  player: PlayerWithStats
-  side: Side
+  player: PlayerWithStats;
+  side: Side;
 }
 
 const TableHead = ({ player, side }: Props) => {
-  const [_, dispatch] = useModalState()
+  const [_, dispatch] = useModalState();
 
   const onClear = async () => {
-    await dispatch(setPlayerId(side, undefined))
-    dispatch(setFocus(side))
-  }
+    dispatch(setPlayerId(side, undefined));
+    dispatch(setFocus(side));
+  };
   return (
-    <div className={styles.head}>
+    <div className="flex items-center justify-between gap-2 text-4xl font-bold text-neutral-200">
       <div>
         {player.firstName} {player.lastName}
       </div>
-      <button onClick={onClear} type="button">
-        <Image src={PencilImage} width={24} alt="edit pencil" />
+      <button
+        className="flex cursor-pointer items-center justify-center rounded-[50%] border-none bg-neutral-300 p-3 text-primary-800 transition-all duration-300 hover:bg-neutral-50"
+        onClick={onClear}
+        type="button"
+      >
+        <HiPencil size={24} />
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default TableHead
+export default TableHead;

@@ -1,24 +1,23 @@
-import { ComponentProps } from 'react'
+import type { ComponentProps } from "react";
 
-import { getPlayerDetailedGames } from '@server/db/games/derivatives'
-import TimeSeriesChart from '@ui/TimeSeriesChart/TimeSeriesChart'
+import TimeSeriesChart from "@ui/TimeSeriesChart/TimeSeriesChart";
 
-import { ChartTitle } from './ChartTitle'
-import PlayerComparison from './PlayerComparison'
-import styles from './ProfileCharts.module.scss'
+import { getPlayerDetailedGames } from "@server/db/games/derivatives";
 
-type DivProps = ComponentProps<'div'>
+import PlayerComparison from "./PlayerComparison";
+
+type DivProps = ComponentProps<"div">;
 
 interface Props extends DivProps {
-  playerId: number
+  playerId: number;
 }
 
 const ProfileCharts = async ({ playerId, ...props }: Props) => {
-  const gameData = await getPlayerDetailedGames(playerId)
+  const gameData = await getPlayerDetailedGames(playerId);
   return (
-    <div {...props} className={styles.container}>
-      <div className={styles.chartContainer}>
-        <ChartTitle title="Fargo Graph" />
+    <div {...props} className="grid max-h-full grid-cols-2 gap-y-16 p-16">
+      <div className="grid max-h-full grid-rows-[auto_minmax(0_,1fr)] gap-y-4 text-neutral-50">
+        <h2 className="text-3xl font-medium text-neutral-100">Fargo Graph</h2>
         <TimeSeriesChart
           gameData={gameData}
           dataName="Fargo Data"
@@ -26,12 +25,14 @@ const ProfileCharts = async ({ playerId, ...props }: Props) => {
           height="100%"
         />
       </div>
-      <div className={styles.chartContainer}>
-        <ChartTitle title="Player Comparison" />
+      <div className="grid max-h-full grid-rows-[auto_minmax(0_,1fr)] gap-y-4 text-neutral-50">
+        <h2 className="text-3xl font-medium text-neutral-100">
+          Player Comparison
+        </h2>
         <PlayerComparison currentPlayerId={playerId} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileCharts
+export default ProfileCharts;

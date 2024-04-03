@@ -1,26 +1,28 @@
-import { round } from 'lodash'
+import { round } from "lodash";
 
-import type { PlayerWithStats } from '@common/types'
-
-import styles from './SelectedPlayer.module.scss'
+import type { PlayerWithStats } from "@common/types";
 
 const TableBody = ({ player }: { player: PlayerWithStats }) => {
   return (
-    <div className={styles.body}>
-      <div className={styles.row}>
-        <span>Games</span>
-        <span>{player.totalGames}</span>
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full justify-between text-left text-3xl">
+        <span className="font-medium text-primary-200">Games</span>
+        <span className="font-semibold text-primary-50">
+          {player.totalGames}
+        </span>
       </div>
-      <div className={styles.row}>
-        <span>Wins</span>
-        <span>{player.wonGames}</span>
+      <div className="flex w-full justify-between text-left text-3xl">
+        <span className="font-medium text-primary-200">Wins</span>
+        <span className="font-semibold text-primary-50">{player.wonGames}</span>
       </div>
-      <div className={styles.row}>
-        <span>Win percentage</span>
-        <span>{round(player.winPercentage, 2)}%</span>
+      <div className="flex w-full justify-between text-left text-3xl">
+        <span className="font-medium text-primary-200">Win percentage</span>
+        <span className="font-semibold text-primary-50">
+          {round(player.winPercentage, 2)}%
+        </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TableBody
+export default TableBody;

@@ -1,44 +1,41 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { ComponentProps } from 'react'
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import type { ComponentProps } from "react";
 
-import billiardPic from '@public/images/billiard–closeup.jpg'
+import AddPlayerButton from "@ui/AddPlayerButton";
+import HeaderTitle from "@ui/Header/HeaderTitle";
 
-import AddPlayerButton from '../AddPlayerButton'
-import styles from './Header.module.scss'
-import HeaderTitle from './HeaderTitle'
+import billiardPic from "@public/images/billiard–closeup.jpg";
 
-type HeaderProps = ComponentProps<'header'>
+type HeaderProps = ComponentProps<"header">;
 
-type Props = HeaderProps
+type Props = HeaderProps;
 
-const Header = ({ ...props }: Props) => {
-  const pathName = usePathname()
-  const isLandingPage = pathName?.toLowerCase()?.endsWith('/player')
+export const PlayerHeader = ({ ...props }: Props) => {
+  const pathName = usePathname();
+  const isLandingPage = pathName?.toLowerCase()?.endsWith("/player");
 
   return (
-    <header {...props} className={styles.header}>
+    <header {...props} className="relative grid h-72 grid-cols-3 items-center">
       <Image
         src={billiardPic}
         alt="Billiard Table"
-        fill={true}
-        style={{ objectFit: 'cover' }}
-        priority={true}
+        style={{ objectFit: "cover" }}
+        fill
+        priority
       />
-      <div className={styles.layout}>
-        <HeaderTitle title="Player" style={{ gridColumn: '1 / 2' }} />
+      <div className="relative col-span-full grid h-72 w-full grid-cols-3 items-center justify-between gap-6 bg-gradient-to-tr from-neutral-900 to-neutral-800 px-12  opacity-80">
+        <HeaderTitle title="Player" style={{ gridColumn: "1 / 2" }} />
         {isLandingPage && (
           <AddPlayerButton
             path="/player/new"
             text="create a new player"
-            style={{ gridColumn: '3 / -1' }}
+            style={{ gridColumn: "3 / -1" }}
           />
         )}
       </div>
     </header>
-  )
-}
-
-export default Header
+  );
+};

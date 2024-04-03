@@ -1,54 +1,82 @@
-import { round } from 'lodash'
+"use client";
 
-import { Player, SmoothScrollId } from '@common/types'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Side, setFocus, setSelectedIdx, useModalState } from '@state/Modal'
+import { cva } from "class-variance-authority";
+import { round } from "lodash";
 
-import styles from './ChoosePlayer.module.scss'
+import { type Player, SmoothScrollId } from "@common/types";
+import { DEFAULT_ELO } from "@common/utils/constants";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import useSeasonalMode from "@hooks/useSeasonalMode";
+import {
+  type Side,
+  setFocus,
+  setSelectedIdx,
+  useModalState,
+} from "@state/Modal";
 
 type ListProps = {
-  playerSearchList: Player[]
-  onChoose: (id: number) => void
-  side: Side
-}
+  onChoose: () => void;
+  side: Side;
+  playerSearchList: Player[];
+};
+
+const rowStyles = cva(
+  "texl-xl flex h-12 cursor-pointer items-center justify-between p-4 font-semibold",
+  {
+    variants: {
+      selected: {
+        true: "bg-neutral-700",
+        false: "bg-neutral-800",
+      },
+    },
+  },
+);
 
 const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
-  const [parent] = useAutoAnimate<HTMLUListElement>({ duration: 200 })
-  const hasPlayers = playerSearchList.length > 0
-  const [{ selectedIdx, focus }, dispatch] = useModalState()
+  const [parent] = useAutoAnimate<HTMLDivElement>({ duration: 200 });
+  const { seasonal } = useSeasonalMode();
+  const hasPlayers = playerSearchList.length > 0;
+  const [{ selectedIdx, focus }, dispatch] = useModalState();
 
-  const isSelected = (i: number) => i == selectedIdx && focus === side
+  const isSelected = (i: number) => i === selectedIdx && focus === side;
   const onHover = (i: number) => {
     return () => {
-      dispatch(setFocus(side))
-      dispatch(setSelectedIdx(i))
-    }
-  }
+      dispatch(setFocus(side));
+      dispatch(setSelectedIdx(i));
+    };
+  };
 
   return (
-    <ul ref={parent} className={styles.playerList}>
+    <div
+      ref={parent}
+      className="flex h-full w-full flex-col divide-y-2 divide-neutral-700 overflow-y-scroll rounded-b-lg bg-neutral-800 text-neutral-200"
+    >
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
-          <li
-            id={isSelected(i) ? SmoothScrollId.Addgame : ''}
-            className={isSelected(i) ? styles.playerRow__selected : styles.playerRow}
+          <button
+            id={isSelected(i) ? SmoothScrollId.Addgame : ""}
+            className={rowStyles({ selected: isSelected(i) })}
             key={p.id}
-            onClick={() => onChoose(p.id)}
-            onMouseMoveCapture={onHover(i)}
+            onClick={onChoose}
+            onKeyUp={onChoose}
+            onMouseEnter={onHover(i)}
+            onMouseLeave={onHover(i)}
             tabIndex={0}
-            role="button"
+            type="button"
           >
             <span>
               {p.emoji} {p.firstName} {p.lastName}
             </span>
-            <span>{round(p.elo)}</span>
-          </li>
+            <span>{round(seasonal ? p.seasonElo ?? DEFAULT_ELO : p.elo)}</span>
+          </button>
         ))
       ) : (
-        <li className={styles.noplayers}>No players found</li>
+        <span className="texl-4xl flex h-full w-full items-center justify-center rounded-b-lg bg-neutral-800 font-semibold text-neutral-200">
+          No players found
+        </span>
       )}
-    </ul>
-  )
-}
+    </div>
+  );
+};
 
-export default PlayerList
+export default PlayerList;

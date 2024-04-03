@@ -1,11 +1,13 @@
-import { ReactNode } from 'react'
-
-import styles from './PlayerLayout.module.scss'
+import type { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const PlayerLayoutOuter = ({ children }: Props) => {
-  return <div className={styles.playerContainerOuter}>{children}</div>
-}
+  return (
+    <div className="grid h-full grid-rows-[auto_minmax(0_,1fr)] text-neutral-100">
+      {children}
+    </div>
+  );
+};

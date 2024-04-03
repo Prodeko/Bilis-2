@@ -1,41 +1,50 @@
-import { Button } from 'app/components/ui/Button'
-import { Card, CardGrid, CardProps } from 'app/components/ui/Card'
-import { Table, gameColumns, prepareGamesData } from 'app/components/ui/Table'
-import { Title, TitleRow } from 'app/components/ui/TitleRow'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { FiTrash2 } from 'react-icons/fi'
+"use client";
 
-import { RecentGame } from '@common/types'
+import { type Dispatch, type SetStateAction, useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 
-import Modal from './Modal'
+import { TextButton } from "@ui/Buttons/TextButton";
+import { Card, CardGrid, type CardProps } from "@ui/Card";
+import { Table, gameColumns, prepareGamesData } from "@ui/Table";
+import { TitleRow } from "@ui/TitleRow";
+
+import type { RecentGame } from "@common/types";
+
+import { GameDeletionModal } from "./GameDeletionModal";
 
 interface Props {
-  games: RecentGame[]
-  setGames: Dispatch<SetStateAction<RecentGame[]>>
-  cardProps: CardProps
+  games: RecentGame[];
+  setGames: Dispatch<SetStateAction<RecentGame[]>>;
+  cardProps: CardProps;
 }
 const Games = ({ games, setGames, cardProps }: Props) => {
-  const [modalVisible, setModalVisible] = useState<boolean>(false)
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const closeModal = () => setModalVisible(false)
-  const showModal = () => setModalVisible(true)
+  const closeModal = () => setModalVisible(false);
+  const showModal = () => setModalVisible(true);
 
   return (
     <Card {...cardProps}>
       <CardGrid>
-        <TitleRow>
-          <Title variation="Games" />
-          <Button
+        <TitleRow title="Games">
+          <TextButton
+            buttonType="button"
             style={{
-              gridColumnStart: '11',
-              gridColumnEnd: '-1',
+              gridColumnStart: "11",
+              gridColumnEnd: "-1",
             }}
-            variation="destructive"
-            text={'Remove Latest'}
-            Icon={FiTrash2}
+            intent="destructive"
+            text={"Remove Latest"}
+            RightIcon={FiTrash2}
             onClick={showModal}
           />
-          {modalVisible && <Modal games={games} setGames={setGames} closeModal={closeModal} />}
+          {modalVisible && (
+            <GameDeletionModal
+              games={games}
+              setGames={setGames}
+              closeModal={closeModal}
+            />
+          )}
         </TitleRow>
         <Table
           dataRows={prepareGamesData(games)}
@@ -45,7 +54,7 @@ const Games = ({ games, setGames, cardProps }: Props) => {
         />
       </CardGrid>
     </Card>
-  )
-}
+  );
+};
 
-export default Games
+export default Games;

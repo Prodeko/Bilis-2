@@ -1,17 +1,17 @@
-import PlayerForm from 'app/components/Player/PlayerForm'
+import PlayerForm from "app/components/Player/PlayerForm";
 
-import BackButton from '@components/Player/BackButton'
-import { PlayerLayoutInner } from '@components/Player/PlayerLayout/Inner'
+import { BackButton } from "@components/Player/BackButton";
+import { PlayerLayoutInner } from "@components/Player/PlayerLayout/Inner";
 
 const NewPlayerPage = async () => {
   return (
     <PlayerLayoutInner>
-      <BackButton route={`/player`} />
+      <BackButton route={"/player"} />
       <PlayerForm />
     </PlayerLayoutInner>
-  )
-}
+  );
+};
 
-export default NewPlayerPage
+export default NewPlayerPage;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

@@ -1,17 +1,15 @@
-import { ComponentProps, ReactNode } from 'react'
+import type { ComponentProps, ReactNode } from "react";
 
-import styles from './Card.module.scss'
-
-export type CardProps = ComponentProps<'div'>
+export type CardProps = ComponentProps<"div">;
 
 interface Props extends CardProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const Card = ({ children, ...props }: Props) => {
   return (
-    <div {...props} className={styles.card}>
+    <div {...props} className="h-full rounded-2xl bg-neutral-800">
       {children}
     </div>
-  )
-}
+  );
+};

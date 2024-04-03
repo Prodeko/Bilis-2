@@ -1,36 +1,38 @@
-import React from 'react'
+import { getSeasons } from "@server/db/seasons";
 
-import { getSeasons } from '@server/db/seasons'
-
-import EditSeason from './EditSeason'
-import styles from './Season.module.scss'
-import SeasonForm from './seasonForm'
+import { CreateSeasonForm } from "./CreateSeasonForm";
+import EditSeason from "./EditSeason";
 
 const SeasonsPage = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  if (searchParams?.password !== process.env.ADMIN_PASSWORD) return null
-  const seasons = await getSeasons()
+  if (searchParams?.password !== process.env.ADMIN_PASSWORD) return null;
+  const seasons = await getSeasons();
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Seasons List</h1>
-      <ul className={styles.seasonsList}>
-        {seasons.map((season, index) => (
-          <li key={index} className={styles.seasonItem}>
-            {season.name ? `${season.name}: ` : ''}
-            {season.start.toLocaleDateString('fi-FI')} - {season.end.toLocaleDateString('fi-FI')}
+    <div className="flex h-full w-full flex-col gap-8 p-16">
+      <h1 className="text-5xl font-semibold text-neutral-100">Seasons List</h1>
+      <ul className="flex h-full list-none flex-col gap-4 overflow-y-scroll">
+        {seasons.map((season) => (
+          <li
+            key={season.id}
+            className="flex items-center gap-3 text-3xl font-medium text-neutral-200"
+          >
+            {season.name ? `${season.name}: ` : ""}
+            {season.start.toLocaleDateString("fi-FI")}
+            {" - "}
+            {season.end.toLocaleDateString("fi-FI")}
             <EditSeason id={season.id} />
           </li>
         ))}
       </ul>
-      <SeasonForm />
+      <CreateSeasonForm />
     </div>
-  )
-}
+  );
+};
 
-export default SeasonsPage
+export default SeasonsPage;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

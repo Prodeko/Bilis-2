@@ -1,25 +1,24 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
 import {
-  ColumnDef,
+  type ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table";
 
-import styles from './MultifunctionTable.module.scss'
-import { Pagination } from './Pagination'
-import { Table } from './Table'
+import { Pagination } from "./Pagination";
+import { Table } from "./Table";
 
 export const TableWithPagination = <Schema extends object>({
   data,
   columns,
 }: {
-  data: Schema[]
-  columns: ColumnDef<Schema>[]
+  data: Schema[];
+  columns: ColumnDef<Schema>[];
 }) => {
   const table = useReactTable({
     data,
@@ -30,14 +29,20 @@ export const TableWithPagination = <Schema extends object>({
     getPaginationRowModel: getPaginationRowModel(),
     //
     debugTable: true,
-  })
+  });
 
-  const currentPaginationState = table.getState().pagination.pageIndex
-  const [displayState, setDisplayState] = useState<number | string>(currentPaginationState + 1)
+  const currentPaginationState = table.getState().pagination.pageIndex;
+  const [displayState, setDisplayState] = useState<number | string>(
+    currentPaginationState + 1,
+  );
   return (
-    <div className={styles.layout}>
+    <div className="grid grid-rows-[minmax(0_,1fr)_auto]">
       <Table table={table} setDisplayState={setDisplayState} />
-      <Pagination table={table} displayState={displayState} setDisplayState={setDisplayState} />
+      <Pagination
+        table={table}
+        displayState={displayState}
+        setDisplayState={setDisplayState}
+      />
     </div>
-  )
-}
+  );
+};

@@ -1,49 +1,45 @@
-'use client'
+"use client";
 
-import { ApexOptions } from 'apexcharts'
-import ApexCharts from 'react-apexcharts'
-import { renderToString } from 'react-dom/server'
+import type { ApexOptions } from "apexcharts";
+import ApexCharts from "react-apexcharts";
+import { renderToString } from "react-dom/server";
 
-import type { TimeSeriesGame } from '@common/types'
+import type { TimeSeriesGame } from "@common/types";
 
-import styles from './TimeSeriesChart.module.scss'
-import Tooltip from './ToolTip'
+import Tooltip from "./ToolTip";
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307
 
-type HeightOptions = '100%' | '75%' | '50%'
+type HeightOptions = "100%" | "75%" | "50%";
 type Props = {
-  gameData: TimeSeriesGame[]
-  dataName: string
-  chartTitle: string
-  height?: HeightOptions
-}
+  gameData: TimeSeriesGame[];
+  dataName: string;
+  chartTitle: string;
+  height?: HeightOptions;
+};
 
 const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const AnyApexCharts = ApexCharts as any // TODO: Temp fix
-
-  const eloData = gameData.map(game => game.currentElo)
+  const eloData = gameData.map((game) => game.currentElo);
 
   // Do not show the graph if data includes only one entry (DEFAULT_ELO)
   if (gameData.length <= 1) {
     return (
-      <div className={styles.nodata}>
+      <div className="flex h-full items-center justify-center text-5xl font-bold">
         <p>No fargo data available</p>
       </div>
-    )
+    );
   }
 
-  const black = '#111'
-  const white = '#ddd'
+  const black = "#111";
+  const white = "#ddd";
 
-  const series: ApexOptions['series'] = [
+  const series: ApexOptions["series"] = [
     {
       name: dataName,
       data: eloData,
     },
-  ]
+  ];
 
   const options: ApexOptions = {
     // Defines basic chart characteristics
@@ -61,9 +57,9 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
           download: false,
         },
       },
-      type: 'area',
+      type: "area",
       zoom: {
-        type: 'x',
+        type: "x",
         enabled: true,
         autoScaleYaxis: true,
       },
@@ -79,7 +75,7 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
 
     // Fill the gradient under the elo curve
     fill: {
-      type: 'gradient',
+      type: "gradient",
       colors: [`${white}`],
       gradient: {
         shadeIntensity: 0.7,
@@ -100,24 +96,24 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
 
     // Define what happens when the data is missing
     noData: {
-      text: 'Missing Fargo Data',
+      text: "Missing Fargo Data",
     },
 
     // Define elo curve characteristics
     stroke: {
-      curve: 'straight',
+      curve: "straight",
       colors: [`${white}`],
       width: 4,
     },
 
     // Main title
     title: {
-      align: 'center',
+      align: "center",
       text: chartTitle,
       offsetY: 20,
       style: {
         color: `${white}`,
-        fontSize: '2.4rem',
+        fontSize: "2.4rem",
       },
     },
 
@@ -125,28 +121,28 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     // Custom example: https://codepen.io/apexcharts/pen/NBdyvV
     // Rendering custom tooltips: https://github.com/apexcharts/react-apexcharts/issues/65
     tooltip: {
-      custom: function ({ dataPointIndex }) {
-        return renderToString(<Tooltip gameData={gameData} dataPointIndex={dataPointIndex} />)
+      custom: ({ dataPointIndex }) => {
+        return renderToString(<Tooltip game={gameData[dataPointIndex]} />);
       },
     },
 
     // X-axis characteristics
     xaxis: {
-      type: 'numeric',
+      type: "numeric",
       decimalsInFloat: 0,
       labels: {
-        formatter: function (val: string) {
-          return (Number(val) - 1).toFixed(0)
+        formatter: (val: string) => {
+          return (Number(val) - 1).toFixed(0);
         },
         style: {
           colors: `${white}`,
         },
       },
       title: {
-        text: 'Game Number',
+        text: "Game Number",
         style: {
           color: `${white}`,
-          fontSize: '2rem',
+          fontSize: "2rem",
         },
         offsetY: 100,
       },
@@ -155,27 +151,33 @@ const TimeSeriesChart = ({ gameData, dataName, chartTitle, height }: Props) => {
     // Y-axis characteristics
     yaxis: {
       labels: {
-        formatter: function (val: number) {
-          return val.toFixed(0)
+        formatter: (val: number) => {
+          return val.toFixed(0);
         },
         style: {
           colors: `${white}`,
         },
       },
       title: {
-        text: 'Fargo',
+        text: "Fargo",
         style: {
           color: `${white}`,
-          fontSize: '2rem',
+          fontSize: "2rem",
         },
       },
     },
-  }
+  };
   return (
-    <div className={styles.chart}>
-      <AnyApexCharts options={options} type="area" series={series} height={height} width="100%" />
+    <div className="max-h-full">
+      <ApexCharts
+        options={options}
+        type="area"
+        series={series}
+        height={height}
+        width="100%"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default TimeSeriesChart
+export default TimeSeriesChart;
