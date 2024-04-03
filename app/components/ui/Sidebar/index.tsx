@@ -15,7 +15,7 @@ const styles = cva(
   {
     variants: {
       seasonal: {
-        true: "from-primary-900 to-neutral-700",
+        true: "from-primary-900 to-primary-800",
         false: "from-neutral-700 to-neutral-600",
       },
     },
