@@ -3,7 +3,7 @@
 import { cva } from "class-variance-authority";
 import { useState } from "react";
 
-import PlayerSearchLink from "@ui/PlayerSearch/PlayerSearchLink";
+import { PlayerSearchLink } from "@components/ui/PlayerSearch/PlayerSearchLink";
 
 const styles = cva(
   "max-h-1/2 grid w-3/4 grid-rows-[auto_minmax(0,_1fr)] gap-4 text-left transition-all duration-[0.7s]",
