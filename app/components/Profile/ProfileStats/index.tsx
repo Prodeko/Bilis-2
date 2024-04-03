@@ -12,7 +12,6 @@ import { getPlayerById } from "@server/db/players";
 import type { PlayerModel } from "@server/models";
 
 import ProfileStat from "./ProfileStat";
-import styles from "./ProfileStats.module.scss";
 
 type DivProps = ComponentProps<"div">;
 

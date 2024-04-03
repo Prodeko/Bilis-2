@@ -23,13 +23,13 @@ const PlayerPage = () => {
 
   const onBlur = () => {
     setVisible(false);
-    setTimeout(() => setExtended(false), 400); // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
+    setTimeout(() => setExtended(false), 400);
   };
 
   const onClick = () => {
     if (!extended) {
       setExtended(true);
-      setTimeout(() => setVisible(true), 700); // // The same length as extendind transformation in PlayerSearchLink.moudule.scss %resultContainer placeholder class
+      setTimeout(() => setVisible(true), 700);
     }
   };
 
