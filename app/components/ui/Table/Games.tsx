@@ -23,7 +23,7 @@ export const prepareGamesData = (data: RecentGame[]): TableGame[] => {
     time: game.formattedTimeString,
     winner: (
       <Link
-        className="min-h-full w-full truncate border-b-2 border-transparent transition-all hover:border-b-primary-300 active:border-b-primary-200"
+        className="min-h-full w-fit truncate border-b-2 border-transparent transition-all duration-100 hover:border-b-primary-300 active:border-b-primary-200"
         href={`/player/${game.winnerId}`}
       >
         {game.winner}
@@ -40,7 +40,7 @@ export const prepareGamesData = (data: RecentGame[]): TableGame[] => {
     ),
     loser: (
       <Link
-        className="min-h-full w-full truncate border-b-2 border-transparent transition-all hover:border-b-primary-300 active:border-b-primary-200"
+        className="min-h-full w-fit truncate border-b-2 border-transparent transition-all duration-100 hover:border-b-primary-300 active:border-b-primary-200"
         href={`/player/${game.loserId}`}
       >
         {game.loser}

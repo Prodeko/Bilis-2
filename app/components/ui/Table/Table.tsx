@@ -29,7 +29,7 @@ interface Props<T extends WithId> {
 }
 
 const headerStyles = cva(
-  "grid w-full grid-cols-12 items-center justify-items-start gap-x-3 border-b border-b-primary-600 px-6 py-2 text-lg font-semibold uppercase text-primary-300",
+  "grid w-full grid-cols-12 items-center justify-items-start gap-x-3 border-b-[3px] border-b-primary-600 px-6 py-2 text-lg font-semibold uppercase text-primary-300",
 );
 
 const rowStyles = cva(
@@ -37,7 +37,7 @@ const rowStyles = cva(
   {
     variants: {
       hoverable: {
-        true: "cursor-pointer transition-all duration-200 hover:bg-primary-700",
+        true: "cursor-pointer transition-all duration-100 hover:bg-primary-700",
       },
     },
   },
@@ -80,7 +80,10 @@ export const Table = ({
           </tr>
         ))}
       </thead>
-      <tbody ref={parent} className="flex h-full flex-col overflow-y-scroll">
+      <tbody
+        ref={parent}
+        className="flex h-full flex-col divide-y-[2px] divide-neutral-700 divide-opacity-40 overflow-y-scroll shadow-inner shadow-neutral-800"
+      >
         {table.getRowModel().rows.map((row) => (
           <tr
             onClick={rowOnClick?.(row.original.id)}

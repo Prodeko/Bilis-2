@@ -21,11 +21,11 @@ type ListProps = {
 };
 
 const rowStyles = cva(
-  "texl-xl flex h-12 cursor-pointer items-center justify-between p-4 font-semibold",
+  "texl-xl flex h-12 cursor-pointer items-center justify-between p-4 font-semibold transition-all duration-100",
   {
     variants: {
       selected: {
-        true: "bg-neutral-700",
+        true: "bg-primary-700",
         false: "bg-neutral-800",
       },
     },
@@ -49,7 +49,7 @@ const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
   return (
     <div
       ref={parent}
-      className="flex h-full w-full flex-col divide-y-2 divide-neutral-700 overflow-y-scroll rounded-b-lg bg-neutral-800 text-neutral-200"
+      className="flex h-full w-full flex-col divide-y-2 divide-neutral-700 divide-opacity-40 overflow-y-scroll rounded-b-lg bg-neutral-800 text-neutral-200"
     >
       {hasPlayers ? (
         playerSearchList.map((p, i) => (
