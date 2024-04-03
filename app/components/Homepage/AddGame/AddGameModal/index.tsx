@@ -4,7 +4,6 @@ import { ModalBlur } from "@ui/ModalBlur";
 
 import type { RecentGame } from "@common/types";
 
-import styles from "./AddGameModal.module.scss";
 import CloseButton from "./CloseButton";
 import Content from "./Content";
 
@@ -16,7 +15,7 @@ type PlayerProps = {
 const AddGame = ({ onClose, setGames }: PlayerProps) => {
   return (
     <ModalBlur>
-      <div className={styles.modal}>
+      <div className="relative h-4/5 min-h-0 w-4/5 rounded-2xl bg-neutral-800">
         <CloseButton onClose={onClose} />
         <Content setGames={setGames} onClose={onClose} />
       </div>
