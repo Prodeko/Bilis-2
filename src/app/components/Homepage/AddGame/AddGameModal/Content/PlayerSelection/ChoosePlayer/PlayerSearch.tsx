@@ -1,8 +1,8 @@
-import useDebounce from "hooks/useDebounce";
 import { type KeyboardEventHandler, useEffect } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 
 import { player } from "@common/types";
+import useDebounce from "@hooks/useDebounce";
 import {
   type Side,
   resetPlayers,

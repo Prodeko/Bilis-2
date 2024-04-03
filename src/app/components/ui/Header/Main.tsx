@@ -1,9 +1,9 @@
-import RandomPlayer from "app/components/Homepage/RandomPlayer";
 import Image from "next/image";
 import type { ComponentProps } from "react";
 
 import HeaderTitle from "@ui/Header/HeaderTitle";
 
+import RandomPlayer from "@components/Homepage/RandomPlayer";
 import billiardPic from "@public/images/billiard-balls.jpg";
 import { getRandomPlayer } from "@server/db/players";
 import { getCurrentSeason } from "@server/db/seasons";

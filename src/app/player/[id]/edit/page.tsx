@@ -1,7 +1,6 @@
-import PlayerForm from "app/components/Player/PlayerForm";
-
 import type { Player } from "@common/types";
 import { BackButton } from "@components/Player/BackButton";
+import PlayerForm from "@components/Player/PlayerForm";
 import { PlayerLayoutInner } from "@components/Player/PlayerLayout/Inner";
 import { getPlayerById } from "@server/db/players";
 

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps } from "react";
 
-import HeaderTitle from "@ui/Header/HeaderTitle";
 import { MottoCard } from "@ui/MottoCard";
 
 import type { Player } from "@common/types";
