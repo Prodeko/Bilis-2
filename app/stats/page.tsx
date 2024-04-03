@@ -1,6 +1,5 @@
+import { Card } from "@ui/Card";
 import { ComingSoon } from "@ui/ComingSoon";
-
-import { Card } from "@components/ui/Card";
 
 import { GameCountTracker } from "./localComponents/GameCountTracker/GameCountTracker";
 import { HallOfFame } from "./localComponents/HallOfFame/HallOfFame";

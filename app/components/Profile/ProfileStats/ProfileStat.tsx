@@ -1,7 +1,8 @@
 import type { IconType } from "react-icons";
 
+import { Card } from "@ui/Card";
+
 import type { ProfileStatistic } from "@common/types";
-import { Card } from "@components/ui/Card";
 
 type Props = ProfileStatistic & {
   Icon: IconType;

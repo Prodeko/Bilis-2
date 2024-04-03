@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { type ChangeEvent, type MouseEvent, useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 
-import { Card, CardGrid, type CardProps } from "@ui/Card";
+import { Card, type CardProps } from "@ui/Card";
 import { Dropdown, Input, InputDropdownWrapper } from "@ui/InputDropdown";
 import { Table, prepareQueueData, queueColumns } from "@ui/Table";
 import { TitleRow } from "@ui/TitleRow";
@@ -70,50 +70,48 @@ export const Queue = ({ cardProps }: Props) => {
   };
 
   return (
-    <Card {...cardProps}>
-      <CardGrid>
-        <TitleRow title="Queue">
-          <InputDropdownWrapper
-            style={{
-              gridColumnStart: "4",
-              gridColumnEnd: "-1",
+    <Card tableGrid {...cardProps}>
+      <TitleRow title="Queue">
+        <InputDropdownWrapper
+          style={{
+            gridColumnStart: "4",
+            gridColumnEnd: "-1",
+          }}
+        >
+          <Input
+            inputId={queueId}
+            IconLeadingProps={{ Icon: FiSearch }}
+            IconTrailingProps={{
+              Icon: FiX,
+              onClick: () => {
+                clearInputField();
+                focusInputField();
+              },
+              onMouseDown: preventInputBlur,
             }}
-          >
-            <Input
-              inputId={queueId}
-              IconLeadingProps={{ Icon: FiSearch }}
-              IconTrailingProps={{
-                Icon: FiX,
-                onClick: () => {
-                  clearInputField();
-                  focusInputField();
-                },
-                onMouseDown: preventInputBlur,
-              }}
-              onClick={openDropdown}
-              onBlur={closeDropdown}
-              onFocus={openDropdown}
-              onChange={handleChange}
-              placeholder="Add player to queue"
-              onKeyDown={handleKeyPress}
-            />
-            <Dropdown
-              arr={filteredPlayers}
-              emptyArrayText={"No Players Found"}
-              selectedIdx={selectedIdx}
-              showDropdown={visible}
-              smoothScrollId={queueId}
-              rowOnClick={handleSelect}
-            />
-          </InputDropdownWrapper>
-        </TitleRow>
-        <Table
-          dataRows={prepareQueueData(queue, dispatch)}
-          columns={queueColumns}
-          columnStartIndices={[1, 4, -1]}
-          rowOnClick={tableRowClick}
-        />
-      </CardGrid>
+            onClick={openDropdown}
+            onBlur={closeDropdown}
+            onFocus={openDropdown}
+            onChange={handleChange}
+            placeholder="Add player to queue"
+            onKeyDown={handleKeyPress}
+          />
+          <Dropdown
+            arr={filteredPlayers}
+            emptyArrayText={"No Players Found"}
+            selectedIdx={selectedIdx}
+            showDropdown={visible}
+            smoothScrollId={queueId}
+            rowOnClick={handleSelect}
+          />
+        </InputDropdownWrapper>
+      </TitleRow>
+      <Table
+        dataRows={prepareQueueData(queue, dispatch)}
+        columns={queueColumns}
+        columnStartIndices={[1, 4, -1]}
+        rowOnClick={tableRowClick}
+      />
     </Card>
   );
 };
