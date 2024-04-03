@@ -28,13 +28,14 @@ const Games = ({ games, setGames, cardProps }: Props) => {
       <CardGrid>
         <TitleRow title="Games">
           <TextButton
+            buttonType="button"
             style={{
               gridColumnStart: "11",
               gridColumnEnd: "-1",
             }}
             intent="destructive"
             text={"Remove Latest"}
-            Icon={FiTrash2}
+            RightIcon={FiTrash2}
             onClick={showModal}
           />
           {modalVisible && (
