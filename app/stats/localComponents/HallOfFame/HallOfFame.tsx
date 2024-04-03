@@ -66,7 +66,7 @@ export const HallOfFame = async ({ ...props }: Props) => {
       <h2 className="w-full text-center text-6xl font-bold uppercase text-neutral-100">
         Hall of Fame
       </h2>
-      <div className="flex w-full flex-col divide-y-2 divide-neutral-600 overflow-y-scroll">
+      <div className="flex w-full flex-col divide-y-2 divide-neutral-600 overflow-y-auto">
         {hofPlayers.map((player) => {
           return (
             <HallOfFameStatRow
