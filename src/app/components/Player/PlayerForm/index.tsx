@@ -47,6 +47,7 @@ export const PlayerForm = ({ player }: Props) => {
     const data = await res.json();
     const updatedPlayer = playerParser.parse(data);
     router.push(`/player/${updatedPlayer.id}`);
+    router.refresh();
   };
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
