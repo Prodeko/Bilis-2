@@ -49,7 +49,11 @@ module.exports = {
       backgroundImage: {
         handshake: "url('/images/handshake.png')",
       },
-      plugins: [require("tailwind-scrollbar")],
+      plugins: [
+        require("tailwind-scrollbar"),
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/container-queries"),
+      ],
     },
   },
 };
