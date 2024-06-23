@@ -19,7 +19,7 @@ type Props = {
   player?: Player;
 };
 
-const PlayerForm = ({ player }: Props) => {
+export const PlayerForm = ({ player }: Props) => {
   const isUpdate = player !== undefined;
 
   const [playerData, setPlayerData] = useState<NewPlayer>({
@@ -139,5 +139,3 @@ const PlayerForm = ({ player }: Props) => {
     </div>
   );
 };
-
-export default PlayerForm;

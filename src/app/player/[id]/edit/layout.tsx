@@ -1,21 +1,21 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-import { PlayerLayoutOuter } from '@components/Player/PlayerLayout/Outer'
-import Header from '@components/ui/Header/Player'
+import { PlayerLayoutOuter } from "@components/Player/PlayerLayout/Outer";
+import { PlayerHeader } from "@components/ui/Header/Player";
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const EditLayout = ({ children }: Props) => {
   return (
     <PlayerLayoutOuter>
-      <Header />
+      <PlayerHeader />
       {children}
     </PlayerLayoutOuter>
-  )
-}
+  );
+};
 
-export default EditLayout
+export default EditLayout;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
