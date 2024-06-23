@@ -12,8 +12,7 @@ import {
   type Player,
   player as playerParser,
 } from "@common/types";
-
-import { Field } from "./Field";
+import { Field } from "@components/Player/PlayerForm/Field";
 
 type Props = {
   player?: Player;
@@ -51,7 +50,7 @@ export const PlayerForm = ({ player }: Props) => {
   };
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
-    const res = await fetch(`/api/player/`, {
+    const res = await fetch("/api/player/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

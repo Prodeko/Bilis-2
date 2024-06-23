@@ -1,8 +1,7 @@
 import type { ComponentProps } from "react";
 
+import { TrackerStat } from "@/app/stats/localComponents/GameCountTracker/TrackerStat";
 import { getGamesFromTimeframe } from "@server/db/players/gameTracker";
-
-import { TrackerStat } from "./TrackerStat";
 
 type DivProps = ComponentProps<"div">;
 

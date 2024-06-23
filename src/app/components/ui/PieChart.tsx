@@ -13,7 +13,11 @@ type Props = {
   mutualGames: MutualGames;
 };
 
-const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
+export const PieChart = ({
+  currentPlayer,
+  opposingPlayer,
+  mutualGames,
+}: Props) => {
   if (
     mutualGames.currentPlayerGamesWon === 0 &&
     mutualGames.opposingPlayerGamesWon === 0
@@ -100,5 +104,3 @@ const PieChart = ({ currentPlayer, opposingPlayer, mutualGames }: Props) => {
     />
   );
 };
-
-export default PieChart;

@@ -9,7 +9,7 @@ interface Props extends ButtonProps {
   text: string;
 }
 
-const AddPlayerButton = ({ path, text, ...props }: Props) => {
+export const AddPlayerButton = ({ path, text, ...props }: Props) => {
   return (
     <Link
       href={path}
@@ -21,5 +21,3 @@ const AddPlayerButton = ({ path, text, ...props }: Props) => {
     </Link>
   );
 };
-
-export default AddPlayerButton;

@@ -25,7 +25,7 @@ interface Props extends ComponentPropsWithoutRef<"aside"> {
   currentSeason: Season;
 }
 
-const Sidebar = ({ currentSeason, ...props }: Props) => {
+export const Sidebar = ({ currentSeason, ...props }: Props) => {
   const { seasonal, toggleSeasonalMode } = useSeasonalMode();
   return (
     <aside {...props} className={styles({ seasonal })}>
@@ -43,5 +43,3 @@ const Sidebar = ({ currentSeason, ...props }: Props) => {
     </aside>
   );
 };
-
-export default Sidebar;

@@ -1,14 +1,17 @@
-'use client'
+"use client";
 
-import { TableWithPagination } from '@ui/MultifunctionTable'
-import { GameTableSchema, getGameColumnSchema } from '@ui/MultifunctionTable/schemas'
+import { TableWithPagination } from "@ui/MultifunctionTable";
+import {
+  type GameTableSchema,
+  getGameColumnSchema,
+} from "@ui/MultifunctionTable/schemas";
 
 interface Props {
-  data: GameTableSchema[]
+  data: GameTableSchema[];
 }
 
 export const TableProvider = ({ data }: Props) => {
-  const columns = getGameColumnSchema()
+  const columns = getGameColumnSchema();
   return (
     <TableWithPagination
       {...{
@@ -16,5 +19,5 @@ export const TableProvider = ({ data }: Props) => {
         columns,
       }}
     />
-  )
-}
+  );
+};

@@ -9,15 +9,14 @@ import { Table, gameColumns, prepareGamesData } from "@ui/Table";
 import { TitleRow } from "@ui/TitleRow";
 
 import type { RecentGame } from "@common/types";
-
-import { GameDeletionModal } from "./GameDeletionModal";
+import { GameDeletionModal } from "@components/Homepage/Games/GameDeletionModal";
 
 interface Props {
   games: RecentGame[];
   setGames: Dispatch<SetStateAction<RecentGame[]>>;
   cardProps: CardProps;
 }
-const Games = ({ games, setGames, cardProps }: Props) => {
+export const Games = ({ games, setGames, cardProps }: Props) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const closeModal = () => setModalVisible(false);
@@ -54,5 +53,3 @@ const Games = ({ games, setGames, cardProps }: Props) => {
     </Card>
   );
 };
-
-export default Games;

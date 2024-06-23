@@ -2,7 +2,7 @@ import { round } from "lodash";
 
 import type { PlayerWithStats } from "@common/types";
 
-const TableBody = ({ player }: { player: PlayerWithStats }) => {
+export const TableBody = ({ player }: { player: PlayerWithStats }) => {
   return (
     <div className="flex w-full flex-col gap-3">
       <div className="flex w-full justify-between text-left text-3xl">
@@ -24,5 +24,3 @@ const TableBody = ({ player }: { player: PlayerWithStats }) => {
     </div>
   );
 };
-
-export default TableBody;

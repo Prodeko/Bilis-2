@@ -9,7 +9,11 @@ interface Props extends h1Props {
   currentSeason?: Season | null;
 }
 
-const HeaderTitle = async ({ title, currentSeason, ...props }: Props) => {
+export const HeaderTitle = async ({
+  title,
+  currentSeason,
+  ...props
+}: Props) => {
   return (
     <div {...props} className="flex flex-col pl-6">
       <h1 className="text-7xl font-bold text-neutral-100">{title}</h1>
@@ -19,5 +23,3 @@ const HeaderTitle = async ({ title, currentSeason, ...props }: Props) => {
     </div>
   );
 };
-
-export default HeaderTitle;

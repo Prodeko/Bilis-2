@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import { Player, player } from '@common/types'
-import useDebounce from '@hooks/useDebounce'
+import { type Player, player } from "@common/types";
+import useDebounce from "@hooks/useDebounce";
 
 const usePlayers = (delayMs: number) => {
-  const [players, setPlayers] = useState<Player[]>([])
-  const [query, setQuery] = useDebounce<string>('', delayMs)
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [query, setQuery] = useDebounce<string>("", delayMs);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const searchParams = new URLSearchParams({ query })
+        const searchParams = new URLSearchParams({ query });
         const res = await fetch(`/api/player?${searchParams}`, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-        })
-        const data = await res.json()
-        const players = player.array().parse(data)
-        setPlayers(players)
+        });
+        const data = await res.json();
+        const players = player.array().parse(data);
+        setPlayers(players);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
-    fetchData()
-  }, [query])
+    fetchData();
+  }, [query]);
 
-  return { players, query, setQuery }
-}
+  return { players, query, setQuery };
+};
 
-export default usePlayers
+export default usePlayers;

@@ -1,8 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import type { Player, RecentGame } from "@common/types";
-
-import AddGameModal from "./AddGameModal";
+import { AddGameModal } from "@components/Homepage/AddGame/AddGameModal";
 
 type Props = {
   onOpen: () => void;
@@ -22,7 +21,7 @@ export const AddGameButton = (props: Props) => {
   return (
     <>
       <button
-        className="bg-handshake relative z-0 flex h-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-cover bg-center text-center text-neutral-400 transition-all duration-300 after:absolute after:h-full after:w-full after:bg-neutral-900 after:bg-opacity-80 after:transition-all after:duration-300 hover:text-neutral-200 hover:after:bg-opacity-75"
+        className="relative z-0 flex h-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl bg-handshake bg-cover bg-center text-center text-neutral-400 transition-all duration-300 after:absolute after:h-full after:w-full after:bg-neutral-900 after:bg-opacity-80 after:transition-all after:duration-300 hover:text-neutral-200 hover:after:bg-opacity-75"
         style={inlineStyles}
         onClick={onOpen}
         type="button"

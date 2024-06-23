@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { ComponentProps } from "react";
 
-import HeaderTitle from "@ui/Header/HeaderTitle";
+import { HeaderTitle } from "@ui/Header/HeaderTitle";
 import { Navigation } from "@ui/Header/StatsNavigation";
 
 import statsPic from "@public/images/stats-header.jpg";

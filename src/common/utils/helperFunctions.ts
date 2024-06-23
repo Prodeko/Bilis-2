@@ -1,4 +1,4 @@
-import { Player, WinLossStats } from '@common/types'
+import type { Player, WinLossStats } from "@common/types";
 
 /**
  * Takes array as input and returns an array of the different permutations.
@@ -13,22 +13,22 @@ import { Player, WinLossStats } from '@common/types'
  * ```
  */
 export const permutator = <T>(inputArr: T[]) => {
-  const result: Array<T[]> = []
+  const result: Array<T[]> = [];
   const permute = (arr: T[], m: T[] = []) => {
     if (arr.length === 0) {
-      result.push(m)
+      result.push(m);
     } else {
       for (let i = 0; i < arr.length; i++) {
-        const curr = arr.slice()
-        const next = curr.splice(i, 1)
-        permute(curr.slice(), m.concat(next))
+        const curr = arr.slice();
+        const next = curr.splice(i, 1);
+        permute(curr.slice(), m.concat(next));
       }
     }
-  }
+  };
 
-  permute(inputArr)
-  return result
-}
+  permute(inputArr);
+  return result;
+};
 
 /**
  * Calculates the length of the longest continuous sequence of elements for whom predicate returns truthy
@@ -38,15 +38,15 @@ export const permutator = <T>(inputArr: T[]) => {
  */
 export const calculateLongestContinuousSequence = <T>(
   inputArr: T[],
-  predicate: (item: T) => boolean = i => Boolean(i)
+  predicate: (item: T) => boolean = (i) => Boolean(i),
 ): number =>
   inputArr.reduce(
     ([currentStreak, longestStreak], item) =>
       predicate(item)
         ? [currentStreak + 1, Math.max(currentStreak + 1, longestStreak)]
         : [0, longestStreak],
-    [0, 0]
-  )[1]
+    [0, 0],
+  )[1];
 
 /**
  * Formats player's full name give a player object
@@ -56,11 +56,15 @@ export const calculateLongestContinuousSequence = <T>(
  * @param includeNickname - Defines if nickname is included
  * @returns Formatted full name
  */
-export const formatFullName = (player: Player, includeEmoji = false, includeNickname = false) => {
-  const emoji = includeEmoji ? `${player.emoji} ` : ''
-  const nickName = includeNickname ? `"${player.nickname}" ` : ''
-  return `${emoji}${player.firstName} ${nickName}${player.lastName}`
-}
+export const formatFullName = (
+  player: Player,
+  includeEmoji = false,
+  includeNickname = false,
+) => {
+  const emoji = includeEmoji ? `${player.emoji} ` : "";
+  const nickName = includeNickname ? `"${player.nickname}" ` : "";
+  return `${emoji}${player.firstName} ${nickName}${player.lastName}`;
+};
 
 /**
  * Returns player game stats
@@ -69,16 +73,19 @@ export const formatFullName = (player: Player, includeEmoji = false, includeNick
  * @param lostGames - Amount of games player has lost
  * @returns Game stats
  */
-export const computeWinLossStats = (wonGames: number, lostGames: number): WinLossStats => {
-  const totalGames = wonGames + lostGames
-  const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100
+export const computeWinLossStats = (
+  wonGames: number,
+  lostGames: number,
+): WinLossStats => {
+  const totalGames = wonGames + lostGames;
+  const winPercentage = totalGames === 0 ? 0 : (wonGames / totalGames) * 100;
   return {
     wonGames,
     lostGames,
     totalGames,
     winPercentage,
-  }
-}
+  };
+};
 /**
  * Scrolls the list element smoothly and keeps the selected element in the center
  *
@@ -90,11 +97,11 @@ export const computeWinLossStats = (wonGames: number, lostGames: number): WinLos
 export const createSmoothScrollFn = (domElementId: string) => {
   return () => {
     document.getElementById(domElementId)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    })
-  }
-}
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+};
 
 /**
  * Return a string formatted date in DD.MM.YYYY HH.MM format
@@ -103,10 +110,10 @@ export const createSmoothScrollFn = (domElementId: string) => {
  * @returns Localized, formatted date string
  */
 export const formatIsoStringToDate = (isoStringDate: string | Date) => {
-  const date = new Date(isoStringDate)
-  return date.toLocaleString('fi-FI', {
-    dateStyle: 'short',
-    timeStyle: 'short',
-    timeZone: 'Europe/Helsinki',
-  })
-}
+  const date = new Date(isoStringDate);
+  return date.toLocaleString("fi-FI", {
+    dateStyle: "short",
+    timeStyle: "short",
+    timeZone: "Europe/Helsinki",
+  });
+};

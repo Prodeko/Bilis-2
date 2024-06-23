@@ -32,7 +32,7 @@ const rowStyles = cva(
   },
 );
 
-const Queue = ({ onChoose, side, players }: ListProps) => {
+export const QueuePlayers = ({ onChoose, side, players }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLDivElement>({
     duration: 200,
   });
@@ -81,5 +81,3 @@ const Queue = ({ onChoose, side, players }: ListProps) => {
     </div>
   );
 };
-
-export default Queue;

@@ -8,7 +8,7 @@ interface Props {
   side: Side;
 }
 
-const TableHead = ({ player, side }: Props) => {
+export const TableHead = ({ player, side }: Props) => {
   const [_, dispatch] = useModalState();
 
   const onClear = async () => {
@@ -30,5 +30,3 @@ const TableHead = ({ player, side }: Props) => {
     </div>
   );
 };
-
-export default TableHead;

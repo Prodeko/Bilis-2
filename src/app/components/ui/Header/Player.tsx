@@ -4,8 +4,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 
-import AddPlayerButton from "@ui/AddPlayerButton";
-import HeaderTitle from "@ui/Header/HeaderTitle";
+import { AddPlayerButton } from "@ui/AddPlayerButton";
+import { HeaderTitle } from "@ui/Header/HeaderTitle";
 
 import billiardPic from "@public/images/billiard–closeup.jpg";
 

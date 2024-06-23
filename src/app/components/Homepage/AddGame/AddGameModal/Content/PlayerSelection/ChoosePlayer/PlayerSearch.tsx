@@ -17,7 +17,7 @@ interface Props {
   handleKeyDown: KeyboardEventHandler<HTMLInputElement>;
 }
 
-const PlayerSearch = ({ side, handleKeyDown }: Props) => {
+export const PlayerSearch = ({ side, handleKeyDown }: Props) => {
   // Note about displaying logic: First the recent players get displayed. When the player starts typing in the input bar, the recency doesn't matter anymore, Instead, players matching the filter will be returned in alphabetical order.
 
   const [query, setQuery] = useDebounce<string>("", 400);
@@ -72,5 +72,3 @@ const PlayerSearch = ({ side, handleKeyDown }: Props) => {
     </div>
   );
 };
-
-export default PlayerSearch;

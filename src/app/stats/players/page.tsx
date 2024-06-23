@@ -1,11 +1,12 @@
-import { elo, id } from '@common/types'
-import { getPlayersWithStats } from '@server/db/players/tableQueries'
-import { PlayerTableSchema } from '@ui/MultifunctionTable/schemas'
+import type { PlayerTableSchema } from "@ui/MultifunctionTable/schemas";
 
-import { TableProvider } from './TableProvider'
+import { elo, id } from "@common/types";
+import { getPlayersWithStats } from "@server/db/players/tableQueries";
+
+import { TableProvider } from "./TableProvider";
 
 const StatsPlayersPage = async () => {
-  const playersWithStats = await getPlayersWithStats()
+  const playersWithStats = await getPlayersWithStats();
   const data: PlayerTableSchema[] = playersWithStats.map((player, idx) => ({
     position: id.parse(idx + 1),
     fullName: `${player.emoji} ${player.first_name} ${player.last_name}`,
@@ -13,11 +14,11 @@ const StatsPlayersPage = async () => {
     gameCount: id.parse(player.game_count),
     winCount: id.parse(player.win_count),
     winPercentage: Number(player.win_percentage.toFixed(2)),
-  }))
+  }));
 
-  return <TableProvider data={data} />
-}
+  return <TableProvider data={data} />;
+};
 
-export default StatsPlayersPage
+export default StatsPlayersPage;
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

@@ -1,7 +1,6 @@
+import { CreateSeasonForm } from "@/app/season/CreateSeasonForm";
+import { EditSeason } from "@/app/season/EditSeason";
 import { getSeasons } from "@server/db/seasons";
-
-import { CreateSeasonForm } from "./CreateSeasonForm";
-import EditSeason from "./EditSeason";
 
 const SeasonsPage = async ({
   searchParams,

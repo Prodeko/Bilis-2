@@ -1,17 +1,16 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import type { RecentGame } from "@common/types";
+import { GameCreation } from "@components/Homepage/AddGame/AddGameModal/Content/GameCreation";
+import { PlayerSelection } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection";
 import { useModalState } from "@state/Modal";
-
-import { GameCreation } from "./GameCreation";
-import { PlayerSelection } from "./PlayerSelection";
 
 type Props = {
   onClose: () => void;
   setGames: Dispatch<SetStateAction<RecentGame[]>>;
 };
 
-const Content = ({ onClose, setGames }: Props) => {
+export const Content = ({ onClose, setGames }: Props) => {
   const [{ game }] = useModalState();
 
   return (
@@ -35,5 +34,3 @@ const Content = ({ onClose, setGames }: Props) => {
     </div>
   );
 };
-
-export default Content;

@@ -8,9 +8,8 @@ import {
   AiOutlineTrophy,
 } from "react-icons/ai";
 
+import { HallOfFameStatRow } from "@/app/stats/localComponents/HallOfFame/HallOfFameStatRow";
 import { NEXT_PUBLIC_API_URL } from "@/config";
-
-import { HallOfFameStatRow } from "./HallOfFameStatRow";
 
 type DivProps = ComponentProps<"div">;
 

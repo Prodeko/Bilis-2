@@ -32,7 +32,7 @@ const rowStyles = cva(
   },
 );
 
-const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
+export const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
   const [parent] = useAutoAnimate<HTMLDivElement>({ duration: 200 });
   const { seasonal } = useSeasonalMode();
   const hasPlayers = playerSearchList.length > 0;
@@ -78,5 +78,3 @@ const PlayerList = ({ playerSearchList, onChoose, side }: ListProps) => {
     </div>
   );
 };
-
-export default PlayerList;

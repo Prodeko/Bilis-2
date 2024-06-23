@@ -10,7 +10,7 @@ interface Props {
 
 export const GameDeletionModal = ({ games, setGames, closeModal }: Props) => {
   const handleRemove = async () => {
-    const res = await fetch(`/api/game`, {
+    const res = await fetch("/api/game", {
       method: "DELETE",
     });
     const data = await res.json();

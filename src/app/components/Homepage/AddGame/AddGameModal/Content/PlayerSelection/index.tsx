@@ -2,11 +2,10 @@ import { cva } from "class-variance-authority";
 import { useEffect, useState } from "react";
 
 import { type PlayerWithStats, playerWithStats } from "@common/types";
+import { ChoosePlayer } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/ChoosePlayer";
+import { SelectedPlayer } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/SelectedPlayer";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import type { Side } from "@state/Modal";
-
-import ChoosePlayer from "./ChoosePlayer";
-import SelectedPlayer from "./SelectedPlayer";
 
 interface Props {
   playerId: number | undefined;

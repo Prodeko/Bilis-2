@@ -1,16 +1,15 @@
 import type { PlayerWithStats } from "@common/types";
+import { EloMeter } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/SelectedPlayer/EloMeter";
+import { TableBody } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/SelectedPlayer/TableBody";
+import { TableHead } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/SelectedPlayer/TableHead";
 import type { Side } from "@state/Modal";
-
-import { EloMeter } from "./EloMeter";
-import TableBody from "./TableBody";
-import TableHead from "./TableHead";
 
 type Props = {
   player: PlayerWithStats;
   side: Side;
 };
 
-const SelectedPlayer = ({ player, side }: Props) => {
+export const SelectedPlayer = ({ player, side }: Props) => {
   return (
     <div className="max-h-full">
       <div className="flex min-w-0 flex-col gap-10">
@@ -21,5 +20,3 @@ const SelectedPlayer = ({ player, side }: Props) => {
     </div>
   );
 };
-
-export default SelectedPlayer;

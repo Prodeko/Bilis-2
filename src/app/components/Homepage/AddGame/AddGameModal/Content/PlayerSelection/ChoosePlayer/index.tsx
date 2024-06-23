@@ -4,6 +4,9 @@ import type { KeyboardEventHandler } from "react";
 
 import { SmoothScrollId } from "@common/types";
 import { createSmoothScrollFn } from "@common/utils/helperFunctions";
+import { PlayerList } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/ChoosePlayer/PlayerList";
+import { PlayerSearch } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/ChoosePlayer/PlayerSearch";
+import { QueuePlayers } from "@components/Homepage/AddGame/AddGameModal/Content/PlayerSelection/ChoosePlayer/QueuePlayers";
 import {
   type Side,
   decrementSelectedIdx,
@@ -14,16 +17,12 @@ import {
 } from "@state/Modal";
 import { useQueueState } from "@state/Queue";
 
-import PlayerList from "./PlayerList";
-import PlayerSearch from "./PlayerSearch";
-import QueuePlayers from "./QueuePlayers";
-
 type PlayerProps = {
   filterId: number | undefined;
   side: Side;
 };
 
-const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
+export const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
   const [{ playerSearchLists, selectedIdx }, dispatch] = useModalState();
   const [queue] = useQueueState();
   const smoothScroll = createSmoothScrollFn(SmoothScrollId.Addgame);
@@ -92,5 +91,3 @@ const ChoosePlayer = ({ filterId, side }: PlayerProps) => {
     </div>
   );
 };
-
-export default ChoosePlayer;

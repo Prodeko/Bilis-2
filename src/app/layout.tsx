@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-import Sidebar from "@ui/Sidebar";
+import { Sidebar } from "@ui/Sidebar";
 
+import "@/styles/globals.css";
 import { getCurrentSeason } from "@server/db/seasons";
-
-import "../styles/globals.css";
 
 interface Props {
   children: ReactNode;

@@ -3,11 +3,15 @@
 import { useState } from "react";
 
 import type { PieChartProps } from "@common/types";
-import PieChart from "@components/ui/PieChart";
+import { PieChart } from "@components/ui/PieChart";
 import { PlayerSearchSelect } from "@components/ui/PlayerSearch/PlayerSearchSelect";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
+export const PlayerComparison = ({
+  currentPlayerId,
+}: {
+  currentPlayerId: number;
+}) => {
   const [pieChartProps, setPieChartProps] = useState<PieChartProps | undefined>(
     undefined,
   );
@@ -25,5 +29,3 @@ const PlayerComparison = ({ currentPlayerId }: { currentPlayerId: number }) => {
     </div>
   );
 };
-
-export default PlayerComparison;

@@ -2,9 +2,8 @@ import type { ComponentProps } from "react";
 
 import TimeSeriesChart from "@ui/TimeSeriesChart/TimeSeriesChart";
 
+import { PlayerComparison } from "@components/Profile/ProfileCharts/PlayerComparison";
 import { getPlayerDetailedGames } from "@server/db/games/derivatives";
-
-import PlayerComparison from "./PlayerComparison";
 
 type DivProps = ComponentProps<"div">;
 
