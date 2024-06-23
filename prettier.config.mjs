@@ -10,9 +10,8 @@ const config = {
   importOrder: ["^[A-Za-z]/(.*)$", "^@ui/(.*)$", "^@(.*)$", "^[./]"],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  tailwindConfig: "./tailwind.config.ts",
+  tailwindConfig: "./tailwind.config.cjs",
   tailwindFunctions: ["clsx", "cva"], // Read more: https://github.com/tailwindlabs/prettier-plugin-tailwindcss#sorting-classes-in-function-calls
 };
 
 export default config;
-

@@ -32,44 +32,41 @@
     "baseUrl": ".",
     "paths": {
       "@common/*": [
-        "./common/*"
+        "./src/common/*"
       ],
       "@server/*": [
-        "./server/*"
+        "./src/server/*"
       ],
       "@components/*": [
-        "./app/components/*"
+        "./src/app/components/*"
       ],
       "@state/*": [
-        "./state/*"
+        "./src/state/*"
       ],
       "@config/*": [
-        "./config/*"
+        "./src/config/*"
       ],
       "@hooks/*": [
-        "./hooks/*"
+        "./src/hooks/*"
       ],
       "@public/*": [
         "./public/*"
       ],
       "@ui/*": [
-        "./app/components/ui/*"
+        "./src/app/components/ui/*"
       ],
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },
   "include": [
-    ".eslintrc.cjs",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "**/node_modules", "**/.*/"
   ]
 }
