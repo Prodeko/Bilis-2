@@ -1,13 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ComponentProps } from "react";
+import { HiCog } from "react-icons/hi";
 
+import { TextButton } from "@ui/Buttons/TextButton";
 import { MottoCard } from "@ui/MottoCard";
 
 import type { Player } from "@common/types";
 import { formatFullName } from "@common/utils/helperFunctions";
 import billiardPic from "@public/images/billiard–closeup.jpg";
-import Settings from "@public/images/settings-01.svg";
 import { getPlayerById } from "@server/db/players";
 
 type HeaderProps = ComponentProps<"header">;
@@ -24,7 +24,7 @@ export const ProfileHeader = async ({ playerId, ...props }: Props) => {
   const name = formatFullName(player, false, !!player.nickname);
 
   return (
-    <header {...props} className="relative grid h-72 grid-cols-8 items-center">
+    <header {...props} className="relative h-72">
       <Image
         src={billiardPic}
         alt="Billiard Player"
@@ -32,26 +32,29 @@ export const ProfileHeader = async ({ playerId, ...props }: Props) => {
         fill
         priority
       />
-      <div className="relative col-span-full grid h-72 w-full grid-cols-8 items-center justify-between gap-6 bg-gradient-to-tr from-neutral-900 to-neutral-800 p-12 opacity-80">
+      <div className="col-span-full grid h-72 w-full grid-cols-8 items-center justify-between gap-12 bg-gradient-to-tr from-neutral-900 to-neutral-800 p-12 opacity-80">
         <div
           style={{ gridColumn: "1 / 2" }}
-          className="relative flex aspect-square max-w-[70%] items-center justify-center rounded-[50%] bg-white text-7xl font-bold shadow-lg"
+          className="flex aspect-square h-full items-center justify-center rounded-[50%] bg-white text-7xl font-bold shadow-lg"
         >
-          <span>{emoji}</span>
-          <Link
-            className="absolute left-2 top-2 flex aspect-square cursor-pointer items-center rounded-[50%] border-2 border-black bg-neutral-300 p-3 text-primary-700 transition-all duration-200"
-            href={`/player/${id}/edit`}
-          >
-            <Image className="h-8 w-8" src={Settings} alt="Edit player" />
-          </Link>
+          <span className="flex h-full w-full items-center justify-center">
+            {emoji}
+          </span>
         </div>
         <div
           style={{ gridColumn: "2 / 5" }}
-          className="flex flex-col items-center gap-4 text-neutral-100"
+          className="flex flex-col items-center justify-center gap-4 text-neutral-100"
         >
-          <span className="text-center text-4xl font-semibold text-white">
+          <span className="max-w-full truncate text-center text-4xl font-semibold text-white">
             {name}
           </span>
+          <TextButton
+            intent={"primary"}
+            buttonType="a"
+            href={`/player/${id}/edit`}
+            text="Edit player"
+            RightIcon={HiCog}
+          />
         </div>
         <MottoCard
           style={{ gridColumn: "5 / -1" }}
