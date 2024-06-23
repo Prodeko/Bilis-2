@@ -4,9 +4,9 @@ import type { ApexOptions } from "apexcharts";
 import ApexCharts from "react-apexcharts";
 import { renderToString } from "react-dom/server";
 
-import type { TimeSeriesGame } from "@common/types";
+import { Tooltip } from "@ui/TimeSeriesChart/ToolTip";
 
-import Tooltip from "./ToolTip";
+import type { TimeSeriesGame } from "@common/types";
 
 // Reason, why to use dynamic import: https://github.com/apexcharts/react-apexcharts/issues/240
 // Check also: https://github.com/apexcharts/vue-apexcharts/issues/307

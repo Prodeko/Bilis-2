@@ -15,7 +15,7 @@ const colorStyles = cva("font-medium", {
   },
 });
 
-const Tooltip = ({ game }: Props) => {
+export const Tooltip = ({ game }: Props) => {
   if (!game) {
     return (
       <div className="relative flex flex-col gap-1 bg-neutral-800 p-2 text-lg">
@@ -47,5 +47,3 @@ const Tooltip = ({ game }: Props) => {
     </div>
   );
 };
-
-export default Tooltip;
