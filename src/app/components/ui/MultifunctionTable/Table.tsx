@@ -1,9 +1,7 @@
+import { Filter } from "./Filter";
+import { type Table as ReactTable, flexRender } from "@tanstack/react-table";
 import { cva } from "class-variance-authority";
 import type { Dispatch, SetStateAction } from "react";
-
-import { type Table as ReactTable, flexRender } from "@tanstack/react-table";
-
-import { Filter } from "./Filter";
 
 interface Props<Schema> {
   table: ReactTable<Schema>;
@@ -44,7 +42,9 @@ export const Table = <Schema extends object>({
                 <th
                   key={header.id}
                   colSpan={header.colSpan}
-                  className={`cursor-pointer select-none ${dataCellStyles({ dataType: typeof firstValue })}`}
+                  className={`cursor-pointer select-none ${dataCellStyles({
+                    dataType: typeof firstValue,
+                  })}`}
                 >
                   {header.isPlaceholder ? null : (
                     <div className="flex flex-col gap-2">
@@ -59,7 +59,7 @@ export const Table = <Schema extends object>({
                       >
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                         {/* Sorting Indicator */}
                         {canSort ? (
@@ -120,8 +120,8 @@ export const Table = <Schema extends object>({
                       </div>
                       {header.column.getCanFilter() ? (
                         <Filter
+                          dataType={header.column.columnDef.meta.dataType}
                           column={header.column}
-                          table={table}
                           setDisplayState={setDisplayState}
                         />
                       ) : null}
