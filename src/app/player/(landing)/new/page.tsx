@@ -1,5 +1,5 @@
 import { BackButton } from "@components/Player/BackButton";
-import PlayerForm from "@components/Player/PlayerForm";
+import { PlayerForm } from "@components/Player/PlayerForm";
 import { PlayerLayoutInner } from "@components/Player/PlayerLayout/Inner";
 
 const NewPlayerPage = async () => {
