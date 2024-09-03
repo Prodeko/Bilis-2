@@ -6,15 +6,18 @@
 	"service": "next",
 	"workspaceFolder": "/usr/src/app",
 	// Configure tool-specific properties.
-	"extensions": [
-		"mrmlnc.vscode-scss",
-		"stylelint.vscode-stylelint",
-		"humao.rest-client",
-		"eamodio.gitlens",
-		"esbenp.prettier-vscode",
-		"dbaeumer.vscode-eslint",
-		"qufiwefefwoyn.inline-sql-syntax"
-	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"humao.rest-client",
+				"eamodio.gitlens",
+				"esbenp.prettier-vscode",
+				"biomejs.biome",
+        "bradlc.vscode-tailwindcss",
+				"qufiwefefwoyn.inline-sql-syntax"
+			]
+		}
+	},
 	"hostRequirements": {
 		"memory": "3gb"
 	},

@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "useHookAtTopLevel": "warn",
+        "noUnusedImports": "warn"
+      },
+      "suspicious": {
+        "noConsoleLog": "warn",
+        "noAssignInExpressions": "off"
+      }
+    },
+    "ignore": ["node_modules/**/*", ".next/**/*", ".pnpm-store/**/*"]
+  },
+  "organizeImports": {
+    "enabled": false
+  },
+  "formatter": {
+    "enabled": false
+  }
+}

@@ -68,11 +68,6 @@ Lisää breakpointeja ja tarkastele senhetkistä muuttujakontekstia sivuja ladat
 - Sivukohtainen peruslayout --> **Layouts** (tämä siksi että haluamme pitää CSS:n pois pages-kansiosta). 
 - Muut komponentit sivukohtaisesti ja käyttökohtaisesti: esim etusivun Leaderboard-komponentti menee **Homepage/Leaderboard**-kansion alle.
 
-##### Uuden komponentin luominen
-Uutta komponenttia tehdessä luodaan pääluokan alle uusi kansio, jonka nimeksi tulee komponentin nimi, esimerkiksi Button. Tämän kansion sisälle tulee kaksi tiedostoa: `index.tsx`, joka on perinteinen React-komponentti ja `ComponentName".module.scss`, johon tulee komponenttikohtainen SCSS-koodi.
-
-Scss-moduuliin importataan aina `@use 'styles' as *;`. Tällä saadaan scss-moduulin sisäiseen käyttöön koko meidän **styles**-kansion sisäinen design-systeemi. Sieltä voi sitten käyttää suoraan muuttujia ($-merkki), mixinejä (@-merkki) ja placeholdereita (%-merkki).
-
 #### Hooks
 **hooks**-kansion alle on määritetty kaikki yleisesti projektissa käytettävät custom React-hookit.
 
@@ -87,9 +82,8 @@ Meillä on tehty designia varten Figma. Oikeuksia Figmaan voit kysyä esimerkiks
 
 Tätä Figmaa vastaa melko yksi-yhteen meidän **styles**-kansion alla oleva tyylisysteemi. Tähän on ajan myötä tullut muutamia lisäyksiä mutta näitä muuttujia/mixinejä/placeholdereita tulisi hyödyntää, kun tyylittelee CSS:ää.
 
-CSS-framworkkina käytämme SASSia, josta voi lukea lisää...
-- virallisesta dokumentaatiosta (https://sass-lang.com/guide)
-- SASS vs CSS (https://www.youtube.com/watch?v=g1kF45K-q7o&list=PL4-IK0AVhVjMYRhK9vRPatSlb-9r0aKgh&index=4
+CSS-framworkkina käytämme Tailwindia, josta voi lukea lisää...
+- virallisesta dokumentaatiosta (https://tailwindcss.com/docs/utility-first)
 
 ### Dokumentaatio
 
