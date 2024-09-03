@@ -7,22 +7,23 @@ import {
   getGameColumnSchema,
 } from "@ui/MultifunctionTable/schemas";
 
-import { elo } from "@common/types";
-import {
-  formatFullName,
-  formatIsoStringToDate,
-} from "@common/utils/helperFunctions";
+import { mapLatestGameToFrontend } from "@common/utils/gameStats";
 import {
   type PaginatedQueryParams,
   TableWithServerPagination,
 } from "@components/ui/MultifunctionTable/ServerPagination";
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 
 interface Props {
   data: GameTableSchema[];
+  pageCount: number;
 }
 
-export const TableProvider = ({ data: initialData }: Props) => {
+export const TableProvider = ({ data: initialData, pageCount }: Props) => {
   const columns = getGameColumnSchema();
   const useFetchData = (params: PaginatedQueryParams) =>
     useQuery({
@@ -62,32 +63,24 @@ export const TableProvider = ({ data: initialData }: Props) => {
         });
 
         return {
-          data: response.data.games.map((game: GameModel) => ({
-            time: formatIsoStringToDate(game.createdAt),
-            winner: game.winner
-              ? formatFullName(game.winner, true, !!game.winner.nickname)
-              : "Winner name not found",
-            loser: game.loser
-              ? formatFullName(game.loser, true, !!game.loser.nickname)
-              : "Loser name not found",
-            winnerFargoNow: elo.parse(Number(game.winnerEloAfter.toFixed(2))),
-            winnerFargoDifference: game.winnerEloAfter - game.winnerEloBefore,
-            loserFargoNow: elo.parse(Number(game.loserEloAfter.toFixed(2))),
-            loserFargoDifference: game.loserEloAfter - game.loserEloBefore,
-            underTable: game.underTable ? "💩" : " ",
-          })),
+          data: response.data.games.map(mapLatestGameToFrontend),
           pageCount: response.data.pageCount,
         };
       },
     });
 
+  const queryClient = new QueryClient();
+
   return (
-    <TableWithServerPagination
-      {...{
-        initialData,
-        columns,
-        useFetchData,
-      }}
-    />
+    <QueryClientProvider client={queryClient}>
+      <TableWithServerPagination
+        {...{
+          initialData,
+          initialPageCount: pageCount,
+          columns,
+          useFetchData,
+        }}
+      />
+    </QueryClientProvider>
   );
 };

@@ -29,10 +29,12 @@ export interface PaginatedQueryParams {
 
 export const TableWithServerPagination = <Schema extends object>({
   initialData,
+  initialPageCount,
   columns,
   useFetchData,
 }: {
   initialData: Schema[];
+  initialPageCount: number;
   columns: ColumnDef<Schema>[];
   useFetchData: (
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -44,8 +46,7 @@ export const TableWithServerPagination = <Schema extends object>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [debouncedFilters, setDebouncedFilters] =
     useDebounce<ColumnFiltersState>([], 500);
-  const [lastPage, setLastPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
   const table = useReactTable({
     data,
     columns,
@@ -67,7 +68,7 @@ export const TableWithServerPagination = <Schema extends object>({
         pageIndex: 0,
       },
     },
-    pageCount: 20000,
+    pageCount: initialPageCount,
   });
 
   const currentPaginationState = table.getState().pagination.pageIndex;

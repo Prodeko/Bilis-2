@@ -1,28 +1,35 @@
-import { Op } from 'sequelize'
+import { Op } from "sequelize";
 
-import type { CreateGameType, Season } from '@common/types'
-import { getScoreChange } from '@common/utils/gameStats'
-import { getPlayerById, updatePlayerById } from '@server/db/players'
-import { GameModel, PlayerModel } from '@server/models'
+import type { CreateGameType, Season } from "@common/types";
+import { getScoreChange } from "@common/utils/gameStats";
+import { getPlayerById, updatePlayerById } from "@server/db/players";
+import { GameModel, PlayerModel } from "@server/models";
 
-import { getCurrentSeason } from '../seasons'
-import { getGameCountForPlayer, getSeasonGameCountForPlayer } from './derivatives'
+import { getCurrentSeason } from "../seasons";
+import {
+  getGameCountForPlayer,
+  getSeasonGameCountForPlayer,
+} from "./derivatives";
 
 const getPlayerOrderedGames = async (playerId: number): Promise<GameModel[]> =>
   GameModel.findAll({
     where: {
       [Op.or]: [{ winnerId: playerId }, { loserId: playerId }],
     },
-    order: [['createdAt', 'ASC']],
-  })
+    order: [["createdAt", "ASC"]],
+  });
 
-const getLatestGames = async (n = 20, offset = 0, seasonal = false): Promise<GameModel[]> => {
-  const season = seasonal && (await getCurrentSeason())
-  return GameModel.scope('withTime').findAll({
-    order: [['createdAt', 'DESC']],
+const getLatestGames = async (
+  n = 20,
+  offset = 0,
+  seasonal = false,
+): Promise<GameModel[]> => {
+  const season = seasonal && (await getCurrentSeason());
+  return GameModel.scope("withTime").findAll({
+    order: [["createdAt", "DESC"]],
     include: [
-      { model: PlayerModel, as: 'winner' },
-      { model: PlayerModel, as: 'loser' },
+      { model: PlayerModel, as: "winner" },
+      { model: PlayerModel, as: "loser" },
     ],
     limit: n,
     offset: offset * n,
@@ -31,50 +38,59 @@ const getLatestGames = async (n = 20, offset = 0, seasonal = false): Promise<Gam
           seasonId: season.id,
         }
       : undefined,
-  })
-}
+  });
+};
+
+const getGameCount = async (): Promise<number> => GameModel.count();
 
 const createGame = async (game: CreateGameType): Promise<GameModel> => {
-  const playerInfo = await getPlayerInfoForNewGameOrThrow(game)
+  const playerInfo = await getPlayerInfoForNewGameOrThrow(game);
 
-  const effects = calculateNewGameEffects(game, playerInfo)
+  const effects = calculateNewGameEffects(game, playerInfo);
 
-  const createdGame = await GameModel.scope('withTime').create(effects.createdGameObject, {
-    include: [
-      { model: PlayerModel, as: 'winner' },
-      { model: PlayerModel, as: 'loser' },
-    ],
-  })
+  const createdGame = await GameModel.scope("withTime").create(
+    effects.createdGameObject,
+    {
+      include: [
+        { model: PlayerModel, as: "winner" },
+        { model: PlayerModel, as: "loser" },
+      ],
+    },
+  );
 
   await Promise.all([
-    updatePlayerById(effects.createdGameObject.winnerId, { ...effects.winnerUpdateInfo }),
-    updatePlayerById(effects.createdGameObject.loserId, { ...effects.loserUpdateInfo }),
-  ])
+    updatePlayerById(effects.createdGameObject.winnerId, {
+      ...effects.winnerUpdateInfo,
+    }),
+    updatePlayerById(effects.createdGameObject.loserId, {
+      ...effects.loserUpdateInfo,
+    }),
+  ]);
 
-  return createdGame
-}
+  return createdGame;
+};
 
 const getPlayerInfoForNewGameOrThrow = async (game: CreateGameType) => {
-  const { winnerId, loserId } = game
+  const { winnerId, loserId } = game;
 
   const [winner, loser, winnerGames, loserGames] = await Promise.all([
     getPlayerById(winnerId),
     getPlayerById(loserId),
     getGameCountForPlayer(winnerId),
     getGameCountForPlayer(loserId),
-  ])
+  ]);
 
-  const currentSeason = await getCurrentSeason()
+  const currentSeason = await getCurrentSeason();
   const [winnerSeasonGames, loserSeasonGames] =
     currentSeason != null
       ? await Promise.all([
           getSeasonGameCountForPlayer(winnerId, currentSeason.id),
           getSeasonGameCountForPlayer(loserId, currentSeason.id),
         ])
-      : [null, null]
+      : [null, null];
 
-  if (!winner) throw Error(`Player with id ${game.winnerId} not found`)
-  if (!loser) throw Error(`Player with id ${game.loserId} not found`)
+  if (!winner) throw Error(`Player with id ${game.winnerId} not found`);
+  if (!loser) throw Error(`Player with id ${game.loserId} not found`);
 
   return {
     winner,
@@ -84,20 +100,20 @@ const getPlayerInfoForNewGameOrThrow = async (game: CreateGameType) => {
     loserGames,
     loserSeasonGames,
     currentSeason,
-  }
-}
+  };
+};
 
 const calculateNewGameEffects = (
   gameInfo: CreateGameType,
   playerInfo: {
-    winner: PlayerModel
-    loser: PlayerModel
-    winnerGames: number
-    loserGames: number
-    winnerSeasonGames: number | null
-    loserSeasonGames: number | null
-    currentSeason: Season | null
-  }
+    winner: PlayerModel;
+    loser: PlayerModel;
+    winnerGames: number;
+    loserGames: number;
+    winnerSeasonGames: number | null;
+    loserSeasonGames: number | null;
+    currentSeason: Season | null;
+  },
 ) => {
   const {
     winner,
@@ -107,25 +123,27 @@ const calculateNewGameEffects = (
     loserGames,
     loserSeasonGames,
     currentSeason,
-  } = playerInfo
+  } = playerInfo;
 
   const [winnerEloChange, loserEloChange] = getScoreChange(
     winner.elo,
     winnerGames,
     loser.elo,
-    loserGames
-  )
+    loserGames,
+  );
 
-  const winnerEloAfter = winner.elo + winnerEloChange
-  const loserEloAfter = loser.elo + loserEloChange
+  const winnerEloAfter = winner.elo + winnerEloChange;
+  const loserEloAfter = loser.elo + loserEloChange;
 
-  let winnerSeasonEloAfter = null
-  let loserSeasonEloAfter = null
-  let winnerSeasonElo = null
-  let loserSeasonElo = null
+  let winnerSeasonEloAfter = null;
+  let loserSeasonEloAfter = null;
+  let winnerSeasonElo = null;
+  let loserSeasonElo = null;
   if (currentSeason != null) {
-    winnerSeasonElo = winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400
-    loserSeasonElo = loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400
+    winnerSeasonElo =
+      winner.latestSeasonId === currentSeason?.id ? winner.seasonElo : 400;
+    loserSeasonElo =
+      loser.latestSeasonId === currentSeason?.id ? loser.seasonElo : 400;
 
     // TODO fix types: (winnerSeasonGames and loserSeasonGames are non-null when currentSeason is non-null)
     const [winnerEloChange, loserEloChange] = getScoreChange(
@@ -134,11 +152,11 @@ const calculateNewGameEffects = (
       winnerSeasonGames!,
       loserSeasonElo,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      loserSeasonGames!
-    )
+      loserSeasonGames!,
+    );
 
-    winnerSeasonEloAfter = winnerSeasonElo + winnerEloChange
-    loserSeasonEloAfter = loserSeasonElo + loserEloChange
+    winnerSeasonEloAfter = winnerSeasonElo + winnerEloChange;
+    loserSeasonEloAfter = loserSeasonElo + loserEloChange;
   }
 
   // ------------------------
@@ -157,41 +175,44 @@ const calculateNewGameEffects = (
 
     underTable: gameInfo.underTable,
     seasonId: currentSeason?.id ?? null,
-  }
+  };
 
   const winnerUpdateInfo = {
     elo: winnerEloAfter,
     latestSeasonId: currentSeason?.id ?? null,
     seasonElo: winnerSeasonEloAfter,
-  }
+  };
   const loserUpdateInfo = {
     elo: loserEloAfter,
     latestSeasonId: currentSeason?.id ?? null,
     seasonElo: loserSeasonEloAfter,
-  }
-  return { createdGameObject, winnerUpdateInfo, loserUpdateInfo }
-}
+  };
+  return { createdGameObject, winnerUpdateInfo, loserUpdateInfo };
+};
 
 const removeLatestGame = async (): Promise<GameModel> => {
   const latest = await GameModel.findOne({
-    order: [['createdAt', 'DESC']],
-  })
+    order: [["createdAt", "DESC"]],
+  });
 
   const winnerLatest = await GameModel.findOne({
     where: {
-      [Op.and]: [{ winnerId: latest?.winnerId }, { seasonId: { [Op.ne]: null } }],
+      [Op.and]: [
+        { winnerId: latest?.winnerId },
+        { seasonId: { [Op.ne]: null } },
+      ],
     },
-    order: [['createdAt', 'DESC']],
-  })
+    order: [["createdAt", "DESC"]],
+  });
 
   const loserLatest = await GameModel.findOne({
     where: {
       [Op.and]: [{ loserId: latest?.loserId }, { seasonId: { [Op.ne]: null } }],
     },
-    order: [['createdAt', 'DESC']],
-  })
+    order: [["createdAt", "DESC"]],
+  });
 
-  if (!latest) throw Error('No games in database')
+  if (!latest) throw Error("No games in database");
 
   // Delete the game and remove update player players' elos
   await Promise.all([
@@ -202,7 +223,8 @@ const removeLatestGame = async (): Promise<GameModel> => {
     }),
     updatePlayerById(latest.winnerId, {
       elo: latest.winnerEloBefore,
-      seasonElo: latest.winnerSeasonEloBefore <= 0 ? 400 : latest.winnerSeasonEloBefore,
+      seasonElo:
+        latest.winnerSeasonEloBefore <= 0 ? 400 : latest.winnerSeasonEloBefore,
       latestSeasonId: winnerLatest?.seasonId ?? null,
     }),
     updatePlayerById(latest.loserId, {
@@ -210,10 +232,10 @@ const removeLatestGame = async (): Promise<GameModel> => {
       seasonElo: latest.loserSeasonEloBefore,
       latestSeasonId: loserLatest?.seasonId ?? null,
     }),
-  ])
+  ]);
 
-  return latest
-}
+  return latest;
+};
 
 export {
   removeLatestGame,
@@ -221,4 +243,5 @@ export {
   getPlayerOrderedGames,
   getLatestGames,
   calculateNewGameEffects,
-}
+  getGameCount,
+};

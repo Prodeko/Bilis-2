@@ -1,20 +1,17 @@
-"use client";
-
-import type { GameTableSchema } from "@ui/MultifunctionTable/schemas";
-
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { mapLatestGameToFrontend } from "@common/utils/gameStats";
+import type { GameTableSchema } from "@components/ui/MultifunctionTable/schemas";
+import { getGameCount, getLatestGames } from "@server/db/games";
 
 import { TableProvider } from "./TableProvider";
 
 const StatsGamesPage = async () => {
-  const data: GameTableSchema[] = [];
-  const queryClient = new QueryClient();
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TableProvider data={data} />
-    </QueryClientProvider>
+  const data: GameTableSchema[] = (await getLatestGames(10)).map(
+    mapLatestGameToFrontend,
   );
+  const gameCount = await getGameCount();
+  const pageCount = Math.ceil(gameCount / 10);
+
+  return <TableProvider data={data} pageCount={pageCount} />;
 };
 
 export default StatsGamesPage;
