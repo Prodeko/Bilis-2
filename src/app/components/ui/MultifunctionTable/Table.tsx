@@ -44,22 +44,19 @@ export const Table = <Schema extends object>({
                 <th
                   key={header.id}
                   colSpan={header.colSpan}
-                  // Handle sorting on click
-                  onClick={
-                    canSort
-                      ? header.column.getToggleSortingHandler()
-                      : undefined
-                  }
-                  onKeyUp={
-                    canSort
-                      ? header.column.getToggleSortingHandler()
-                      : undefined
-                  }
                   className={`cursor-pointer select-none ${dataCellStyles({ dataType: typeof firstValue })}`}
                 >
                   {header.isPlaceholder ? null : (
                     <div className="flex flex-col gap-2">
-                      <div className="flex items-center justify-between">
+                      <div
+                        className="flex items-center justify-between"
+                        onClick={
+                          canSort
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                        onKeyUp={() => null}
+                      >
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext(),

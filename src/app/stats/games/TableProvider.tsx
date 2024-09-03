@@ -16,7 +16,6 @@ import {
   type PaginatedQueryParams,
   TableWithServerPagination,
 } from "@components/ui/MultifunctionTable/ServerPagination";
-import { GameModel } from "@server/models";
 import { useQuery } from "@tanstack/react-query";
 
 interface Props {
@@ -29,7 +28,6 @@ export const TableProvider = ({ data: initialData }: Props) => {
     useQuery({
       queryKey: ["getLatestGames", params],
       queryFn: async () => {
-        console.log("Column filters", params.columnFilters);
         const response = await axios.get("/api/stats/games", {
           params: {
             ...params,

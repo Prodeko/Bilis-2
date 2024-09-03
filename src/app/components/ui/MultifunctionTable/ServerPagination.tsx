@@ -1,8 +1,10 @@
 "use client";
 
+import { set } from "lodash";
 import { useState } from "react";
 import React from "react";
 
+import useDebounce from "@hooks/useDebounce";
 import type { UseQueryResult } from "@tanstack/react-query";
 import {
   type ColumnDef,
@@ -32,13 +34,16 @@ export const TableWithServerPagination = <Schema extends object>({
 }: {
   initialData: Schema[];
   columns: ColumnDef<Schema>[];
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   useFetchData: (
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     x: any,
-  ) => UseQueryResult<{ data: Schema[]; pageCount: number }, Error>;
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  ) => UseQueryResult<{ data: any; pageCount: any }, Error>;
 }) => {
   const [data, setData] = useState(initialData);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [debouncedFilters, setDebouncedFilters] =
+    useDebounce<ColumnFiltersState>([], 500);
   const [lastPage, setLastPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const table = useReactTable({
@@ -75,8 +80,12 @@ export const TableWithServerPagination = <Schema extends object>({
     page: table.getState().pagination.pageIndex + 1,
     sortBy: table.getState().sorting[0]?.id,
     sortDirection: table.getState().sorting[0]?.desc ? "DESC" : "ASC",
-    columnFilters,
+    columnFilters: debouncedFilters,
   });
+
+  React.useEffect(() => {
+    setDebouncedFilters(columnFilters);
+  }, [columnFilters, setDebouncedFilters]);
 
   React.useEffect(() => {
     if (fetchedData) {

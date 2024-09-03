@@ -152,7 +152,7 @@ export async function GET(req: NextRequest) {
           sortDirection || "ASC",
         ],
       ];
-    } else if (sortBy !== "time") {
+    } else if (sortBy && sortBy !== "time") {
       order = [[sortBy, sortDirection || "DESC"]];
     }
     order.push(["createdAt", sortDirection || "DESC"]);
