@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { Op } from "sequelize";
 import { ZodError, z } from "zod";
 
-import { GameModel } from "@server/models";
+import { GameModel, PlayerModel } from "@server/models";
 
 // Assume GameModel corresponds to the new schema
 
@@ -43,6 +43,8 @@ const querySchema = z.object({
   filterCreatedAtMin: z.string().optional(), // assuming string representation of date/time
   filterCreatedAtMax: z.string().optional(),
   filterUnderTable: z.coerce.boolean().optional(),
+  filterWinnerName: z.string().optional(), // New filter for winner name
+  filterLoserName: z.string().optional(), // New filter for loser name
 });
 
 export async function GET(req: NextRequest) {
@@ -66,6 +68,8 @@ export async function GET(req: NextRequest) {
       filterCreatedAtMin,
       filterCreatedAtMax,
       filterUnderTable,
+      filterWinnerName,
+      filterLoserName,
     } = querySchema.parse(queryParams);
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -119,13 +123,32 @@ export async function GET(req: NextRequest) {
       where.underTable = filterUnderTable;
     }
 
+    // Add filters for winner and loser names
+    if (filterWinnerName) {
+      where[Op.or] = [
+        { "$winner.first_name$": { [Op.iLike]: `%${filterWinnerName}%` } },
+        { "$winner.last_name$": { [Op.iLike]: `%${filterWinnerName}%` } },
+      ];
+    }
+
+    if (filterLoserName) {
+      where[Op.or] = [
+        { "$loser.first_name$": { [Op.iLike]: `%${filterLoserName}%` } },
+        { "$loser.last_name$": { [Op.iLike]: `%${filterLoserName}%` } },
+      ];
+    }
+
     const order: [string, OrderDirection][] = sortBy
       ? [[sortBy, sortDirection || "DESC"]]
       : [["createdAt", "DESC"]]; // Default sorting by createdAt DESC
 
-    const result = await GameModel.findAndCountAll({
+    const result = await GameModel.scope("withTime").findAndCountAll({
       where,
       limit,
+      include: [
+        { model: PlayerModel, as: "winner" },
+        { model: PlayerModel, as: "loser" },
+      ],
       offset: limit * (page - 1),
       order,
     });
