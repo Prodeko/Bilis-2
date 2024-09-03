@@ -17,40 +17,6 @@ export const Filter = ({ column, table, setDisplayState }: Props) => {
 
   const columnFilterValue = column.getFilterValue();
 
-  if (typeof firstValue === "number") {
-    return (
-      <div className="flex w-full justify-between divide-[1px] divide-neutral-700 overflow-hidden">
-        <input
-          type="number"
-          inputMode="numeric"
-          value={(columnFilterValue as [number, number])?.[0] ?? ""}
-          onChange={(e) => {
-            column.setFilterValue((old: [number, number]) => [
-              e.target.value,
-              old?.[1],
-            ]);
-            setDisplayState(1);
-          }}
-          placeholder="Min"
-          className="w-full grow border border-neutral-700 bg-neutral-600 p-3 text-lg font-normal text-neutral-200 outline-none placeholder:text-neutral-800 "
-        />
-        <input
-          type="number"
-          inputMode="numeric"
-          value={(columnFilterValue as [number, number])?.[1] ?? ""}
-          onChange={(e) => {
-            column.setFilterValue((old: [number, number]) => [
-              old?.[0],
-              e.target.value,
-            ]);
-            setDisplayState(1);
-          }}
-          placeholder="Max"
-          className="w-full grow border border-neutral-700 bg-neutral-600 p-3 text-lg font-normal text-neutral-200 outline-none placeholder:text-neutral-800 "
-        />
-      </div>
-    );
-  }
   if (typeof firstValue === "string" && ["💩", " "].includes(firstValue)) {
     return <SelectFilter column={column} setDisplayState={setDisplayState} />;
   }
@@ -68,5 +34,37 @@ export const Filter = ({ column, table, setDisplayState }: Props) => {
       />
     );
   }
-  return null;
+
+  return (
+    <div className="flex w-full justify-between divide-[1px] divide-neutral-700 overflow-hidden">
+      <input
+        type="number"
+        inputMode="numeric"
+        value={(columnFilterValue as [number, number])?.[0] ?? ""}
+        onChange={(e) => {
+          column.setFilterValue((old: [number, number]) => [
+            e.target.value,
+            old?.[1],
+          ]);
+          setDisplayState(1);
+        }}
+        placeholder="Min"
+        className="w-full grow border border-neutral-700 bg-neutral-600 p-3 text-lg font-normal text-neutral-200 outline-none placeholder:text-neutral-800 "
+      />
+      <input
+        type="number"
+        inputMode="numeric"
+        value={(columnFilterValue as [number, number])?.[1] ?? ""}
+        onChange={(e) => {
+          column.setFilterValue((old: [number, number]) => [
+            old?.[0],
+            e.target.value,
+          ]);
+          setDisplayState(1);
+        }}
+        placeholder="Max"
+        className="w-full grow border border-neutral-700 bg-neutral-600 p-3 text-lg font-normal text-neutral-200 outline-none placeholder:text-neutral-800 "
+      />
+    </div>
+  );
 };
