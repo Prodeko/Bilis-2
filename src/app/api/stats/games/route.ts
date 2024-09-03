@@ -26,7 +26,9 @@ const querySchema = z.object({
       "winnerSeasonEloAfter",
       "loserSeasonEloAfter",
       "seasonId",
-      "createdAt",
+      "winner",
+      "loser",
+      "time",
     ])
     .optional(),
   sortDirection: z.enum(["ASC", "DESC"]).optional(),
@@ -78,34 +80,31 @@ export async function GET(req: NextRequest) {
     if (filterId) where.id = filterId;
 
     if (filterWinnerEloMin || filterWinnerEloMax)
-      where.winnerEloBefore = {
+      where.winnerEloAfter = {
         [Op.between]: [
           filterWinnerEloMin || 0,
-          filterWinnerEloMax || Number.POSITIVE_INFINITY,
+          filterWinnerEloMax || 1_000_000,
         ],
       };
 
     if (filterLoserEloMin || filterLoserEloMax)
-      where.loserEloBefore = {
-        [Op.between]: [
-          filterLoserEloMin || 0,
-          filterLoserEloMax || Number.POSITIVE_INFINITY,
-        ],
+      where.loserEloAfter = {
+        [Op.between]: [filterLoserEloMin || 0, filterLoserEloMax || 1_000_000],
       };
 
     if (filterWinnerSeasonEloMin || filterWinnerSeasonEloMax)
-      where.winnerSeasonEloBefore = {
+      where.winnerSeasonEloAfter = {
         [Op.between]: [
           filterWinnerSeasonEloMin || 0,
-          filterWinnerSeasonEloMax || Number.POSITIVE_INFINITY,
+          filterWinnerSeasonEloMax || 1_000_000,
         ],
       };
 
     if (filterLoserSeasonEloMin || filterLoserSeasonEloMax)
-      where.loserSeasonEloBefore = {
+      where.loserSeasonEloAfter = {
         [Op.between]: [
           filterLoserSeasonEloMin || 0,
-          filterLoserSeasonEloMax || Number.POSITIVE_INFINITY,
+          filterLoserSeasonEloMax || 1_000_000,
         ],
       };
 
@@ -138,9 +137,25 @@ export async function GET(req: NextRequest) {
       ];
     }
 
-    const order: [string, OrderDirection][] = sortBy
-      ? [[sortBy, sortDirection || "DESC"]]
-      : [["createdAt", "DESC"]]; // Default sorting by createdAt DESC
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    let order: any[] = [];
+    if (sortBy === "winner" || sortBy === "loser") {
+      order = [
+        [
+          { model: PlayerModel, as: sortBy },
+          "first_name",
+          sortDirection || "ASC",
+        ],
+        [
+          { model: PlayerModel, as: sortBy },
+          "last_name",
+          sortDirection || "ASC",
+        ],
+      ];
+    } else if (sortBy !== "time") {
+      order = [[sortBy, sortDirection || "DESC"]];
+    }
+    order.push(["createdAt", sortDirection || "DESC"]);
 
     const result = await GameModel.scope("withTime").findAndCountAll({
       where,

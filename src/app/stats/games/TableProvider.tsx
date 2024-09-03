@@ -43,17 +43,17 @@ export const TableProvider = ({ data: initialData }: Props) => {
               (filter) => filter.id === "loser",
             )?.value,
             filterWinnerEloMin: params.columnFilters.find(
-              (filter) => filter.id === "winnerFargoNow",
-            )?.value,
+              (filter) => filter.id === "winnerEloAfter",
+            )?.value?.[0],
             filterWinnerEloMax: params.columnFilters.find(
-              (filter) => filter.id === "winnerFargoNow",
-            )?.value,
+              (filter) => filter.id === "winnerEloAfter",
+            )?.value?.[1],
             filterLoserEloMin: params.columnFilters.find(
-              (filter) => filter.id === "loserFargoNow",
-            )?.value,
+              (filter) => filter.id === "loserEloAfter",
+            )?.value?.[0],
             filterLoserEloMax: params.columnFilters.find(
-              (filter) => filter.id === "loserFargoNow",
-            )?.value,
+              (filter) => filter.id === "loserEloAfter",
+            )?.value?.[1],
             filterCreatedAtMin: params.columnFilters.find(
               (filter) => filter.id === "time",
             )?.value,

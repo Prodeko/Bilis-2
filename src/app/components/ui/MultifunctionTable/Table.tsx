@@ -36,18 +36,91 @@ export const Table = <Schema extends object>({
               const firstValue = table
                 .getPreFilteredRowModel()
                 .flatRows[0]?.getValue(header.column.id);
+
+              // Check if column can be sorted
+              const canSort = header.column.getCanSort();
+
               return (
                 <th
-                  className={dataCellStyles({ dataType: typeof firstValue })}
                   key={header.id}
                   colSpan={header.colSpan}
+                  // Handle sorting on click
+                  onClick={
+                    canSort
+                      ? header.column.getToggleSortingHandler()
+                      : undefined
+                  }
+                  onKeyUp={
+                    canSort
+                      ? header.column.getToggleSortingHandler()
+                      : undefined
+                  }
+                  className={`cursor-pointer select-none ${dataCellStyles({ dataType: typeof firstValue })}`}
                 >
                   {header.isPlaceholder ? null : (
                     <div className="flex flex-col gap-2">
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                      <div className="flex items-center justify-between">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                        {/* Sorting Indicator */}
+                        {canSort ? (
+                          <span>
+                            {header.column.getIsSorted() ? (
+                              header.column.getIsSorted() === "desc" ? (
+                                <svg
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth={2}
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <title>.</title>
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19 9l-7 7-7-7"
+                                  />
+                                </svg>
+                              ) : (
+                                <svg
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth={2}
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <title>.</title>
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5 15l7-7 7 7"
+                                  />
+                                </svg>
+                              )
+                            ) : (
+                              <svg
+                                className="h-4 w-4 opacity-30"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <title>.</title>
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                        ) : null}
+                      </div>
                       {header.column.getCanFilter() ? (
                         <Filter
                           column={header.column}

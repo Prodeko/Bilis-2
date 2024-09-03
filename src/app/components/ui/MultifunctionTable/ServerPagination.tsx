@@ -21,7 +21,8 @@ export interface PaginatedQueryParams {
   page: number;
   sortBy: string;
   sortDirection: boolean;
-  columnFilters: ColumnFiltersState;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  columnFilters: any[];
 }
 
 export const TableWithServerPagination = <Schema extends object>({
@@ -73,20 +74,17 @@ export const TableWithServerPagination = <Schema extends object>({
     limit: 10,
     page: table.getState().pagination.pageIndex + 1,
     sortBy: table.getState().sorting[0]?.id,
-    sortDirection: table.getState().sorting[0]?.desc,
+    sortDirection: table.getState().sorting[0]?.desc ? "DESC" : "ASC",
     columnFilters,
   });
 
   React.useEffect(() => {
     if (fetchedData) {
       setData(fetchedData.data);
-      console.log("Setting page count", fetchedData.pageCount);
       table.setPageCount(fetchedData.pageCount);
     }
   }, [fetchedData, table]);
 
-  console.log("Page count", table.getPageCount());
-  console.log("Page index", table.getState().pagination.pageIndex);
   return (
     <div className="grid grid-rows-[minmax(0_,1fr)_auto]">
       <Table table={table} setDisplayState={setDisplayState} />

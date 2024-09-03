@@ -23,11 +23,11 @@ export const SelectFilter = ({ column, setDisplayState, ...props }: Props) => {
 
   const switchFilter = (value: Options) => {
     if (value === "All") {
-      column.setFilterValue("");
+      column.setFilterValue(undefined);
     } else if (value === "💩") {
-      column.setFilterValue("💩");
+      column.setFilterValue(true);
     } else if (value === "No - 💩") {
-      column.setFilterValue(" ");
+      column.setFilterValue(false);
     }
   };
 

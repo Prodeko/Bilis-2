@@ -33,6 +33,7 @@ export const getGameColumnSchema = (): ColumnDef<GameTableSchema, any>[] => {
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("winnerFargoNow", {
+      id: "winnerEloAfter",
       header: "w.fargo",
       cell: (info) => info.getValue(),
     }),
@@ -41,6 +42,7 @@ export const getGameColumnSchema = (): ColumnDef<GameTableSchema, any>[] => {
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("loserFargoNow", {
+      id: "loserEloAfter",
       header: "l.fargo",
       cell: (info) => info.getValue(),
     }),
