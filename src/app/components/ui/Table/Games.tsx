@@ -53,6 +53,7 @@ export const prepareGamesData = (data: RecentGame[]): TableGame[] => {
           <FiChevronRight />
         </span>
         <span>{round(game.loserEloAfter)}</span>
+        {game.underTable && <span>💩</span>}
       </div>
     ),
   }));
