@@ -39,7 +39,7 @@ export const Sidebar = ({ currentSeason, ...props }: Props) => {
           <Toggle on={seasonal} onChange={toggleSeasonalMode} />
         )}
         <p className="text-[6px] text-neutral-50">
-          Version 1.3.3 - Jaffakeksi 🍪{" "}
+          Version 1.4.0 - Innovaatio 💡{" "}
         </p>
       </div>
     </aside>
