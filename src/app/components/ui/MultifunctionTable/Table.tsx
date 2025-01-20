@@ -1,7 +1,9 @@
-import { Filter } from "./Filter";
-import { type Table as ReactTable, flexRender } from "@tanstack/react-table";
 import { cva } from "class-variance-authority";
 import type { Dispatch, SetStateAction } from "react";
+
+import { type Table as ReactTable, flexRender } from "@tanstack/react-table";
+
+import { Filter } from "./Filter";
 
 interface Props<Schema> {
   table: ReactTable<Schema>;
@@ -59,7 +61,7 @@ export const Table = <Schema extends object>({
                       >
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                         {/* Sorting Indicator */}
                         {canSort ? (

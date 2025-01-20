@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
 import {
   getHighestEloAllTimePlayer,
@@ -7,7 +7,7 @@ import {
   getMostGamesPlayed,
   getMostPlayedGamesInOneDay,
   getMostUndertableWins,
-} from '@server/db/players/hofQueries'
+} from "@server/db/players/hofQueries";
 
 export async function GET() {
   const hofPlayers = await Promise.all([
@@ -17,9 +17,9 @@ export async function GET() {
     getMostGamesPlayed(),
     getMostUndertableWins(),
     getMostPlayedGamesInOneDay(),
-  ])
+  ]);
 
-  return NextResponse.json(hofPlayers)
+  return NextResponse.json(hofPlayers);
 }
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";

@@ -1,8 +1,16 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer, useRef } from 'react'
+import type React from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from "react";
 
-import { Player } from '@common/types'
+import type { Player } from "@common/types";
 
-import { Action, State } from './reducer'
+import type { Action, State } from "./reducer";
 
 const initialState: State = {
   playerSearchLists: {
@@ -12,22 +20,26 @@ const initialState: State = {
   game: {},
   selectedIdx: 0,
   refs: {},
-  focus: 'winner',
+  focus: "winner",
   recentPlayers: [],
-}
+};
 
 export const ModalContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState,
-])
+]);
 
 type ModalProviderProps = {
-  recentPlayers: Player[]
-  reducer: React.Reducer<State, Action>
-  children: React.ReactElement
-}
+  recentPlayers: Player[];
+  reducer: React.Reducer<State, Action>;
+  children: React.ReactElement;
+};
 
-export const ModalProvider = ({ recentPlayers, reducer, children }: ModalProviderProps) => {
+export const ModalProvider = ({
+  recentPlayers,
+  reducer,
+  children,
+}: ModalProviderProps) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     refs: {
@@ -36,25 +48,25 @@ export const ModalProvider = ({ recentPlayers, reducer, children }: ModalProvide
       addGame: useRef<HTMLButtonElement>(null),
     },
     recentPlayers,
-  })
+  });
 
   // keep the focus state and the focused input in sync
   useEffect(() => {
-    state?.refs?.[state.focus]?.current?.focus()
-  }, [state.focus, state?.refs])
+    state?.refs?.[state.focus]?.current?.focus();
+  }, [state.focus, state?.refs]);
 
   // when winner and loser are selected, focus on add game -button
   // NOTE: timeout is needed because otherwise when pressing enter to select player, react also consideres the keystroke as pressing the button
   useEffect(() => {
     if (state.game.winnerId && state.game.loserId) {
-      setTimeout(() => state?.refs?.addGame?.current?.focus(), 100)
+      setTimeout(() => state?.refs?.addGame?.current?.focus(), 100);
     }
-  }, [state])
+  }, [state]);
 
   return (
     <ModalContext.Provider value={useMemo(() => [state, dispatch], [state])}>
       {children}
     </ModalContext.Provider>
-  )
-}
-export const useModalState = () => useContext(ModalContext)
+  );
+};
+export const useModalState = () => useContext(ModalContext);

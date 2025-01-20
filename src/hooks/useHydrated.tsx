@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 /** Hook used to check when the javascript is running on the client. This is important when we use
  * server-side rendering. We might get bugs during hydration (React attaches event listeners to server-side generated html).
@@ -8,12 +8,12 @@ import { useEffect, useState } from 'react'
  * @returns boolean value that indicates if the hydration period is over
  */
 const useHydrated = () => {
-  const [isHydrated, setHydrated] = useState<boolean>(false)
+  const [isHydrated, setHydrated] = useState<boolean>(false);
   useEffect(() => {
-    setHydrated(true)
-  }, [])
+    setHydrated(true);
+  }, []);
 
-  return isHydrated
-}
+  return isHydrated;
+};
 
-export default useHydrated
+export default useHydrated;

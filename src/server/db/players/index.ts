@@ -1,41 +1,45 @@
-import { Op, QueryTypes, Sequelize } from 'sequelize'
+import { Op, QueryTypes, Sequelize } from "sequelize";
 
-import { NewPlayer, Player, newPlayer, player } from '@common/types'
-import { permutator } from '@common/utils/helperFunctions'
-import { PlayerModel } from '@server/models'
-import dbConf from '@server/utils/dbConf'
+import { type NewPlayer, type Player, newPlayer, player } from "@common/types";
+import { permutator } from "@common/utils/helperFunctions";
+import { PlayerModel } from "@server/models";
+import dbConf from "@server/utils/dbConf";
 
-import { getCurrentSeason } from '../seasons'
+import { getCurrentSeason } from "../seasons";
 
 const createPlayer = async (player: NewPlayer): Promise<PlayerModel> => {
-  const parsedPlayer = newPlayer.parse(player)
+  const parsedPlayer = newPlayer.parse(player);
   const newPlayerWithElo = {
     ...parsedPlayer,
     elo: 400,
-  }
-  const createdPlayer = await PlayerModel.create(newPlayerWithElo)
-  return createdPlayer
-}
+  };
+  const createdPlayer = await PlayerModel.create(newPlayerWithElo);
+  return createdPlayer;
+};
 
-const getPlayerById = async (id: number): Promise<PlayerModel | null> => PlayerModel.findByPk(id)
+const getPlayerById = async (id: number): Promise<PlayerModel | null> =>
+  PlayerModel.findByPk(id);
 
 const getRandomPlayer = (): Promise<PlayerModel | null> =>
   PlayerModel.findOne({
     order: dbConf.sequelize.random(),
     where: {
       motto: {
-        [Op.ne]: '',
+        [Op.ne]: "",
       },
     },
-  })
+  });
 
-const updatePlayerById = async (id: number, data: Partial<Player>): Promise<PlayerModel> => {
-  const player = await getPlayerById(id)
-  if (!player) throw Error(`Player with id ${id} not found`)
-  if ('id' in data) throw Error('Updating player id is not allowed')
-  const updated = await player.update(data)
-  return updated
-}
+const updatePlayerById = async (
+  id: number,
+  data: Partial<Player>,
+): Promise<PlayerModel> => {
+  const player = await getPlayerById(id);
+  if (!player) throw Error(`Player with id ${id} not found`);
+  if ("id" in data) throw Error("Updating player id is not allowed");
+  const updated = await player.update(data);
+  return updated;
+};
 
 //WARNING!! Only use in dev, destroys everything in database
 const clearPlayersDEV = () =>
@@ -43,22 +47,28 @@ const clearPlayersDEV = () =>
     where: {},
     truncate: true,
     cascade: true,
-  })
+  });
 
-const getPlayers = async (amount?: number, seasonal?: boolean): Promise<PlayerModel[]> => {
-  const season = seasonal ? await getCurrentSeason() : null
+const getPlayers = async (
+  amount?: number,
+  seasonal?: boolean,
+): Promise<PlayerModel[]> => {
+  const season = seasonal ? await getCurrentSeason() : null;
   return PlayerModel.findAll({
     limit: amount,
-    order: [[seasonal ? 'seasonElo' : 'elo', 'DESC']],
+    order: [[seasonal ? "seasonElo" : "elo", "DESC"]],
     where: seasonal
       ? {
           latestSeasonId: season?.id,
         }
       : undefined,
-  })
-}
+  });
+};
 
-const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<Player[]> => {
+const getLatestPlayers = async (
+  nofPlayers: number,
+  seasonal = false,
+): Promise<Player[]> => {
   const response = (await dbConf.sequelize.query(
     `--sql
     WITH combined_players AS (
@@ -101,7 +111,7 @@ const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<P
         ELSE players.season_elo
       END
       `
-          : 'players.elo'
+          : "players.elo"
       } as "elo",
       players.season_elo as "seasonElo",
       players.latest_season_id as "latestSeasonId"
@@ -109,27 +119,33 @@ const getLatestPlayers = async (nofPlayers: number, seasonal = false): Promise<P
     JOIN players
     ON players.id = recent_players.player_id
   `,
-    { type: QueryTypes.SELECT }
-  )) as Player[]
-  return player.array().parse(response)
-}
+    { type: QueryTypes.SELECT },
+  )) as Player[];
+  return player.array().parse(response);
+};
 
-const searchPlayers = async (query: string, limit?: number): Promise<PlayerModel[]> => {
-  const colOptions = ['first_name', 'last_name', 'nickname', 'id']
-  const permutations = permutator(colOptions)
+const searchPlayers = async (
+  query: string,
+  limit?: number,
+): Promise<PlayerModel[]> => {
+  const colOptions = ["first_name", "last_name", "nickname", "id"];
+  const permutations = permutator(colOptions);
 
-  const options = permutations.map(perm => {
-    return Sequelize.where(Sequelize.fn('concat', ...perm.map(col => Sequelize.col(col))), {
-      [Op.iLike]: `%${query.replaceAll(' ', '%')}%`,
-    })
-  })
+  const options = permutations.map((perm) => {
+    return Sequelize.where(
+      Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
+      {
+        [Op.iLike]: `%${query.replaceAll(" ", "%")}%`,
+      },
+    );
+  });
 
   const players = await PlayerModel.findAll({
     where: { [Op.or]: options },
     limit: limit,
-  })
-  return players
-}
+  });
+  return players;
+};
 
 export {
   clearPlayersDEV,
@@ -140,4 +156,4 @@ export {
   getRandomPlayer,
   searchPlayers,
   updatePlayerById,
-}
+};

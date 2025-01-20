@@ -1,31 +1,31 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model } from "sequelize";
 
-import dbConf from '@server/utils/dbConf'
+import dbConf from "@server/utils/dbConf";
 
 class Game extends Model {
-  declare id: number
+  declare id: number;
 
-  declare winnerEloBefore: number
+  declare winnerEloBefore: number;
 
-  declare loserEloBefore: number
+  declare loserEloBefore: number;
 
-  declare winnerEloAfter: number
+  declare winnerEloAfter: number;
 
-  declare loserEloAfter: number
+  declare loserEloAfter: number;
 
-  declare underTable: boolean
+  declare underTable: boolean;
 
-  declare winnerSeasonEloBefore: number
+  declare winnerSeasonEloBefore: number;
 
-  declare loserSeasonEloBefore: number
+  declare loserSeasonEloBefore: number;
 
-  declare winnerSeasonEloAfter: number
+  declare winnerSeasonEloAfter: number;
 
-  declare loserSeasonEloAfter: number
+  declare loserSeasonEloAfter: number;
 
-  declare seasonId: number
+  declare seasonId: number;
 
-  declare createdAt: Date
+  declare createdAt: Date;
 }
 
 Game.init(
@@ -87,43 +87,43 @@ Game.init(
     underscored: true,
     timestamps: true,
     updatedAt: false,
-    modelName: 'game',
+    modelName: "game",
     defaultScope: {
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
+        exclude: ["createdAt", "updatedAt"],
       },
     },
     scopes: {
       // Adds timestamps to the scope
       withTime: {
         attributes: {
-          exclude: ['updatedAt'],
+          exclude: ["updatedAt"],
         },
       },
     },
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload()
+        await attrs.reload();
       },
     },
     indexes: [
       {
-        fields: ['winnerId'],
-        using: 'BTREE',
-        name: 'games_winner_id_idx',
+        fields: ["winnerId"],
+        using: "BTREE",
+        name: "games_winner_id_idx",
       },
       {
-        fields: ['loserId'],
-        using: 'BTREE',
-        name: 'games_loser_id_idx',
+        fields: ["loserId"],
+        using: "BTREE",
+        name: "games_loser_id_idx",
       },
       {
-        fields: ['createdAt'],
-        using: 'BRIN',
-        name: 'games_created_at_idx',
+        fields: ["createdAt"],
+        using: "BRIN",
+        name: "games_created_at_idx",
       },
     ],
-  }
-)
+  },
+);
 
-export default Game
+export default Game;

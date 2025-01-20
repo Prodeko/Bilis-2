@@ -1,8 +1,10 @@
-import Sequelize from 'sequelize'
-import { MigrationFn } from 'umzug'
+import Sequelize from "sequelize";
+import type { MigrationFn } from "umzug";
 
-export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('players', {
+export const up: MigrationFn<Sequelize.QueryInterface> = async ({
+  context: queryInterface,
+}) => {
+  await queryInterface.createTable("players", {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -24,7 +26,7 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
     emoji: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: '🥵',
+      defaultValue: "🥵",
     },
     created_at: {
       type: Sequelize.DATE,
@@ -34,9 +36,11 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
       type: Sequelize.DATE,
       allowNull: false,
     },
-  })
-}
+  });
+};
 
-export const down: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
-  await queryInterface.dropTable('players')
-}
+export const down: MigrationFn<Sequelize.QueryInterface> = async ({
+  context: queryInterface,
+}) => {
+  await queryInterface.dropTable("players");
+};

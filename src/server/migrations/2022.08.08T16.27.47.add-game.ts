@@ -1,8 +1,10 @@
-import Sequelize from 'sequelize'
-import { MigrationFn } from 'umzug'
+import Sequelize from "sequelize";
+import type { MigrationFn } from "umzug";
 
-export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('games', {
+export const up: MigrationFn<Sequelize.QueryInterface> = async ({
+  context: queryInterface,
+}) => {
+  await queryInterface.createTable("games", {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -11,12 +13,12 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
     },
     winner_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'players', key: 'id' },
+      references: { model: "players", key: "id" },
       allowNull: false,
     },
     loser_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'players', key: 'id' },
+      references: { model: "players", key: "id" },
       allowNull: false,
     },
     winner_elo_before: {
@@ -43,9 +45,11 @@ export const up: MigrationFn<Sequelize.QueryInterface> = async ({ context: query
       type: Sequelize.DATE,
       allowNull: false,
     },
-  })
-}
+  });
+};
 
-export const down: MigrationFn<Sequelize.QueryInterface> = async ({ context: queryInterface }) => {
-  await queryInterface.dropTable('games')
-}
+export const down: MigrationFn<Sequelize.QueryInterface> = async ({
+  context: queryInterface,
+}) => {
+  await queryInterface.dropTable("games");
+};

@@ -1,1 +1,1 @@
-export type CardVariation = 'leaderboard'
+export type CardVariation = "leaderboard";

@@ -1,7 +1,7 @@
-const dotenv = require('dotenv')
+const dotenv = require("dotenv");
 
 const init = () => {
-  dotenv.config()
-}
+  dotenv.config();
+};
 
-module.exports = { init }
+module.exports = { init };
