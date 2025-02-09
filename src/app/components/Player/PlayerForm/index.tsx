@@ -28,7 +28,9 @@ export const PlayerForm = ({ player }: Props) => {
     motto: player ? player.motto : "",
     emoji: player ? player.emoji : "",
   });
+
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false);
+  const [isButtonPressed, setButtonPressed] = useState(false);
 
   const router = useRouter();
 
@@ -51,6 +53,7 @@ export const PlayerForm = ({ player }: Props) => {
   };
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
+    setButtonPressed(!isButtonPressed);
     const res = await fetch("/api/player/", {
       method: "POST",
       headers: {
@@ -129,7 +132,7 @@ export const PlayerForm = ({ player }: Props) => {
         </div>
         <TextButton
           buttonType="button"
-          disabled={!isValid}
+          disabled={!isValid || isButtonPressed}
           onClick={submit}
           RightIcon={HiUserAdd}
           text={isUpdate ? "Save changes" : "Create player"}
