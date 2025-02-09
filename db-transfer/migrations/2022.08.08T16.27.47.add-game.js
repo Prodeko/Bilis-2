@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 
 const up = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('games', {
+  await queryInterface.createTable("games", {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -10,12 +10,12 @@ const up = async ({ context: queryInterface }) => {
     },
     winner_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'players', key: 'id' },
+      references: { model: "players", key: "id" },
       allowNull: false,
     },
     loser_id: {
       type: Sequelize.INTEGER,
-      references: { model: 'players', key: 'id' },
+      references: { model: "players", key: "id" },
       allowNull: false,
     },
     winner_elo_before: {
@@ -42,14 +42,14 @@ const up = async ({ context: queryInterface }) => {
       type: Sequelize.DATE,
       allowNull: false,
     },
-  })
-}
+  });
+};
 
 const down = async ({ context: queryInterface }) => {
-  await queryInterface.dropTable('games')
-}
+  await queryInterface.dropTable("games");
+};
 
 module.exports = {
   up,
   down,
-}
+};

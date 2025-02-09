@@ -1,8 +1,8 @@
-import { QueryTypes } from 'sequelize'
+import { QueryTypes } from "sequelize";
 
-import { HofPlayer, hofPlayer } from '@common/types'
-import { GameModel, PlayerModel } from '@server/models'
-import dbConf from '@server/utils/dbConf'
+import { type HofPlayer, hofPlayer } from "@common/types";
+import { PlayerModel } from "@server/models";
+import dbConf from "@server/utils/dbConf";
 
 /**
 This file includes queries used to compute hall of fame statistics. Functions in this file should return 
@@ -18,28 +18,29 @@ const getHighestEloAllTimePlayer = async (): Promise<HofPlayer> => {
       ORDER BY winner_elo_after DESC
       LIMIT 1
     `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      winner_id: number
-      winner_elo_after: number
-    }
-  ]
+      winner_id: number;
+      winner_elo_after: number;
+    },
+  ];
 
   const topPlayer = await PlayerModel.findOne({
     where: {
       id: response?.winner_id,
     },
-  })
+  });
 
-  if (!response || !topPlayer) throw new Error('No top player or top player game found!')
+  if (!response || !topPlayer)
+    throw new Error("No top player or top player game found!");
 
   const hallOfFamePlayer = {
     ...topPlayer.toJSON(),
     hofStat: response.winner_elo_after.toFixed(2),
-  }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 const getHighestWinPercentage = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
@@ -66,24 +67,26 @@ const getHighestWinPercentage = async (): Promise<HofPlayer> => {
     ORDER BY win_percentage DESC
     LIMIT 1
   `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      winner_id: number
-      win_percentage: number
-    }
-  ]
+      winner_id: number;
+      win_percentage: number;
+    },
+  ];
 
-  const player = await PlayerModel.findOne({ where: { id: response.winner_id } })
+  const player = await PlayerModel.findOne({
+    where: { id: response.winner_id },
+  });
 
-  if (!player) throw new Error('No player found!')
+  if (!player) throw new Error("No player found!");
 
   const hallOfFamePlayer = {
     ...player.toJSON(),
     hofStat: `${response.win_percentage.toFixed(1)}%`,
-  }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 const getHighestStreak = async (): Promise<HofPlayer> => {
   // NOTE: The following query is pretty advanced and uses some tricks to get the result needed.
@@ -131,22 +134,25 @@ const getHighestStreak = async (): Promise<HofPlayer> => {
       ORDER BY streak_length DESC
       LIMIT 1;
   `,
-    { type: QueryTypes.SELECT }
-  )) as [{ player_id: number; streak_length: number }]
+    { type: QueryTypes.SELECT },
+  )) as [{ player_id: number; streak_length: number }];
 
-  if (!response) throw new Error('No games in database')
+  if (!response) throw new Error("No games in database");
 
   const player = await PlayerModel.findOne({
     where: {
       id: response[0].player_id,
     },
-  })
+  });
 
-  if (!player) throw new Error('No player found!')
+  if (!player) throw new Error("No player found!");
 
-  const hallOfFamePlayer = { ...player.toJSON(), hofStat: response[0].streak_length }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  const hallOfFamePlayer = {
+    ...player.toJSON(),
+    hofStat: response[0].streak_length,
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 const getMostGamesPlayed = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
@@ -165,24 +171,24 @@ const getMostGamesPlayed = async (): Promise<HofPlayer> => {
     ORDER BY nof_played_games DESC
     LIMIT 1
   `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      id: number
-      nof_played_games: number
-    }
-  ]
+      id: number;
+      nof_played_games: number;
+    },
+  ];
 
-  const player = await PlayerModel.findOne({ where: { id: response.id } })
+  const player = await PlayerModel.findOne({ where: { id: response.id } });
 
-  if (!player) throw new Error('No player found!')
+  if (!player) throw new Error("No player found!");
 
   const hallOfFamePlayer = {
     ...player.toJSON(),
     hofStat: response.nof_played_games,
-  }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 const getMostUndertableWins = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
@@ -196,24 +202,24 @@ const getMostUndertableWins = async (): Promise<HofPlayer> => {
     ORDER BY nof_undertable_games DESC
     LIMIT 1
   `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      id: number
-      nof_undertable_games: number
-    }
-  ]
+      id: number;
+      nof_undertable_games: number;
+    },
+  ];
 
-  const player = await PlayerModel.findOne({ where: { id: response.id } })
+  const player = await PlayerModel.findOne({ where: { id: response.id } });
 
-  if (!player) throw new Error('No player found!')
+  if (!player) throw new Error("No player found!");
 
   const hallOfFamePlayer = {
     ...player.toJSON(),
     hofStat: response.nof_undertable_games,
-  }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
   const [response] = (await dbConf.sequelize.query(
@@ -237,24 +243,24 @@ const getMostPlayedGamesInOneDay = async (): Promise<HofPlayer> => {
     ORDER BY nof_games DESC
     LIMIT 1
   `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      id: number
-      nof_games: number
-    }
-  ]
+      id: number;
+      nof_games: number;
+    },
+  ];
 
-  const player = await PlayerModel.findOne({ where: { id: response.id } })
+  const player = await PlayerModel.findOne({ where: { id: response.id } });
 
-  if (!player) throw new Error('No player found!')
+  if (!player) throw new Error("No player found!");
 
   const hallOfFamePlayer = {
     ...player.toJSON(),
     hofStat: response.nof_games,
-  }
-  return hofPlayer.parse(hallOfFamePlayer)
-}
+  };
+  return hofPlayer.parse(hallOfFamePlayer);
+};
 
 export {
   getHighestEloAllTimePlayer,
@@ -263,4 +269,4 @@ export {
   getMostGamesPlayed,
   getMostUndertableWins,
   getMostPlayedGamesInOneDay,
-}
+};

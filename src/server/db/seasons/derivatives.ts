@@ -1,4 +1,4 @@
-import { SeasonModel } from '@server/models'
+import { SeasonModel } from "@server/models";
 
 // NOTE!! Only use in dev, destroys everything in database
 const clearSeasonsDEV = (): Promise<number> =>
@@ -6,6 +6,6 @@ const clearSeasonsDEV = (): Promise<number> =>
     where: {},
     truncate: true,
     cascade: true,
-  })
+  });
 
-export { clearSeasonsDEV }
+export { clearSeasonsDEV };

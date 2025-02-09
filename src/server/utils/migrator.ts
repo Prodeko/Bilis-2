@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import dbConf from './dbConf'
+import dbConf from "./dbConf";
 
 if (require.main === module) {
-  dbConf.umzug.runAsCLI()
+  dbConf.umzug.runAsCLI();
 }

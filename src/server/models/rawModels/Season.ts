@@ -1,17 +1,17 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model } from "sequelize";
 
-import dbConf from '@server/utils/dbConf'
+import dbConf from "@server/utils/dbConf";
 
 class Season extends Model {
-  declare id: number
+  declare id: number;
 
-  declare start: Date
+  declare start: Date;
 
-  declare end: Date
+  declare end: Date;
 
-  declare name: string
+  declare name: string;
 
-  declare createdAt: Date
+  declare createdAt: Date;
 }
 
 Season.init(
@@ -40,26 +40,26 @@ Season.init(
     underscored: true,
     timestamps: true,
     updatedAt: false,
-    modelName: 'season',
+    modelName: "season",
     defaultScope: {
       attributes: {
-        exclude: ['createdAt', 'updatedAt'],
+        exclude: ["createdAt", "updatedAt"],
       },
     },
     scopes: {
       // Adds timestamps to the scope
       withTime: {
         attributes: {
-          exclude: ['updatedAt'],
+          exclude: ["updatedAt"],
         },
       },
     },
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload()
+        await attrs.reload();
       },
     },
-  }
-)
+  },
+);
 
-export default Season
+export default Season;

@@ -1,4 +1,4 @@
-import type { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 import { id as idParser, newSeason } from "@common/types";
 import { deleteSeason, updateSeason } from "@server/db/seasons";

@@ -13,11 +13,7 @@
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
     /* Bundled projects */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
     "module": "esnext",
     "moduleResolution": "Bundler",
@@ -31,33 +27,15 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@common/*": [
-        "./src/common/*"
-      ],
-      "@server/*": [
-        "./src/server/*"
-      ],
-      "@components/*": [
-        "./src/app/components/*"
-      ],
-      "@state/*": [
-        "./src/state/*"
-      ],
-      "@config/*": [
-        "./src/config/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@public/*": [
-        "./public/*"
-      ],
-      "@ui/*": [
-        "./src/app/components/ui/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ]
+      "@common/*": ["./src/common/*"],
+      "@server/*": ["./src/server/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@state/*": ["./src/state/*"],
+      "@config/*": ["./src/config/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@public/*": ["./public/*"],
+      "@ui/*": ["./src/app/components/ui/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -66,7 +44,5 @@
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "**/node_modules", "**/.*/"
-  ]
+  "exclude": ["**/node_modules", "**/.*/"]
 }

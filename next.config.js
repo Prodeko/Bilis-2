@@ -7,12 +7,12 @@ const nextConfig = {
   },
   // This enables server components to work with sequelize ORM
   experimental: {
-    serverComponentsExternalPackages: ['sequelize'],
+    serverComponentsExternalPackages: ["sequelize"],
   },
-  output: 'standalone',
+  output: "standalone",
   typescript: {
     ignoreBuildErrors: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 
 const up = async ({ context: queryInterface }) => {
-  await queryInterface.createTable('players', {
+  await queryInterface.createTable("players", {
     id: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -23,7 +23,7 @@ const up = async ({ context: queryInterface }) => {
     emoji: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: '🥵',
+      defaultValue: "🥵",
     },
     created_at: {
       type: Sequelize.DATE,
@@ -33,14 +33,14 @@ const up = async ({ context: queryInterface }) => {
       type: Sequelize.DATE,
       allowNull: false,
     },
-  })
-}
+  });
+};
 
 const down = async ({ context: queryInterface }) => {
-  await queryInterface.dropTable('players')
-}
+  await queryInterface.dropTable("players");
+};
 
 module.exports = {
   up,
   down,
-}
+};
