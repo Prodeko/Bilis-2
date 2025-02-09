@@ -1,7 +1,6 @@
 import { Op, QueryTypes, Sequelize } from "sequelize";
 
 import { type NewPlayer, type Player, newPlayer, player } from "@common/types";
-import { permutator } from "@common/utils/helperFunctions";
 import { PlayerModel } from "@server/models";
 import dbConf from "@server/utils/dbConf";
 
@@ -128,23 +127,30 @@ const searchPlayers = async (
   query: string,
   limit?: number,
 ): Promise<PlayerModel[]> => {
-  const colOptions = ["first_name", "last_name", "nickname", "id"];
-  const permutations = permutator(colOptions);
+  const queryParts = query.split(" ");
 
-  const options = permutations.map((perm) => {
-    return Sequelize.where(
-      Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
-      {
-        [Op.iLike]: `%${query.replaceAll(" ", "%")}%`,
-      },
-    );
-  });
+  const conditions = queryParts.map((part) => ({
+    [Op.or]: [
+      Sequelize.where(Sequelize.fn("lower", Sequelize.col("first_name")), {
+        [Op.startsWith]: part.toLowerCase(),
+      }),
+      Sequelize.where(Sequelize.fn("lower", Sequelize.col("last_name")), {
+        [Op.startsWith]: part.toLowerCase(),
+      }),
+      Sequelize.where(Sequelize.fn("lower", Sequelize.col("nickname")), {
+        [Op.startsWith]: part.toLowerCase(),
+      }),
+    ],
+  }));
 
-  const players = await PlayerModel.findAll({
-    where: { [Op.or]: options },
-    limit: limit,
+  const whereClause = {
+    [Op.and]: conditions,
+  };
+
+  return PlayerModel.findAll({
+    where: whereClause,
+    limit,
   });
-  return players;
 };
 
 export {
