@@ -1,6 +1,6 @@
-import { QueryTypes } from 'sequelize'
+import { QueryTypes } from "sequelize";
 
-import dbConf from '@server/utils/dbConf'
+import dbConf from "@server/utils/dbConf";
 
 export const getPlayersWithStats = async () => {
   const response = (await dbConf.sequelize.query(
@@ -23,18 +23,18 @@ export const getPlayersWithStats = async () => {
     GROUP BY 1,2,3,4,5
     ORDER BY elo DESC
   `,
-    { type: QueryTypes.SELECT }
+    { type: QueryTypes.SELECT },
   )) as [
     {
-      id: number
-      first_name: string
-      last_name: string
-      elo: number
-      emoji: string
-      game_count: number
-      win_count: number
-      win_percentage: number
-    }
-  ]
-  return response
-}
+      id: number;
+      first_name: string;
+      last_name: string;
+      elo: number;
+      emoji: string;
+      game_count: number;
+      win_count: number;
+      win_percentage: number;
+    },
+  ];
+  return response;
+};

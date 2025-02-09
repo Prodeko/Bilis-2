@@ -30,7 +30,7 @@ export const isNewPlayer = (
  * @returns Type guard function for the type
  */
 export function createTypeGuard<T>(type: T): (obj: any) => obj is T {
-  return function (obj: any): obj is T {
+  return (obj: any): obj is T => {
     for (const key in type) {
       const keyExists = key in obj;
       const typeIsMatching = typeof obj[key] !== typeof type[key];

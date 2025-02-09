@@ -1,7 +1,7 @@
 import { Card } from "@ui/Card";
 import { ComingSoon } from "@ui/ComingSoon";
 
-import { GameCountTracker } from "./localComponents/GameCountTracker/GameCountTracker";
+// import { GameCountTracker } from "./localComponents/GameCountTracker/GameCountTracker";
 import { HallOfFame } from "./localComponents/HallOfFame/HallOfFame";
 
 const StatsPage = async () => {
@@ -22,14 +22,14 @@ const StatsPage = async () => {
       >
         <ComingSoon />
       </Card>
-      <Card
+      {/* <Card
         style={{
           gridRow: "3 / -1",
           gridColumn: "2 / -1",
         }}
       >
         <GameCountTracker />
-      </Card>
+      </Card> */}
     </div>
   );
 };

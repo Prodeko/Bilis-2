@@ -1,22 +1,23 @@
-'use client'
+"use client";
 
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import type React from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
-import { Player } from '@common/types'
+import type { Player } from "@common/types";
 
-import { Action, State, setQueue } from './reducer'
+import { type Action, type State, setQueue } from "./reducer";
 
-const initialState: Player[] = []
+const initialState: Player[] = [];
 
 const QueueContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
   () => initialState,
-])
+]);
 
 type QueueProviderProps = {
-  reducer: React.Reducer<State, Action>
-  children: React.ReactElement
-}
+  reducer: React.Reducer<State, Action>;
+  children: React.ReactElement;
+};
 
 /**
  * Provides queue to the children of this provider.
@@ -25,11 +26,15 @@ type QueueProviderProps = {
  * @returns Global state provider for queue
  */
 export const QueueProvider = ({ reducer, children }: QueueProviderProps) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
-    dispatch(setQueue())
-  }, [])
+    dispatch(setQueue());
+  }, []);
 
-  return <QueueContext.Provider value={[state, dispatch]}>{children}</QueueContext.Provider>
-}
-export const useQueueState = () => useContext(QueueContext)
+  return (
+    <QueueContext.Provider value={[state, dispatch]}>
+      {children}
+    </QueueContext.Provider>
+  );
+};
+export const useQueueState = () => useContext(QueueContext);

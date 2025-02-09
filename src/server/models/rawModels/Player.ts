@@ -1,29 +1,29 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model } from "sequelize";
 
-import dbConf from '@server/utils/dbConf'
+import dbConf from "@server/utils/dbConf";
 
 class Player extends Model {
-  declare id: number
+  declare id: number;
 
-  declare firstName: string
+  declare firstName: string;
 
-  declare lastName: string
+  declare lastName: string;
 
-  declare nickname: string
+  declare nickname: string;
 
-  declare emoji: string
+  declare emoji: string;
 
-  declare motto: string
+  declare motto: string;
 
-  declare elo: number
+  declare elo: number;
 
-  declare seasonElo: number
+  declare seasonElo: number;
 
-  declare latestSeasonId: number
+  declare latestSeasonId: number;
 
-  declare createdAt: Date
+  declare createdAt: Date;
 
-  declare updatedAt: Date
+  declare updatedAt: Date;
 }
 
 Player.init(
@@ -73,13 +73,13 @@ Player.init(
     sequelize: dbConf.sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'player',
+    modelName: "player",
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload()
+        await attrs.reload();
       },
     },
-  }
-)
+  },
+);
 
-export default Player
+export default Player;

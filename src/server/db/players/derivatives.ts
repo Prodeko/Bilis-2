@@ -1,15 +1,22 @@
-import { PlayerModel } from '@server/models'
-import { getPlayers } from '.'
+import type { Player } from "@common/types";
+import type { PlayerModel } from "@server/models";
 
-import { Player } from '@common/types'
+import { getPlayers } from ".";
 
-const formatForSeasonal = async (players: PlayerModel[], seasonal?: boolean): Promise<Player[]> => players.map(player => ({
-  ...player.toJSON(),
-  elo: seasonal ? player.seasonElo : player.elo,
-}))
+const formatForSeasonal = async (
+  players: PlayerModel[],
+  seasonal?: boolean,
+): Promise<Player[]> =>
+  players.map((player) => ({
+    ...player.toJSON(),
+    elo: seasonal ? player.seasonElo : player.elo,
+  }));
 
-export const getFormattedPlayers = async (amount?: number, seasonal?: boolean): Promise<Player[]> => {
-  const players = await getPlayers(amount, seasonal)
+export const getFormattedPlayers = async (
+  amount?: number,
+  seasonal?: boolean,
+): Promise<Player[]> => {
+  const players = await getPlayers(amount, seasonal);
 
-  return formatForSeasonal(players, seasonal)
-}
+  return formatForSeasonal(players, seasonal);
+};

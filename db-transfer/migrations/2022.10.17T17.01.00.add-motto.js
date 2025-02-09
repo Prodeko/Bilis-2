@@ -1,18 +1,18 @@
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize");
 
 const up = async ({ context: queryInterface }) => {
-  await queryInterface.addColumn('players', 'motto', {
+  await queryInterface.addColumn("players", "motto", {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: '',
-  })
-}
+    defaultValue: "",
+  });
+};
 
 const down = async ({ context: queryInterface }) => {
-  await queryInterface.removeColumn('players', 'motto')
-}
+  await queryInterface.removeColumn("players", "motto");
+};
 
 module.exports = {
   up,
   down,
-}
+};

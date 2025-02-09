@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize')
-const { oldSequelize } = require('../../../config/db.js')
+const { DataTypes, Model } = require("sequelize");
+const { oldSequelize } = require("../../../config/db.js");
 
 class Player extends Model {}
 
@@ -28,19 +28,19 @@ Player.init(
     sequelize: oldSequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'player',
+    modelName: "player",
     defaultScope: {
       attributes: {
-        exclude: ['createdAt'],
+        exclude: ["createdAt"],
       },
     },
-    tableName: 'bilis_player',
+    tableName: "bilis_player",
     hooks: {
       async afterCreate(attrs) {
-        await attrs.reload()
+        await attrs.reload();
       },
     },
-  }
-)
+  },
+);
 
-module.exports = { Player }
+module.exports = { Player };

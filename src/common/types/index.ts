@@ -1,13 +1,13 @@
-import { z } from 'zod'
+import { z } from "zod";
 
-const id = z.number().int().nonnegative()
-const elo = z.number().positive()
+const id = z.number().int().nonnegative();
+const elo = z.number().positive();
 
 // Base types}
 const withId = z.object({
   id,
-})
-type WithId = z.infer<typeof withId>
+});
+type WithId = z.infer<typeof withId>;
 
 // Player types
 const player = withId.extend({
@@ -19,33 +19,33 @@ const player = withId.extend({
   elo,
   seasonElo: elo.optional().nullable(),
   latestSeasonId: id.optional().nullable(),
-})
-type Player = z.infer<typeof player>
+});
+type Player = z.infer<typeof player>;
 
-const newPlayer = player.omit({ id: true, elo: true })
-type NewPlayer = z.infer<typeof newPlayer>
+const newPlayer = player.omit({ id: true, elo: true });
+type NewPlayer = z.infer<typeof newPlayer>;
 
 const winLossStats = z.object({
   wonGames: z.number().int().nonnegative(),
   lostGames: z.number().int().nonnegative(),
   totalGames: z.number().int().nonnegative(),
   winPercentage: z.number().nonnegative(),
-})
-type WinLossStats = z.infer<typeof winLossStats>
+});
+type WinLossStats = z.infer<typeof winLossStats>;
 
 const playerStats = winLossStats.extend({
   longestWinStreak: z.number().int().nonnegative(),
   seasonal: winLossStats,
-})
-type PlayerStats = z.infer<typeof playerStats>
+});
+type PlayerStats = z.infer<typeof playerStats>;
 
-const playerWithStats = player.merge(playerStats)
-type PlayerWithStats = z.infer<typeof playerWithStats>
+const playerWithStats = player.merge(playerStats);
+type PlayerWithStats = z.infer<typeof playerWithStats>;
 
 const hofPlayer = player.extend({
   hofStat: z.union([z.string(), z.number()]),
-})
-type HofPlayer = z.infer<typeof hofPlayer>
+});
+type HofPlayer = z.infer<typeof hofPlayer>;
 
 // Game types
 const game = withId.extend({
@@ -61,45 +61,45 @@ const game = withId.extend({
   loserSeasonalEloAfter: elo.nullable().optional(),
   underTable: z.boolean(),
   seasonId: id.optional(),
-})
-type Game = z.infer<typeof game>
+});
+type Game = z.infer<typeof game>;
 
 const recentGame = game.extend({
   formattedTimeString: z.string().datetime(),
   winner: z.string(),
   loser: z.string(),
-})
-type RecentGame = z.infer<typeof recentGame>
+});
+type RecentGame = z.infer<typeof recentGame>;
 
 const addedGameResponse = z.object({
   recentGame: recentGame,
   winner: player,
   loser: player,
-})
-type AddedGameResponse = z.infer<typeof addedGameResponse>
+});
+type AddedGameResponse = z.infer<typeof addedGameResponse>;
 
 const mutualGames = z.object({
   currentPlayerGamesWon: z.number().int().nonnegative(),
   opposingPlayerGamesWon: z.number().int().nonnegative(),
   totalGames: z.number().int().nonnegative(),
-})
-type MutualGames = z.infer<typeof mutualGames>
+});
+type MutualGames = z.infer<typeof mutualGames>;
 
 const gameWithPlayers = game.extend({
   winner: player,
   loser: player,
-})
-type GameWithPlayers = z.infer<typeof gameWithPlayers>
+});
+type GameWithPlayers = z.infer<typeof gameWithPlayers>;
 
-const newGame = game.omit({ id: true })
-type NewGame = z.infer<typeof newGame>
+const newGame = game.omit({ id: true });
+type NewGame = z.infer<typeof newGame>;
 
 const createGameType = z.object({
   winnerId: id,
   loserId: id,
   underTable: z.boolean().optional(),
-})
-type CreateGameType = z.infer<typeof createGameType>
+});
+type CreateGameType = z.infer<typeof createGameType>;
 
 const timeSeriesGame = z.object({
   currentElo: elo,
@@ -107,46 +107,46 @@ const timeSeriesGame = z.object({
   opponent: z.string().optional(),
   seasonalEloDiff: z.number().nullable().optional(),
   eloDiff: z.number(),
-})
-type TimeSeriesGame = z.infer<typeof timeSeriesGame>
+});
+type TimeSeriesGame = z.infer<typeof timeSeriesGame>;
 
 // Season types
 const baseSeason = withId.extend({
   start: z.coerce.date(),
   end: z.coerce.date(),
   name: z.string().optional(),
-})
+});
 
 // Method 'omit' does not exist for the return type of
 // refine method, so the baseSeason is needed
-const season = baseSeason.refine(season => {
-  season.start < season.end
-}, 'End date must be grater than start date!')
-type Season = z.infer<typeof season>
+const season = baseSeason.refine((season) => {
+  season.start < season.end;
+}, "End date must be grater than start date!");
+type Season = z.infer<typeof season>;
 
-const newSeason = baseSeason.omit({ id: true })
-type NewSeason = z.infer<typeof newSeason>
+const newSeason = baseSeason.omit({ id: true });
+type NewSeason = z.infer<typeof newSeason>;
 
 // Profile types
 
 const subStatistic = z.object({
   label: z.string(),
   value: z.string(),
-})
-type SubStatistic = z.infer<typeof subStatistic>
+});
+type SubStatistic = z.infer<typeof subStatistic>;
 
 const profileStatistic = z.object({
   label: z.string(),
   subStatistics: z.array(subStatistic),
-})
-type ProfileStatistic = z.infer<typeof profileStatistic>
+});
+type ProfileStatistic = z.infer<typeof profileStatistic>;
 
 const pieChartProps = z.object({
   currentPlayer: player,
   opposingPlayer: player,
   mutualGames,
-})
-type PieChartProps = z.infer<typeof pieChartProps>
+});
+type PieChartProps = z.infer<typeof pieChartProps>;
 
 // Random types
 
@@ -154,8 +154,8 @@ type PieChartProps = z.infer<typeof pieChartProps>
  * Add these to the smooth scroll functions and to the list items you want to smooth scroll into
  */
 enum SmoothScrollId {
-  Queue = 'queue-list-item',
-  Addgame = 'add-game-list-item',
+  Queue = "queue-list-item",
+  Addgame = "add-game-list-item",
 }
 
 // Export types
@@ -180,7 +180,7 @@ export type {
   CreateGameType,
   PieChartProps,
   HofPlayer,
-}
+};
 
 export {
   id,
@@ -205,6 +205,6 @@ export {
   profileStatistic,
   pieChartProps,
   hofPlayer,
-}
+};
 
-export { SmoothScrollId }
+export { SmoothScrollId };

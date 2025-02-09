@@ -10,8 +10,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment:
-      name: 'Production'
-      url: 'http://bilis2.prodeko.org'
+      name: "Production"
+      url: "http://bilis2.prodeko.org"
 
     steps:
       - uses: actions/checkout@v2
@@ -36,9 +36,9 @@ jobs:
       - name: Deploy from ACR
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'bilis2'
+          app-name: "bilis2"
           images: ${{ secrets.REGISTRY_LOGIN_SERVER }}/bilis/bilis
-    
+
       - name: Azure logout
         run: |
           az logout
