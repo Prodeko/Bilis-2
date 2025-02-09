@@ -43,13 +43,25 @@ export const HallOfFame = async ({ ...props }: Props) => {
     },
   ];
 
-  const req = await fetch(`${NEXT_PUBLIC_API_URL}/hof`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const hofPlayersStats = await req.json();
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  let hofPlayersStats: any;
+
+  try {
+    const req = await fetch(`${NEXT_PUBLIC_API_URL}/hof`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("SOME DATA:");
+    console.log(JSON.stringify(req, null, 2));
+    const hofPlayersStats = await req.json();
+  } catch (e) {
+    console.log("FAILED!!!!");
+    console.log(e);
+  }
+
   const hofPlayers = hofIcons.map((icon, i) => {
     return {
       ...icon,
