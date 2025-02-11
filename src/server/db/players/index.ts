@@ -1,6 +1,7 @@
 import { Op, QueryTypes, Sequelize } from "sequelize";
 
 import { type NewPlayer, type Player, newPlayer, player } from "@common/types";
+import { permutator } from "@common/utils/helperFunctions";
 import { PlayerModel } from "@server/models";
 import dbConf from "@server/utils/dbConf";
 
@@ -127,30 +128,41 @@ const searchPlayers = async (
   query: string,
   limit?: number,
 ): Promise<PlayerModel[]> => {
-  const queryParts = query.split(" ");
+  try {
+    const colOptions = ["first_name", "last_name", "nickname", "id"];
+    const permutations = permutator(colOptions);
 
-  const conditions = queryParts.map((part) => ({
-    [Op.or]: [
-      Sequelize.where(Sequelize.fn("lower", Sequelize.col("first_name")), {
-        [Op.startsWith]: part.toLowerCase(),
-      }),
-      Sequelize.where(Sequelize.fn("lower", Sequelize.col("last_name")), {
-        [Op.startsWith]: part.toLowerCase(),
-      }),
-      Sequelize.where(Sequelize.fn("lower", Sequelize.col("nickname")), {
-        [Op.startsWith]: part.toLowerCase(),
-      }),
-    ],
-  }));
+    const queryParts = query.split(" ").filter((part) => part.length > 0);
 
-  const whereClause = {
-    [Op.and]: conditions,
-  };
+    const options = await Promise.all(
+      queryParts.map(async (part) => {
+        return await Promise.all(
+          permutations.map(async (perm) => {
+            return Sequelize.where(
+              Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
+              {
+                [Op.iLike]: `${part}%`,
+              },
+            );
+          }),
+        );
+      }),
+    );
 
-  return PlayerModel.findAll({
-    where: whereClause,
-    limit,
-  });
+    const whereClause = {
+      [Op.and]: options.map((opts) => ({ [Op.or]: opts })),
+    };
+
+    const players = await PlayerModel.findAll({
+      where: whereClause,
+      limit: limit,
+    });
+
+    return players;
+  } catch (error) {
+    console.error("Error in searchPlayers:", error);
+    throw error;
+  }
 };
 
 export {
