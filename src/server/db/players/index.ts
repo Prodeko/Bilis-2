@@ -128,23 +128,41 @@ const searchPlayers = async (
   query: string,
   limit?: number,
 ): Promise<PlayerModel[]> => {
-  const colOptions = ["first_name", "last_name", "nickname", "id"];
-  const permutations = permutator(colOptions);
+  try {
+    const colOptions = ["first_name", "last_name", "nickname", "id"];
+    const permutations = permutator(colOptions);
 
-  const options = permutations.map((perm) => {
-    return Sequelize.where(
-      Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
-      {
-        [Op.iLike]: `%${query.replaceAll(" ", "%")}%`,
-      },
+    const queryParts = query.split(" ").filter((part) => part.length > 0);
+
+    const options = await Promise.all(
+      queryParts.map(async (part) => {
+        return await Promise.all(
+          permutations.map(async (perm) => {
+            return Sequelize.where(
+              Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
+              {
+                [Op.iLike]: `${part}%`,
+              },
+            );
+          }),
+        );
+      }),
     );
-  });
 
-  const players = await PlayerModel.findAll({
-    where: { [Op.or]: options },
-    limit: limit,
-  });
-  return players;
+    const whereClause = {
+      [Op.and]: options.map((opts) => ({ [Op.or]: opts })),
+    };
+
+    const players = await PlayerModel.findAll({
+      where: whereClause,
+      limit: limit,
+    });
+
+    return players;
+  } catch (error) {
+    console.error("Error in searchPlayers:", error);
+    throw error;
+  }
 };
 
 export {
