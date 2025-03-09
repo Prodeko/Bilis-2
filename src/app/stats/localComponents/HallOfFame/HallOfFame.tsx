@@ -9,7 +9,15 @@ import {
 } from "react-icons/ai";
 
 import { HallOfFameStatRow } from "@/app/stats/localComponents/HallOfFame/HallOfFameStatRow";
-import { NEXT_PUBLIC_API_URL } from "@/config";
+// import { NEXT_PUBLIC_API_URL } from "@/config";
+import {
+  getHighestEloAllTimePlayer,
+  getHighestStreak,
+  getHighestWinPercentage,
+  getMostGamesPlayed,
+  getMostPlayedGamesInOneDay,
+  getMostUndertableWins,
+} from "@server/db/players/hofQueries";
 
 type DivProps = ComponentProps<"div">;
 
@@ -44,13 +52,24 @@ export const HallOfFame = async ({ ...props }: Props) => {
   ];
 
   // TODO: FIX THIS NEXT TIME
-  const req = await fetch(`${NEXT_PUBLIC_API_URL}/hof`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const hofPlayersStats = await req.json();
+  // const req = await fetch(`${NEXT_PUBLIC_API_URL}/hof`, {
+  //   // const req = await fetch("/api/hof", {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+
+  const hofPlayersStats = await Promise.all([
+    getHighestEloAllTimePlayer(),
+    getHighestStreak(),
+    getHighestWinPercentage(),
+    getMostGamesPlayed(),
+    getMostUndertableWins(),
+    getMostPlayedGamesInOneDay(),
+  ]);
+
+  // const hofPlayersStats = await req.json();
   const hofPlayers = hofIcons.map((icon, i) => {
     return {
       ...icon,
