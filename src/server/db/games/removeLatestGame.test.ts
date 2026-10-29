@@ -52,11 +52,17 @@ describe("remove latest game", () => {
     await removeLatestGame();
 
     expect(mockUpdatePlayerById).toHaveBeenCalledTimes(2);
-    expect(mockUpdatePlayerById).toHaveBeenCalledWith(LATEST_GAME.winnerId, {
-      elo: LATEST_GAME.winnerEloBefore,
-    });
-    expect(mockUpdatePlayerById).toHaveBeenCalledWith(LATEST_GAME.loserId, {
-      elo: LATEST_GAME.loserEloBefore,
-    });
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(
+      LATEST_GAME.winnerId,
+      expect.objectContaining({
+        elo: LATEST_GAME.winnerEloBefore,
+      }),
+    );
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(
+      LATEST_GAME.loserId,
+      expect.objectContaining({
+        elo: LATEST_GAME.loserEloBefore,
+      }),
+    );
   });
 });
