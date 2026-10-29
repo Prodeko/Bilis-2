@@ -68,7 +68,7 @@ export const PlayerSearchLink = ({ visible, onClick, onBlur }: Props) => {
   return (
     <div className="flex w-full flex-col gap-2">
       <input
-        className="w-full rounded-lg bg-white p-3"
+        className="w-full rounded-lg bg-white p-3 text-black"
         placeholder={"Search for a player"}
         onClick={onClick}
         onKeyDown={handleKeyPress}
