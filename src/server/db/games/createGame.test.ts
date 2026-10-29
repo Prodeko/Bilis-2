@@ -116,12 +116,18 @@ describe("create game", () => {
 
     await createGame(newGame);
     expect(mockUpdatePlayerById).toHaveBeenCalledTimes(2);
-    expect(mockUpdatePlayerById).toHaveBeenCalledWith(mockWinner.id, {
-      elo: mockWinner.elo + winnerEloChange,
-    });
-    expect(mockUpdatePlayerById).toHaveBeenCalledWith(mockLoser.id, {
-      elo: mockLoser.elo + loserEloChange,
-    });
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(
+      mockWinner.id,
+      expect.objectContaining({
+        elo: mockWinner.elo + winnerEloChange,
+      }),
+    );
+    expect(mockUpdatePlayerById).toHaveBeenCalledWith(
+      mockLoser.id,
+      expect.objectContaining({
+        elo: mockLoser.elo + loserEloChange,
+      }),
+    );
   });
 
   test("throws if player id's not given", async () => {

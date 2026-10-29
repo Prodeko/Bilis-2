@@ -7,7 +7,7 @@ import { formatFullName } from "@common/utils/helperFunctions";
 interface Props {
   statName: string;
   Icon: IconType;
-  hofPlayer: HofPlayer;
+  hofPlayer?: HofPlayer;
 }
 
 export const HallOfFameStatRow = ({ statName, hofPlayer, Icon }: Props) => {
