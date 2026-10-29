@@ -53,17 +53,24 @@ export const PlayerForm = ({ player }: Props) => {
   };
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
-    setButtonPressed(!isButtonPressed);
-    const res = await fetch("/api/player/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPlayer),
-    });
-    const data = await res.json();
-    const parsedPlayer = playerParser.parse(data);
-    router.push(`/player/${parsedPlayer.id}`);
+    // Disabled while the request runs so a double click can't create the
+    // player twice; enabled again if it fails, so the form can be retried
+    setButtonPressed(true);
+    try {
+      const res = await fetch("/api/player/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPlayer),
+      });
+      const data = await res.json();
+      const parsedPlayer = playerParser.parse(data);
+      router.push(`/player/${parsedPlayer.id}`);
+    } catch (error) {
+      console.error("Creating the player failed", error);
+      setButtonPressed(false);
+    }
   };
 
   const submit = (event: MouseEvent<HTMLButtonElement>) => {

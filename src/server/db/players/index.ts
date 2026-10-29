@@ -124,45 +124,45 @@ const getLatestPlayers = async (
   return player.array().parse(response);
 };
 
+const SEARCH_COLUMNS = ["first_name", "last_name", "nickname", "id"];
+
+// True when every word of the query starts the player's first name, last
+// name, nickname or id, e.g. "mik uus" for Mikael Uusitalo or "123" for id 123
+const matchesEveryWord = (player: PlayerModel, words: string[]) => {
+  const fields = [player.firstName, player.lastName, player.nickname, player.id]
+    .filter((field) => field !== null && field !== undefined)
+    .map((field) => String(field).toLowerCase());
+  return words.every((word) =>
+    fields.some((field) => field.startsWith(word.toLowerCase())),
+  );
+};
+
+// Finds players whose names, nickname and id, joined in any order, contain the
+// query with spaces as wildcards ("mikael uusitalo" finds Mikael Uusitalo).
+// Players where every word starts one of those fields come first, so typing a
+// full name or an id puts that player at the top.
 const searchPlayers = async (
   query: string,
   limit?: number,
 ): Promise<PlayerModel[]> => {
-  try {
-    const colOptions = ["first_name", "last_name", "nickname", "id"];
-    const permutations = permutator(colOptions);
+  const options = permutator(SEARCH_COLUMNS).map((perm) =>
+    Sequelize.where(
+      Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
+      {
+        [Op.iLike]: `%${query.replaceAll(" ", "%")}%`,
+      },
+    ),
+  );
 
-    const queryParts = query.split(" ").filter((part) => part.length > 0);
+  // No limit here: the sort below has to see every match before the cut
+  const players = await PlayerModel.findAll({
+    where: { [Op.or]: options },
+  });
 
-    const options = await Promise.all(
-      queryParts.map(async (part) => {
-        return await Promise.all(
-          permutations.map(async (perm) => {
-            return Sequelize.where(
-              Sequelize.fn("concat", ...perm.map((col) => Sequelize.col(col))),
-              {
-                [Op.iLike]: `${part}%`,
-              },
-            );
-          }),
-        );
-      }),
-    );
-
-    const whereClause = {
-      [Op.and]: options.map((opts) => ({ [Op.or]: opts })),
-    };
-
-    const players = await PlayerModel.findAll({
-      where: whereClause,
-      limit: limit,
-    });
-
-    return players;
-  } catch (error) {
-    console.error("Error in searchPlayers:", error);
-    throw error;
-  }
+  const words = query.split(" ").filter((word) => word.length > 0);
+  const precise = players.filter((player) => matchesEveryWord(player, words));
+  const rest = players.filter((player) => !matchesEveryWord(player, words));
+  return [...precise, ...rest].slice(0, limit);
 };
 
 export {
