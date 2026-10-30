@@ -28,7 +28,9 @@ export const PlayerForm = ({ player }: Props) => {
     motto: player ? player.motto : "",
     emoji: player ? player.emoji : "",
   });
+
   const [emojiSelectorOpen, setEmojiSelectorOpen] = useState<boolean>(false);
+  const [isButtonPressed, setButtonPressed] = useState(false);
 
   const router = useRouter();
 
@@ -51,16 +53,24 @@ export const PlayerForm = ({ player }: Props) => {
   };
 
   const submitNewPlayer = async (newPlayer: NewPlayer) => {
-    const res = await fetch("/api/player/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPlayer),
-    });
-    const data = await res.json();
-    const parsedPlayer = playerParser.parse(data);
-    router.push(`/player/${parsedPlayer.id}`);
+    // Disabled while the request runs so a double click can't create the
+    // player twice; enabled again if it fails, so the form can be retried
+    setButtonPressed(true);
+    try {
+      const res = await fetch("/api/player/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPlayer),
+      });
+      const data = await res.json();
+      const parsedPlayer = playerParser.parse(data);
+      router.push(`/player/${parsedPlayer.id}`);
+    } catch (error) {
+      console.error("Creating the player failed", error);
+      setButtonPressed(false);
+    }
   };
 
   const submit = (event: MouseEvent<HTMLButtonElement>) => {
@@ -129,7 +139,7 @@ export const PlayerForm = ({ player }: Props) => {
         </div>
         <TextButton
           buttonType="button"
-          disabled={!isValid}
+          disabled={!isValid || isButtonPressed}
           onClick={submit}
           RightIcon={HiUserAdd}
           text={isUpdate ? "Save changes" : "Create player"}

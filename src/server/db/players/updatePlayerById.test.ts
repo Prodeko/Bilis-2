@@ -1,3 +1,8 @@
+/**
+ * pg needs TextEncoder, which the jsdom environment doesn't have
+ * @jest-environment node
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { updatePlayerById } from ".";
 

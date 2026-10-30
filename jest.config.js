@@ -15,12 +15,16 @@ const customJestConfig = {
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["./jest.setup.js"],
   testMatch: ["**/*.test.ts"],
+  // Same aliases as "paths" in tsconfig.json
   moduleNameMapper: {
-    "@common/(.*)": "<rootDir>/common/$1",
-    "@server/(.*)": "<rootDir>/server/$1",
-    "@components/(.*)": "<rootDir>/components/$1",
-    "@state/(.*)": "<rootDir>/state/$1",
-    "@config": "<rootDir>/config",
+    "^@common/(.*)$": "<rootDir>/src/common/$1",
+    "^@server/(.*)$": "<rootDir>/src/server/$1",
+    "^@components/(.*)$": "<rootDir>/src/app/components/$1",
+    "^@state/(.*)$": "<rootDir>/src/state/$1",
+    "^@config/(.*)$": "<rootDir>/src/config/$1",
+    "^@hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "^@ui/(.*)$": "<rootDir>/src/app/components/ui/$1",
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
 };
 
